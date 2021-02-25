@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 export default function NavberDesktop({ NavbarItem }) {
   console.log(NavbarItem);
   return (
-    <div>
+    <div className="d-flex">
       {NavbarItem.map((value, index) => (
         <div key={index}>teset</div>
       ))}

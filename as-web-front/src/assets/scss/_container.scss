@@ -1,0 +1,12 @@
+.site-content {
+  width: 100%;
+  max-width: 1366px;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+  // @include breakpoint('lg') {
+  //   padding-right: $site-container-lg-left-gap;
+  //   padding-left: $site-container-lg-left-gap;
+  // }
+}
