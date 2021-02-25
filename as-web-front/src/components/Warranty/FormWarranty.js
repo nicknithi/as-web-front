@@ -1,7 +1,7 @@
 import React from "react";
-import { connect, useDispatch  } from "react-redux";
+import { connect } from "react-redux";
 
-function FormWarranty() {
+function FormWarranty(prop) {
   let getTitle = "";
   let getDetail = "";
   const handleSubmit = (e) => {
@@ -13,8 +13,8 @@ function FormWarranty() {
       title,
       detail,
     };
- 
-    dispatch({
+    console.log(prop);
+    prop.dispatch({
       type: "ADD_POST",
       data,
     });
