@@ -1,6 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
+import "./assets/scss/app.scss";
+import Header from "./components/Header";
+import FormWarranty from "./components/Warranty/FormWarranty";
+import RecheckFormWarranty from "./components/Warranty/RecheckFormWarranty";
 
 export default function App() {
-  const [count, setCount] = useState(0);
-  return <div>asdfasff {count}</div>;
+  return (
+    <div className="site-content">
+      {/* <Header /> */}
+      <FormWarranty />
+      <RecheckFormWarranty />
+    </div>
+  );
 }

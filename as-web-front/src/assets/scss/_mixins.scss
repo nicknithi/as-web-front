@@ -1,0 +1,78 @@
+// breakpoints
+@mixin breakpoint($breakpoint) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+  }
+}
+// non select
+@mixin no-select {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+// Transition
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+
+// Transform
+@mixin transform($transforms...) {
+  -webkit-transform: $transforms;
+  -moz-transform: $transforms;
+  -ms-transform: $transforms;
+  transform: $transforms;
+}
+//truncate Height
+@mixin truncateFixedHeight($font-size, $line-height, $lines-to-show) {
+  display: block; // Fallback for non-webkit
+  display: -webkit-box;
+  height: convertToREM(
+    $font-size * $line-height * $lines-to-show
+  ); // Fallback for non-webkit
+  font-size: convertToREM($font-size);
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@mixin truncateMaxHeight($font-size, $line-height, $lines-to-show) {
+  display: block; // Fallback for non-webkit
+  display: -webkit-box;
+  max-height: convertToREM(
+    $font-size * $line-height * $lines-to-show
+  ); // Fallback for non-webkit
+  font-size: convertToREM($font-size);
+  line-height: $line-height;
+  -webkit-line-clamp: $lines-to-show;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Colors
+@mixin gradient($direction, $list) {
+  background-image: -webkit-linear-gradient($direction, $list);
+  background-image: -moz-linear-gradient($direction, $list);
+  background-image: -o-linear-gradient($direction, $list);
+  background-image: linear-gradient($direction, $list);
+}
+
+@mixin headingFontSize($font-size) {
+  font-size: $font-size;
+  @include breakpoint("lg") {
+    font-size: $font-size;
+  }
+}

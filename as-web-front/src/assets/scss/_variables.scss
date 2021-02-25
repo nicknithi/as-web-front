@@ -1,0 +1,128 @@
+$black: #000000;
+$white: #ffffff;
+
+// Grey
+$dark-gray: #303034;
+$deep-gray: #231f20;
+$medium-gray: #676b80;
+$gray: #868686;
+$light-gray: #dedede;
+$gray-50: #c9cbd5;
+$gray-30: #e5e6eb;
+$gray-20: #f0f0f4;
+$gray-10: #f7f7f9;
+
+// Gradient
+$bg-gradient-gray-list: $white, #f2f2f2;
+$bg-gradient-direction: to bottom;
+
+// Brand colors
+$primary: #ffb41d;
+$primary-light: #fff4d6;
+$primary-light-20: #ccdef5;
+$primary-light-60: #72a8ef;
+$primary-dark-10: #1168d8;
+$primary-dark-20: #0952b0;
+
+$secondary: #ffaa29;
+$secondary-light-60: #f7c273;
+$secondary-dark-10: #f89704;
+$secondary-dark-20: #ef7b00;
+
+// Borders/Line
+$border-primary: $primary;
+$border-primary-light: #72a8ef;
+$border-secondary: #ffaa29;
+$border-gray: #d8d8d8;
+$border-gray-50: #c9c9cf;
+$border-gray-70: #e3e3e3;
+$border-gray-75: #f0f0f0;
+
+// Status colors
+$success: #0abd57;
+$warning: #fec81f;
+$fail: #ff495c;
+
+// Default
+$default-bg-color: #f2f3f4;
+
+// Font Color
+$font-color-light-grey: #a1a4b5;
+$font-color-medium-grey: #676b80;
+$font-color-dark-grey: #303034;
+
+// Fonts
+$default-title-color: $deep-gray;
+$default-font-color: #404044;
+$default-font-size: 1rem;
+
+$default-font-family: "DB Manothai X", sans-serif;
+$default-title-family: "DB Helvethaica X", sans-serif;
+$heading1-font-family: "DB Helvethaica X 75 Bd", sans-serif; // $default-title-family;// 'DB Helvethaica X 75 Bd', sans-serif;
+$heading-font-family: "DB Helvethaica X 65 Med", sans-serif; // $default-title-family;// 'DB Helvethaica X 75 Bd', sans-serif;
+$title-font-family: $default-title-family; // 'DB Helvethaica X 65 Med', sans-serif;
+$sub-title-font-family: $default-title-family;
+
+$body-font-size: 26px;
+$h1-font-size-mobile: 38px;
+$h2-font-size-mobile: 48px;
+$h3-font-size-mobile: 34px;
+$h4-font-size-mobile: 22px;
+// $h1-font-size           : 62px;
+// $h2-font-size           : 48px;
+// $h3-font-size           : 34px;
+// $h4-font-size           : 28px;
+$h1-font-size: 52px;
+$h2-font-size: 38px; // 40px;
+$h3-font-size: 34px;
+$h4-font-size: 28px;
+$body-font-size-number: 26;
+// $h1-font-size-number    : 62;
+// $h2-font-size-number    : 48;
+// $h3-font-size-number    : 34;
+// $h4-font-size-number    : 28;
+$h1-font-size-number: 52;
+$h2-font-size-number: 38; // 40;
+$h3-font-size-number: 34;
+$h4-font-size-number: 28;
+
+$default-line-height: 1.1;
+$heading-line-height: 1.11;
+$heading-font-weight: bold;
+
+// Radius
+$default-radius: 4px;
+
+// Default gap
+$default-gap: 15px;
+
+$button-default-padding: 5px 19px;
+
+// Transition
+$default-transition: all 0.2s ease-in-out;
+
+// Shadow
+$shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+$shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+$shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.175);
+
+$site-container-lg-left-gap: 32px;
+$site-container-max-width: 1366px;
+$container-lg-max-width: 1143px;
+
+// Breakpoint
+$breakpoints: (
+  "xs": 460px,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
+);
+
+$embed-responsive-aspect-ratios: ((21 9), (16 9), (4 3), (1 1)) !default;
+
+// z-index
+$light-box-z-index: 100;
+$chat-box-z-index: 101;
+$z-index-loading: 1070;
