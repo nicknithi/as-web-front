@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-
+import MemberData from "../Warranty/MemberData";
+import ProductData from "../Warranty/ProductData";
 function FormWarranty(prop) {
   let getTitle = "";
   let getDetail = "";
@@ -23,26 +24,12 @@ function FormWarranty(prop) {
   };
   return (
     <div>
-      <h1>Create</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          ref={(input) => (getTitle = input)}
-          placeholder="Enter title"
-          required
-        />
-        <br />
-        <br />
-        <input
-          type="textarea"
-          ref={(input) => (getDetail = input)}
-          placeholder="Enter detail"
-          required
-        />
-        <br />
-        <br />
-        <button>submit</button>
-      </form>
+      <div className="form-warranty">
+        <form>
+          <MemberData />
+          <ProductData />
+        </form>
+      </div>
     </div>
   );
 }

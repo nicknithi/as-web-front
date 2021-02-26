@@ -6,3 +6,120 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+    font-family: 'psl_kittithadaregular';
+    src: url('psl094-webfont.woff2') format('woff2'), url('psl094-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaadregular';
+    src: url('psl094ad-webfont.woff2') format('woff2'), url('psl094ad-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadacsregular';
+    src: url('psl094cs-webfont.woff2') format('woff2'), url('psl094cs-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaspregular';
+    src: url('psl094sp-webfont.woff2') format('woff2'), url('psl094sp-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaitalic';
+    src: url('psl095-webfont.woff2') format('woff2'), url('psl095-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaaditalic';
+    src: url('psl095ad-webfont.woff2') format('woff2'), url('psl095ad-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadacsitalic';
+    src: url('psl095cs-webfont.woff2') format('woff2'), url('psl095cs-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaspitalic';
+    src: url('psl095sp-webfont.woff2') format('woff2'), url('psl095sp-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadabold';
+    src: url('psl096-webfont.woff2') format('woff2'), url('psl096-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaadbold';
+    src: url('psl096ad-webfont.woff2') format('woff2'), url('psl096ad-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadacsbold';
+    src: url('psl096cs-webfont.woff2') format('woff2'), url('psl096cs-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+@font-face {
+    font-family: 'psl_kittithadaspbold';
+    src: url('psl096sp-webfont.woff2') format('woff2'), url('psl096sp-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}

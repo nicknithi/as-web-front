@@ -1,3 +1,48 @@
+@import "../app.scss";
+@import "../../fonts/stylesheet.css";
 .as-navbar-desktop {
-  width: 100%;
+  width: $container-lg-max-width;
+  .navbar-header {
+    height: 9rem;
+    .logo {
+      img {
+        position: absolute;
+        top: 50%;
+        transform: translate(0%, -50%);
+      }
+    }
+    .right-content {
+      .official-website {
+        white-space: nowrap;
+      }
+      .btn-lang {
+        min-width: 35px;
+        min-height: 35px;
+        color: white;
+        border: none;
+        &.th {
+          background-color: #4ea4cd;
+        }
+        &.en {
+          background-color: #7a7a7a;
+        }
+      }
+    }
+  }
+  .navbar-hr {
+    background-color: $secondary;
+    height: 2px;
+    border: none;
+  }
+  .navbar-menu {
+    height: 4rem;
+    .navbar-item {
+      font-weight: bold;
+      font-size: 1.5rem;
+      &:hover {
+        color: lightseagreen;
+        cursor: pointer;
+      }
+    }
+  }
 }

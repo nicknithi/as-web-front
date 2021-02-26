@@ -3,6 +3,32 @@ import React, { useEffect } from "react";
 import NavberDesktop from "./Navbar/NavberDesktop";
 import axios from "axios";
 export default function header() {
+  const Navbar = [
+    {
+      title: "บริการ",
+    },
+    {
+      title: "โปรโมชั่น",
+    },
+    {
+      title: "ความรู้ด้านเทคนิค",
+    },
+    {
+      title: "การบำรุงรักษาและแก้ไขปัญหา",
+    },
+    {
+      title: "การติดตั้ง",
+    },
+    {
+      title: "อะไหล่",
+    },
+    {
+      title: "การรับประกัน",
+    },
+    {
+      title: "สมาชิกการบริการ",
+    },
+  ];
   useEffect(() => {
     // fetch("https://randomuser.me/api/")
     //   .then((res) => res.json())
@@ -14,7 +40,7 @@ export default function header() {
   });
   return (
     <div>
-      <NavberDesktop NavbarItem={[1, 2, 3, 4, 5]} />
+      <NavberDesktop NavbarItem={Navbar} />
     </div>
   );
 }

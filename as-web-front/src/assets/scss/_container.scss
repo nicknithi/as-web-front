@@ -1,6 +1,9 @@
+body {
+  color: rgb(99, 99, 99);
+}
 .site-content {
   width: 100%;
-  max-width: 1366px;
+  max-width: $container-lg-max-width;
   margin-right: auto;
   margin-left: auto;
   padding-right: 15px;
