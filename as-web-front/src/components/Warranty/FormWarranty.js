@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import MemberData from "../Warranty/MemberData";
 import ProductData from "../Warranty/ProductData";
+import AddressSetting from "../../components/Warranty/AddressSetting";
 function FormWarranty(prop) {
   let getTitle = "";
   let getDetail = "";
@@ -27,6 +28,7 @@ function FormWarranty(prop) {
       <div className="form-warranty">
         <form>
           <MemberData />
+          <AddressSetting />
           <ProductData />
         </form>
       </div>
