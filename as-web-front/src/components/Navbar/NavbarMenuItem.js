@@ -1,5 +1,10 @@
 import React from "react";
-
-export default function NavbarMenuItem({ title }) {
-  return <div className="navbar-item">{title}</div>;
+import NavbarSubMenuDesktop from "./NavbarSubMenuDesktop";
+export default function NavbarMenuItem({ title, subMenu }) {
+  return (
+    <div className="navbar-item position-relative">
+      {title}
+      <NavbarSubMenuDesktop subMenu={subMenu} />
+    </div>
+  );
 }
