@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import postReducer from "./store/reducers/postReducer";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/scss/app.scss";
+
 const store = createStore(
   postReducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
