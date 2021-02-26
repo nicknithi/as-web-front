@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import GoogleMap from "../map/googleMap";
+import DropDown from "../Input/dropDown";
 export default function AddressSetting() {
   const [currentLocation, setcurrentLocation] = useState({ lat: 0, lng: 0 });
   if (navigator.geolocation) {
@@ -29,7 +30,7 @@ export default function AddressSetting() {
         <div className="row">
           <div className="col-md-6">
             <label className="font-weight-bold">จังหวัด*</label>
-            <input type="textarea" className="as-input" required />
+            <DropDown />
           </div>
           <div className="col-md-6">
             <label className="font-weight-bold">อำเภอ/เขต*</label>
