@@ -1,12 +1,21 @@
 import React from "react";
 import Header from "./components/Header";
 import DefaultLayout from "./layouts/Default";
-
+import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import Home from "./layouts/Home";
 export default function App() {
+  console.log(useHistory);
   return (
     <div>
       <Header />
-      <DefaultLayout />
+      <BrowserRouter>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/warranty">
+          <DefaultLayout />
+        </Route>
+      </BrowserRouter>
     </div>
   );
 }

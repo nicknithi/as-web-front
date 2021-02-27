@@ -1,14 +1,12 @@
 import React from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function dropDown({ data, handleEvent }) {
+export default function dropDownDistrict({ data, handleEvent }) {
   const handleSelect = (e) => {
-    document.getElementById("province").value = e.target.value;
-    console.log(e.target.value);
     handleEvent(e.target.value);
   };
   return (
     <div className="position-relative as-dropdown">
-      <input type="hidden" id="province" value="" />
+      <input type="hidden" id="district" value="" />
       <select
         className="form-select position-absolute w-100"
         aria-label="Default select example"
@@ -17,7 +15,7 @@ export default function dropDown({ data, handleEvent }) {
         <option selected>Open this select menu</option>
         {data.map((item, index) => (
           <option key={index} value={item.id}>
-            {item.province_Name}
+            {item.district_Name}
           </option>
         ))}
       </select>

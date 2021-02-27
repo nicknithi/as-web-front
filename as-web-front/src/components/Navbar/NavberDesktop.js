@@ -10,9 +10,9 @@ export default function NavberDesktop({ NavbarItem }) {
     <div>
       <div className="as-navbar-desktop mx-auto d-none d-md-block">
         <div className="navbar-header d-flex">
-          <div className="logo position-relative">
+          <a href="/" className="logo position-relative">
             <img src={logo} />
-          </div>
+          </a>
           <div className="right-content ml-auto d-flex align-items-center">
             <span className="mr-3 official-website">Official Website</span>
             <button className="btn-lang th mr-3">TH</button>

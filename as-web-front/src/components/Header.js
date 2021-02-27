@@ -117,15 +117,7 @@ export default function header() {
       ],
     },
   ];
-  useEffect(() => {
-    // fetch("https://randomuser.me/api/")
-    //   .then((res) => res.json())
-    //   .then((res) => console.log("nick", res));
-    axios.get(`https://randomuser.me/api/`).then((res) => {
-      const persons = res.data;
-      console.log("nithi", persons);
-    });
-  });
+  useEffect(() => {});
   return (
     <div>
       <NavberDesktop NavbarItem={Navbar} />
