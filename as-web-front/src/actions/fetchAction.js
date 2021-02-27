@@ -1,5 +1,12 @@
 import store from "../store";
 import axios from "axios";
+const api = axios.create({
+  baseURL: `http://119.59.117.57/API`,
+  // headers: {
+  //   "Access-Control-Allow-Origin": "*",
+  //   "Access-Control-Allow-Headers": "Authorization",
+  // },
+});
 export const fetch_province = () => {
   return {
     type: "FETCH_PROVINCE",
@@ -43,8 +50,8 @@ export const setTempInput = (post) => {
 export const getProvince = () => {
   // store.dispatch(fetch_province());
   return function (dispatch, getState) {
-    return axios
-      .post(`http://119.59.117.57/API/api/Master/GetProvince`)
+    return api
+      .post(`/api/Master/GetProvince`)
       .then((res) => {
         dispatch(receive_province(res.data.data));
       })
@@ -55,7 +62,7 @@ export const getDistrict = () => {
   // store.dispatch(fetch_district());
   return function (dispatch, getState) {
     return axios
-      .post(`http://119.59.117.57/API/api/Master/GetDistrict`)
+      .post(`/api/Master/GetDistrict`)
       .then((res) => {
         dispatch(receive_district(res.data.data));
       })
