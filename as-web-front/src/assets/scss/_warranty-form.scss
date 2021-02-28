@@ -14,4 +14,40 @@
     padding: 30px;
     background-color: #e9e9e9;
   }
+  .rate-form {
+    background-color: #e9e9e9;
+    .title {
+      font-weight: bold;
+    }
+    .emotion {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      &:hover {
+        svg {
+          fill: black;
+        }
+      }
+      &.active {
+        fill: black;
+      }
+      .motion-text {
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+    textarea {
+      font-size: 22px;
+      border-color: white;
+      border: none;
+    }
+  }
+  .cost-warranty-detail {
+    border-top: 3px solid $secondary;
+    margin-left: -15px;
+    margin-right: -15px;
+    .title {
+      font-weight: bold;
+    }
+  }
 }

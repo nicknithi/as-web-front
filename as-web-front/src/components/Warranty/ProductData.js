@@ -1,5 +1,6 @@
 import React from "react";
 import ButtonManageForm from "../button/ButtonManageForm";
+import UploadImage from "../Warranty/uploadImage";
 export default function ProductData() {
   return (
     <div>
@@ -73,6 +74,9 @@ export default function ProductData() {
             </div>
           </div>
           <ButtonManageForm />
+          <div className="row mt-4">
+            <UploadImage />
+          </div>
         </div>
       </div>
     </div>

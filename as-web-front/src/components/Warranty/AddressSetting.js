@@ -34,7 +34,7 @@ function AddressSetting({ dataObject, dispatch }) {
       <h3 className="font-weight-bold mb-3">ที่อยู่การติดตั้ง</h3>
       <div className="member-data">
         <div className="row">
-          <div className="col-md-6">
+          <div className="col-md-12">
             <label className="font-weight-bold">
               ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
             </label>
@@ -65,9 +65,8 @@ function AddressSetting({ dataObject, dispatch }) {
         </div>
         <div>
           <label className="font-weight-bold">แผนที่ (โปรดระบุ)</label>
-          {/* <GoogleMap currLocation={currentLocation} /> */}
+          <GoogleMap />
         </div>
-        <button>teste</button>
       </div>
     </div>
   );

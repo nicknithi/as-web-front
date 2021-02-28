@@ -44,7 +44,6 @@ export default function MemberData() {
             <input type="textarea" id="email" className="as-input" required />
           </div>
         </div>
-        <button>test</button>
       </div>
     </div>
   );

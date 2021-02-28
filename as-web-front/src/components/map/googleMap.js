@@ -5,8 +5,8 @@ class googleMap extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    position: this.props.currLocation,
-    center: this.props.currLocation,
+    position: { lat: 15.87, lng: 100.9925 },
+    center: { lat: 15.87, lng: 100.9925 },
   };
   onMarkerClick = (props, marker, e) =>
     this.setState({
