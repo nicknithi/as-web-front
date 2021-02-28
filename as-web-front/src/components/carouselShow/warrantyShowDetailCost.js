@@ -1,13 +1,16 @@
 import React, { useState } from "react";
 import img from "../../assets/img/PIC01.png";
 import "../../assets/scss/components/carousel/warranty.scss";
-import Carousel from "react-bootstrap/Carousel";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import imgoverlay from "../../assets/img/PIC02.png";
 const WarrantyShowDetailCost = () => {
   const [triggerShow, setTriggerShow] = useState(false);
   const handleShow = () => {
     setTriggerShow(!triggerShow);
   };
+  let settings = { adaptiveHeight: true };
   return (
     <div className="warrnty-cost-detail">
       <div className="row">
@@ -36,14 +39,26 @@ const WarrantyShowDetailCost = () => {
       </div>
       {triggerShow ? (
         <div className="show-detail-overlay">
-          <Carousel>
-            <Carousel.Item>
+          <Slider {...settings}>
+            <div className="slide-item">
               <img src={imgoverlay} />
-            </Carousel.Item>
-            <Carousel.Item>
+            </div>
+
+            <div className="slide-item">
               <img src={imgoverlay} />
-            </Carousel.Item>
-          </Carousel>
+            </div>
+
+            <div className="slide-item">
+              <img src={imgoverlay} />
+            </div>
+
+            <div className="slide-item">
+              <img src={imgoverlay} />
+            </div>
+          </Slider>
+          <div className="close-overlay" onClick={handleShow}>
+            X
+          </div>
         </div>
       ) : (
         <div />
