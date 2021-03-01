@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import MemberData from "../Warranty/MemberData";
 import ProductData from "../Warranty/ProductData";
@@ -8,10 +8,25 @@ import { getProvince, setTempInput } from "../../actions/fetchAction";
 import ButtonMain from "../button/ButtonMain";
 import CostWarrantyDetail from "./CostWarrantyDetail";
 import WarrantyConfirm from "./WarrantyConfirm";
-
+import ButtonManageForm from "../button/ButtonManageForm";
 function FormWarranty(prop) {
-  let FormAddressList = [];
-  let FormProductList = [];
+  const [procudeForm, setProcudeForm] = useState([0]);
+  let FormDataProduct = [
+    {
+      Purchase_Province: null,
+      Purchase_Date: null,
+      Store_ID: null,
+      Store_Name_Other: null,
+      Receipt_Number: null,
+      Barcode_Number: null,
+      Warranty_Number: null,
+      Type_ID: null,
+      Product_ID: null,
+      Model_ID: null,
+      Product_Code_Other: null,
+      QTY: null,
+    },
+  ];
   let FormData = {
     Customer_Code: null,
     Customer_Firstname: null,
@@ -26,18 +41,7 @@ function FormWarranty(prop) {
     Customer_ZipCode: null,
     Customer_Latitude: null,
     Customer_Longtitude: null,
-    Purchase_Province: null,
-    Purchase_Date: null,
-    Store_ID: null,
-    Store_Name_Other: null,
-    Receipt_Number: null,
-    Barcode_Number: null,
-    Warranty_Number: null,
-    Type_ID: null,
-    Product_ID: null,
-    Model_ID: null,
-    Product_Code_Other: null,
-    QTY: null,
+
     Score: null,
     Description: null,
   };
@@ -50,9 +54,75 @@ function FormWarranty(prop) {
       console.log(e.value, e.name);
     }
   };
+  const handleInputProduct = (e) => {
+    console.log(parseInt(e.target.attributes.index.value));
+    console.log(FormDataProduct);
+    if (e.target) {
+      FormDataProduct[parseInt(e.target.attributes.index.value)][
+        e.target.name
+      ] = e.target.value;
+      console.log(e.target.value, e.target.name);
+    } else {
+      FormDataProduct[parseInt(e.target.attributes.index.value)][e.name] =
+        e.value;
+      console.log(e.value, e.name);
+    }
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(FormData);
+  };
+
+  const uiProductForm = () => {
+    return procudeForm.map((item, index) => (
+      <ProductData
+        key={index}
+        handleChangInput={handleInputProduct}
+        index={index}
+      />
+    ));
+  };
+  const addProductForm = () => {
+    setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
+    FormDataProduct = [
+      ...FormDataProduct,
+      {
+        Purchase_Province: null,
+        Purchase_Date: null,
+        Store_ID: null,
+        Store_Name_Other: null,
+        Receipt_Number: null,
+        Barcode_Number: null,
+        Warranty_Number: null,
+        Type_ID: null,
+        Product_ID: null,
+        Model_ID: null,
+        Product_Code_Other: null,
+        QTY: null,
+      },
+    ];
+    console.log(FormDataProduct);
+  };
+  const addStoreForm = () => {
+    setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
+    FormDataProduct = [
+      ...FormDataProduct,
+      {
+        Purchase_Province: null,
+        Purchase_Date: null,
+        Store_ID: null,
+        Store_Name_Other: null,
+        Receipt_Number: null,
+        Barcode_Number: null,
+        Warranty_Number: null,
+        Type_ID: null,
+        Product_ID: null,
+        Model_ID: null,
+        Product_Code_Other: null,
+        QTY: null,
+      },
+    ];
+    console.log(FormDataProduct);
   };
   useEffect(() => {
     prop.dispatch(getProvince());
@@ -74,7 +144,11 @@ function FormWarranty(prop) {
           dataObject={prop.data.DataDropdownReducer}
           handleChangInput={handleChangInput}
         />
-        <ProductData handleChangInput={handleChangInput} />
+        {uiProductForm()}
+        <ButtonManageForm
+          addProductForm={addProductForm}
+          addStoreForm={addStoreForm}
+        />
         <FormRate handleChangInput={handleChangInput} />
         <div className="row">
           <div className="col-md-4 mx-auto text-center mt-4">
