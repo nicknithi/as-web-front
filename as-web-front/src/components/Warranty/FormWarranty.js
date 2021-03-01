@@ -9,6 +9,7 @@ import ButtonMain from "../button/ButtonMain";
 import CostWarrantyDetail from "./CostWarrantyDetail";
 import WarrantyConfirm from "./WarrantyConfirm";
 import ButtonManageForm from "../button/ButtonManageForm";
+import http from "../../axios";
 function FormWarranty(prop) {
   const [procudeForm, setProcudeForm] = useState([0]);
   let FormDataProduct = [
@@ -45,6 +46,7 @@ function FormWarranty(prop) {
     Score: null,
     Description: null,
   };
+
   const handleChangInput = (e) => {
     if (e.target) {
       FormData[e.target.name] = e.target.value;
@@ -68,9 +70,9 @@ function FormWarranty(prop) {
       console.log(e.value, e.name);
     }
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(FormData);
   };
 
   const uiProductForm = () => {
@@ -84,24 +86,8 @@ function FormWarranty(prop) {
   };
   const addProductForm = () => {
     setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
-    FormDataProduct = [
-      ...FormDataProduct,
-      {
-        Purchase_Province: null,
-        Purchase_Date: null,
-        Store_ID: null,
-        Store_Name_Other: null,
-        Receipt_Number: null,
-        Barcode_Number: null,
-        Warranty_Number: null,
-        Type_ID: null,
-        Product_ID: null,
-        Model_ID: null,
-        Product_Code_Other: null,
-        QTY: null,
-      },
-    ];
-    console.log(FormDataProduct);
+    // // FormDataProduct.push("test" + procudeForm.length);
+    //console.log(FormDataProduct);
   };
   const addStoreForm = () => {
     setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
