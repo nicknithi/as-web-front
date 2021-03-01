@@ -8,7 +8,16 @@ import { getProvince, setTempInput } from "../../actions/fetchAction";
 import ButtonMain from "../button/ButtonMain";
 import CostWarrantyDetail from "./CostWarrantyDetail";
 import WarrantyConfirm from "./WarrantyConfirm";
+
 function FormWarranty(prop) {
+  let settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+  };
+
   let fromWarrantyInput = {
     memberService: "",
     name: "",
