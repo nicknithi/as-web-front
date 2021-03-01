@@ -7,9 +7,9 @@ function ScanBarCode() {
     width: 200,
     height: 200,
   });
-  if (window.innerWidth >= 768) {
-    setSizeCamera({ width: 500, height: 500 });
-  }
+  //   if (window.innerWidth >= 768) {
+  //     setSizeCamera({ width: 500, height: 500 });
+  //   }
   return (
     <>
       <div className="as-scan-barcode">
@@ -17,8 +17,13 @@ function ScanBarCode() {
           width={sizeCamera.width}
           height={sizeCamera.height}
           onUpdate={(err, result) => {
-            if (result) setData(result.text);
-            else setData("Not Found");
+            if (result) {
+              alert("test", result.text);
+              console.log(result);
+              setData(result.text);
+            } else {
+              setData("Not Found");
+            }
           }}
         />
       </div>

@@ -25,6 +25,14 @@ class googleMap extends Component {
         lng: clickEvent.latLng.lng(),
       },
     });
+    document.getElementById(
+      "Customer_Latitude"
+    ).value = clickEvent.latLng.lat();
+    this.props.handleMap(document.getElementById("Customer_Latitude"));
+    document.getElementById(
+      "Customer_Longtitude"
+    ).value = clickEvent.latLng.lng();
+    this.props.handleMap(document.getElementById("Customer_Longtitude"));
   };
   render() {
     return (
@@ -32,6 +40,18 @@ class googleMap extends Component {
         className="position-relative"
         style={{ height: "600px", border: "1px solid gray" }}
       >
+        <input
+          type="hidden"
+          id="Customer_Latitude"
+          name="Customer_Latitude"
+          value=""
+        />
+        <input
+          type="hidden"
+          id="Customer_Longtitude"
+          name="Customer_Longtitude"
+          value=""
+        />
         <Map
           google={this.props.google}
           initialCenter={this.state.center}

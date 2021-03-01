@@ -10,40 +10,49 @@ import CostWarrantyDetail from "./CostWarrantyDetail";
 import WarrantyConfirm from "./WarrantyConfirm";
 
 function FormWarranty(prop) {
-  let settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+  let FormAddressList = [];
+  let FormProductList = [];
+  let FormData = {
+    Customer_Code: null,
+    Customer_Firstname: null,
+    Customer_Lastname: null,
+    Customer_Tel: null,
+    Customer_Mobile: null,
+    Customer_Email: null,
+    Customer_Address: null,
+    Customer_Province: null,
+    Customer_District: null,
+    Customer_SubDistrict: null,
+    Customer_ZipCode: null,
+    Customer_Latitude: null,
+    Customer_Longtitude: null,
+    Purchase_Province: null,
+    Purchase_Date: null,
+    Store_ID: null,
+    Store_Name_Other: null,
+    Receipt_Number: null,
+    Barcode_Number: null,
+    Warranty_Number: null,
+    Type_ID: null,
+    Product_ID: null,
+    Model_ID: null,
+    Product_Code_Other: null,
+    QTY: null,
+    Score: null,
+    Description: null,
   };
-
-  let fromWarrantyInput = {
-    memberService: "",
-    name: "",
-    surname: "",
-    tel: "",
-    phone: "",
-    email: "",
-    addressProduct: "",
-    postCode: "",
-    map: "",
+  const handleChangInput = (e) => {
+    if (e.target) {
+      FormData[e.target.name] = e.target.value;
+      console.log(e.target.value, e.target.name);
+    } else {
+      FormData[e.name] = e.value;
+      console.log(e.value, e.name);
+    }
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    fromWarrantyInput.memberService = document.getElementById(
-      "memberService"
-    ).value;
-    fromWarrantyInput.name = document.getElementById("name").value;
-    fromWarrantyInput.surname = document.getElementById("surname").value;
-    fromWarrantyInput.tel = document.getElementById("tel").value;
-    fromWarrantyInput.phone = document.getElementById("phone").value;
-    fromWarrantyInput.email = document.getElementById("email").value;
-    fromWarrantyInput.addressProduct = document.getElementById(
-      "addressProduct"
-    ).value;
-    fromWarrantyInput.postCode = document.getElementById("postCode").value;
-    prop.dispatch(setTempInput(fromWarrantyInput));
+    console.log(FormData);
   };
   useEffect(() => {
     prop.dispatch(getProvince());
@@ -59,12 +68,14 @@ function FormWarranty(prop) {
             "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
           }
         />
-        <MemberData />
-        <form onSubmit={handleSubmit}>
-          <AddressSetting dataObject={prop.data.DataDropdownReducer} />
-        </form>
-        <ProductData />
-        <FormRate />
+        <MemberData handleChangInput={handleChangInput} />
+        <form onSubmit={handleSubmit}></form>
+        <AddressSetting
+          dataObject={prop.data.DataDropdownReducer}
+          handleChangInput={handleChangInput}
+        />
+        <ProductData handleChangInput={handleChangInput} />
+        <FormRate handleChangInput={handleChangInput} />
         <div className="row">
           <div className="col-md-4 mx-auto text-center mt-4">
             <ButtonMain

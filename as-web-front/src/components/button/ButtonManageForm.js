@@ -1,12 +1,15 @@
 import React from "react";
 import "../../assets/scss/components/button/manage-form.scss";
-export default function ButtonManageForm() {
+export default function ButtonManageForm({ addProductForm, addStoreForm }) {
   return (
     <div className="manage-form text-center mt-3">
       <button className="mr-3 delete-product font-weight-bold">
         ลบสินค้ารับประกัน
       </button>
-      <button className="mr-3 plus-product font-weight-bold">
+      <button
+        className="mr-3 plus-product font-weight-bold"
+        onClick={addProductForm}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -19,7 +22,7 @@ export default function ButtonManageForm() {
         </svg>
         เพิ่มสินค้ารับประกัน
       </button>
-      <button className="plus-store font-weight-bold">
+      <button className="plus-store font-weight-bold" onClick={addStoreForm}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
