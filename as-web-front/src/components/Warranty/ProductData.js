@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import ButtonManageForm from "../button/ButtonManageForm";
 import UploadImage from "../Warranty/uploadImage";
+import InputScanBarCode from "../Input/InputScanBarCode";
+import ScanBarCode from "../BarCode/ScanBarCode";
 export default function ProductData() {
+  const handleScan = () => {
+    setTriggleBarcode(true);
+  };
+  const [triggleBarcode, setTriggleBarcode] = useState(false);
   return (
     <div>
       <div className="mt-3">
@@ -40,7 +46,9 @@ export default function ProductData() {
               <label className="font-weight-bold">
                 รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
               </label>
-              <input type="text" className="as-input" required />
+              {/* <input type="text" className="as-input" required /> */}
+              <InputScanBarCode handleEvent={handleScan} />
+              {triggleBarcode && <ScanBarCode />}
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">หมายเลขรับประกัน</label>

@@ -10,7 +10,7 @@ export default function App() {
   console.log(useHistory);
   return (
     <div>
-      <Header />
+      {/* <Header /> */}
       <BrowserRouter>
         <Route exact path="/">
           <Home />
