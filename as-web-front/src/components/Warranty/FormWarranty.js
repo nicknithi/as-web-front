@@ -8,7 +8,6 @@ import { getProvince, setTempInput } from "../../actions/fetchAction";
 import ButtonMain from "../button/ButtonMain";
 import CostWarrantyDetail from "./CostWarrantyDetail";
 import WarrantyConfirm from "./WarrantyConfirm";
-
 function FormWarranty(prop) {
   let settings = {
     dots: true,
