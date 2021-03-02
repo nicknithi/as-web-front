@@ -3,20 +3,43 @@ import ButtonManageForm from "../button/ButtonManageForm";
 import UploadImage from "../Warranty/uploadImage";
 import InputScanBarCode from "../Input/InputScanBarCode";
 import ScanBarCode from "../BarCode/ScanBarCode";
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+
 export default function ProductData({
   handleChangInput,
   index,
   FormDataProduct,
   handleGetFileForm,
 }) {
+  const [startDate, setStartDate] = useState(new Date());
   const handleScan = () => {
     setTriggleBarcode(true);
   };
   const handleGetFile = (file, index) => {
     handleGetFileForm(file, index);
   };
+  const handleSetDateTime = (d, i) => {
+    console.log(d, i);
+    document.getElementById("Purchase_Date").value = formatDate(d);
+    document.getElementById("Purchase_Date").attributes.index.value = i;
+    handleChangInput(document.getElementById("Purchase_Date"));
+    setStartDate(d);
+  };
+  function formatDate(date) {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  }
+
   const [triggleBarcode, setTriggleBarcode] = useState(false);
-  console.log("test nick", FormDataProduct[index]);
   return (
     <div>
       <div className="mt-3">
@@ -29,6 +52,7 @@ export default function ProductData({
                 type="text"
                 className="as-input"
                 index={index}
+                defaultValue={"tesetsete nickets"}
                 name="Purchase_Province"
                 onChange={handleChangInput}
                 disabled={FormDataProduct[index].Purchase_Province}
@@ -39,14 +63,15 @@ export default function ProductData({
             <div className="col-md-6">
               <label className="font-weight-bold">วัน/เดือน/ปี ที่ซื้อ*</label>
               <input
-                type="text"
+                type="hidden"
                 index={index}
                 name="Purchase_Date"
-                onChange={handleChangInput}
-                disabled={FormDataProduct[index].Purchase_Date}
-                value={FormDataProduct[index].Purchase_Date}
-                className="as-input"
-                required
+                id="Purchase_Date"
+                value=""
+              />
+              <DatePicker
+                selected={startDate}
+                onChange={(date) => handleSetDateTime(date, index)}
               />
             </div>
           </div>
@@ -101,7 +126,11 @@ export default function ProductData({
                 รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
               </label>
               {/* <input type="text" className="as-input" required /> */}
-              <InputScanBarCode handleEvent={handleChangInput} index={index} />
+              <InputScanBarCode
+                handleEvent={handleChangInput}
+                handleScan={handleScan}
+                index={index}
+              />
               {triggleBarcode && <ScanBarCode />}
             </div>
             <div className="col-md-6">

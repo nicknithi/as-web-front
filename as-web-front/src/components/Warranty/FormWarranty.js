@@ -137,17 +137,18 @@ function FormWarranty(prop) {
     }
   };
   const handleInputProduct = (e) => {
-    console.log(parseInt(e.target.attributes.index.value));
-    console.log(FormDataProduct);
     if (e.target) {
       FormDataProduct[parseInt(e.target.attributes.index.value)][
         e.target.name
       ] = e.target.value;
-      console.log(e.target.value, e.target.name);
+      console.log(
+        e.target.attributes.index.value,
+        e.target.value,
+        e.target.name
+      );
     } else {
-      FormDataProduct[parseInt(e.target.attributes.index.value)][e.name] =
-        e.value;
-      console.log(e.value, e.name);
+      FormDataProduct[parseInt(e.attributes.index.value)][e.name] = e.value;
+      console.log(e.attributes.index.value, e.value, e.name);
     }
   };
   const uiProductForm = () => {
@@ -235,36 +236,36 @@ function FormWarranty(prop) {
     dataFromLast.forEach((item, index) => {
       let FormLastData = new FormData();
       FormLastData.append("files", FileWaranty[index]);
-      let mockData = {
-        Barcode_Number: "1",
-        Customer_Address: "asdf",
-        Customer_Code: "testets",
-        Customer_District: 2,
-        Customer_Email: "asdf",
-        Customer_Firstname: "asdf",
-        Customer_Lastname: "asdf",
-        Customer_Latitude: "15.881484007073663",
-        Customer_Longtitude: "100.96422355404475",
-        Customer_Mobile: "asdf",
-        Customer_Province: 1,
-        Customer_SubDistrict: 1,
-        Customer_Tel: "asdf",
-        Customer_ZipCode: "asdf",
-        Description: "11",
-        Model_ID: 1,
-        Product_Code_Other: "1",
-        Product_ID: 11,
-        Purchase_Date: "1",
-        Purchase_Province: 1,
-        QTY: 1,
-        Receipt_Number: "1",
-        Score: 3,
-        Store_ID: 1,
-        Store_Name_Other: "1",
-        Type_ID: 11,
-        Warranty_Number: "1",
-      };
-      FormLastData.append("datas", JSON.stringify(mockData));
+      // let mockData = {
+      //   Barcode_Number: "1",
+      //   Customer_Address: "asdf",
+      //   Customer_Code: "testets",
+      //   Customer_District: 2,
+      //   Customer_Email: "asdf",
+      //   Customer_Firstname: "asdf",
+      //   Customer_Lastname: "asdf",
+      //   Customer_Latitude: "15.881484007073663",
+      //   Customer_Longtitude: "100.96422355404475",
+      //   Customer_Mobile: "asdf",
+      //   Customer_Province: 1,
+      //   Customer_SubDistrict: 1,
+      //   Customer_Tel: "asdf",
+      //   Customer_ZipCode: "asdf",
+      //   Description: "11",
+      //   Model_ID: 1,
+      //   Product_Code_Other: "1",
+      //   Product_ID: 11,
+      //   Purchase_Date: "1",
+      //   Purchase_Province: 1,
+      //   QTY: 1,
+      //   Receipt_Number: "1",
+      //   Score: 3,
+      //   Store_ID: 1,
+      //   Store_Name_Other: "1",
+      //   Type_ID: 11,
+      //   Warranty_Number: "1",
+      // };
+      FormLastData.append("datas", JSON.stringify(FormLastData));
       axios
         .post(
           "http://119.59.117.57/API/api/Warranty/AddDataWarranty",
@@ -287,7 +288,7 @@ function FormWarranty(prop) {
   console.log(prop.data);
   return (
     <div>
-      <button onClick={test}>test</button>
+      {/* <button onClick={test}>test</button> */}
       <div className="form-warranty">
         <CostWarrantyDetail />
         <WarrantyConfirm

@@ -3,7 +3,7 @@ const initialState = {
   district: [],
   subdistrict: [],
   isError: false,
-  temp_data_input_warranty: {},
+  temp_data_input_warranty: [],
 };
 
 const asyncReducer = (state = initialState, action) => {

@@ -7,6 +7,7 @@ import Home from "./layouts/Home";
 import Login from "./layouts/Login";
 import Forgotpassowrd from "./layouts/Forgotpassowrd";
 import TestApi from "./components/testApi";
+import FormComfirm from "./components/Warranty/FormComfirm";
 export default function App() {
   console.log(useHistory);
   return (
@@ -27,6 +28,9 @@ export default function App() {
         </Route>
         <Route exact path="/testApi">
           <TestApi />
+        </Route>
+        <Route exact path="/warranty/confirm">
+          <FormComfirm />
         </Route>
       </BrowserRouter>
       <Footer />

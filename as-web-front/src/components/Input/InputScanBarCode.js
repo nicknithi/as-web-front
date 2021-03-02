@@ -1,9 +1,6 @@
 import React from "react";
 
-export default function InputScanBarCode({ handleEvent, index }) {
-  const handleScan = () => {
-    handleEvent();
-  };
+export default function InputScanBarCode({ handleEvent, handleScan, index }) {
   const manualInput = (e) => {
     handleEvent(e);
   };
