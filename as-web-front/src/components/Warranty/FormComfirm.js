@@ -1,6 +1,7 @@
 import React from "react";
-
-export default function FormComfirm() {
+import { connect } from "react-redux";
+function FormComfirm(props) {
+  console.log(props.data.DataDropdownReducer.temp_data_input_warranty);
   return (
     <div>
       <h3>การลงทะเบียนสินค้า</h3>
@@ -51,3 +52,9 @@ export default function FormComfirm() {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  };
+};
+export default connect(mapStateToProps)(FormComfirm);

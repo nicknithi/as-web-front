@@ -11,7 +11,9 @@ import WarrantyConfirm from "./WarrantyConfirm";
 import ButtonManageForm from "../button/ButtonManageForm";
 import http from "../../axios";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 function FormWarranty(prop) {
+  const history = useHistory();
   //let formtest = new FormData()
   const [Province, setProvince] = useState([]);
   const [District, setDistrict] = useState([]);
@@ -47,9 +49,7 @@ function FormWarranty(prop) {
       .catch((e) => {});
   }, []);
   const test = () => {
-    console.log("GetProvince", Province);
-    console.log("GetDistrict", District);
-    console.log("GetSubDistrict", SubDistrict);
+    history.push("/");
   };
   const handleGetFile = (file, index) => {
     FileWaranty[index] = file;
@@ -233,53 +233,26 @@ function FormWarranty(prop) {
 
       return { ...item, ...FormDataWarranty };
     });
-    dataFromLast.forEach((item, index) => {
-      let FormLastData = new FormData();
-      FormLastData.append("files", FileWaranty[index]);
-      // let mockData = {
-      //   Barcode_Number: "1",
-      //   Customer_Address: "asdf",
-      //   Customer_Code: "testets",
-      //   Customer_District: 2,
-      //   Customer_Email: "asdf",
-      //   Customer_Firstname: "asdf",
-      //   Customer_Lastname: "asdf",
-      //   Customer_Latitude: "15.881484007073663",
-      //   Customer_Longtitude: "100.96422355404475",
-      //   Customer_Mobile: "asdf",
-      //   Customer_Province: 1,
-      //   Customer_SubDistrict: 1,
-      //   Customer_Tel: "asdf",
-      //   Customer_ZipCode: "asdf",
-      //   Description: "11",
-      //   Model_ID: 1,
-      //   Product_Code_Other: "1",
-      //   Product_ID: 11,
-      //   Purchase_Date: "1",
-      //   Purchase_Province: 1,
-      //   QTY: 1,
-      //   Receipt_Number: "1",
-      //   Score: 3,
-      //   Store_ID: 1,
-      //   Store_Name_Other: "1",
-      //   Type_ID: 11,
-      //   Warranty_Number: "1",
-      // };
-      FormLastData.append("datas", JSON.stringify(FormLastData));
-      axios
-        .post(
-          "http://119.59.117.57/API/api/Warranty/AddDataWarranty",
-          FormLastData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        });
-    });
+    prop.dispatch(setTempInput({ datas: dataFromLast, files: FileWaranty }));
+    history.push("/warranty/confirm");
+    // dataFromLast.forEach((item, index) => {
+    //   let FormLastData = new FormData();
+    //   FormLastData.append("files", FileWaranty[index]);
+    //   FormLastData.append("datas", JSON.stringify(FormLastData));
+    //   axios
+    //     .post(
+    //       "http://119.59.117.57/API/api/Warranty/AddDataWarranty",
+    //       FormLastData,
+    //       {
+    //         headers: {
+    //           "Content-Type": "multipart/form-data",
+    //         },
+    //       }
+    //     )
+    //     .then((res) => {
+    //       console.log(res);
+    //     });
+    // });
     console.log("last", dataFromLast);
   };
   useEffect(() => {
@@ -288,7 +261,7 @@ function FormWarranty(prop) {
   console.log(prop.data);
   return (
     <div>
-      {/* <button onClick={test}>test</button> */}
+      <button onClick={test}>test</button>
       <div className="form-warranty">
         <CostWarrantyDetail />
         <WarrantyConfirm

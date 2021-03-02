@@ -8,12 +8,13 @@ import Login from "./layouts/Login";
 import Forgotpassowrd from "./layouts/Forgotpassowrd";
 import TestApi from "./components/testApi";
 import FormComfirm from "./components/Warranty/FormComfirm";
+import history from "./history";
 export default function App() {
   console.log(useHistory);
   return (
     <div>
       {/* <Header /> */}
-      <BrowserRouter>
+      <BrowserRouter history={history}>
         <Route exact path="/">
           <Home />
         </Route>
