@@ -6,12 +6,15 @@ import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import Home from "./layouts/Home";
 import Login from "./layouts/Login";
 import Forgotpassowrd from "./layouts/Forgotpassowrd";
+import TestApi from "./components/testApi";
+import FormComfirm from "./components/Warranty/FormComfirm";
+import history from "./history";
 export default function App() {
   console.log(useHistory);
   return (
     <div>
-      {/* <Header /> */}
-      <BrowserRouter>
+      <Header />
+      <BrowserRouter history={history}>
         <Route exact path="/">
           <Home />
         </Route>
@@ -23,6 +26,12 @@ export default function App() {
         </Route>
         <Route exact path="/forgotpassowrd">
           <Forgotpassowrd />
+        </Route>
+        <Route exact path="/testApi">
+          <TestApi />
+        </Route>
+        <Route exact path="/warranty/confirm">
+          <FormComfirm />
         </Route>
       </BrowserRouter>
       <Footer />

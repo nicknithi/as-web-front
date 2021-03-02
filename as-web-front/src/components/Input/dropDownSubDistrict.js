@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function DropDownDistrict({ data, handleEvent }) {
+export default function DropDownSubDistrict({ data, handleEvent }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     setTitleState(
-      data.find((a) => a.id === parseInt(e.target.value)).district_Name
+      data.find((a) => a.id === parseInt(e.target.value)).sub_District_Name
     );
     handleEvent(e);
   };
@@ -13,14 +13,14 @@ export default function DropDownDistrict({ data, handleEvent }) {
       <input type="hidden" id="district" value="" />
       <select
         className="form-select position-absolute w-100"
-        name="Customer_District"
+        name="Customer_SubDistrict"
         aria-label="Default select example"
         onChange={handleSelect}
       >
         <option selected>Open this select menu</option>
         {data.map((item, index) => (
           <option key={index} value={item.id}>
-            {item.district_Name}
+            {item.sub_District_Name}
           </option>
         ))}
       </select>

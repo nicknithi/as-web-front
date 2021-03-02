@@ -1,30 +1,42 @@
 import React from "react";
 
-export default function FormRate() {
+export default function FormRate({ handleChangInput }) {
+  const handleRate = (rate) => {
+    document.getElementById("Score").value = rate;
+    handleChangInput(document.getElementById("Score"));
+  };
+  const handleCommend = (e) => {
+    handleChangInput(e);
+  };
   return (
     <div className="rate-form mt-4 py-4">
+      <input type="hidden" name="Score" id="Score" />
       <div className="row">
         <div className="col-md-4 mx-auto">
           <h3 className="title">
             ประเมินความพึงพอใจต่อสินค้าอเมริกันสแตนดาร์ด
           </h3>
           <div className="d-flex justify-content-between">
-            <div className="emotion">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="25"
-                height="25"
-                fill="currentColor"
-                class="bi bi-emoji-angry"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zm6.991-8.38a.5.5 0 1 1 .448.894l-1.009.504c.176.27.285.64.285 1.049 0 .828-.448 1.5-1 1.5s-1-.672-1-1.5c0-.247.04-.48.11-.686a.502.502 0 0 1 .166-.761l2-1zm-6.552 0a.5.5 0 0 0-.448.894l1.009.504A1.94 1.94 0 0 0 5 6.5C5 7.328 5.448 8 6 8s1-.672 1-1.5c0-.247-.04-.48-.11-.686a.502.502 0 0 0-.166-.761l-2-1z" />
-              </svg>
-              <span className="motion-text ml-1">แย่</span>
+            <div onClick={() => handleRate(1)}>
+              <div className="emotion">
+                <svg
+                  rate="1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="currentColor"
+                  class="bi bi-emoji-angry"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                  <path d="M4.285 12.433a.5.5 0 0 0 .683-.183A3.498 3.498 0 0 1 8 10.5c1.295 0 2.426.703 3.032 1.75a.5.5 0 0 0 .866-.5A4.498 4.498 0 0 0 8 9.5a4.5 4.5 0 0 0-3.898 2.25.5.5 0 0 0 .183.683zm6.991-8.38a.5.5 0 1 1 .448.894l-1.009.504c.176.27.285.64.285 1.049 0 .828-.448 1.5-1 1.5s-1-.672-1-1.5c0-.247.04-.48.11-.686a.502.502 0 0 1 .166-.761l2-1zm-6.552 0a.5.5 0 0 0-.448.894l1.009.504A1.94 1.94 0 0 0 5 6.5C5 7.328 5.448 8 6 8s1-.672 1-1.5c0-.247-.04-.48-.11-.686a.502.502 0 0 0-.166-.761l-2-1z" />
+                </svg>
+                <span className="motion-text ml-1">แย่</span>
+              </div>
             </div>
-            <div className="emotion">
+            <div className="emotion" onClick={() => handleRate(2)}>
               <svg
+                rate="2"
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
@@ -37,8 +49,9 @@ export default function FormRate() {
               </svg>
               <span className="motion-text ml-1">ควรปรับปรุง</span>
             </div>
-            <div className="emotion">
+            <div className="emotion" onClick={() => handleRate(3)}>
               <svg
+                rate="3"
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
@@ -51,8 +64,9 @@ export default function FormRate() {
               </svg>
               <span className="motion-text ml-1">พอใช้</span>
             </div>
-            <div className="emotion">
+            <div className="emotion" onClick={() => handleRate(4)}>
               <svg
+                rate="4"
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
@@ -65,8 +79,9 @@ export default function FormRate() {
               </svg>
               <span className="motion-text ml-1">ดี</span>
             </div>
-            <div className="emotion">
+            <div className="emotion" onClick={() => handleRate(5)}>
               <svg
+                rate="5"
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
@@ -85,7 +100,9 @@ export default function FormRate() {
       <div className="row">
         <div className="col-md-4 mx-auto">
           <textarea
+            onChange={handleCommend}
             className="w-100 mt-3"
+            name="Description"
             placeholder={"ข้อเสนอแนะ.........."}
           ></textarea>
         </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/scss/warranty.scss";
-import ButtonConfirmWarranty from "../button/ButtonConfirmWarranty";
+import ButtonConfirmWarranty from "../button/WarrantyConfirm";
 import InputCheckBox from "../Input/inputCheckBox";
 export default function WarrantyConfirm({ title, description }) {
   return (

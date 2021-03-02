@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
-class googleMap extends Component {
+class googleMapDisabled extends Component {
   state = {
     showingInfoWindow: false,
     activeMarker: {},
@@ -14,26 +14,6 @@ class googleMap extends Component {
       activeMarker: marker,
       showingInfoWindow: true,
     });
-
-  onMapClicked = (mapProps, map, clickEvent) => {
-    //if (this.state.showingInfoWindow) {
-    this.setState({
-      showingInfoWindow: false,
-      activeMarker: null,
-      position: {
-        lat: clickEvent.latLng.lat(),
-        lng: clickEvent.latLng.lng(),
-      },
-    });
-    document.getElementById(
-      "Customer_Latitude"
-    ).value = clickEvent.latLng.lat();
-    this.props.handleMap(document.getElementById("Customer_Latitude"));
-    document.getElementById(
-      "Customer_Longtitude"
-    ).value = clickEvent.latLng.lng();
-    this.props.handleMap(document.getElementById("Customer_Longtitude"));
-  };
   render() {
     return (
       <div
@@ -79,4 +59,4 @@ class googleMap extends Component {
 export default GoogleApiWrapper({
   apiKey: "AIzaSyCFU_U1T37xH_Xm4-FJ-EJslB8gTUyMizQ",
   language: "TH",
-})(googleMap);
+})(googleMapDisabled);
