@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function dropDown({ data, handleEvent }) {
+export default function DropDown({ data, handleEvent }) {
+  const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
+    setTitleState(
+      data.find((a) => a.id === parseInt(e.target.value)).province_Name
+    );
     handleEvent(e);
   };
+
   return (
     <div className="position-relative as-dropdown">
       <select
@@ -14,13 +19,13 @@ export default function dropDown({ data, handleEvent }) {
       >
         <option selected>Open this select menu</option>
         {data.map((item, index) => (
-          <option key={index} value={item.id}>
+          <option key={index} value={item.id} titleSet={item.province_Name}>
             {item.province_Name}
           </option>
         ))}
       </select>
       <div className="custom-dropdown">
-        {"test"}
+        {title}
         <div className="button-select">
           <div className="squre" />
         </div>

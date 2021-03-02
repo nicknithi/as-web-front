@@ -7,9 +7,8 @@ export default function Default() {
   return (
     <div>
       <BannerCover />
-      <div className="container">
+      <div className="container pb-4">
         <FormWarranty />
-        <RecheckFormWarranty />
       </div>
     </div>
   );

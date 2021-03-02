@@ -52,7 +52,7 @@ export default function ProductData({
                 type="text"
                 className="as-input"
                 index={index}
-                defaultValue={"tesetsete nickets"}
+                // defaultValue={"tesetsete nickets"}
                 name="Purchase_Province"
                 onChange={handleChangInput}
                 disabled={FormDataProduct[index].Purchase_Province}
@@ -69,10 +69,12 @@ export default function ProductData({
                 id="Purchase_Date"
                 value=""
               />
-              <DatePicker
-                selected={startDate}
-                onChange={(date) => handleSetDateTime(date, index)}
-              />
+              <div className="row pl-3">
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => handleSetDateTime(date, index)}
+                />
+              </div>
             </div>
           </div>
           <div className="row">
