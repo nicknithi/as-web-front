@@ -1,9 +1,12 @@
 import React from "react";
 import "../../assets/scss/components/button/warranty-confirm.scss";
-export default function ButtonConfirmWarranty({ title }) {
+export default function ButtonConfirmWarranty({ title, uploadImg, index }) {
+  const handleSelectFile = (e) => {
+    uploadImg(e.target.files[0], parseInt(e.target.attributes.index.value));
+  };
   return (
     <div className="button-confirm-warranty text-center">
-      <button>{title}</button>
+      <input type="file" index={index} onChange={handleSelectFile} />
     </div>
   );
 }

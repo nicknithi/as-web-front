@@ -3,11 +3,20 @@ import ButtonManageForm from "../button/ButtonManageForm";
 import UploadImage from "../Warranty/uploadImage";
 import InputScanBarCode from "../Input/InputScanBarCode";
 import ScanBarCode from "../BarCode/ScanBarCode";
-export default function ProductData({ handleChangInput, index }) {
+export default function ProductData({
+  handleChangInput,
+  index,
+  FormDataProduct,
+  handleGetFileForm,
+}) {
   const handleScan = () => {
     setTriggleBarcode(true);
   };
+  const handleGetFile = (file, index) => {
+    handleGetFileForm(file, index);
+  };
   const [triggleBarcode, setTriggleBarcode] = useState(false);
+  console.log("test nick", FormDataProduct[index]);
   return (
     <div>
       <div className="mt-3">
@@ -22,6 +31,8 @@ export default function ProductData({ handleChangInput, index }) {
                 index={index}
                 name="Purchase_Province"
                 onChange={handleChangInput}
+                disabled={FormDataProduct[index].Purchase_Province}
+                value={FormDataProduct[index].Purchase_Province}
                 required
               />
             </div>
@@ -30,8 +41,10 @@ export default function ProductData({ handleChangInput, index }) {
               <input
                 type="text"
                 index={index}
-                name="Purchase_Date "
+                name="Purchase_Date"
                 onChange={handleChangInput}
+                disabled={FormDataProduct[index].Purchase_Date}
+                value={FormDataProduct[index].Purchase_Date}
                 className="as-input"
                 required
               />
@@ -45,6 +58,8 @@ export default function ProductData({ handleChangInput, index }) {
                 index={index}
                 name="Store_ID"
                 onChange={handleChangInput}
+                disabled={FormDataProduct[index].Store_ID}
+                value={FormDataProduct[index].Store_ID}
                 className="as-input"
                 required
               />
@@ -59,6 +74,8 @@ export default function ProductData({ handleChangInput, index }) {
                 index={index}
                 name="Store_Name_Other"
                 onChange={handleChangInput}
+                disabled={FormDataProduct[index].Store_Name_Other}
+                value={FormDataProduct[index].Store_Name_Other}
                 required
               />
             </div>
@@ -72,6 +89,8 @@ export default function ProductData({ handleChangInput, index }) {
                 index={index}
                 name="Receipt_Number"
                 onChange={handleChangInput}
+                disabled={FormDataProduct[index].Receipt_Number}
+                value={FormDataProduct[index].Receipt_Number}
                 required
               />
             </div>
@@ -82,7 +101,7 @@ export default function ProductData({ handleChangInput, index }) {
                 รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
               </label>
               {/* <input type="text" className="as-input" required /> */}
-              <InputScanBarCode handleEvent={handleScan} />
+              <InputScanBarCode handleEvent={handleChangInput} index={index} />
               {triggleBarcode && <ScanBarCode />}
             </div>
             <div className="col-md-6">
@@ -159,7 +178,7 @@ export default function ProductData({ handleChangInput, index }) {
             </div>
           </div>
           <div className="row mt-4">
-            <UploadImage />
+            <UploadImage handleGetFile={handleGetFile} index={index} />
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function dropDownDistrict({ data, handleEvent }) {
+export default function dropDownSubDistrict({ data, handleEvent }) {
   const handleSelect = (e) => {
     handleEvent(e);
   };
@@ -9,14 +9,14 @@ export default function dropDownDistrict({ data, handleEvent }) {
       <input type="hidden" id="district" value="" />
       <select
         className="form-select position-absolute w-100"
-        name="Customer_District"
+        name="Customer_SubDistrict"
         aria-label="Default select example"
         onChange={handleSelect}
       >
         <option selected>Open this select menu</option>
         {data.map((item, index) => (
           <option key={index} value={item.id}>
-            {item.district_Name}
+            {item.sub_District_Name}
           </option>
         ))}
       </select>

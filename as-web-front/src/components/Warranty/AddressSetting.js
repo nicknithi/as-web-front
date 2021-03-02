@@ -3,15 +3,27 @@ import { connect } from "react-redux";
 import GoogleMap from "../map/googleMap";
 import DropDownProvince from "../Input/dropDownProvince";
 import DropDownDistrict from "../Input/dropDownDistrict";
+import DropDownSubDistrict from "../Input/dropDownSubDistrict";
 import { getDistrict, setTempInput } from "../../actions/fetchAction";
-function AddressSetting({ dataObject, handleChangInput, dispatch }) {
-  console.log(dataObject);
-  const handleFetchGetDistrict = (e) => {
+function AddressSetting({
+  handleChangInput,
+  dispatch,
+  Province,
+  District,
+  SubDistrict,
+}) {
+  const handleProvince = (e) => {
     handleChangInput(e);
   };
-  const handleFetchGetSubDistrict = (district_id) => {
-    dispatch(setTempInput({ district: district_id }));
+  const handleDistrict = (e) => {
+    handleChangInput(e);
   };
+  const handleSubDistrict = (e) => {
+    handleChangInput(e);
+  };
+  // const handleFetchGetSubDistrict = (district_id) => {
+  //   dispatch(setTempInput({ district: district_id }));
+  // };
   const handleMap = (e) => {
     handleChangInput(e);
   };
@@ -36,20 +48,21 @@ function AddressSetting({ dataObject, handleChangInput, dispatch }) {
         <div className="row">
           <div className="col-md-6">
             <label className="font-weight-bold">จังหวัด*</label>
-            <DropDownProvince
-              data={dataObject.province}
-              handleEvent={handleFetchGetDistrict}
-            />
+            <DropDownProvince data={Province} handleEvent={handleProvince} />
           </div>
           <div className="col-md-6">
             <label className="font-weight-bold">อำเภอ/เขต*</label>
-            <DropDownDistrict
-              data={dataObject.district}
-              handleEvent={handleFetchGetSubDistrict}
-            />
+            <DropDownDistrict data={District} handleEvent={handleDistrict} />
           </div>
         </div>
         <div className="row">
+          <div className="col-md-6">
+            <label className="font-weight-bold">ตำบล*</label>
+            <DropDownSubDistrict
+              data={SubDistrict}
+              handleEvent={handleSubDistrict}
+            />
+          </div>
           <div className="col-md-6">
             <label className="font-weight-bold">รหัสไปรษณีย์*</label>
             <input
