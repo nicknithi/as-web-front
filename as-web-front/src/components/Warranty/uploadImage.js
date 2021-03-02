@@ -1,6 +1,6 @@
 import React from "react";
 import "../../assets/scss/components/uploadImg.scss";
-import ButtonConfirmWarranty from "../button/ButtonConfirmWarranty";
+import ButtonUpload from "../button/ButtonUpload";
 export default function uploadImage({ handleGetFile, index }) {
   const uploadImg = (file, index) => {
     handleGetFile(file, index);
@@ -22,14 +22,14 @@ export default function uploadImage({ handleGetFile, index }) {
       </div>
       <div className="button d-flex justify-content-center mt-3">
         <div className="mr-3">
-          <ButtonConfirmWarranty
+          <ButtonUpload
             title={"อัพโหลดภาพ"}
             uploadImg={uploadImg}
             index={index}
           />
         </div>
         <div>
-          <ButtonConfirmWarranty title={"ถ่ายภาพ"} />
+          <ButtonUpload uploadImg={uploadImg} index={index} title={"ถ่ายภาพ"} />
         </div>
       </div>
     </div>

@@ -261,7 +261,7 @@ function FormWarranty(prop) {
   console.log(prop.data);
   return (
     <div>
-      <button onClick={test}>test</button>
+      {/* <button onClick={test}>test</button> */}
       <div className="form-warranty">
         <CostWarrantyDetail />
         <WarrantyConfirm

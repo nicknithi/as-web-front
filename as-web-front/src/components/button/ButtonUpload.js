@@ -1,6 +1,6 @@
 import React from "react";
-import "../../assets/scss/components/button/warranty-confirm.scss";
-export default function ButtonConfirmWarranty({ title, uploadImg, index }) {
+import "../../assets/scss/components/button/button-upload.scss";
+export default function ButtonUpload({ title, uploadImg, index }) {
   const handleSelectFile = (e) => {
     uploadImg(e.target.files[0], parseInt(e.target.attributes.index.value));
   };

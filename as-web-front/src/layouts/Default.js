@@ -6,8 +6,8 @@ import BannerCover from "../components/Banner/BannerCover";
 export default function Default() {
   return (
     <div>
-      {/* <BannerCover /> */}
-      <div className="site-content">
+      <BannerCover />
+      <div className="container">
         <FormWarranty />
         <RecheckFormWarranty />
       </div>
