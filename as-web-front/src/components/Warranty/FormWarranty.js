@@ -12,7 +12,9 @@ import WarrantyConfirm from "./WarrantyConfirm";
 import ButtonManageForm from "../button/ButtonManageForm";
 import http from "../../axios";
 import axios from "axios";
+import dataMockD from "../../dataMock";
 import { useHistory } from "react-router-dom";
+import cloneDeep from "lodash.clonedeep";
 function FormWarranty(prop) {
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
   //let formtest = new FormData()
@@ -22,6 +24,8 @@ function FormWarranty(prop) {
   const [FileWaranty, setFileWaranty] = useState([]);
   const [checkData, setCheckData] = useState(false);
   const [FormInput, setFormInput] = useState(true);
+  const [ProvinceC, setProvinceC] = useState("");
+  const [DataForComfirm, setDataForComfirm] = useState([]);
   useEffect(() => {
     //GetProvince
     http
@@ -176,9 +180,9 @@ function FormWarranty(prop) {
     setFormInput(!FormInput);
     setCheckData(!checkData);
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let dataFromLast = FormDataProduct.map((item, index) => {
+    let dataFromLast = await FormDataProduct.map((item, index) => {
       console.log(item.Customer_Province, item);
       FormDataWarranty.Customer_Province = parseInt(
         FormDataWarranty.Customer_Province
@@ -190,8 +194,7 @@ function FormWarranty(prop) {
         FormDataWarranty.Customer_SubDistrict
       );
       FormDataWarranty.Score = parseInt(FormDataWarranty.Score);
-      //fix customer_code
-      FormDataWarranty.Customer_Code = "testets";
+
       item.Purchase_Province = parseInt(item.Purchase_Province);
       console.log(item);
       item.Store_ID = parseInt(item.Store_ID);
@@ -202,35 +205,87 @@ function FormWarranty(prop) {
 
       return { ...item, ...FormDataWarranty };
     });
-    setLastDataComToConfirm(dataFromLast);
+    setLastDataComToConfirm(cloneDeep(dataFromLast));
+    console.log("dataFromLast2131", dataFromLast);
+    // fix data show for form confirm
+    // const dataLoop = dataFromLast;
+    // const dataShow = dataLoop.map((item, index) => {
+    //   item.Customer_Province = Province.find(
+    //     (p) => p.id === item.Customer_Province
+    //   ).province_Name;
+
+    //   item.Customer_District = District.find(
+    //     (d) => d.id === item.Customer_District
+    //   ).district_Name;
+    //   item.Customer_SubDistrict = SubDistrict.find(
+    //     (d) => d.id === item.Customer_SubDistrict
+    //   ).sub_District_Name;
+    //   item.Purchase_Province = dataMockD.Purchase_Province.find(
+    //     (d) => d.id === item.Purchase_Province
+    //   ).value;
+    //   item.Store_ID = dataMockD.Store_ID.find(
+    //     (d) => d.id === item.Store_ID
+    //   ).value;
+    //   item.Type_ID = dataMockD.Type_ID.find((d) => d.id === item.Type_ID).value;
+    //   item.Product_ID = dataMockD.Product_ID.find(
+    //     (d) => d.id === item.Product_ID
+    //   ).value;
+    //   item.Model_ID = dataMockD.Model_ID.find(
+    //     (d) => d.id === item.Model_ID
+    //   ).value;
+    //   return item;
+    // });
+    // setDataForComfirm(dataShow);
     setFormInput(!FormInput);
     setCheckData(!checkData);
-    // prop.dispatch(setTempInput({ datas: dataFromLast, files: FileWaranty }));
-    // history.push("/warranty/confirm");
-    // dataFromLast.forEach((item, index) => {
-    //   let FormLastData = new FormData();
-    //   FormLastData.append("files", FileWaranty[index]);
-    //   FormLastData.append("datas", JSON.stringify(FormLastData));
-    //   axios
-    //     .post(
-    //       "http://119.59.117.57/API/api/Warranty/AddDataWarranty",
-    //       FormLastData,
-    //       {
-    //         headers: {
-    //           "Content-Type": "multipart/form-data",
-    //         },
-    //       }
-    //     )
-    //     .then((res) => {
-    //       console.log(res);
-    //     });
-    // });
-    console.log("last", dataFromLast);
+  };
+  const handleLastSubmit = () => {
+    console.log("LastDataComToConfirm", LastDataComToConfirm);
+    LastDataComToConfirm.forEach((items, index) => {
+      let FormLastData = new FormData();
+      FormLastData.append("files", FileWaranty[index]);
+      FormLastData.append("datas", JSON.stringify(items));
+      axios
+        .post(
+          "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",
+          FormLastData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    });
+  };
+  const handleGetMemberData = (code) => {
+    http
+      .post(`/api/Customer/GetDataCustomerByCode?Customer_Code=${code}`)
+      .then((res) => {
+        if (res.data.message == "Success!") {
+          console.log("res1", res);
+          const data = res.data.data;
+          FormDataWarranty.Customer_Firstname = data.customer_Name;
+          FormDataWarranty.Customer_Lastname = data.customer_Surname;
+          FormDataWarranty.Customer_Tel = data.customer_Tel;
+          FormDataWarranty.Customer_Mobile = data.customer_Phone;
+          FormDataWarranty.Customer_Email = data.customer_Email;
+          setFormDataWarranty(FormDataWarranty);
+        }
+      });
   };
   const deleteFormProduct = () => {};
-
+  const test = () => {
+    setProvinceC(
+      Province.find((p) => p.id === LastDataComToConfirm[0].Customer_Province)
+        .province_Name
+    );
+  };
   return (
     <div>
+      {/* <button onClick={test}>teste</button> */}
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
         <CostWarrantyDetail />
         <WarrantyConfirm
@@ -239,7 +294,11 @@ function FormWarranty(prop) {
             "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
           }
         />
-        <MemberData handleChangInput={handleChangInput} />
+        <MemberData
+          handleChangInput={handleChangInput}
+          handleGetMemberData={handleGetMemberData}
+          defultData={FormDataWarranty}
+        />
         <form onSubmit={handleSubmit}>
           <AddressSetting
             Province={Province}
@@ -269,10 +328,16 @@ function FormWarranty(prop) {
         <div>
           <FormComfirm
             DataComfirm={{ datas: LastDataComToConfirm, files: FileWaranty }}
+            ProvinceC={ProvinceC}
           />
           <div className="d-flex justify-content-center mt-3 mb-4">
             <div className="mr-4">
-              <ButtonMain title="ยืนยัน" color="#636363" BgColor="#ffaa29" />
+              <ButtonMain
+                title="ยืนยัน"
+                color="#636363"
+                BgColor="#ffaa29"
+                handleClick={handleLastSubmit}
+              />
             </div>
             <div>
               <ButtonMain

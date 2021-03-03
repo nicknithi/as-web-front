@@ -1,40 +1,18 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import BannerCover from "../../components/Banner/BannerCover";
 import GoogleMapDisabled from "../map/googleMapDisabled";
 import ButtonMain from "../button/ButtonMain";
 import "../../assets/scss/form-comfirm.scss";
-import axios from "axios";
 
 function FormComfirm(props) {
   console.log("testdata", props.DataComfirm);
   const dataSet = props.DataComfirm;
-  // const handleClickSubmit = () => {
-  //   if (dataSet) {
-  //     dataSet.datas.forEach((items, index) => {
-  //       console.log(items);
-  //       let FormLastData = new FormData();
-  //       FormLastData.append("files", dataSet.files[index]);
-  //       FormLastData.append("datas", JSON.stringify(items));
-  //       axios
-  //         .post(
-  //           "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",
-  //           FormLastData,
-  //           {
-  //             headers: {
-  //               "Content-Type": "multipart/form-data",
-  //             },
-  //           }
-  //         )
-  //         .then((res) => {
-  //           console.log(res);
-  //         });
-  //     });
-  //   }
-  // };
+  console.log("dataSet", dataSet);
 
   return (
     <div className="form-comfirm">
+      {props.ProvinceC}
       <div className="container">
         <h1 className="mt-3">การลงทะเบียนสินค้า</h1>
         <div className="mb-4">
@@ -59,8 +37,11 @@ function FormComfirm(props) {
           <h2>ที่อยู่การติดตั้ง</h2>
           <div className="address-section p-4">
             <div className="mb-3">
-              ที่อยู่การติดตั้งสินค้า :{" "}
-              {dataSet.datas[0].Customer_Address || ""}
+              ที่อยู่การติดตั้งสินค้า : {dataSet.datas[0].Customer_Address}{" "}
+              {dataSet.datas[0].Customer_Province}{" "}
+              {dataSet.datas[0].Customer_District}{" "}
+              {dataSet.datas[0].Customer_SubDistrict}{" "}
+              {dataSet.datas[0].Customer_ZipCode}
             </div>
             <GoogleMapDisabled
               lat={dataSet.datas[0].Customer_Latitude}

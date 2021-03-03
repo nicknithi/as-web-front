@@ -10,6 +10,7 @@
     "bootstrap": "^4.6.0",
     "google-map-react": "^2.1.9",
     "google-maps-react": "^2.0.6",
+    "lodash.clonedeep": "^4.5.0",
     "lodash.isempty": "^4.4.0",
     "pure-react-carousel": "^1.27.6",
     "react": "^17.0.1",

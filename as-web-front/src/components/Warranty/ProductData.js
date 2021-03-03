@@ -44,6 +44,7 @@ export default function ProductData({
   }
 
   const [triggleBarcode, setTriggleBarcode] = useState(false);
+
   return (
     <div>
       <div className="mt-3">
