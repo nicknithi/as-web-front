@@ -14,7 +14,7 @@ import http from "../../axios";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 function FormWarranty(prop) {
-  const history = useHistory();
+  const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
   //let formtest = new FormData()
   const [Province, setProvince] = useState([]);
   const [District, setDistrict] = useState([]);
@@ -172,6 +172,10 @@ function FormWarranty(prop) {
 
     console.log(FormDataProduct);
   };
+  const handleEdit = () => {
+    setFormInput(!FormInput);
+    setCheckData(!checkData);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     let dataFromLast = FormDataProduct.map((item, index) => {
@@ -198,6 +202,7 @@ function FormWarranty(prop) {
 
       return { ...item, ...FormDataWarranty };
     });
+    setLastDataComToConfirm(dataFromLast);
     setFormInput(!FormInput);
     setCheckData(!checkData);
     // prop.dispatch(setTempInput({ datas: dataFromLast, files: FileWaranty }));
@@ -226,44 +231,63 @@ function FormWarranty(prop) {
 
   return (
     <div>
-      {FormInput && (
-        <div className="form-warranty">
-          <CostWarrantyDetail />
-          <WarrantyConfirm
-            title={"การลงทะเบียนรับประกันสินค้า"}
-            description={
-              "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
-            }
+      <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
+        <CostWarrantyDetail />
+        <WarrantyConfirm
+          title={"การลงทะเบียนรับประกันสินค้า"}
+          description={
+            "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
+          }
+        />
+        <MemberData handleChangInput={handleChangInput} />
+        <form onSubmit={handleSubmit}>
+          <AddressSetting
+            Province={Province}
+            District={District}
+            SubDistrict={SubDistrict}
+            handleChangInput={handleChangInput}
           />
-          <MemberData handleChangInput={handleChangInput} />
-          <form onSubmit={handleSubmit}>
-            <AddressSetting
-              Province={Province}
-              District={District}
-              SubDistrict={SubDistrict}
-              handleChangInput={handleChangInput}
-            />
-            {uiProductForm()}
-            <ButtonManageForm
-              addProductForm={addProductForm}
-              addStoreForm={addStoreForm}
-              deleteFormProduct={deleteFormProduct}
-            />
-            <FormRate handleChangInput={handleChangInput} />
-            <div className="row">
-              <div className="col-md-4 mx-auto text-center mt-4">
-                <ButtonMain
-                  title="ตรวจสอบข้อมูล"
-                  color="#636363"
-                  BgColor="#ffaa29"
-                />
-              </div>
+          {uiProductForm()}
+          <ButtonManageForm
+            addProductForm={addProductForm}
+            addStoreForm={addStoreForm}
+            deleteFormProduct={deleteFormProduct}
+          />
+          <FormRate handleChangInput={handleChangInput} />
+          <div className="row">
+            <div className="col-md-4 mx-auto text-center mt-4">
+              <ButtonMain
+                title="ตรวจสอบข้อมูล"
+                color="#636363"
+                BgColor="#ffaa29"
+              />
             </div>
-          </form>
+          </div>
+        </form>
+      </div>
+      {checkData && (
+        <div>
+          <FormComfirm
+            DataComfirm={{ datas: LastDataComToConfirm, files: FileWaranty }}
+          />
+          <div className="d-flex justify-content-center mt-3 mb-4">
+            <div className="mr-4">
+              <ButtonMain title="ยืนยัน" color="#636363" BgColor="#ffaa29" />
+            </div>
+            <div>
+              <ButtonMain
+                title="แก้ไขข้อมูล"
+                color="#636363"
+                BgColor="#4ea4cd"
+                handleClick={handleEdit}
+              />
+            </div>
+          </div>
+          <div className="text-center mt-3 mb-4">
+            <ButtonMain title="กลับ" color="#636363" BgColor="#ffaa29" />
+          </div>
         </div>
       )}
-
-      {checkData && <FormComfirm />}
     </div>
   );
 }
