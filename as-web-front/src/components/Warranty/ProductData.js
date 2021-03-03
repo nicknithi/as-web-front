@@ -4,9 +4,13 @@ import UploadImage from "../Warranty/uploadImage";
 import InputScanBarCode from "../Input/InputScanBarCode";
 import ScanBarCode from "../BarCode/ScanBarCode";
 import DatePicker from "react-datepicker";
-
+import DropDownPurchaseProvince from "../Input/dropDownPurchaseProvince";
+import DropDownStoreId from "../Input/dropDownStore_ID";
+import DropDownTypeId from "../Input/dropDownType_ID";
+import DropDownProductId from "../Input/dropDownProduct_ID";
+import DropDownModelId from "../Input/dropDownModel_ID";
 import "react-datepicker/dist/react-datepicker.css";
-
+import "../../assets/scss/components/input/dataPicker.scss";
 export default function ProductData({
   handleChangInput,
   index,
@@ -48,7 +52,7 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">จังหวัดที่ซื้อ*</label>
-              <input
+              {/* <input
                 type="text"
                 className="as-input"
                 index={index}
@@ -58,6 +62,10 @@ export default function ProductData({
                 disabled={FormDataProduct[index].Purchase_Province}
                 value={FormDataProduct[index].Purchase_Province}
                 required
+              /> */}
+              <DropDownPurchaseProvince
+                index={index}
+                handleEvent={handleChangInput}
               />
             </div>
             <div className="col-md-6">
@@ -69,7 +77,7 @@ export default function ProductData({
                 id="Purchase_Date"
                 value=""
               />
-              <div className="row pl-3">
+              <div className="row px-3 data-picker">
                 <DatePicker
                   selected={startDate}
                   onChange={(date) => handleSetDateTime(date, index)}
@@ -80,7 +88,7 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">ชื่อร้านตัวแทนจำหน่าย</label>
-              <input
+              {/* <input
                 type="textarea"
                 index={index}
                 name="Store_ID"
@@ -89,7 +97,8 @@ export default function ProductData({
                 value={FormDataProduct[index].Store_ID}
                 className="as-input"
                 required
-              />
+              /> */}
+              <DropDownStoreId index={index} handleEvent={handleChangInput} />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">
@@ -150,38 +159,41 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">ประเภทสินค้า*</label>
-              <input
+              {/* <input
                 type="text"
                 className="as-input"
                 index={index}
                 name="Type_ID"
                 onChange={handleChangInput}
                 required
-              />
+              /> */}
+              <DropDownTypeId index={index} handleEvent={handleChangInput} />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">รหัสสินค้า*</label>
-              <input
+              {/* <input
                 type="textarea"
                 className="as-input"
                 index={index}
                 name="Product_ID"
                 onChange={handleChangInput}
                 required
-              />
+              /> */}
+              <DropDownProductId index={index} handleEvent={handleChangInput} />
             </div>
           </div>
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">ชื่อรุ่น*</label>
-              <input
+              {/* <input
                 type="text"
                 className="as-input"
                 index={index}
                 name="Model_ID"
                 onChange={handleChangInput}
                 required
-              />
+              /> */}
+              <DropDownModelId index={index} handleEvent={handleChangInput} />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">รหัสสินค้า (อื่นๆ)</label>
@@ -199,7 +211,7 @@ export default function ProductData({
             <div className="col-md-6">
               <label className="font-weight-bold">จำนวนชิ้นที่ซื้อ</label>
               <input
-                type="text"
+                type="number"
                 index={index}
                 className="as-input"
                 name="QTY"

@@ -65,13 +65,17 @@ export default function testApi() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.append("datas", JSON.stringify(dataMock2));
+    formData.append("datas", JSON.stringify(dataMock));
     axios
-      .post("http://119.59.117.57/API/api/Warranty/AddDataWarranty", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
+      .post(
+        "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
       .then((res) => {
         console.log(res);
       });

@@ -5,8 +5,8 @@ class googleMapDisabled extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    position: { lat: 15.87, lng: 100.9925 },
-    center: { lat: 15.87, lng: 100.9925 },
+    position: { lat: this.props.lat, lng: this.props.lng },
+    center: { lat: this.props.lat, lng: this.props.lng },
   };
   onMarkerClick = (props, marker, e) =>
     this.setState({

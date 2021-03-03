@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import MemberData from "../Warranty/MemberData";
 import ProductData from "../Warranty/ProductData";
 import FormRate from "../Warranty/FormRate";
+import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
 import { getProvince, setTempInput } from "../../actions/fetchAction";
 import ButtonMain from "../button/ButtonMain";
@@ -19,7 +20,8 @@ function FormWarranty(prop) {
   const [District, setDistrict] = useState([]);
   const [SubDistrict, setSubDistrict] = useState([]);
   const [FileWaranty, setFileWaranty] = useState([]);
-
+  const [checkData, setCheckData] = useState(false);
+  const [FormInput, setFormInput] = useState(true);
   useEffect(() => {
     //GetProvince
     http
@@ -48,9 +50,6 @@ function FormWarranty(prop) {
       })
       .catch((e) => {});
   }, []);
-  const test = () => {
-    history.push("/");
-  };
   const handleGetFile = (file, index) => {
     FileWaranty[index] = file;
     setFileWaranty(FileWaranty);
@@ -90,40 +89,6 @@ function FormWarranty(prop) {
     Score: null,
     Description: null,
   });
-  // let FormDataProduct = [
-  //   {
-  //     Purchase_Province: null,
-  //     Purchase_Date: null,
-  //     Store_ID: null,
-  //     Store_Name_Other: null,
-  //     Receipt_Number: null,
-  //     Barcode_Number: null,
-  //     Warranty_Number: null,
-  //     Type_ID: null,
-  //     Product_ID: null,
-  //     Model_ID: null,
-  //     Product_Code_Other: null,
-  //     QTY: null,
-  //   },
-  // ];
-  // let FormDataWarranty = {
-  //   Customer_Code: null,
-  //   Customer_Firstname: null,
-  //   Customer_Lastname: null,
-  //   Customer_Tel: null,
-  //   Customer_Mobile: null,
-  //   Customer_Email: null,
-  //   Customer_Address: null,
-  //   Customer_Province: null,
-  //   Customer_District: null,
-  //   Customer_SubDistrict: null,
-  //   Customer_ZipCode: null,
-  //   Customer_Latitude: null,
-  //   Customer_Longtitude: null,
-
-  //   Score: null,
-  //   Description: null,
-  // };
 
   const handleChangInput = (e) => {
     if (e.target) {
@@ -233,8 +198,10 @@ function FormWarranty(prop) {
 
       return { ...item, ...FormDataWarranty };
     });
-    prop.dispatch(setTempInput({ datas: dataFromLast, files: FileWaranty }));
-    history.push("/warranty/confirm");
+    setFormInput(!FormInput);
+    setCheckData(!checkData);
+    // prop.dispatch(setTempInput({ datas: dataFromLast, files: FileWaranty }));
+    // history.push("/warranty/confirm");
     // dataFromLast.forEach((item, index) => {
     //   let FormLastData = new FormData();
     //   FormLastData.append("files", FileWaranty[index]);
@@ -255,46 +222,48 @@ function FormWarranty(prop) {
     // });
     console.log("last", dataFromLast);
   };
-  useEffect(() => {
-    prop.dispatch(getProvince());
-  }, []);
-  console.log(prop.data);
+  const deleteFormProduct = () => {};
+
   return (
     <div>
-      {/* <button onClick={test}>test</button> */}
-      <div className="form-warranty">
-        <CostWarrantyDetail />
-        <WarrantyConfirm
-          title={"การลงทะเบียนรับประกันสินค้า"}
-          description={
-            "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
-          }
-        />
-        <MemberData handleChangInput={handleChangInput} />
-        <form onSubmit={handleSubmit}>
-          <AddressSetting
-            Province={Province}
-            District={District}
-            SubDistrict={SubDistrict}
-            handleChangInput={handleChangInput}
+      {FormInput && (
+        <div className="form-warranty">
+          <CostWarrantyDetail />
+          <WarrantyConfirm
+            title={"การลงทะเบียนรับประกันสินค้า"}
+            description={
+              "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
+            }
           />
-          {uiProductForm()}
-          <ButtonManageForm
-            addProductForm={addProductForm}
-            addStoreForm={addStoreForm}
-          />
-          <FormRate handleChangInput={handleChangInput} />
-          <div className="row">
-            <div className="col-md-4 mx-auto text-center mt-4">
-              <ButtonMain
-                title="ตรวจสอบข้อมูล"
-                color="#636363"
-                BgColor="#ffaa29"
-              />
+          <MemberData handleChangInput={handleChangInput} />
+          <form onSubmit={handleSubmit}>
+            <AddressSetting
+              Province={Province}
+              District={District}
+              SubDistrict={SubDistrict}
+              handleChangInput={handleChangInput}
+            />
+            {uiProductForm()}
+            <ButtonManageForm
+              addProductForm={addProductForm}
+              addStoreForm={addStoreForm}
+              deleteFormProduct={deleteFormProduct}
+            />
+            <FormRate handleChangInput={handleChangInput} />
+            <div className="row">
+              <div className="col-md-4 mx-auto text-center mt-4">
+                <ButtonMain
+                  title="ตรวจสอบข้อมูล"
+                  color="#636363"
+                  BgColor="#ffaa29"
+                />
+              </div>
             </div>
-          </div>
-        </form>
-      </div>
+          </form>
+        </div>
+      )}
+
+      {checkData && <FormComfirm />}
     </div>
   );
 }
