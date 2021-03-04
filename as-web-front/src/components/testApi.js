@@ -61,6 +61,7 @@ export default function testApi() {
   };
   const formData = new FormData();
   const handleSelectFile = (e) => {
+    console.dir(e.target.attributes.index.value);
     formData.append("files", e.target.files[0]);
   };
   const handleSubmit = (e) => {
@@ -83,7 +84,14 @@ export default function testApi() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input type="file" onChange={handleSelectFile} />
+        <label for="upload-photo">Browse...</label>
+        <input
+          type="file"
+          name="photo"
+          id="upload-photo"
+          index="1"
+          onChange={handleSelectFile}
+        />
         <button>submit</button>
       </form>
     </div>

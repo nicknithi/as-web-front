@@ -13,7 +13,7 @@ export default function UploadImage({ handleGetFile, index }) {
         <img
           src={imgPreview}
           alt="preview"
-          style={{ "max-width": "100%", "max-height": "100%" }}
+          style={{ maxWidth: "100%", maxHeight: "100%" }}
         />
       ) : (
         <div className="img-upload">
