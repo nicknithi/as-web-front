@@ -206,36 +206,35 @@ function FormWarranty(prop) {
       return { ...item, ...FormDataWarranty };
     });
     setLastDataComToConfirm(cloneDeep(dataFromLast));
-    console.log("dataFromLast2131", dataFromLast);
     // fix data show for form confirm
-    // const dataLoop = dataFromLast;
-    // const dataShow = dataLoop.map((item, index) => {
-    //   item.Customer_Province = Province.find(
-    //     (p) => p.id === item.Customer_Province
-    //   ).province_Name;
+    const dataLoop = dataFromLast;
+    const dataShow = dataLoop.map((item, index) => {
+      item.Customer_Province = Province.find(
+        (p) => p.id === item.Customer_Province
+      ).province_Name;
 
-    //   item.Customer_District = District.find(
-    //     (d) => d.id === item.Customer_District
-    //   ).district_Name;
-    //   item.Customer_SubDistrict = SubDistrict.find(
-    //     (d) => d.id === item.Customer_SubDistrict
-    //   ).sub_District_Name;
-    //   item.Purchase_Province = dataMockD.Purchase_Province.find(
-    //     (d) => d.id === item.Purchase_Province
-    //   ).value;
-    //   item.Store_ID = dataMockD.Store_ID.find(
-    //     (d) => d.id === item.Store_ID
-    //   ).value;
-    //   item.Type_ID = dataMockD.Type_ID.find((d) => d.id === item.Type_ID).value;
-    //   item.Product_ID = dataMockD.Product_ID.find(
-    //     (d) => d.id === item.Product_ID
-    //   ).value;
-    //   item.Model_ID = dataMockD.Model_ID.find(
-    //     (d) => d.id === item.Model_ID
-    //   ).value;
-    //   return item;
-    // });
-    // setDataForComfirm(dataShow);
+      item.Customer_District = District.find(
+        (d) => d.id === item.Customer_District
+      ).district_Name;
+      item.Customer_SubDistrict = SubDistrict.find(
+        (d) => d.id === item.Customer_SubDistrict
+      ).sub_District_Name;
+      item.Purchase_Province = dataMockD.Purchase_Province.find(
+        (d) => d.id === item.Purchase_Province
+      ).value;
+      item.Store_ID = dataMockD.Store_ID.find(
+        (d) => d.id === item.Store_ID
+      ).value;
+      item.Type_ID = dataMockD.Type_ID.find((d) => d.id === item.Type_ID).value;
+      item.Product_ID = dataMockD.Product_ID.find(
+        (d) => d.id === item.Product_ID
+      ).value;
+      item.Model_ID = dataMockD.Model_ID.find(
+        (d) => d.id === item.Model_ID
+      ).value;
+      return item;
+    });
+    setDataForComfirm(dataShow);
     setFormInput(!FormInput);
     setCheckData(!checkData);
   };
@@ -264,7 +263,7 @@ function FormWarranty(prop) {
     http
       .post(`/api/Customer/GetDataCustomerByCode?Customer_Code=${code}`)
       .then((res) => {
-        if (res.data.message == "Success!") {
+        if (res.data.message === "Success!") {
           console.log("res1", res);
           const data = res.data.data;
           FormDataWarranty.Customer_Firstname = data.customer_Name;
@@ -327,7 +326,7 @@ function FormWarranty(prop) {
       {checkData && (
         <div>
           <FormComfirm
-            DataComfirm={{ datas: LastDataComToConfirm, files: FileWaranty }}
+            DataComfirm={{ datas: DataForComfirm, files: FileWaranty }}
             ProvinceC={ProvinceC}
           />
           <div className="d-flex justify-content-center mt-3 mb-4">

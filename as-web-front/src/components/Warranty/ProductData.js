@@ -103,7 +103,7 @@ export default function ProductData({
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">
-                ชื่อร้านตัวแทนจำหน่าย (อื่นๆ)
+                ชื่อร้านตัวแทนจำหน่าย (กรณีค้นหาไม่พบ)
               </label>
               <input
                 type="textarea"
@@ -185,7 +185,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">ชื่อรุ่น*</label>
+              <label className="font-weight-bold mt-3">ชื่อรุ่น*</label>
               {/* <input
                 type="text"
                 className="as-input"
@@ -197,7 +197,9 @@ export default function ProductData({
               <DropDownModelId index={index} handleEvent={handleChangInput} />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">รหัสสินค้า (อื่นๆ)</label>
+              <label className="font-weight-bold mt-3">
+                รหัสสินค้า (กรณีค้นหาไม่พบ)
+              </label>
               <input
                 type="textarea"
                 className="as-input"

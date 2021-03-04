@@ -3,10 +3,11 @@ import "../../assets/scss/components/button/manage-form.scss";
 export default function ButtonManageForm({ addProductForm, addStoreForm }) {
   return (
     <div className="manage-form text-center mt-3">
-      <button className="mr-3 delete-product font-weight-bold">
+      <button className="mr-3 delete-product font-weight-bold" type="button">
         ลบสินค้ารับประกัน
       </button>
       <button
+        type="button"
         className="mr-3 plus-product font-weight-bold"
         onClick={addProductForm}
       >
@@ -22,7 +23,11 @@ export default function ButtonManageForm({ addProductForm, addStoreForm }) {
         </svg>
         เพิ่มสินค้ารับประกัน
       </button>
-      <button className="plus-store font-weight-bold" onClick={addStoreForm}>
+      <button
+        className="plus-store font-weight-bold"
+        type="button"
+        onClick={addStoreForm}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"

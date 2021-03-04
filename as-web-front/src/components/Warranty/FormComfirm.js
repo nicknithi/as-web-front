@@ -74,6 +74,15 @@ function FormComfirm(props) {
                 <br />
                 รหัสบาร์โค๊ด : {item.Barcode_Number || ""}
               </div>
+              <div className="img-preview row">
+                <div className="col-md-4 mx-auto">
+                  <img
+                    src={URL.createObjectURL(dataSet.files[index])}
+                    alt={"preview"}
+                    style={{ "max-width": "100%", "max-height": "100%" }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         ))}

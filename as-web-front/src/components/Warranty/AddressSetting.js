@@ -57,14 +57,14 @@ function AddressSetting({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">ตำบล*</label>
+            <label className="font-weight-bold mt-3">ตำบล*</label>
             <DropDownSubDistrict
               data={SubDistrict}
               handleEvent={handleSubDistrict}
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">รหัสไปรษณีย์*</label>
+            <label className="font-weight-bold mt-3">รหัสไปรษณีย์*</label>
             <input
               type="text"
               id="postCode"
@@ -75,7 +75,7 @@ function AddressSetting({
           </div>
         </div>
         <div>
-          <label className="font-weight-bold">แผนที่ (โปรดระบุ)</label>
+          <label className="font-weight-bold mt-3">แผนที่ (โปรดระบุ)</label>
           <GoogleMap handleMap={handleMap} />
         </div>
       </div>
