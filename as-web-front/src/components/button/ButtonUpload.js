@@ -7,7 +7,9 @@ export default function ButtonUpload({ title, uploadImg, index }) {
   };
   return (
     <div className="button-confirm-warranty text-center">
-      <label for={`upload-photo${index}`}>Browse...</label>
+      <label class="btn-upload" for={`upload-photo${index}`}>
+        {title}
+      </label>
       <input
         type="file"
         name="photo"

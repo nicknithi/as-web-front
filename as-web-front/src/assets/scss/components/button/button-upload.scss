@@ -1,5 +1,15 @@
 .btn-upload {
-  width: 72px;
-  border-color: white;
-  border: none;
+  width: 150px;
+  color: white;
+  background-color: #4ea4cd;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 5px 10px 5px 10px;
+  font-weight: bold;
+  font-size: 20px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.13);
 }
