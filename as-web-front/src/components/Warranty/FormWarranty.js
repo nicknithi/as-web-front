@@ -275,16 +275,35 @@ function FormWarranty(prop) {
         }
       });
   };
-  const deleteFormProduct = () => {};
+  const deleteFormProduct = () => {
+    if (procudeForm.length > 1) {
+      let LastDataComToConfirmTT = [...LastDataComToConfirm];
+      LastDataComToConfirmTT.pop();
+      setLastDataComToConfirm(LastDataComToConfirmTT);
+      let FileWarantyTT = [...FileWaranty];
+      FileWarantyTT.pop();
+      setFileWaranty(FileWarantyTT);
+      let DataForComfirmTT = [...DataForComfirm];
+      DataForComfirmTT.pop();
+      setDataForComfirm(DataForComfirmTT);
+      let FormDataProductTT = [...FormDataProduct];
+      FormDataProductTT.pop();
+      setFormDataProduct(FormDataProductTT);
+      let values = [...procudeForm];
+      values.splice(values.length - 1, 1);
+      setProcudeForm(values);
+    }
+  };
   const test = () => {
-    setProvinceC(
-      Province.find((p) => p.id === LastDataComToConfirm[0].Customer_Province)
-        .province_Name
-    );
+    console.log(LastDataComToConfirm);
+    console.log(FileWaranty);
+    console.log(DataForComfirm);
+    console.log(procudeForm);
+    console.log(dataMockD);
   };
   return (
     <div>
-      {/* <button onClick={test}>teste</button> */}
+      <button onClick={test}>teste</button>
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
         <CostWarrantyDetail />
         <WarrantyConfirm

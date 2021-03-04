@@ -1,9 +1,17 @@
 import React from "react";
 import "../../assets/scss/components/button/manage-form.scss";
-export default function ButtonManageForm({ addProductForm, addStoreForm }) {
+export default function ButtonManageForm({
+  addProductForm,
+  addStoreForm,
+  deleteFormProduct,
+}) {
   return (
     <div className="manage-form text-center mt-3">
-      <button className="mr-3 delete-product font-weight-bold" type="button">
+      <button
+        className="mr-3 delete-product font-weight-bold"
+        type="button"
+        onClick={deleteFormProduct}
+      >
         ลบสินค้ารับประกัน
       </button>
       <button
