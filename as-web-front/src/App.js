@@ -13,7 +13,7 @@ export default function App() {
   console.log(useHistory);
   return (
     <div>
-      {/* <Header /> */}
+      <Header />
       <BrowserRouter history={history}>
         <Route exact path="/">
           <Home />
@@ -34,7 +34,7 @@ export default function App() {
           <FormComfirm />
         </Route>
       </BrowserRouter>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

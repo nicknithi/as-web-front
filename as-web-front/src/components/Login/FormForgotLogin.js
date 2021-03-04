@@ -21,7 +21,7 @@ export default function FormForgotLogin() {
       </div>
       <div className="row mt-4">
         <div className="mx-auto">
-          <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#ffaa29" />
+          <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
         </div>
       </div>
     </div>

@@ -27,7 +27,7 @@ export default function FromLogin() {
         </div>
         <div className="row">
           <div className="mx-auto">
-            <ButtonMain title="เข้าสู่ระบบ" color="#636363" BgColor="#ffaa29" />
+            <ButtonMain title="เข้าสู่ระบบ" color="#636363" BgColor="#f1c400" />
           </div>
         </div>
       </div>

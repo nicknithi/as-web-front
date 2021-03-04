@@ -160,14 +160,14 @@ function FormWarranty(prop) {
       Purchase_Province: null,
       Purchase_Date: null,
       Store_ID: null,
-      Store_Name_Other: null,
+      Store_Name_Other: "",
       Receipt_Number: null,
       Barcode_Number: null,
       Warranty_Number: null,
       Type_ID: null,
       Product_ID: null,
       Model_ID: null,
-      Product_Code_Other: null,
+      Product_Code_Other: "",
       QTY: null,
     });
     setFormDataProduct(FormDataProduct);
@@ -303,7 +303,7 @@ function FormWarranty(prop) {
   };
   return (
     <div>
-      <button onClick={test}>teste</button>
+      {/* <button onClick={test}>teste</button> */}
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
         <CostWarrantyDetail />
         <WarrantyConfirm
@@ -336,7 +336,7 @@ function FormWarranty(prop) {
               <ButtonMain
                 title="ตรวจสอบข้อมูล"
                 color="#636363"
-                BgColor="#ffaa29"
+                BgColor="#f1c400"
               />
             </div>
           </div>
@@ -353,7 +353,7 @@ function FormWarranty(prop) {
               <ButtonMain
                 title="ยืนยัน"
                 color="#636363"
-                BgColor="#ffaa29"
+                BgColor="#f1c400"
                 handleClick={handleLastSubmit}
               />
             </div>
@@ -361,13 +361,13 @@ function FormWarranty(prop) {
               <ButtonMain
                 title="แก้ไขข้อมูล"
                 color="#636363"
-                BgColor="#4ea4cd"
+                BgColor="#58a7af"
                 handleClick={handleEdit}
               />
             </div>
           </div>
           <div className="text-center mt-3 mb-4">
-            <ButtonMain title="กลับ" color="#636363" BgColor="#ffaa29" />
+            <ButtonMain title="กลับ" color="#636363" BgColor="#f1c400" />
           </div>
         </div>
       )}

@@ -206,7 +206,6 @@ export default function ProductData({
                 index={index}
                 name="Product_Code_Other"
                 onChange={handleChangInput}
-                required
               />
             </div>
           </div>

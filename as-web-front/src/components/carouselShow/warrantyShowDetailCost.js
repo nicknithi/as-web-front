@@ -5,6 +5,9 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import imgoverlay from "../../assets/img/PIC02.png";
+import imgoverlay1 from "../../assets/img/cost2 (1).png";
+import imgoverlay2 from "../../assets/img/cost2 (2).png";
+import imgoverlay3 from "../../assets/img/cost2 (3).png";
 const WarrantyShowDetailCost = () => {
   const [triggerShow, setTriggerShow] = useState(false);
   const handleShow = () => {
@@ -45,15 +48,15 @@ const WarrantyShowDetailCost = () => {
             </div>
 
             <div className="slide-item">
-              <img src={imgoverlay} />
+              <img src={imgoverlay1} />
             </div>
 
             <div className="slide-item">
-              <img src={imgoverlay} />
+              <img src={imgoverlay2} />
             </div>
 
             <div className="slide-item">
-              <img src={imgoverlay} />
+              <img src={imgoverlay3} />
             </div>
           </Slider>
           <div className="close-overlay" onClick={handleShow}>

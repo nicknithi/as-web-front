@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function DropDownDistrict({ data, handleEvent }) {
+export default function DropDownDistrict({ data, handleEvent, titleDistrict }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     setTitleState(
@@ -25,7 +25,7 @@ export default function DropDownDistrict({ data, handleEvent }) {
         ))}
       </select>
       <div className="custom-dropdown">
-        {title}
+        {titleDistrict ? "กรุณาเลือก" : title}
         <div className="button-select">
           <div className="squre" />
         </div>

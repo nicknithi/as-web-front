@@ -12,11 +12,66 @@ function AddressSetting({
   District,
   SubDistrict,
 }) {
+  const [titleDistric, setTitleDistric] = useState(false);
+  const [DistrictDP, setDistrictDP] = useState([
+    {
+      id: 0,
+      district_Name: "กรุณาเลือก",
+    },
+  ]);
+  const [subDistrictDP, setSubDistrictDP] = useState([
+    {
+      id: 0,
+      sub_District_Name: "กรุณาเลือก",
+    },
+  ]);
+  const [tempProvince, setTempProvince] = useState(0);
   const handleProvince = (e) => {
     handleChangInput(e);
+    setTempProvince(e.target.value);
+    setDistrictDP([
+      {
+        id: 0,
+        district_Name: "กรุณาเลือก",
+      },
+    ]);
+    setSubDistrictDP([
+      {
+        id: 0,
+        sub_District_Name: "กรุณาเลือก",
+      },
+    ]);
+    let data = District.find(
+      (p) => p.fK_Province_ID === parseInt(e.target.value)
+    );
+    if (data !== undefined) {
+      setDistrictDP([
+        {
+          id: 0,
+          district_Name: "กรุณาเลือก",
+        },
+        data,
+      ]);
+      console.log(data);
+    }
   };
   const handleDistrict = (e) => {
     handleChangInput(e);
+    let data = SubDistrict.find(
+      (p) =>
+        p.fK_District_ID === parseInt(e.target.value) &&
+        p.fK_Province_ID === parseInt(tempProvince)
+    );
+
+    if (data !== undefined) {
+      setSubDistrictDP([
+        {
+          id: 0,
+          sub_District_Name: "กรุณาเลือก",
+        },
+        data,
+      ]);
+    }
   };
   const handleSubDistrict = (e) => {
     handleChangInput(e);
@@ -52,14 +107,18 @@ function AddressSetting({
           </div>
           <div className="col-md-6">
             <label className="font-weight-bold">อำเภอ/เขต*</label>
-            <DropDownDistrict data={District} handleEvent={handleDistrict} />
+            <DropDownDistrict
+              data={DistrictDP}
+              handleEvent={handleDistrict}
+              title={titleDistric}
+            />
           </div>
         </div>
         <div className="row">
           <div className="col-md-6">
             <label className="font-weight-bold mt-3">ตำบล*</label>
             <DropDownSubDistrict
-              data={SubDistrict}
+              data={subDistrictDP}
               handleEvent={handleSubDistrict}
             />
           </div>
