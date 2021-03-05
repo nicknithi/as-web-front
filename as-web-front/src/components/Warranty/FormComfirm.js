@@ -4,6 +4,7 @@ import BannerCover from "../../components/Banner/BannerCover";
 import GoogleMapDisabled from "../map/googleMapDisabled";
 import ButtonMain from "../button/ButtonMain";
 import "../../assets/scss/form-comfirm.scss";
+import http from "../../axios";
 
 function FormComfirm(props) {
   console.log("testdata", props.DataComfirm);

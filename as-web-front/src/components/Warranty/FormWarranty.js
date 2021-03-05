@@ -26,6 +26,10 @@ function FormWarranty(prop) {
   const [FormInput, setFormInput] = useState(true);
   const [ProvinceC, setProvinceC] = useState("");
   const [DataForComfirm, setDataForComfirm] = useState([]);
+
+  const [dataTypeID, setDataTypeId] = useState([]);
+  const [dataModelID, setDataModelID] = useState([]);
+  const [dataProductID, setdataProductID] = useState([]);
   useEffect(() => {
     //GetProvince
     http
@@ -53,6 +57,29 @@ function FormWarranty(prop) {
         setSubDistrict(res.data.data);
       })
       .catch((e) => {});
+    http.post("/api/Product/GetAllProduct").then((res) => {
+      console.log("product", res.data.data);
+      const data = res.data.data.map((item, index) => {
+        return { id: item.id, value: item.product_Name_TH };
+      });
+      setdataProductID(data);
+      //setProduct(data);
+    });
+    http.post("/api/Product/GetAllProductType").then((res) => {
+      const data = res.data.data.map((item, index) => {
+        return { id: item.type_ID, value: item.type_Name_TH };
+      });
+      setDataTypeId(data);
+      //setTypeId(data);
+    });
+    http.post("/api/Product/GetAllProductModel").then((res) => {
+      console.log("model ", res.data.data);
+      const data = res.data.data.map((item, index) => {
+        return { id: item.id, value: item.model_Name_TH };
+      });
+      setDataModelID(data);
+      //setModelId(data);
+    });
   }, []);
   const handleGetFile = (file, index) => {
     FileWaranty[index] = file;
@@ -160,14 +187,14 @@ function FormWarranty(prop) {
       Purchase_Province: null,
       Purchase_Date: null,
       Store_ID: null,
-      Store_Name_Other: "",
+      Store_Name_Other: null,
       Receipt_Number: null,
       Barcode_Number: null,
       Warranty_Number: null,
       Type_ID: null,
       Product_ID: null,
       Model_ID: null,
-      Product_Code_Other: "",
+      Product_Code_Other: null,
       QTY: null,
     });
     setFormDataProduct(FormDataProduct);
@@ -194,7 +221,12 @@ function FormWarranty(prop) {
         FormDataWarranty.Customer_SubDistrict
       );
       FormDataWarranty.Score = parseInt(FormDataWarranty.Score);
-
+      if (item.Store_Name_Other === null) {
+        item.Store_Name_Other = "";
+      }
+      if (item.Product_Code_Other === null) {
+        item.Product_Code_Other = "";
+      }
       item.Purchase_Province = parseInt(item.Purchase_Province);
       console.log(item);
       item.Store_ID = parseInt(item.Store_ID);
@@ -225,13 +257,11 @@ function FormWarranty(prop) {
       item.Store_ID = dataMockD.Store_ID.find(
         (d) => d.id === item.Store_ID
       ).value;
-      item.Type_ID = dataMockD.Type_ID.find((d) => d.id === item.Type_ID).value;
-      item.Product_ID = dataMockD.Product_ID.find(
+      item.Type_ID = dataTypeID.find((d) => d.id === item.Type_ID).value;
+      item.Product_ID = dataProductID.find(
         (d) => d.id === item.Product_ID
       ).value;
-      item.Model_ID = dataMockD.Model_ID.find(
-        (d) => d.id === item.Model_ID
-      ).value;
+      item.Model_ID = dataModelID.find((d) => d.id === item.Model_ID).value;
       return item;
     });
     setDataForComfirm(dataShow);

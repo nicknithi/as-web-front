@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ButtonManageForm from "../button/ButtonManageForm";
 import UploadImage from "../Warranty/uploadImage";
 import InputScanBarCode from "../Input/InputScanBarCode";
@@ -9,17 +9,68 @@ import DropDownStoreId from "../Input/dropDownStore_ID";
 import DropDownTypeId from "../Input/dropDownType_ID";
 import DropDownProductId from "../Input/dropDownProduct_ID";
 import DropDownModelId from "../Input/dropDownModel_ID";
+import dataMock from "../../dataMock";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/scss/components/input/dataPicker.scss";
+import http from "../../axios";
 export default function ProductData({
   handleChangInput,
   index,
   FormDataProduct,
   handleGetFileForm,
 }) {
+  useEffect(() => {
+    http.post("/api/Product/GetAllProduct").then((res) => {
+      console.log("product", res.data.data);
+      const data = res.data.data.map((item, index) => {
+        return { id: item.id, value: item.product_Name_TH };
+      });
+      setdataProductID(data);
+      //setProduct(data);
+    });
+    http.post("/api/Product/GetAllProductType").then((res) => {
+      const data = res.data.data.map((item, index) => {
+        return { id: item.type_ID, value: item.type_Name_TH };
+      });
+      setDataTypeId(data);
+      //setTypeId(data);
+    });
+    http.post("/api/Product/GetAllProductModel").then((res) => {
+      console.log("model ", res.data.data);
+      const data = res.data.data.map((item, index) => {
+        return { id: item.id, value: item.model_Name_TH };
+      });
+      setDataModelID(data);
+      //setModelId(data);
+    });
+  }, []);
+  const [dataTypeID, setDataTypeId] = useState([]);
+  const [dataModelID, setDataModelID] = useState([]);
+  const [dataProductID, setdataProductID] = useState([]);
+  const [typeId, setTypeId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
+  const [modelId, setModelId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
+  const [productCode, setProduct] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [startDate, setStartDate] = useState(new Date());
   const handleScan = () => {
     setTriggleBarcode(true);
+  };
+  const handleChangInputBarcode = (e) => {
+    handleChangInput(e);
+    console.log("test");
+    http
+      .post(`/api/Product/GetProductTop20ByBarcode?Barcode=${e.target.value}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data.message === "Success!") {
+          setTypeId([
+            dataTypeID.find((d) => d.id === res.data.data[0].fK_Type_ID),
+          ]);
+          setProduct([dataProductID.find((d) => d.id === res.data.data[0].id)]);
+          setModelId([
+            dataModelID.find((d) => d.id === res.data.data[0].fK_Model_ID),
+          ]);
+        }
+      });
   };
   const handleGetFile = (file, index) => {
     handleGetFileForm(file, index);
@@ -113,7 +164,6 @@ export default function ProductData({
                 onChange={handleChangInput}
                 disabled={FormDataProduct[index].Store_Name_Other}
                 value={FormDataProduct[index].Store_Name_Other}
-                required
               />
             </div>
           </div>
@@ -139,7 +189,7 @@ export default function ProductData({
               </label>
               {/* <input type="text" className="as-input" required /> */}
               <InputScanBarCode
-                handleEvent={handleChangInput}
+                handleEvent={handleChangInputBarcode}
                 handleScan={handleScan}
                 index={index}
               />
@@ -168,7 +218,12 @@ export default function ProductData({
                 onChange={handleChangInput}
                 required
               /> */}
-              <DropDownTypeId index={index} handleEvent={handleChangInput} />
+              <DropDownTypeId
+                index={index}
+                data={typeId}
+                // selectedAS={typeId}
+                handleEvent={handleChangInput}
+              />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">รหัสสินค้า*</label>
@@ -180,7 +235,11 @@ export default function ProductData({
                 onChange={handleChangInput}
                 required
               /> */}
-              <DropDownProductId index={index} handleEvent={handleChangInput} />
+              <DropDownProductId
+                index={index}
+                data={productCode}
+                handleEvent={handleChangInput}
+              />
             </div>
           </div>
           <div className="row">
@@ -194,7 +253,11 @@ export default function ProductData({
                 onChange={handleChangInput}
                 required
               /> */}
-              <DropDownModelId index={index} handleEvent={handleChangInput} />
+              <DropDownModelId
+                index={index}
+                data={modelId}
+                handleEvent={handleChangInput}
+              />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold mt-3">
