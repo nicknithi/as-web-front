@@ -31,33 +31,33 @@ export default function testApi() {
     Description: "ทดสอบรับประกัน description",
   };
   let dataMock2 = {
-    Barcode_Number: "1",
-    Customer_Address: "asdf",
-    Customer_Code: "ทดสอบรับประกัน",
-    Customer_District: 2,
-    Customer_Email: "asdf",
-    Customer_Firstname: "ทดสอบรับประกัน1",
-    Customer_Lastname: "ทดสอบรับประกัน1",
-    Customer_Latitude: "15.881484007073663",
-    Customer_Longtitude: "100.96422355404475",
-    Customer_Mobile: "asdf",
+    Barcode_Number: "123",
+    Customer_Address: "123",
+    Customer_Code: "ทดสอบรับประกัน123",
+    Customer_District: 1,
+    Customer_Email: "ทดสอบรับประกัน@email.com",
+    Customer_Firstname: "123",
+    Customer_Lastname: "123",
+    Customer_Latitude: "15.881473792312825",
+    Customer_Longtitude: "100.97935717582705",
+    Customer_Mobile: "0123456789",
     Customer_Province: 1,
     Customer_SubDistrict: 1,
-    Customer_Tel: "asdf",
-    Customer_ZipCode: "12345",
-    Description: "11",
+    Customer_Tel: "0123456789",
+    Customer_ZipCode: "123",
+    Description: "ทดสอบรับประกัน description",
     Model_ID: 1,
-    Product_Code_Other: "1",
+    Product_Code_Other: "12",
     Product_ID: 1,
-    Purchase_Date: "2021-02-28",
+    Purchase_Date: "2021-03-19",
     Purchase_Province: 1,
-    QTY: 1,
+    QTY: 12,
     Receipt_Number: "1",
-    Score: 3,
+    Score: 1,
     Store_ID: 1,
-    Store_Name_Other: "1",
+    Store_Name_Other: "12",
     Type_ID: 1,
-    Warranty_Number: "1",
+    Warranty_Number: "12",
   };
   const formData = new FormData();
   const handleSelectFile = (e) => {
@@ -66,7 +66,7 @@ export default function testApi() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.append("datas", JSON.stringify(dataMock));
+    formData.append("datas", JSON.stringify(dataMock2));
     axios
       .post(
         "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",
