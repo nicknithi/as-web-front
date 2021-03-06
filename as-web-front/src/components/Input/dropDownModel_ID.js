@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dataMock from "../../dataMock";
 import "../../assets/scss/components/input/dropdown.scss";
 export default function DropDownModel_ID({ data, handleEvent, index }) {
@@ -8,7 +8,15 @@ export default function DropDownModel_ID({ data, handleEvent, index }) {
     setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
     handleEvent(e);
   };
-
+  useEffect(() => {
+    let x = document.createElement("INPUT");
+    x.setAttribute("type", "text");
+    x.setAttribute("name", "Model_ID");
+    x.setAttribute("index", index);
+    x.setAttribute("value", data[0].id);
+    handleEvent(x);
+    setTitleState(data[0].value);
+  }, [data]);
   return (
     <div className="position-relative as-dropdown">
       <select
@@ -18,7 +26,6 @@ export default function DropDownModel_ID({ data, handleEvent, index }) {
         index={index}
         onChange={handleSelect}
       >
-        <option selected>Open this select menu</option>
         {data.map((item, index) => (
           <option key={index} value={item.id} titleSet={item.value}>
             {item.value}

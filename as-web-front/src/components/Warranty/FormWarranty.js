@@ -7,8 +7,7 @@ import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
 import { getProvince, setTempInput } from "../../actions/fetchAction";
 import ButtonMain from "../button/ButtonMain";
-import CostWarrantyDetail from "./CostWarrantyDetail";
-import WarrantyConfirm from "./WarrantyConfirm";
+
 import ButtonManageForm from "../button/ButtonManageForm";
 import http from "../../axios";
 import axios from "axios";
@@ -62,14 +61,14 @@ function FormWarranty(prop) {
       const data = res.data.data.map((item, index) => {
         return { id: item.id, value: item.product_Name_TH };
       });
-      setdataProductID(data);
+      setdataProductID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
       //setProduct(data);
     });
     http.post("/api/Product/GetAllProductType").then((res) => {
       const data = res.data.data.map((item, index) => {
         return { id: item.type_ID, value: item.type_Name_TH };
       });
-      setDataTypeId(data);
+      setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...data]);
       //setTypeId(data);
     });
     http.post("/api/Product/GetAllProductModel").then((res) => {
@@ -77,7 +76,7 @@ function FormWarranty(prop) {
       const data = res.data.data.map((item, index) => {
         return { id: item.id, value: item.model_Name_TH };
       });
-      setDataModelID(data);
+      setDataModelID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
       //setModelId(data);
     });
   }, []);
@@ -209,6 +208,7 @@ function FormWarranty(prop) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log("testset", FormDataProduct);
     let dataFromLast = await FormDataProduct.map((item, index) => {
       console.log(item.Customer_Province, item);
       FormDataWarranty.Customer_Province = parseInt(
@@ -286,6 +286,11 @@ function FormWarranty(prop) {
         )
         .then((res) => {
           console.log(res);
+          if (res.data.message === "Success!") {
+            window.location = "/";
+          } else {
+            alert("ไม่สำเร็จ กรุณาลองใหม่");
+          }
         });
     });
   };
@@ -335,13 +340,6 @@ function FormWarranty(prop) {
     <div>
       {/* <button onClick={test}>teste</button> */}
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
-        <CostWarrantyDetail />
-        <WarrantyConfirm
-          title={"การลงทะเบียนรับประกันสินค้า"}
-          description={
-            "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
-          }
-        />
         <MemberData
           handleChangInput={handleChangInput}
           handleGetMemberData={handleGetMemberData}

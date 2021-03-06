@@ -1,17 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "../../assets/scss/components/navbar.scss";
-import logo from "../../assets/img/Logo.png";
+import logo from "../../assets/img/Logo_300ppi.png";
 import InputSearch from "../Input/InputSearch";
 import NavbarDesktopMenu from "./NavbarDesktopMenu";
-export default function NavberDesktop({ NavbarItem }) {
+export default function NavbarDesktop({ NavbarItem }) {
   const placeholderSearch = "ค้นหา...";
   return (
     <div>
       <div className="as-navbar-desktop mx-auto d-none d-md-block">
         <div className="navbar-header d-flex">
           <a href="/" className="logo position-relative">
-            <img src={logo} />
+            <img className="img-fluid" src={logo} />
           </a>
           <div className="right-content ml-auto d-flex align-items-center">
             <span className="mr-3 official-website">Official Website</span>
@@ -30,9 +30,9 @@ export default function NavberDesktop({ NavbarItem }) {
   );
 }
 
-NavberDesktop.propTypes = {
+NavbarDesktop.propTypes = {
   NavbarItem: PropTypes.array,
 };
-NavberDesktop.defaultProps = {
+NavbarDesktop.defaultProps = {
   NavbarItem: [],
 };

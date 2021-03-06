@@ -56,7 +56,6 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
               defaultValue={defultData.Customer_Firstname}
               onChange={handleChangInput}
               Customer_Firstname
-              required
             />
           </div>
           <div className="col-md-6">
@@ -68,7 +67,6 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
               className="as-input"
               name="Customer_Lastname"
               onChange={handleChangInput}
-              required
             />
           </div>
         </div>
@@ -82,7 +80,6 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
               className="as-input"
               name="Customer_Tel"
               onChange={handleChangInput}
-              required
             />
           </div>
           <div className="col-md-6">
@@ -110,7 +107,6 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
               className="as-input"
               name="Customer_Email"
               onChange={handleChangInput}
-              required
             />
           </div>
         </div>

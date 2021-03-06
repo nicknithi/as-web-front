@@ -12,6 +12,9 @@ function AddressSetting({
   District,
   SubDistrict,
 }) {
+  const [ZipCode, setZipCode] = useState(null);
+  const [tempProvince, setTempProvince] = useState(0);
+  const [tempDistrict, setTempDistrict] = useState(0);
   const [titleDistric, setTitleDistric] = useState(false);
   const [DistrictDP, setDistrictDP] = useState([
     {
@@ -25,7 +28,7 @@ function AddressSetting({
       sub_District_Name: "กรุณาเลือก",
     },
   ]);
-  const [tempProvince, setTempProvince] = useState(0);
+
   const handleProvince = (e) => {
     handleChangInput(e);
     setTempProvince(e.target.value);
@@ -57,6 +60,7 @@ function AddressSetting({
   };
   const handleDistrict = (e) => {
     handleChangInput(e);
+    setTempDistrict(e.target.value);
     let data = SubDistrict.find(
       (p) =>
         p.fK_District_ID === parseInt(e.target.value) &&
@@ -64,6 +68,7 @@ function AddressSetting({
     );
 
     if (data !== undefined) {
+      console.log("tstest", data);
       setSubDistrictDP([
         {
           id: 0,
@@ -75,6 +80,21 @@ function AddressSetting({
   };
   const handleSubDistrict = (e) => {
     handleChangInput(e);
+    console.log(e.target.value);
+    let data = SubDistrict.find(
+      (d) =>
+        d.id === parseInt(e.target.value) &&
+        d.fK_District_ID === parseInt(tempDistrict) &&
+        d.fK_Province_ID === parseInt(tempProvince)
+    );
+    if (data !== undefined) {
+      setZipCode(data.zip_Code);
+      let x = document.createElement("INPUT");
+      x.setAttribute("type", "text");
+      x.setAttribute("name", "Customer_ZipCode");
+      x.setAttribute("value", data.zip_Code);
+      handleChangInput(x);
+    }
   };
   // const handleFetchGetSubDistrict = (district_id) => {
   //   dispatch(setTempInput({ district: district_id }));
@@ -127,9 +147,11 @@ function AddressSetting({
             <input
               type="text"
               id="postCode"
+              defaultValue={ZipCode}
               name="Customer_ZipCode"
               onChange={handleChangInput}
               className="as-input"
+              required
             />
           </div>
         </div>

@@ -8,7 +8,7 @@ export default function UploadImage({ handleGetFile, index }) {
     setImgPreview(URL.createObjectURL(file));
   };
   return (
-    <div className="col-md-4  mx-auto">
+    <div className="col-md-4  mx-auto text-center">
       {imgPreview ? (
         <img
           src={imgPreview}

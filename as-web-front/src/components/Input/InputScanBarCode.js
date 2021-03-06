@@ -1,17 +1,100 @@
-import React from "react";
+import React, { useState, useEffect, Fragment } from "react";
+import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
+import "react-bootstrap-typeahead/css/Typeahead.css";
+import "../../assets/scss/components/input/input-barcode.scss";
+import http from "../../axios";
 export default function InputScanBarCode({ handleEvent, handleScan, index }) {
   const manualInput = (e) => {
-    handleEvent(e);
+    if (e.length) {
+      document.getElementById("Barcode_Number").value = e[0].id;
+      // console.log(document.getElementById("Barcode_Number"));
+      handleEvent(
+        document.getElementById("Barcode_Number"),
+        e[0].id,
+        e[0].fK_Model_ID,
+        e[0].fK_Type_ID,
+        e[0].barcode
+      );
+    } else {
+      document.getElementById("Barcode_Number").value = 0;
+      // console.log(document.getElementById("Barcode_Number"));
+      handleEvent(document.getElementById("Barcode_Number"), 0, 0, 0, "");
+    }
   };
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [options, setOptions] = useState([]);
+
+  const handleSearch = (query) => {
+    setIsLoading(true);
+    http
+      .post(`/api/Product/GetProductTop20ByBarcode?Barcode=${query}`)
+      .then((res) => {
+        console.log(res);
+        if (res.data.message === "Success!") {
+          console.log(res.data.data);
+          const option = res.data.data.map((item, index) => {
+            return {
+              id: item.id,
+              value: item.product_Name_TH,
+              index: index,
+              fK_Model_ID: item.fK_Model_ID,
+              fK_Type_ID: item.fK_Type_ID,
+              barcode: item.product_Barcode,
+            };
+          });
+          setOptions(option);
+          setIsLoading(false);
+        } else {
+        }
+        if (res.data.message === "Fail!") {
+          setIsLoading(false);
+        }
+      });
+  };
+  const filterBy = () => true;
+  useEffect(() => {}, []);
   return (
-    <div>
-      <input
+    <div className="input-barcode">
+      {/* <input
         type="text"
         name="Barcode_Number"
         id="Barcode_Number"
         className="as-input"
         index={index}
         onChange={manualInput}
+      /> */}
+      <input
+        type="hidden"
+        name="Barcode_Number"
+        id="Barcode_Number"
+        index={index}
+        value=""
+      />
+      <AsyncTypeahead
+        filterBy={filterBy}
+        id="async-example"
+        isLoading={isLoading}
+        labelKey="barcode"
+        minLength={3}
+        onSearch={handleSearch}
+        onChange={manualInput}
+        options={options}
+        placeholder=""
+        renderMenuItemChildren={(option, props) => (
+          <Fragment>
+            {/* <img
+              alt={option.login}
+              src={option.avatar_url}
+              style={{
+                height: "24px",
+                marginRight: "10px",
+                width: "24px",
+              }}
+            /> */}
+            <span>{option.barcode}</span>
+          </Fragment>
+        )}
       />
       {/* <button onClick={handleScan}>scan</button> */}
     </div>

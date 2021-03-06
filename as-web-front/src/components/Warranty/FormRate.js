@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 export default function FormRate({ handleChangInput }) {
   const handleRate = (rate) => {
     document.getElementById("Score").value = rate;
     handleChangInput(document.getElementById("Score"));
+    setActive(rate);
   };
   const handleCommend = (e) => {
     handleChangInput(e);
   };
+  const [Active, setActive] = useState("");
+  useEffect(() => {}, []);
+  const IsActive = (level) => {
+    if (Active === level) {
+      return "#f1c400";
+    } else {
+      return "currentColor";
+    }
+  };
   return (
-    <div className="rate-form mt-4 py-4">
+    <div className="rate-form mt-4 py-4 px-3">
       <input type="hidden" name="Score" id="Score" />
       <div className="row">
         <div className="col-md-4 mx-auto">
@@ -24,7 +34,7 @@ export default function FormRate({ handleChangInput }) {
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
                   height="25"
-                  fill="currentColor"
+                  fill={IsActive(1)}
                   class="bi bi-emoji-angry"
                   viewBox="0 0 16 16"
                 >
@@ -40,7 +50,7 @@ export default function FormRate({ handleChangInput }) {
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
-                fill="currentColor"
+                fill={IsActive(2)}
                 class="bi bi-emoji-frown"
                 viewBox="0 0 16 16"
               >
@@ -55,7 +65,7 @@ export default function FormRate({ handleChangInput }) {
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
-                fill="currentColor"
+                fill={IsActive(3)}
                 class="bi bi-emoji-neutral"
                 viewBox="0 0 16 16"
               >
@@ -70,7 +80,7 @@ export default function FormRate({ handleChangInput }) {
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
-                fill="currentColor"
+                fill={IsActive(4)}
                 class="bi bi-emoji-smile"
                 viewBox="0 0 16 16"
               >
@@ -85,7 +95,7 @@ export default function FormRate({ handleChangInput }) {
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
                 height="25"
-                fill="currentColor"
+                fill={IsActive(5)}
                 class="bi bi-emoji-laughing"
                 viewBox="0 0 16 16"
               >

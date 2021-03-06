@@ -16,6 +16,7 @@ export default function DropDown({ data, handleEvent }) {
         aria-label="Default select example"
         name="Customer_Province"
         onChange={handleSelect}
+        required
       >
         <option selected>Open this select menu</option>
         {data.map((item, index) => (

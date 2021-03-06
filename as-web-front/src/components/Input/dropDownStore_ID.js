@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import dataMock from "../../dataMock";
 import "../../assets/scss/components/input/dropdown.scss";
 export default function DropDownStore_ID({ data, handleEvent, index }) {
@@ -8,7 +8,9 @@ export default function DropDownStore_ID({ data, handleEvent, index }) {
     setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
     handleEvent(e);
   };
-
+  useEffect(() => {
+    setTitleState(data[0].value);
+  }, [data]);
   return (
     <div className="position-relative as-dropdown">
       <select

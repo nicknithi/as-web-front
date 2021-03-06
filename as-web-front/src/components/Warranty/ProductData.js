@@ -25,28 +25,34 @@ export default function ProductData({
       const data = res.data.data.map((item, index) => {
         return { id: item.id, value: item.product_Name_TH };
       });
-      setdataProductID(data);
-      //setProduct(data);
+      setdataProductID([...dataProductID, ...data]);
+      setProduct([...productCode, ...data]);
     });
     http.post("/api/Product/GetAllProductType").then((res) => {
       const data = res.data.data.map((item, index) => {
         return { id: item.type_ID, value: item.type_Name_TH };
       });
-      setDataTypeId(data);
-      //setTypeId(data);
+      setDataTypeId([...dataTypeID, ...data]);
+      setTypeId([...typeId, ...data]);
     });
     http.post("/api/Product/GetAllProductModel").then((res) => {
       console.log("model ", res.data.data);
       const data = res.data.data.map((item, index) => {
         return { id: item.id, value: item.model_Name_TH };
       });
-      setDataModelID(data);
-      //setModelId(data);
+      setDataModelID([...dataModelID, ...data]);
+      setModelId([...modelId, ...data]);
     });
   }, []);
-  const [dataTypeID, setDataTypeId] = useState([]);
-  const [dataModelID, setDataModelID] = useState([]);
-  const [dataProductID, setdataProductID] = useState([]);
+  const [dataTypeID, setDataTypeId] = useState([
+    { id: 0, value: "กรุณาเลือก" },
+  ]);
+  const [dataModelID, setDataModelID] = useState([
+    { id: 0, value: "กรุณาเลือก" },
+  ]);
+  const [dataProductID, setdataProductID] = useState([
+    { id: 0, value: "กรุณาเลือก" },
+  ]);
   const [typeId, setTypeId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [modelId, setModelId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [productCode, setProduct] = useState([{ id: 0, value: "กรุณาเลือก" }]);
@@ -54,23 +60,31 @@ export default function ProductData({
   const handleScan = () => {
     setTriggleBarcode(true);
   };
-  const handleChangInputBarcode = (e) => {
+  const handleChangInputBarcode = (e, id, ModelId, TypeId, BarCode) => {
+    console.log(id, ModelId, TypeId, BarCode);
+    console.log(
+      "find",
+      dataTypeID.find((d) => d.id === TypeId)
+    );
     handleChangInput(e);
-    console.log("test");
-    http
-      .post(`/api/Product/GetProductTop20ByBarcode?Barcode=${e.target.value}`)
-      .then((res) => {
-        console.log(res);
-        if (res.data.message === "Success!") {
-          setTypeId([
-            dataTypeID.find((d) => d.id === res.data.data[0].fK_Type_ID),
-          ]);
-          setProduct([dataProductID.find((d) => d.id === res.data.data[0].id)]);
-          setModelId([
-            dataModelID.find((d) => d.id === res.data.data[0].fK_Model_ID),
-          ]);
-        }
-      });
+    setTypeId([dataTypeID.find((d) => d.id === TypeId)]);
+    setProduct([dataProductID.find((d) => d.id === id)]);
+    setModelId([dataModelID.find((d) => d.id === ModelId)]);
+
+    // http
+    //   .post(`/api/Product/GetProductByBarcode?Barcode=${BarCode}`)
+    //   .then((res) => {
+    //     console.log(res);
+    //     if (res.data.message === "Success!") {
+    //       setTypeId([
+    //         dataTypeID.find((d) => d.id === res.data.data.fK_Type_ID),
+    //       ]);
+    //       setProduct([dataProductID.find((d) => d.id === res.data.data.id)]);
+    //       setModelId([
+    //         dataModelID.find((d) => d.id === res.data.data.fK_Model_ID),
+    //       ]);
+    //     }
+    //   });
   };
   const handleGetFile = (file, index) => {
     handleGetFileForm(file, index);

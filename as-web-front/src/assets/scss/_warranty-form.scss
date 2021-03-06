@@ -27,11 +27,8 @@
       cursor: pointer;
       &:hover {
         svg {
-          fill: black;
+          fill: #f1c400;
         }
-      }
-      &.active {
-        fill: black;
       }
       .motion-text {
         font-size: 20px;
@@ -44,12 +41,12 @@
       border: none;
     }
   }
-  .cost-warranty-detail {
-    border-top: 3px solid $secondary;
-    margin-left: -15px;
-    margin-right: -15px;
-    .title {
-      font-weight: bold;
-    }
+}
+.cost-warranty-detail {
+  border-top: 3px solid #f1c400;
+  margin-left: -15px;
+  margin-right: -15px;
+  .title {
+    font-weight: bold;
   }
 }

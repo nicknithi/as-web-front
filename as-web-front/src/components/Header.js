@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useEffect } from "react";
-import NavberDesktop from "./Navbar/NavberDesktop";
+import NavbarDesktop from "./Navbar/NavbarDesktop";
+import NavbarMobile from "./Navbar/NavbarMobile";
 import axios from "axios";
 export default function header() {
   const Navbar = [
@@ -120,7 +121,8 @@ export default function header() {
   useEffect(() => {});
   return (
     <div>
-      <NavberDesktop NavbarItem={Navbar} />
+      <NavbarDesktop NavbarItem={Navbar} />
+      <NavbarMobile />
     </div>
   );
 }

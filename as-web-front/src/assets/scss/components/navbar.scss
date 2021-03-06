@@ -1,10 +1,11 @@
 @import "../app.scss";
 @import "../../fonts/stylesheet.css";
 .as-navbar-desktop {
-  width: $container-lg-max-width;
+  max-width: $container-lg-max-width;
   .navbar-header {
     height: 9rem;
     .logo {
+      width: 300px;
       img {
         position: absolute;
         top: 50%;
@@ -63,6 +64,18 @@
           }
         }
       }
+    }
+  }
+}
+
+.navbar-mobile {
+  height: 3.75rem;
+  width: 100%;
+  background-color: white;
+  a {
+    img {
+      max-width: 31%;
+      max-height: 90%;
     }
   }
 }

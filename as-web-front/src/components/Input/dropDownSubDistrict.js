@@ -17,7 +17,6 @@ export default function DropDownSubDistrict({ data, handleEvent }) {
         aria-label="Default select example"
         onChange={handleSelect}
       >
-        <option selected>Open this select menu</option>
         {data.map((item, index) => (
           <option key={index} value={item.id}>
             {item.sub_District_Name}

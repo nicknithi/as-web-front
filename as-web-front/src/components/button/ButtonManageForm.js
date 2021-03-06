@@ -6,7 +6,7 @@ export default function ButtonManageForm({
   deleteFormProduct,
 }) {
   return (
-    <div className="manage-form text-center mt-3">
+    <div className="manage-form text-center mt-3 d-flex justify-content-center">
       <button
         className="mr-3 delete-product font-weight-bold"
         type="button"
