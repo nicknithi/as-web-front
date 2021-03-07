@@ -1,6 +1,10 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-export default function testApi() {
+export default function TestApi() {
+  const [name, setName] = useState("");
+  useEffect(() => {
+    console.log(name);
+  }, [name]);
   let dataMock = {
     Customer_Code: "ทดสอบรับประกัน",
     Customer_Firstname: "ทดสอบรับประกัน1",
@@ -81,8 +85,12 @@ export default function testApi() {
         console.log(res);
       });
   };
+  const test = () => {
+    setName("Nick");
+  };
   return (
     <div>
+      <button onClick={test}>tesat</button>
       <form onSubmit={handleSubmit}>
         <label for="upload-photo">Browse...</label>
         <input
@@ -91,6 +99,11 @@ export default function testApi() {
           id="upload-photo"
           index="1"
           onChange={handleSelectFile}
+        />
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
         <button>submit</button>
       </form>

@@ -5,8 +5,8 @@ class googleMap extends Component {
     showingInfoWindow: false,
     activeMarker: {},
     selectedPlace: {},
-    position: { lat: 15.87, lng: 100.9925 },
-    center: { lat: 15.87, lng: 100.9925 },
+    position: { lat: this.props.LagLong.lat, lng: this.props.LagLong.lng },
+    center: { lat: this.props.LagLong.lat, lng: this.props.LagLong.lng },
   };
   onMarkerClick = (props, marker, e) =>
     this.setState({
@@ -25,14 +25,11 @@ class googleMap extends Component {
         lng: clickEvent.latLng.lng(),
       },
     });
-    document.getElementById(
-      "Customer_Latitude"
-    ).value = clickEvent.latLng.lat();
-    this.props.handleMap(document.getElementById("Customer_Latitude"));
-    document.getElementById(
-      "Customer_Longtitude"
-    ).value = clickEvent.latLng.lng();
-    this.props.handleMap(document.getElementById("Customer_Longtitude"));
+    this.props.setFormDataWarranty({
+      ...this.props.FormDataWarranty,
+      Customer_Latitude: clickEvent.latLng.lat(),
+      Customer_Longtitude: clickEvent.latLng.lng(),
+    });
   };
   render() {
     return (

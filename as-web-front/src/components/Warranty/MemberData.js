@@ -1,34 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import http from "../../axios";
-export default function MemberData({ handleChangInput, handleGetMemberData }) {
-  const [defultData, setDefultData] = useState({
-    Customer_Firstname: "",
-    Customer_Lastname: "",
-    Customer_Tel: "",
-    Customer_Mobile: "",
-    Customer_Email: "",
-  });
-  const [firstname, setFirstname] = useState("");
-  const getDataMember = (e) => {
-    handleChangInput(e);
-    handleGetMemberData(e.target.value);
-    http
-      .post(
-        `/api/Customer/GetDataCustomerByCode?Customer_Code=${e.target.value}`
-      )
-      .then((res) => {
-        if (res.data.message == "Success!") {
-          console.log("res1", res);
-          const data = res.data.data;
-          defultData.Customer_Firstname = data.customer_Name;
-          defultData.Customer_Lastname = data.customer_Surname;
-          defultData.Customer_Tel = data.customer_Tel;
-          defultData.Customer_Mobile = data.customer_Phone;
-          defultData.Customer_Email = data.customer_Email;
-          setDefultData(defultData);
-          setFirstname(data.customer_Name);
-        }
-      });
+export default function MemberData({
+  FormDataWarranty,
+  setFormDataWarranty,
+  handleSearchByCustomerCode,
+}) {
+  const changeCode = (e) => {
+    handleSearchByCustomerCode(e.target.value);
+    const data = { ...FormDataWarranty };
+    setFormDataWarranty({
+      ...data,
+      Customer_Code: e.target.value,
+    });
   };
   return (
     <div className="mt-3">
@@ -41,7 +24,7 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
               type="text"
               className="as-input"
               name="Customer_Code"
-              onChange={getDataMember}
+              onChange={(e) => changeCode(e)}
             />
           </div>
         </div>
@@ -53,9 +36,13 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
               id="name"
               name="Customer_Firstname"
               className="as-input"
-              defaultValue={defultData.Customer_Firstname}
-              onChange={handleChangInput}
-              Customer_Firstname
+              value={FormDataWarranty.Customer_Firstname}
+              onChange={(e) =>
+                setFormDataWarranty({
+                  ...FormDataWarranty,
+                  Customer_Firstname: e.target.value,
+                })
+              }
             />
           </div>
           <div className="col-md-6">
@@ -63,10 +50,15 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
             <input
               type="textarea"
               id="surname"
-              defaultValue={defultData.Customer_Lastname}
               className="as-input"
               name="Customer_Lastname"
-              onChange={handleChangInput}
+              value={FormDataWarranty.Customer_Lastname}
+              onChange={(e) =>
+                setFormDataWarranty({
+                  ...FormDataWarranty,
+                  Customer_Lastname: e.target.value,
+                })
+              }
             />
           </div>
         </div>
@@ -76,10 +68,15 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
             <input
               type="textarea"
               id="tel"
-              defaultValue={defultData.Customer_Tel}
               className="as-input"
               name="Customer_Tel"
-              onChange={handleChangInput}
+              value={FormDataWarranty.Customer_Tel}
+              onChange={(e) =>
+                setFormDataWarranty({
+                  ...FormDataWarranty,
+                  Customer_Tel: e.target.value,
+                })
+              }
             />
           </div>
           <div className="col-md-6">
@@ -87,10 +84,15 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
             <input
               type="textarea"
               id="phone"
-              defaultValue={defultData.Customer_Mobile}
               className="as-input"
               name="Customer_Mobile"
-              onChange={handleChangInput}
+              value={FormDataWarranty.Customer_Mobile}
+              onChange={(e) =>
+                setFormDataWarranty({
+                  ...FormDataWarranty,
+                  Customer_Mobile: e.target.value,
+                })
+              }
               required
             />
           </div>
@@ -103,10 +105,15 @@ export default function MemberData({ handleChangInput, handleGetMemberData }) {
             <input
               type="textarea"
               id="email"
-              defaultValue={defultData.Customer_Email}
               className="as-input"
               name="Customer_Email"
-              onChange={handleChangInput}
+              value={FormDataWarranty.Customer_Email}
+              onChange={(e) =>
+                setFormDataWarranty({
+                  ...FormDataWarranty,
+                  Customer_Email: e.target.value,
+                })
+              }
             />
           </div>
         </div>

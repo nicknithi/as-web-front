@@ -29,9 +29,9 @@ function FormWarranty(prop) {
   const [dataTypeID, setDataTypeId] = useState([]);
   const [dataModelID, setDataModelID] = useState([]);
   const [dataProductID, setdataProductID] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
     //GetProvince
-    http
+    await http
       .post("/api/Master/GetProvince")
       .then((res) => {
         //console.log("GetProvince123", res.data.data);
@@ -40,7 +40,7 @@ function FormWarranty(prop) {
       .catch((e) => {});
 
     //GetDistrict
-    http
+    await http
       .post("/api/Master/GetDistrict")
       .then((res) => {
         //console.log("GetProvince123", res.data.data);
@@ -49,7 +49,7 @@ function FormWarranty(prop) {
       .catch((e) => {});
 
     //GetDistrict
-    http
+    await http
       .post("/api/Master/GetSubDistrict")
       .then((res) => {
         //console.log("GetProvince123", res.data.data);
@@ -119,7 +119,49 @@ function FormWarranty(prop) {
     Score: null,
     Description: null,
   });
-
+  const handleSearchByCustomerCode = async (code) => {
+    await http
+      .post(`/api/Customer/GetDataCustomerByCode?Customer_Code=${code}`)
+      .then((res) => {
+        if (res.data.message == "Success!") {
+          const data = res.data.data;
+          const oldData = { ...FormDataWarranty };
+          console.log("old", oldData);
+          console.log("new", data);
+          oldData.Customer_Firstname = data.customer_Name;
+          oldData.Customer_Lastname = data.customer_Surname;
+          oldData.Customer_Tel = data.customer_Tel;
+          oldData.Customer_Mobile = data.customer_Phone;
+          oldData.Customer_Email = data.customer_Email;
+          oldData.Customer_Address = data.customer_Address;
+          oldData.Customer_Province = data.fK_Province_ID;
+          oldData.Customer_District = data.fK_District_ID;
+          oldData.Customer_SubDistrict = data.fK_Sub_District_ID;
+          oldData.Customer_ZipCode = data.customer_ZIP_Code;
+          oldData.Customer_Latitude = data.customer_Latitude;
+          oldData.Customer_Longtitude = data.customer_Longitude;
+          setFormDataWarranty(oldData);
+        } else {
+          const oldData = { ...FormDataWarranty };
+          oldData.Customer_Firstname = "";
+          oldData.Customer_Lastname = "";
+          oldData.Customer_Tel = "";
+          oldData.Customer_Mobile = "";
+          oldData.Customer_Email = "";
+          oldData.Customer_Address = "";
+          oldData.Customer_Province = "";
+          oldData.Customer_District = "";
+          oldData.Customer_SubDistrict = "";
+          oldData.Customer_ZipCode = "";
+          oldData.Customer_Latitude = "";
+          oldData.Customer_Longtitude = "";
+          setFormDataWarranty(oldData);
+        }
+      });
+  };
+  useEffect(() => {
+    console.log(FormDataWarranty);
+  }, [FormDataWarranty]);
   const handleChangInput = (e) => {
     if (e.target) {
       FormDataWarranty[e.target.name] = e.target.value;
@@ -307,6 +349,13 @@ function FormWarranty(prop) {
           FormDataWarranty.Customer_Mobile = data.customer_Phone;
           FormDataWarranty.Customer_Email = data.customer_Email;
           setFormDataWarranty(FormDataWarranty);
+        } else {
+          FormDataWarranty.Customer_Firstname = "";
+          FormDataWarranty.Customer_Lastname = "";
+          FormDataWarranty.Customer_Tel = "";
+          FormDataWarranty.Customer_Mobile = "";
+          FormDataWarranty.Customer_Email = "";
+          setFormDataWarranty(FormDataWarranty);
         }
       });
   };
@@ -340,17 +389,19 @@ function FormWarranty(prop) {
     <div>
       {/* <button onClick={test}>teste</button> */}
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
-        <MemberData
-          handleChangInput={handleChangInput}
-          handleGetMemberData={handleGetMemberData}
-          defultData={FormDataWarranty}
-        />
         <form onSubmit={handleSubmit}>
+          <MemberData
+            FormDataWarranty={FormDataWarranty}
+            setFormDataWarranty={setFormDataWarranty}
+            handleSearchByCustomerCode={handleSearchByCustomerCode}
+          />
           <AddressSetting
             Province={Province}
             District={District}
             SubDistrict={SubDistrict}
             handleChangInput={handleChangInput}
+            FormDataWarranty={FormDataWarranty}
+            setFormDataWarranty={setFormDataWarranty}
           />
           {uiProductForm()}
           <ButtonManageForm
