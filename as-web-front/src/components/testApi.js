@@ -70,7 +70,7 @@ export default function TestApi() {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    formData.append("datas", JSON.stringify(dataMock2));
+    formData.append("datas", JSON.stringify(dataMock));
     axios
       .post(
         "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",

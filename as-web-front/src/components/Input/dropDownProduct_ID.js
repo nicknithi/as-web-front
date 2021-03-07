@@ -10,13 +10,13 @@ export default function DropDownProduct_ID({ data, handleEvent, index }) {
     handleEvent(e);
   };
   useEffect(() => {
-    let x = document.createElement("INPUT");
-    x.setAttribute("type", "text");
-    x.setAttribute("name", "Product_ID");
-    x.setAttribute("index", index);
-    x.setAttribute("value", data[0].id);
-    handleEvent(x);
-    setTitleState(data[0].value);
+    // let x = document.createElement("INPUT");
+    // x.setAttribute("type", "text");
+    // x.setAttribute("name", "Product_ID");
+    // x.setAttribute("index", index);
+    // x.setAttribute("value", data[0].id);
+    // handleEvent(x);
+    // setTitleState(data[0].value);
   }, [data]);
   return (
     <div className="position-relative as-dropdown">

@@ -14,7 +14,7 @@ import axios from "axios";
 import dataMockD from "../../dataMock";
 import { useHistory } from "react-router-dom";
 import cloneDeep from "lodash.clonedeep";
-function FormWarranty(prop) {
+function FormWarranty({ Confirm }) {
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
   //let formtest = new FormData()
   const [Province, setProvince] = useState([]);
@@ -162,6 +162,9 @@ function FormWarranty(prop) {
   useEffect(() => {
     console.log(FormDataWarranty);
   }, [FormDataWarranty]);
+  useEffect(() => {
+    console.log("FormDataProduct", FormDataProduct);
+  }, [FormDataProduct]);
   const handleChangInput = (e) => {
     if (e.target) {
       FormDataWarranty[e.target.name] = e.target.value;
@@ -196,13 +199,16 @@ function FormWarranty(prop) {
         handleChangInput={handleInputProduct}
         handleGetFileForm={handleGetFile}
         index={index}
+        FormDataProduct={FormDataProduct}
+        setFormDataProduct={setFormDataProduct}
+        Province={Province}
       />
     ));
   };
   const addProductForm = () => {
     setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
-    const tempProduct = FormDataProduct;
-    FormDataProduct.push({
+    const tempProduct = [...FormDataProduct];
+    tempProduct.push({
       Purchase_Province: tempProduct[tempProduct.length - 1].Purchase_Province,
       Purchase_Date: tempProduct[tempProduct.length - 1].Purchase_Date,
       Store_ID: tempProduct[tempProduct.length - 1].Store_ID,
@@ -216,7 +222,7 @@ function FormWarranty(prop) {
       Product_Code_Other: null,
       QTY: null,
     });
-    setFormDataProduct(FormDataProduct);
+    setFormDataProduct(tempProduct);
     FileWaranty.push([]);
     setFileWaranty(FileWaranty);
 
@@ -394,6 +400,7 @@ function FormWarranty(prop) {
             FormDataWarranty={FormDataWarranty}
             setFormDataWarranty={setFormDataWarranty}
             handleSearchByCustomerCode={handleSearchByCustomerCode}
+            Confirm={Confirm}
           />
           <AddressSetting
             Province={Province}

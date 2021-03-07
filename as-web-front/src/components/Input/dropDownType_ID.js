@@ -9,14 +9,15 @@ export default function DropDownType_ID({ data, handleEvent, index }) {
     handleEvent(e);
   };
   useEffect(() => {
-    let x = document.createElement("INPUT");
-    x.setAttribute("type", "text");
-    x.setAttribute("name", "Type_ID");
-    x.setAttribute("index", index);
-    x.setAttribute("value", data[0].id);
-    handleEvent(x);
+    // let x = document.createElement("INPUT");
+    // x.setAttribute("type", "text");
+    // x.setAttribute("name", "Type_ID");
+    // x.setAttribute("index", index);
+    // x.setAttribute("value", data[0].id);
+    // handleEvent(x);
 
-    setTitleState(data[0].value);
+    // setTitleState(data[0].value);
+    console.log(data);
   }, [data]);
   return (
     <div className="position-relative as-dropdown">

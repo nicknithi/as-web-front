@@ -1,13 +1,41 @@
 import React, { useState, useEffect } from "react";
 import dataMock from "../../dataMock";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function DropDownStore_ID({ data, handleEvent, index }) {
+export default function DropDownStore_ID({
+  data,
+  handleEvent,
+  index,
+  FormDataProduct,
+  setFormDataProduct,
+}) {
   data = dataMock.Purchase_Province;
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
-    setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
-    handleEvent(e);
+    if (e.target) {
+      setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
+      const dataSet = [...FormDataProduct];
+      dataSet[index].Store_ID = e.target.value;
+      setFormDataProduct(dataSet);
+    }
+    //handleEvent(e);
   };
+  useEffect(async () => {
+    const dataTest = await data;
+    if (dataTest[0]) {
+      if (FormDataProduct[index].Store_ID) {
+        const findData = dataTest.find(
+          (a) => a.id === parseInt(FormDataProduct[index].Store_ID)
+        );
+        if (findData !== undefined) {
+          setTitleState(findData.value);
+        } else {
+          setTitleState("กรุณาเลือก");
+        }
+      } else {
+        setTitleState("กรุณาเลือก");
+      }
+    }
+  }, [FormDataProduct[index].Store_ID]);
   useEffect(() => {
     setTitleState(data[0].value);
   }, [data]);
@@ -18,6 +46,7 @@ export default function DropDownStore_ID({ data, handleEvent, index }) {
         aria-label="Default select example"
         name="Store_ID"
         index={index}
+        value={FormDataProduct[index].Store_ID}
         onChange={handleSelect}
       >
         <option selected>Open this select menu</option>

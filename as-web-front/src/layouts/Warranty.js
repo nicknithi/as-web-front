@@ -148,7 +148,7 @@ export default function Warranty() {
             </PerfectScrollbar>
           </div> */}
         </div>
-        {Confirm && <FormWarranty />}
+        {Confirm && <FormWarranty Confirm={Confirm} />}
       </div>
     </div>
   );

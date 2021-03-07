@@ -12,12 +12,15 @@ import DropDownModelId from "../Input/dropDownModel_ID";
 import dataMock from "../../dataMock";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/scss/components/input/dataPicker.scss";
+import InputProcuctCode from "../Input/inputProcuctCode";
 import http from "../../axios";
 export default function ProductData({
   handleChangInput,
   index,
-  FormDataProduct,
   handleGetFileForm,
+  FormDataProduct,
+  setFormDataProduct,
+  Province,
 }) {
   useEffect(() => {
     http.post("/api/Product/GetAllProduct").then((res) => {
@@ -60,6 +63,15 @@ export default function ProductData({
   const handleScan = () => {
     setTriggleBarcode(true);
   };
+  const getStoreByProvince = async (Province_id) => {
+    await http
+      .post("/api/Product/GetStoreByName", {
+        Lang_ID: 1,
+        Province_ID: Province_id,
+        Store_Name: "string",
+      })
+      .then((res) => {});
+  };
   const handleChangInputBarcode = (e, id, ModelId, TypeId, BarCode) => {
     console.log(id, ModelId, TypeId, BarCode);
     console.log(
@@ -67,9 +79,18 @@ export default function ProductData({
       dataTypeID.find((d) => d.id === TypeId)
     );
     handleChangInput(e);
-    setTypeId([dataTypeID.find((d) => d.id === TypeId)]);
-    setProduct([dataProductID.find((d) => d.id === id)]);
-    setModelId([dataModelID.find((d) => d.id === ModelId)]);
+    const type = dataTypeID.find((d) => d.id === TypeId);
+    if (type !== undefined) {
+      setTypeId([type]);
+    }
+    const Product = dataProductID.find((d) => d.id === id);
+    if (Product !== undefined) {
+      setProduct([Product]);
+    }
+    const Model = dataModelID.find((d) => d.id === ModelId);
+    if (Model !== undefined) {
+      setModelId([Model]);
+    }
 
     // http
     //   .post(`/api/Product/GetProductByBarcode?Barcode=${BarCode}`)
@@ -90,10 +111,12 @@ export default function ProductData({
     handleGetFileForm(file, index);
   };
   const handleSetDateTime = (d, i) => {
-    console.log(d, i);
+    const dataSet = [...FormDataProduct];
+    dataSet[i].Purchase_Date = d;
+    setFormDataProduct(dataSet);
     document.getElementById("Purchase_Date").value = formatDate(d);
     document.getElementById("Purchase_Date").attributes.index.value = i;
-    handleChangInput(document.getElementById("Purchase_Date"));
+    // handleChangInput(document.getElementById("Purchase_Date"));
     setStartDate(d);
   };
   function formatDate(date) {
@@ -130,8 +153,11 @@ export default function ProductData({
                 required
               /> */}
               <DropDownPurchaseProvince
+                data={Province}
                 index={index}
-                handleEvent={handleChangInput}
+                handleEvent={getStoreByProvince}
+                FormDataProduct={FormDataProduct}
+                setFormDataProduct={setFormDataProduct}
               />
             </div>
             <div className="col-md-6">
@@ -145,7 +171,7 @@ export default function ProductData({
               />
               <div className="row px-3 data-picker">
                 <DatePicker
-                  selected={startDate}
+                  selected={FormDataProduct[index].Purchase_Date}
                   onChange={(date) => handleSetDateTime(date, index)}
                 />
               </div>
@@ -164,7 +190,12 @@ export default function ProductData({
                 className="as-input"
                 required
               /> */}
-              <DropDownStoreId index={index} handleEvent={handleChangInput} />
+              <DropDownStoreId
+                index={index}
+                handleEvent={handleChangInput}
+                FormDataProduct={FormDataProduct}
+                setFormDataProduct={setFormDataProduct}
+              />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">
@@ -175,7 +206,12 @@ export default function ProductData({
                 className="as-input"
                 index={index}
                 name="Store_Name_Other"
-                onChange={handleChangInput}
+                onChange={(e) =>
+                  setFormDataProduct(
+                    ([...FormDataProduct][index].Store_Name_Other =
+                      e.target.value)
+                  )
+                }
                 disabled={FormDataProduct[index].Store_Name_Other}
                 value={FormDataProduct[index].Store_Name_Other}
               />
@@ -249,10 +285,14 @@ export default function ProductData({
                 onChange={handleChangInput}
                 required
               /> */}
-              <DropDownProductId
+              {/* <DropDownProductId
                 index={index}
                 data={productCode}
                 handleEvent={handleChangInput}
+              /> */}
+              <InputProcuctCode
+                handleEvent={handleChangInputBarcode}
+                index={index}
               />
             </div>
           </div>

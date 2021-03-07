@@ -4,6 +4,7 @@ export default function MemberData({
   FormDataWarranty,
   setFormDataWarranty,
   handleSearchByCustomerCode,
+  Confirm,
 }) {
   const changeCode = (e) => {
     handleSearchByCustomerCode(e.target.value);
@@ -24,6 +25,7 @@ export default function MemberData({
               type="text"
               className="as-input"
               name="Customer_Code"
+              // disabled={Confirm}
               onChange={(e) => changeCode(e)}
             />
           </div>

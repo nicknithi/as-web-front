@@ -121,9 +121,7 @@ function AddressSetting({
           p.fK_District_ID === parseInt(e.target.value) &&
           p.fK_Province_ID === parseInt(tempProvince)
       );
-      console.log("out", SubDistrict);
       if (data.length) {
-        console.log("in", data);
         setSubDistrictDP([
           {
             id: "",
