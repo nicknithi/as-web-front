@@ -10,6 +10,7 @@ export default function InputProcuctCode({
 }) {
   const manualInput = (e) => {
     if (e.length) {
+      handleEvent(e[0].fK_Model_ID, e[0].fK_Type_ID, e[0].product_Code);
     } else {
     }
   };

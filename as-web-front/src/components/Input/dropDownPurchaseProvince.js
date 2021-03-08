@@ -17,20 +17,20 @@ export default function DropDownPurchaseProvince({
       setFormDataProduct(dataSet);
       const title = data.find((a) => a.id === parseInt(e.target.value))
         .province_Name;
-      console.log(title);
+      console.log("set titel province ", title);
       setTitleState(title);
       handleEvent(e.target.value);
     }
   };
-  useEffect(async () => {
-    const dataTest = await data;
+  useEffect(() => {
+    const dataTest = data;
     if (dataTest[0]) {
       if (FormDataProduct[index].Purchase_Province) {
         const findData = dataTest.find(
           (a) => a.id === parseInt(FormDataProduct[index].Purchase_Province)
         );
         if (findData !== undefined) {
-          setTitleState(findData.value);
+          setTitleState(findData.province_Name);
         } else {
           setTitleState("กรุณาเลือก");
         }

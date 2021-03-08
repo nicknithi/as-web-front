@@ -16,8 +16,8 @@ export default function DropDownType_ID({ data, handleEvent, index }) {
     // x.setAttribute("value", data[0].id);
     // handleEvent(x);
 
-    // setTitleState(data[0].value);
-    console.log(data);
+    setTitleState(data[0].value);
+    console.log("testes 55", data);
   }, [data]);
   return (
     <div className="position-relative as-dropdown">

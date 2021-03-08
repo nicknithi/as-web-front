@@ -306,6 +306,7 @@ function FormWarranty({ Confirm }) {
 
       return { ...item, ...FormDataWarranty };
     });
+    console.log("555666777888", dataFromLast);
     setLastDataComToConfirm(cloneDeep(dataFromLast));
     // fix data show for form confirm
     const dataLoop = dataFromLast;

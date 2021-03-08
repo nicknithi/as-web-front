@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import dataMock from "../../dataMock";
 import "../../assets/scss/components/input/dropdown.scss";
+import http from "../../axios";
+
 export default function DropDownStore_ID({
   data,
   handleEvent,
@@ -8,7 +10,7 @@ export default function DropDownStore_ID({
   FormDataProduct,
   setFormDataProduct,
 }) {
-  data = dataMock.Purchase_Province;
+  // data = dataMock.Purchase_Province;
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     if (e.target) {

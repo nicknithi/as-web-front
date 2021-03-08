@@ -11,6 +11,7 @@ export default function InputProductName({
 }) {
   const manualInput = (e) => {
     if (e.length) {
+      handleEvent(e[0].fK_Model_ID, e[0].fK_Type_ID, e[0].product_Code);
     } else {
     }
   };
@@ -22,30 +23,25 @@ export default function InputProductName({
     setIsLoading(true);
 
     http
-      .post(`/api/Product/GetStoreByName`, {
+      .post(`/api/Product/GetProductTop20ByName`, {
         Lang_ID: 1,
-        Province_ID: parseInt(FormDataProduct[index].Purchase_Province),
-        Store_Name: query,
+        Product_Name: query,
       })
       .then((res) => {
         console.log(res);
         if (res.data.message === "Success!") {
           console.log(res.data.data);
-
-          //   const productID = [...FormDataProduct];
-          //   productID[index].Product_ID = query;
-          //   setFormDataProduct(productID);
-          //   const option = res.data.data.map((item, index) => {
-          //     return {
-          //       id: item.id,
-          //       value: item.product_Name,
-          //       index: index,
-          //       fK_Model_ID: item.fK_Model_ID,
-          //       fK_Type_ID: item.fK_Type_ID,
-          //       barcode: item.product_Barcode,
-          //     };
-          //   });
-          //   setOptions(option);
+          const option = res.data.data.map((item, index) => {
+            return {
+              id: item.id,
+              value: item.product_Name,
+              index: index,
+              fK_Model_ID: item.fK_Model_ID,
+              fK_Type_ID: item.fK_Type_ID,
+              product_Code: item.product_Code,
+            };
+          });
+          setOptions(option);
           setIsLoading(false);
         } else {
           console.log(FormDataProduct[index].Purchase_Province);
@@ -59,28 +55,12 @@ export default function InputProductName({
   useEffect(() => {}, []);
   return (
     <div className="input-barcode">
-      {/* <input
-        type="text"
-        name="Barcode_Number"
-        id="Barcode_Number"
-        className="as-input"
-        index={index}
-        onChange={manualInput}
-      /> */}
-      <input
-        type="hidden"
-        name="Barcode_Number"
-        id="Barcode_Number"
-        index={index}
-        value=""
-      />
       <AsyncTypeahead
         filterBy={filterBy}
         id="async-example"
         isLoading={isLoading}
-        labelKey="barcode"
+        labelKey="value"
         minLength={3}
-        disabled={!FormDataProduct[index].Purchase_Province}
         onSearch={handleSearch}
         onChange={manualInput}
         options={options}
@@ -96,7 +76,7 @@ export default function InputProductName({
                 width: "24px",
               }}
             /> */}
-            <span>{option.barcode}</span>
+            <span>{option.value}</span>
           </Fragment>
         )}
       />

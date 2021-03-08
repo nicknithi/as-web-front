@@ -69,6 +69,7 @@ export default function ProductData({
   const [modelId, setModelId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [productCode, setProduct] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [startDate, setStartDate] = useState(new Date());
+  const [storeData, setStoreData] = useState([{ id: "", value: "กรุณาเลือก" }]);
   const handleScan = () => {
     setTriggleBarcode(true);
   };
@@ -77,9 +78,33 @@ export default function ProductData({
       .post("/api/Product/GetStoreByName", {
         Lang_ID: 1,
         Province_ID: Province_id,
-        Store_Name: "string",
+        Store_Name: "",
       })
-      .then((res) => {});
+      .then((res) => {
+        const storeDataSet = res.data.data.map((item, index) => {
+          return {
+            id: item.id,
+            value: `${item.store_Name} (${item.store_Branch})`,
+          };
+        });
+        const dpStoreData = [{ id: "", value: "กรุณาเลือก" }, ...storeDataSet];
+        setStoreData(dpStoreData);
+      });
+  };
+  const handleChangInputProductCode = (ModelId, TypeId, product_code) => {
+    const ProductCodeSet = [...FormDataProduct];
+    ProductCodeSet[index].Model_ID = ModelId;
+    ProductCodeSet[index].Type_ID = TypeId;
+    ProductCodeSet[index].Product_code = product_code;
+    setFormDataProduct(ProductCodeSet);
+    const type = dataTypeID.find((d) => d.id === TypeId);
+    if (type !== undefined) {
+      setTypeId([type]);
+    }
+    const Model = dataModelID.find((d) => d.id === ModelId);
+    if (Model !== undefined) {
+      setModelId([Model]);
+    }
   };
   const handleChangInputBarcode = async (
     e,
@@ -93,6 +118,8 @@ export default function ProductData({
     const barCodeSet = [...FormDataProduct];
     barCodeSet[index].Barcode_Number = BarCode;
     barCodeSet[index].Product_ID = id;
+    barCodeSet[index].Model_ID = ModelId;
+    barCodeSet[index].Type_ID = TypeId;
     barCodeSet[index].Product_code = product_code;
     setFormDataProduct(barCodeSet);
 
@@ -107,10 +134,10 @@ export default function ProductData({
     if (type !== undefined) {
       setTypeId([type]);
     }
-    const Product = dataProductID.find((d) => d.id === id);
-    if (Product !== undefined) {
-      setProduct([Product]);
-    }
+    // const Product = dataProductID.find((d) => d.id === id);
+    // if (Product !== undefined) {
+    //   setProduct([Product]);
+    // }
     const Model = dataModelID.find((d) => d.id === ModelId);
     if (Model !== undefined) {
       setModelId([Model]);
@@ -140,7 +167,11 @@ export default function ProductData({
   }
 
   const [triggleBarcode, setTriggleBarcode] = useState(false);
-
+  const Store_Name_Other = (e) => {
+    const Store_Name_OtherSet = [...FormDataProduct];
+    Store_Name_OtherSet[index].Store_Name_Other = e.target.value;
+    setFormDataProduct(Store_Name_OtherSet);
+  };
   return (
     <div>
       <div className="mt-3">
@@ -199,6 +230,7 @@ export default function ProductData({
                 required
               /> */}
               <DropDownStoreId
+                data={storeData}
                 index={index}
                 handleEvent={handleChangInput}
                 FormDataProduct={FormDataProduct}
@@ -214,13 +246,8 @@ export default function ProductData({
                 className="as-input"
                 index={index}
                 name="Store_Name_Other"
-                onChange={(e) =>
-                  setFormDataProduct(
-                    ([...FormDataProduct][index].Store_Name_Other =
-                      e.target.value)
-                  )
-                }
-                disabled={FormDataProduct[index].Store_Name_Other}
+                onChange={(e) => Store_Name_Other(e)}
+                // disabled={FormDataProduct[index].Store_Name_Other}
                 value={FormDataProduct[index].Store_Name_Other}
               />
             </div>
@@ -282,7 +309,7 @@ export default function ProductData({
                 handleEvent={handleChangInput}
               /> */}
               <InputProcuctCode
-                handleEvent={handleChangInputBarcode}
+                handleEvent={handleChangInputProductCode}
                 index={index}
                 FormDataProduct={FormDataProduct}
               />
@@ -290,6 +317,7 @@ export default function ProductData({
             <div className="col-md-6">
               <label className="font-weight-bold">ชื่อสินค้า</label>
               <InputProcuctName
+                handleEvent={handleChangInputProductCode}
                 index={index}
                 FormDataProduct={FormDataProduct}
                 setFormDataProduct={setFormDataProduct}
