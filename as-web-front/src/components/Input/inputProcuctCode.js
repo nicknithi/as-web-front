@@ -1,15 +1,28 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useReducer } from "react";
 import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
 import http from "../../axios";
-export default function InputProcuctCode({ handleEvent, index }) {
+export default function InputProcuctCode({
+  handleEvent,
+  index,
+  FormDataProduct,
+}) {
   const manualInput = (e) => {
     if (e.length) {
     } else {
     }
   };
-
+  const [PD, setPD] = useState([
+    {
+      id: null,
+      value: null,
+      index: null,
+      fK_Model_ID: null,
+      fK_Type_ID: null,
+      product_Code: "",
+    },
+  ]);
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
@@ -23,7 +36,6 @@ export default function InputProcuctCode({ handleEvent, index }) {
       .then((res) => {
         console.log(res);
         if (res.data.message === "Success!") {
-          console.log(res.data.data);
           const option = res.data.data.map((item, index) => {
             return {
               id: item.id,
@@ -31,7 +43,7 @@ export default function InputProcuctCode({ handleEvent, index }) {
               index: index,
               fK_Model_ID: item.fK_Model_ID,
               fK_Type_ID: item.fK_Type_ID,
-              barcode: item.product_Barcode,
+              product_Code: item.product_Code,
             };
           });
           setOptions(option);
@@ -44,7 +56,26 @@ export default function InputProcuctCode({ handleEvent, index }) {
       });
   };
   const filterBy = () => true;
-  useEffect(() => {}, []);
+  function reducer(state, action) {
+    switch (action.type) {
+      case "increment":
+        if (FormDataProduct[index].Product_code) {
+          const OPD = [...PD];
+          OPD[0].product_Code = FormDataProduct[index].Product_code;
+          setPD(OPD);
+        }
+
+        break;
+      default:
+        setPD("");
+        break;
+    }
+  }
+  const [state, dispatch] = useReducer(reducer, "");
+  useEffect(() => {
+    dispatch({ type: "increment" });
+    console.log("test");
+  }, [FormDataProduct]);
   return (
     <div className="input-barcode">
       {/* <input
@@ -65,8 +96,9 @@ export default function InputProcuctCode({ handleEvent, index }) {
       <AsyncTypeahead
         filterBy={filterBy}
         id="async-example"
+        defaultSelected={PD}
         isLoading={isLoading}
-        labelKey="barcode"
+        labelKey="product_Code"
         minLength={3}
         onSearch={handleSearch}
         onChange={manualInput}
@@ -83,7 +115,7 @@ export default function InputProcuctCode({ handleEvent, index }) {
                 width: "24px",
               }}
             /> */}
-            <span>{option.barcode}</span>
+            <span>{option.product_Code}</span>
           </Fragment>
         )}
       />

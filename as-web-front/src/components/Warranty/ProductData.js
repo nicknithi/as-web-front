@@ -13,6 +13,7 @@ import dataMock from "../../dataMock";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/scss/components/input/dataPicker.scss";
 import InputProcuctCode from "../Input/inputProcuctCode";
+import InputProcuctName from "../Input/inputProductName";
 import http from "../../axios";
 export default function ProductData({
   handleChangInput,
@@ -23,30 +24,31 @@ export default function ProductData({
   Province,
 }) {
   useEffect(() => {
-    http.post("/api/Product/GetAllProduct").then((res) => {
-      console.log("product", res.data.data);
-      const data = res.data.data.map((item, index) => {
-        return { id: item.id, value: item.product_Name_TH };
+    http
+      .post("/api/Product/GetAllProductType", {
+        Lang_ID: 1,
+      })
+      .then((res) => {
+        const data = res.data.data.map((item, index) => {
+          return { id: item.id, value: item.type_Name };
+        });
+        setDataTypeId([...dataTypeID, ...data]);
+        setTypeId([...typeId, ...data]);
       });
-      setdataProductID([...dataProductID, ...data]);
-      setProduct([...productCode, ...data]);
-    });
-    http.post("/api/Product/GetAllProductType").then((res) => {
-      const data = res.data.data.map((item, index) => {
-        return { id: item.type_ID, value: item.type_Name_TH };
+    http
+      .post("/api/Product/GetAllProductModel", {
+        Lang_ID: 1,
+      })
+      .then((res) => {
+        console.log("model ", res.data.data);
+        // const data = res.data.data.map((item, index) => {
+        //   return { id: item.id, value: item.model_Name_TH };
+        // });
+        // setDataModelID([...dataModelID, ...data]);
+        // setModelId([...modelId, ...data]);
       });
-      setDataTypeId([...dataTypeID, ...data]);
-      setTypeId([...typeId, ...data]);
-    });
-    http.post("/api/Product/GetAllProductModel").then((res) => {
-      console.log("model ", res.data.data);
-      const data = res.data.data.map((item, index) => {
-        return { id: item.id, value: item.model_Name_TH };
-      });
-      setDataModelID([...dataModelID, ...data]);
-      setModelId([...modelId, ...data]);
-    });
   }, []);
+
   const [dataTypeID, setDataTypeId] = useState([
     { id: 0, value: "กรุณาเลือก" },
   ]);
@@ -56,6 +58,13 @@ export default function ProductData({
   const [dataProductID, setdataProductID] = useState([
     { id: 0, value: "กรุณาเลือก" },
   ]);
+  const GetProduct = async (code) => {
+    const ProductDataSet = await http.post("/api/Product/GetProductByCode", {
+      Lang_ID: 1,
+      Product_Code: code,
+    });
+    return ProductDataSet;
+  };
   const [typeId, setTypeId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [modelId, setModelId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [productCode, setProduct] = useState([{ id: 0, value: "กรุณาเลือก" }]);
@@ -72,13 +81,28 @@ export default function ProductData({
       })
       .then((res) => {});
   };
-  const handleChangInputBarcode = (e, id, ModelId, TypeId, BarCode) => {
-    console.log(id, ModelId, TypeId, BarCode);
-    console.log(
-      "find",
-      dataTypeID.find((d) => d.id === TypeId)
-    );
-    handleChangInput(e);
+  const handleChangInputBarcode = async (
+    e,
+    id,
+    ModelId,
+    TypeId,
+    BarCode,
+    product_code
+  ) => {
+    console.log(id, ModelId, TypeId, BarCode, product_code);
+    const barCodeSet = [...FormDataProduct];
+    barCodeSet[index].Barcode_Number = BarCode;
+    barCodeSet[index].Product_ID = id;
+    barCodeSet[index].Product_code = product_code;
+    setFormDataProduct(barCodeSet);
+
+    // const ProductData = await GetProduct(product_code);
+    // console.log("Product 12312", ProductData);
+    // if (allProduct.data.message === "Success!" && allProduct.data.data.length) {
+    //   const Product allProduct.data.data.map((item, index) => {
+    //     return
+    //   });
+    // }
     const type = dataTypeID.find((d) => d.id === TypeId);
     if (type !== undefined) {
       setTypeId([type]);
@@ -91,21 +115,6 @@ export default function ProductData({
     if (Model !== undefined) {
       setModelId([Model]);
     }
-
-    // http
-    //   .post(`/api/Product/GetProductByBarcode?Barcode=${BarCode}`)
-    //   .then((res) => {
-    //     console.log(res);
-    //     if (res.data.message === "Success!") {
-    //       setTypeId([
-    //         dataTypeID.find((d) => d.id === res.data.data.fK_Type_ID),
-    //       ]);
-    //       setProduct([dataProductID.find((d) => d.id === res.data.data.id)]);
-    //       setModelId([
-    //         dataModelID.find((d) => d.id === res.data.data.fK_Model_ID),
-    //       ]);
-    //     }
-    //   });
   };
   const handleGetFile = (file, index) => {
     handleGetFileForm(file, index);
@@ -116,7 +125,6 @@ export default function ProductData({
     setFormDataProduct(dataSet);
     document.getElementById("Purchase_Date").value = formatDate(d);
     document.getElementById("Purchase_Date").attributes.index.value = i;
-    // handleChangInput(document.getElementById("Purchase_Date"));
     setStartDate(d);
   };
   function formatDate(date) {
@@ -259,23 +267,6 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">ประเภทสินค้า*</label>
-              {/* <input
-                type="text"
-                className="as-input"
-                index={index}
-                name="Type_ID"
-                onChange={handleChangInput}
-                required
-              /> */}
-              <DropDownTypeId
-                index={index}
-                data={typeId}
-                // selectedAS={typeId}
-                handleEvent={handleChangInput}
-              />
-            </div>
-            <div className="col-md-6">
               <label className="font-weight-bold">รหัสสินค้า*</label>
               {/* <input
                 type="textarea"
@@ -293,12 +284,38 @@ export default function ProductData({
               <InputProcuctCode
                 handleEvent={handleChangInputBarcode}
                 index={index}
+                FormDataProduct={FormDataProduct}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="font-weight-bold">ชื่อสินค้า</label>
+              <InputProcuctName
+                index={index}
+                FormDataProduct={FormDataProduct}
+                setFormDataProduct={setFormDataProduct}
               />
             </div>
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold mt-3">ชื่อรุ่น*</label>
+              <label className="font-weight-bold">ประเภทสินค้า*</label>
+              {/* <input
+                type="text"
+                className="as-input"
+                index={index}
+                name="Type_ID"
+                onChange={handleChangInput}
+                required
+              /> */}
+              <DropDownTypeId
+                index={index}
+                data={typeId}
+                // selectedAS={typeId}
+                handleEvent={handleChangInput}
+              />
+            </div>
+            <div className="col-md-6">
+              <label className="font-weight-bold">ชื่อรุ่น*</label>
               {/* <input
                 type="text"
                 className="as-input"
@@ -313,6 +330,8 @@ export default function ProductData({
                 handleEvent={handleChangInput}
               />
             </div>
+          </div>
+          <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold mt-3">
                 รหัสสินค้า (กรณีค้นหาไม่พบ)
@@ -325,10 +344,8 @@ export default function ProductData({
                 onChange={handleChangInput}
               />
             </div>
-          </div>
-          <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">จำนวนชิ้นที่ซื้อ</label>
+              <label className="font-weight-bold mt-3">จำนวนชิ้นที่ซื้อ</label>
               <input
                 type="number"
                 index={index}

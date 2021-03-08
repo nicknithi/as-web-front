@@ -3,23 +3,15 @@ import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
 import http from "../../axios";
-export default function InputScanBarCode({ handleEvent, handleScan, index }) {
+export default function InputProductName({
+  handleEvent,
+  index,
+  FormDataProduct,
+  setFormDataProduct,
+}) {
   const manualInput = (e) => {
     if (e.length) {
-      document.getElementById("Barcode_Number").value = e[0].id;
-      // console.log(document.getElementById("Barcode_Number"));
-      handleEvent(
-        document.getElementById("Barcode_Number"),
-        e[0].id,
-        e[0].fK_Model_ID,
-        e[0].fK_Type_ID,
-        e[0].barcode,
-        e[0].product_code
-      );
     } else {
-      document.getElementById("Barcode_Number").value = 0;
-      // console.log(document.getElementById("Barcode_Number"));
-      handleEvent(document.getElementById("Barcode_Number"), 0, 0, 0, "");
     }
   };
 
@@ -28,29 +20,35 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
 
   const handleSearch = (query) => {
     setIsLoading(true);
+
     http
-      .post(`/api/Product/GetProductTop20ByBarcode`, {
+      .post(`/api/Product/GetStoreByName`, {
         Lang_ID: 1,
-        Product_Barcode: query,
+        Province_ID: parseInt(FormDataProduct[index].Purchase_Province),
+        Store_Name: query,
       })
       .then((res) => {
         console.log(res);
         if (res.data.message === "Success!") {
-          console.log("by bar code", res.data.data);
-          const option = res.data.data.map((item, index) => {
-            return {
-              id: item.id,
-              value: item.product_Name,
-              index: index,
-              fK_Model_ID: item.fK_Model_ID,
-              fK_Type_ID: item.fK_Type_ID,
-              barcode: item.product_Barcode,
-              product_code: item.product_Code,
-            };
-          });
-          setOptions(option);
+          console.log(res.data.data);
+
+          //   const productID = [...FormDataProduct];
+          //   productID[index].Product_ID = query;
+          //   setFormDataProduct(productID);
+          //   const option = res.data.data.map((item, index) => {
+          //     return {
+          //       id: item.id,
+          //       value: item.product_Name,
+          //       index: index,
+          //       fK_Model_ID: item.fK_Model_ID,
+          //       fK_Type_ID: item.fK_Type_ID,
+          //       barcode: item.product_Barcode,
+          //     };
+          //   });
+          //   setOptions(option);
           setIsLoading(false);
         } else {
+          console.log(FormDataProduct[index].Purchase_Province);
         }
         if (res.data.message === "Fail!") {
           setIsLoading(false);
@@ -82,6 +80,7 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
         isLoading={isLoading}
         labelKey="barcode"
         minLength={3}
+        disabled={!FormDataProduct[index].Purchase_Province}
         onSearch={handleSearch}
         onChange={manualInput}
         options={options}

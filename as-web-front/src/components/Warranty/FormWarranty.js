@@ -29,10 +29,12 @@ function FormWarranty({ Confirm }) {
   const [dataTypeID, setDataTypeId] = useState([]);
   const [dataModelID, setDataModelID] = useState([]);
   const [dataProductID, setdataProductID] = useState([]);
-  useEffect(async () => {
+  useEffect(() => {
     //GetProvince
-    await http
-      .post("/api/Master/GetProvince")
+    http
+      .post("/api/Master/GetProvince", {
+        Lang_ID: 1,
+      })
       .then((res) => {
         //console.log("GetProvince123", res.data.data);
         setProvince(res.data.data);
@@ -40,8 +42,10 @@ function FormWarranty({ Confirm }) {
       .catch((e) => {});
 
     //GetDistrict
-    await http
-      .post("/api/Master/GetDistrict")
+    http
+      .post("/api/Master/GetDistrict", {
+        Lang_ID: 1,
+      })
       .then((res) => {
         //console.log("GetProvince123", res.data.data);
         setDistrict(res.data.data);
@@ -49,36 +53,50 @@ function FormWarranty({ Confirm }) {
       .catch((e) => {});
 
     //GetDistrict
-    await http
-      .post("/api/Master/GetSubDistrict")
+    http
+      .post("/api/Master/GetSubDistrict", {
+        Lang_ID: 1,
+      })
       .then((res) => {
         //console.log("GetProvince123", res.data.data);
         setSubDistrict(res.data.data);
       })
       .catch((e) => {});
-    http.post("/api/Product/GetAllProduct").then((res) => {
-      console.log("product", res.data.data);
-      const data = res.data.data.map((item, index) => {
-        return { id: item.id, value: item.product_Name_TH };
+    http
+      .post("/api/Product/GetAllProduct", {
+        Lang_ID: 1,
+      })
+      .then((res) => {
+        console.log("product", res.data.data);
+        const data = res.data.data.map((item, index) => {
+          return { id: item.id, value: item.product_Name_TH };
+        });
+        setdataProductID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
+        //setProduct(data);
       });
-      setdataProductID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
-      //setProduct(data);
-    });
-    http.post("/api/Product/GetAllProductType").then((res) => {
-      const data = res.data.data.map((item, index) => {
-        return { id: item.type_ID, value: item.type_Name_TH };
+    http
+      .post("/api/Product/GetAllProductType", {
+        Lang_ID: 1,
+      })
+      .then((res) => {
+        const data = res.data.data.map((item, index) => {
+          return { id: item.type_ID, value: item.type_Name_TH };
+        });
+        setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...data]);
+        //setTypeId(data);
       });
-      setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...data]);
-      //setTypeId(data);
-    });
-    http.post("/api/Product/GetAllProductModel").then((res) => {
-      console.log("model ", res.data.data);
-      const data = res.data.data.map((item, index) => {
-        return { id: item.id, value: item.model_Name_TH };
+    http
+      .post("/api/Product/GetAllProductModel", {
+        Lang_ID: 1,
+      })
+      .then((res) => {
+        console.log("model ", res.data.data);
+        // const data = res.data.data.map((item, index) => {
+        //   return { id: item.id, value: item.model_Name_TH };
+        // });
+        // setDataModelID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
+        //setModelId(data);
       });
-      setDataModelID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
-      //setModelId(data);
-    });
   }, []);
   const handleGetFile = (file, index) => {
     FileWaranty[index] = file;
@@ -100,6 +118,7 @@ function FormWarranty({ Confirm }) {
       Model_ID: null,
       Product_Code_Other: null,
       QTY: null,
+      Product_code: null,
     },
   ]);
   const [FormDataWarranty, setFormDataWarranty] = useState({
@@ -221,6 +240,7 @@ function FormWarranty({ Confirm }) {
       Model_ID: null,
       Product_Code_Other: null,
       QTY: null,
+      Product_code: null,
     });
     setFormDataProduct(tempProduct);
     FileWaranty.push([]);
@@ -243,6 +263,7 @@ function FormWarranty({ Confirm }) {
       Model_ID: null,
       Product_Code_Other: null,
       QTY: null,
+      Product_code: null,
     });
     setFormDataProduct(FormDataProduct);
     FileWaranty.push([]);
