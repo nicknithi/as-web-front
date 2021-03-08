@@ -10,6 +10,7 @@ import TestApi from "./components/testApi";
 import FormComfirm from "./components/Warranty/FormComfirm";
 import history from "./history";
 import ExampleTest from "./components/exampleTest";
+import Testi18n from "./testi18n";
 export default function App() {
   console.log(useHistory);
   return (
@@ -36,6 +37,9 @@ export default function App() {
         </Route>
         <Route exact path="/warranty/test">
           <ExampleTest />
+        </Route>
+        <Route exact path="/warranty/testi18n">
+          <Testi18n />
         </Route>
       </BrowserRouter>
       <Footer />
