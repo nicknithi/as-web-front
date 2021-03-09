@@ -1,9 +1,19 @@
 .register {
+  border-top: 3px solid #f1c400;
   .register-container {
     label {
       font-size: 22px;
     }
-    border-top: 3px solid #f1c400;
+
+    background-color: #e9e9e9;
+    margin-right: -15px;
+    margin-left: -15px;
+    padding: 30px;
+  }
+  .address-container {
+    label {
+      font-size: 22px;
+    }
     border-bottom: 3px solid #f1c400;
     background-color: #e9e9e9;
     margin-right: -15px;

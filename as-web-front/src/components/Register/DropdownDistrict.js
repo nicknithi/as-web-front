@@ -1,16 +1,37 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function DropDown({ data, handleEvent }) {
+export default function DropDown({
+  data,
+  handleEvent,
+  DataFromRegister,
+  setDataFromRegister,
+}) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
+    console.log("eeeee");
     if (e.target.value) {
-      setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
+      let index1 = e.nativeEvent.target.selectedIndex;
+      setTitleState(e.nativeEvent.target[index1].text);
       handleEvent(e);
     } else {
       setTitleState(data[0].value);
       handleEvent(e);
     }
   };
+  useEffect(() => {
+    if (DataFromRegister.FK_District_ID) {
+      const findData = data.find(
+        (a) => a.id === parseInt(DataFromRegister.FK_District_ID)
+      );
+      if (findData !== undefined) {
+        setTitleState(findData.value);
+      } else {
+        setTitleState("กรุณาเลือก");
+      }
+    } else {
+      setTitleState("กรุณาเลือก");
+    }
+  }, [DataFromRegister.FK_District_ID]);
   return (
     <div className="position-relative as-dropdown">
       <select
