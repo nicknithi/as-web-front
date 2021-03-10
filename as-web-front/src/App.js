@@ -12,6 +12,7 @@ import history from "./history";
 import ExampleTest from "./components/exampleTest";
 import Testi18n from "./testi18n";
 import Register from "./layouts/Register";
+import Installation from "./layouts/Installation";
 export default function App() {
   console.log(useHistory);
   return (
@@ -44,6 +45,9 @@ export default function App() {
         </Route>
         <Route exact path="/register">
           <Register />
+        </Route>
+        <Route exact path="/installation">
+          <Installation />
         </Route>
       </BrowserRouter>
       <Footer />

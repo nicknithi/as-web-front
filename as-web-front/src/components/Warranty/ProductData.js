@@ -342,22 +342,15 @@ export default function ProductData({
                 handleEvent={handleChangInput}
               />
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <label className="font-weight-bold">ชื่อรุ่น*</label>
-              {/* <input
-                type="text"
-                className="as-input"
-                index={index}
-                name="Model_ID"
-                onChange={handleChangInput}
-                required
-              /> */}
+
               <DropDownModelId
                 index={index}
                 data={modelId}
                 handleEvent={handleChangInput}
               />
-            </div>
+            </div> */}
           </div>
           <div className="row">
             <div className="col-md-6">
