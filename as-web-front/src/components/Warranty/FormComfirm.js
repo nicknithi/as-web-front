@@ -12,7 +12,7 @@ function FormComfirm(props) {
 
   return (
     <div className="form-comfirm">
-      {/* {props.ProvinceC}
+      {props.ProvinceC}
       <div className="container">
         <h1 className="mt-3">การลงทะเบียนสินค้า</h1>
         <div className="mb-4">
@@ -86,23 +86,7 @@ function FormComfirm(props) {
             </div>
           </div>
         ))}
-      </div> */}
-      {/* {/* <div className="d-flex justify-content-center mt-3 mb-4">
-        <div className="mr-4">
-          <ButtonMain
-            title="ยืนยัน"
-            color="#636363"
-            BgColor="#ffaa29"
-            handleClick={handleClickSubmit}
-          />
-        </div>
-        <div>
-          <ButtonMain title="แก้ไขข้อมูล" color="#636363" BgColor="#4ea4cd" />
-        </div>
       </div>
-      <div className="text-center mt-3 mb-4">
-        <ButtonMain title="กลับ" color="#636363" BgColor="#ffaa29" />
-      </div> */}
     </div>
   );
 }

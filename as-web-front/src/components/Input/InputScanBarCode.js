@@ -14,7 +14,8 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
         e[0].fK_Model_ID,
         e[0].fK_Type_ID,
         e[0].barcode,
-        e[0].product_code
+        e[0].product_code,
+        e[0].product_Name
       );
     } else {
       document.getElementById("Barcode_Number").value = 0;
@@ -46,6 +47,7 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
               fK_Type_ID: item.fK_Type_ID,
               barcode: item.product_Barcode,
               product_code: item.product_Code,
+              product_Name: item.product_Name,
             };
           });
           setOptions(option);

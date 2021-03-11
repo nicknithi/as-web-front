@@ -5,15 +5,19 @@ import ProductData from "../Warranty/ProductData";
 import FormRate from "../Warranty/FormRate";
 import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
-import { getProvince, setTempInput } from "../../actions/fetchAction";
+import {
+  getProvince,
+  setTempInput,
+  formatDate,
+} from "../../actions/fetchAction";
 import ButtonMain from "../button/ButtonMain";
 
 import ButtonManageForm from "../button/ButtonManageForm";
 import http from "../../axios";
 import axios from "axios";
-import dataMockD from "../../dataMock";
 import { useHistory } from "react-router-dom";
 import cloneDeep from "lodash.clonedeep";
+import { getProductType, getStoreByProvinceData } from "../../GetDataDropDown";
 function FormWarranty({ Confirm }) {
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
   //let formtest = new FormData()
@@ -29,7 +33,9 @@ function FormWarranty({ Confirm }) {
   const [dataTypeID, setDataTypeId] = useState([]);
   const [dataModelID, setDataModelID] = useState([]);
   const [dataProductID, setdataProductID] = useState([]);
-  useEffect(() => {
+  useEffect(async () => {
+    const typeData = await getProductType();
+    setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...typeData]);
     //GetProvince
     http
       .post("/api/Master/GetProvince", {
@@ -74,17 +80,7 @@ function FormWarranty({ Confirm }) {
         setdataProductID([{ id: 0, value: "กรุณาเลือก" }, ...data]);
         //setProduct(data);
       });
-    http
-      .post("/api/Product/GetAllProductType", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        const data = res.data.data.map((item, index) => {
-          return { id: item.type_ID, value: item.type_Name_TH };
-        });
-        setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...data]);
-        //setTypeId(data);
-      });
+
     http
       .post("/api/Product/GetAllProductModel", {
         Lang_ID: 1,
@@ -119,6 +115,7 @@ function FormWarranty({ Confirm }) {
       Product_Code_Other: null,
       QTY: null,
       Product_code: null,
+      product_Name: null,
     },
   ]);
   const [FormDataWarranty, setFormDataWarranty] = useState({
@@ -147,6 +144,7 @@ function FormWarranty({ Confirm }) {
           const oldData = { ...FormDataWarranty };
           console.log("old", oldData);
           console.log("new", data);
+          oldData.Customer_Code = code;
           oldData.Customer_Firstname = data.customer_Name;
           oldData.Customer_Lastname = data.customer_Surname;
           oldData.Customer_Tel = data.customer_Tel;
@@ -241,6 +239,7 @@ function FormWarranty({ Confirm }) {
       Product_Code_Other: null,
       QTY: null,
       Product_code: null,
+      product_Name: null,
     });
     setFormDataProduct(tempProduct);
     FileWaranty.push([]);
@@ -264,6 +263,7 @@ function FormWarranty({ Confirm }) {
       Product_Code_Other: null,
       QTY: null,
       Product_code: null,
+      product_Name: null,
     });
     setFormDataProduct(FormDataProduct);
     FileWaranty.push([]);
@@ -275,9 +275,22 @@ function FormWarranty({ Confirm }) {
     setFormInput(!FormInput);
     setCheckData(!checkData);
   };
+
+  const formatDate = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("testset", FormDataProduct);
+    console.log("testset", FormDataProduct, FormDataWarranty);
     let dataFromLast = await FormDataProduct.map((item, index) => {
       console.log(item.Customer_Province, item);
       FormDataWarranty.Customer_Province = parseInt(
@@ -296,47 +309,50 @@ function FormWarranty({ Confirm }) {
       if (item.Product_Code_Other === null) {
         item.Product_Code_Other = "";
       }
+      // item.Purchase_Date = formatDate(item.Purchase_Date);
       item.Purchase_Province = parseInt(item.Purchase_Province);
-      console.log(item);
       item.Store_ID = parseInt(item.Store_ID);
       item.Type_ID = parseInt(item.Type_ID);
       item.Product_ID = parseInt(item.Product_ID);
-      item.Model_ID = parseInt(item.Model_ID);
+      item.Model_ID = 0;
       item.QTY = parseInt(item.QTY);
 
       return { ...item, ...FormDataWarranty };
     });
-    console.log("555666777888", dataFromLast);
     setLastDataComToConfirm(cloneDeep(dataFromLast));
     // fix data show for form confirm
     const dataLoop = dataFromLast;
-    const dataShow = dataLoop.map((item, index) => {
-      item.Customer_Province = Province.find(
-        (p) => p.id === item.Customer_Province
-      ).province_Name;
+    const dataShow = await Promise.all(
+      dataLoop.map(async (item, index) => {
+        item.Customer_Province = Province.find(
+          (p) => p.id === item.Customer_Province
+        ).province_Name;
 
-      item.Customer_District = District.find(
-        (d) => d.id === item.Customer_District
-      ).district_Name;
-      item.Customer_SubDistrict = SubDistrict.find(
-        (d) => d.id === item.Customer_SubDistrict
-      ).sub_District_Name;
-      item.Purchase_Province = Province.find(
-        (d) => d.id === item.Purchase_Province
-      ).province_Name;
-      // item.Store_ID = dataMockD.Store_ID.find(
-      //   (d) => d.id === item.Store_ID
-      // ).value;
-      item.Store_ID = 0;
-      // item.Type_ID = dataTypeID.find((d) => d.id === item.Type_ID).type_Name;
-      // item.Product_ID = dataProductID.find(
-      //   (d) => d.id === item.Product_ID
-      // ).product_Name;
-      // item.Model_ID = dataModelID.find((d) => d.id === item.Model_ID).value;
-      item.Model_ID = 0;
-      return item;
-    });
+        item.Customer_District = District.find(
+          (d) => d.id === item.Customer_District
+        ).district_Name;
+        item.Customer_SubDistrict = SubDistrict.find(
+          (d) => d.id === item.Customer_SubDistrict
+        ).sub_District_Name;
+        item.Purchase_Province = Province.find(
+          (d) => d.id === item.Purchase_Province
+        ).province_Name;
+        const storeData = await getStoreByProvinceData(
+          FormDataProduct[index].Purchase_Province
+        );
+        item.Purchase_Date = formatDate(item.Purchase_Date);
+        item.Store_ID = storeData.find((s) => s.id === item.Store_ID).value;
+
+        const resTypeID = await getProductType();
+        item.Type_ID = resTypeID.find((t) => t.id === item.Type_ID).value;
+        item.Model_ID = 0;
+        return item;
+      })
+    );
+
+    console.log("dataShow", dataShow);
     setDataForComfirm(dataShow);
+
     setFormInput(!FormInput);
     setCheckData(!checkData);
   };
@@ -407,13 +423,6 @@ function FormWarranty({ Confirm }) {
       values.splice(values.length - 1, 1);
       setProcudeForm(values);
     }
-  };
-  const test = () => {
-    console.log(LastDataComToConfirm);
-    console.log(FileWaranty);
-    console.log(DataForComfirm);
-    console.log(procudeForm);
-    console.log(dataMockD);
   };
   return (
     <div>

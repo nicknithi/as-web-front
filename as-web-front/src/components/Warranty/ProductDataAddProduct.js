@@ -9,7 +9,6 @@ import DropDownStoreId from "../Input/dropDownStore_ID";
 import DropDownTypeId from "../Input/dropDownType_ID";
 import DropDownProductId from "../Input/dropDownProduct_ID";
 import DropDownModelId from "../Input/dropDownModel_ID";
-import dataMock from "../../dataMock";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/scss/components/input/dataPicker.scss";
 import http from "../../axios";

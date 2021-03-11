@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import dataMock from "../../dataMock";
 import "../../assets/scss/components/input/dropdown.scss";
 export default function DropDownProduct_ID({ data, handleEvent, index }) {
-  // data = dataMock.Purchase_Province;
   const [title, setTitleState] = useState("กรุณาเลือก");
   // setTitleState(data[0].value);
   const handleSelect = (e) => {

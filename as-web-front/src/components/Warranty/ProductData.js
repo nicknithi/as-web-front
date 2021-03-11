@@ -9,12 +9,12 @@ import DropDownStoreId from "../Input/dropDownStore_ID";
 import DropDownTypeId from "../Input/dropDownType_ID";
 import DropDownProductId from "../Input/dropDownProduct_ID";
 import DropDownModelId from "../Input/dropDownModel_ID";
-import dataMock from "../../dataMock";
 import "react-datepicker/dist/react-datepicker.css";
 import "../../assets/scss/components/input/dataPicker.scss";
 import InputProcuctCode from "../Input/inputProcuctCode";
 import InputProcuctName from "../Input/inputProductName";
 import http from "../../axios";
+import { getProductType, getStoreByProvinceData } from "../../GetDataDropDown";
 export default function ProductData({
   handleChangInput,
   index,
@@ -23,30 +23,10 @@ export default function ProductData({
   setFormDataProduct,
   Province,
 }) {
-  useEffect(() => {
-    http
-      .post("/api/Product/GetAllProductType", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        const data = res.data.data.map((item, index) => {
-          return { id: item.id, value: item.type_Name };
-        });
-        setDataTypeId([...dataTypeID, ...data]);
-        setTypeId([...typeId, ...data]);
-      });
-    http
-      .post("/api/Product/GetAllProductModel", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        console.log("model ", res.data.data);
-        // const data = res.data.data.map((item, index) => {
-        //   return { id: item.id, value: item.model_Name_TH };
-        // });
-        // setDataModelID([...dataModelID, ...data]);
-        // setModelId([...modelId, ...data]);
-      });
+  useEffect(async () => {
+    const resTypeID = await getProductType();
+    setDataTypeId([...dataTypeID, ...resTypeID]);
+    setTypeId([...typeId, ...resTypeID]);
   }, []);
 
   const [dataTypeID, setDataTypeId] = useState([
@@ -74,22 +54,9 @@ export default function ProductData({
     setTriggleBarcode(true);
   };
   const getStoreByProvince = async (Province_id) => {
-    await http
-      .post("/api/Product/GetStoreByName", {
-        Lang_ID: 1,
-        Province_ID: Province_id,
-        Store_Name: "",
-      })
-      .then((res) => {
-        const storeDataSet = res.data.data.map((item, index) => {
-          return {
-            id: item.id,
-            value: `${item.store_Name} (${item.store_Branch})`,
-          };
-        });
-        const dpStoreData = [{ id: "", value: "กรุณาเลือก" }, ...storeDataSet];
-        setStoreData(dpStoreData);
-      });
+    const storeDataSet = await getStoreByProvinceData(Province_id);
+    const dpStoreData = [{ id: "", value: "กรุณาเลือก" }, ...storeDataSet];
+    setStoreData(dpStoreData);
   };
   const handleChangInputProductCode = (ModelId, TypeId, product_code) => {
     const ProductCodeSet = [...FormDataProduct];
@@ -112,7 +79,8 @@ export default function ProductData({
     ModelId,
     TypeId,
     BarCode,
-    product_code
+    product_code,
+    product_Name
   ) => {
     console.log(id, ModelId, TypeId, BarCode, product_code);
     const barCodeSet = [...FormDataProduct];
@@ -121,6 +89,7 @@ export default function ProductData({
     barCodeSet[index].Model_ID = ModelId;
     barCodeSet[index].Type_ID = TypeId;
     barCodeSet[index].Product_code = product_code;
+    barCodeSet[index].product_Name = product_Name;
     setFormDataProduct(barCodeSet);
 
     // const ProductData = await GetProduct(product_code);
