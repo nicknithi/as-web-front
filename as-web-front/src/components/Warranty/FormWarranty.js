@@ -321,17 +321,19 @@ function FormWarranty({ Confirm }) {
       item.Customer_SubDistrict = SubDistrict.find(
         (d) => d.id === item.Customer_SubDistrict
       ).sub_District_Name;
-      item.Purchase_Province = dataMockD.Purchase_Province.find(
+      item.Purchase_Province = Province.find(
         (d) => d.id === item.Purchase_Province
-      ).value;
-      item.Store_ID = dataMockD.Store_ID.find(
-        (d) => d.id === item.Store_ID
-      ).value;
-      item.Type_ID = dataTypeID.find((d) => d.id === item.Type_ID).value;
-      item.Product_ID = dataProductID.find(
-        (d) => d.id === item.Product_ID
-      ).value;
-      item.Model_ID = dataModelID.find((d) => d.id === item.Model_ID).value;
+      ).province_Name;
+      // item.Store_ID = dataMockD.Store_ID.find(
+      //   (d) => d.id === item.Store_ID
+      // ).value;
+      item.Store_ID = 0;
+      // item.Type_ID = dataTypeID.find((d) => d.id === item.Type_ID).type_Name;
+      // item.Product_ID = dataProductID.find(
+      //   (d) => d.id === item.Product_ID
+      // ).product_Name;
+      // item.Model_ID = dataModelID.find((d) => d.id === item.Model_ID).value;
+      item.Model_ID = 0;
       return item;
     });
     setDataForComfirm(dataShow);

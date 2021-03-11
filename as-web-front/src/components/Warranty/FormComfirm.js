@@ -7,13 +7,12 @@ import "../../assets/scss/form-comfirm.scss";
 import http from "../../axios";
 
 function FormComfirm(props) {
-  console.log("testdata", props.DataComfirm);
   const dataSet = props.DataComfirm;
   console.log("dataSet", dataSet);
 
   return (
     <div className="form-comfirm">
-      {props.ProvinceC}
+      {/* {props.ProvinceC}
       <div className="container">
         <h1 className="mt-3">การลงทะเบียนสินค้า</h1>
         <div className="mb-4">
@@ -87,7 +86,7 @@ function FormComfirm(props) {
             </div>
           </div>
         ))}
-      </div>
+      </div> */}
       {/* {/* <div className="d-flex justify-content-center mt-3 mb-4">
         <div className="mr-4">
           <ButtonMain

@@ -14,9 +14,9 @@ export default function Register() {
   const [SubDistrict, setSubDistrict] = useState([
     { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
   ]);
-  const [ProvinceDN, setProvinceDN] = useState([
-    { id: "", value: "กรุณาเลือก" },
-  ]);
+  // const [ProvinceDN, setProvinceDN] = useState([
+  //   { id: "", value: "กรุณาเลือก" },
+  // ]);
   const [DistrictDN, setDistrictDN] = useState([
     { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
   ]);
@@ -44,6 +44,7 @@ export default function Register() {
     Quota_Service: 0,
     IsMember: true,
     Create_By: "",
+    Customer_Company: "",
   });
   useEffect(() => {
     //get Province
@@ -55,7 +56,7 @@ export default function Register() {
         const ProvinceSet = res.data.data.map((item, index) => {
           return { id: item.id, value: item.province_Name };
         });
-        setProvinceDN([...Province, ...ProvinceSet]);
+        // setProvinceDN([...Province, ...ProvinceSet]);
         setProvince([...Province, ...ProvinceSet]);
       })
       .catch((e) => {});
@@ -157,9 +158,9 @@ export default function Register() {
       window.location = "/login";
     }
   };
-  useEffect(() => {
-    console.log("DataFromRegister", DataFromRegister);
-  }, [DataFromRegister]);
+  // useEffect(() => {
+  //   console.log("DataFromRegister", DataFromRegister);
+  // }, [DataFromRegister]);
   return (
     <form onSubmit={submit}>
       <div className="container register pb-4">
@@ -202,7 +203,17 @@ export default function Register() {
           <div className="row">
             <div className="col-md-12">
               <label className="font-weight-bold">ชื่อบริษัท</label>
-              <input type="text" className="as-input" />
+              <input
+                type="text"
+                className="as-input"
+                value={DataFromRegister.Customer_Company}
+                onChange={(e) =>
+                  setDataFromRegister({
+                    ...DataFromRegister,
+                    Customer_Company: e.target.value,
+                  })
+                }
+              />
             </div>
           </div>
           <div className="row">
