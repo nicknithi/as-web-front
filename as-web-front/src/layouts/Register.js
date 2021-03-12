@@ -4,6 +4,8 @@ import DropdownProvince from "../components/Register/DropdownProvince";
 import DropdownDistrict from "../components/Register/DropdownDistrict";
 import DropdownSubDistrict from "../components/Register/DropdownSubDistrict";
 import GoogleMap from "../components/map/googleMapRegister";
+import ButtonMain from "../components/button/ButtonMain";
+import "../assets/scss/components/input/radio.scss";
 import http from "../axios";
 export default function Register() {
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
@@ -158,207 +160,283 @@ export default function Register() {
       window.location = "/login";
     }
   };
-  // useEffect(() => {
-  //   console.log("DataFromRegister", DataFromRegister);
-  // }, [DataFromRegister]);
+  const goBlack = () => {
+    window.location = "/";
+  };
+  useEffect(() => {
+    console.log("DataFromRegister", DataFromRegister);
+  }, [DataFromRegister]);
   return (
-    <form onSubmit={submit}>
-      <div className="container register pb-4">
-        <h3 className="font-weight-bold mb-3">ลงทะเบียนสมัครสมาชิก</h3>
-        <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
+    <div>
+      <form onSubmit={submit}>
+        <div className="container register pb-4">
+          <h3 className="font-weight-bold mb-3">ลงทะเบียนสมัครสมาชิก</h3>
+          <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
 
-        <div className="register-container">
-          <div className="row">
-            <div className="col-md-6">
-              <label className="font-weight-bold">ชื่อ*</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.FirstName}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    FirstName: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="font-weight-bold">นามสกุล*</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.LastName}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    LastName: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <label className="font-weight-bold">ชื่อบริษัท</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.Customer_Company}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    Customer_Company: e.target.value,
-                  })
-                }
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="font-weight-bold">เบอ์โทรศัพท์</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.Tel}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    Tel: e.target.value,
-                  })
-                }
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="font-weight-bold">มือถือ*</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.Phone}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    Phone: e.target.value,
-                  })
-                }
-                required
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-12">
-              <label className="font-weight-bold">อีเมล</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.Email}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    Email: e.target.value,
-                  })
-                }
-              />
-            </div>
-          </div>
-        </div>
-        <h3 className="font-weight-bold mb-3 mt-3">ที่อยู่การติดตั้ง</h3>
-        <div className="address-container">
-          <div className="row">
-            <div className="col-md-12">
-              <label className="font-weight-bold">
-                ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
+          <div className="register-container">
+            <h4 className="font-weight-bold">
+              ประเภทสมาชิก*(กรุณากดเพื่อเลือกประเภทสมาชิก)
+            </h4>
+            <div className="row ml-1">
+              <label className="as-container font-weight-bold">
+                ลงทะเบียนสมาชิกบ้านพักอาศัย
+                <input
+                  type="radio"
+                  name="radio"
+                  name="customer-type"
+                  value="1"
+                  checked={DataFromRegister.Customer_Type === "1"}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Customer_Type: e.target.value,
+                    })
+                  }
+                />
+                <span className="checkmark"></span>
               </label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.Address}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    Address: e.target.value,
-                  })
-                }
-                required
-              />
+            </div>
+            <div className="row ml-1">
+              <label className="as-container font-weight-bold">
+                ลงทะเบียนสมาชิกผู้รับเหมารายย่อย
+                <input
+                  type="radio"
+                  name="radio"
+                  name="customer-type"
+                  value="2"
+                  checked={DataFromRegister.Customer_Type === "2"}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Customer_Type: e.target.value,
+                    })
+                  }
+                />
+                <span className="checkmark"></span>
+              </label>
+            </div>
+            <div className="row ml-1">
+              <label className="as-container font-weight-bold">
+                ลงทะเบียนสมาชิกโครงการสำนักงาน,โรงแรม,ออฟฟิศ ฯลฯ
+                ที่ไม่ใช่บ้านพักอาศัย
+                <input
+                  type="radio"
+                  name="radio"
+                  name="customer-type"
+                  value="3"
+                  checked={DataFromRegister.Customer_Type === "3"}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Customer_Type: e.target.value,
+                    })
+                  }
+                />
+                <span className="checkmark"></span>
+              </label>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <label className="font-weight-bold">ชื่อ*</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.FirstName}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      FirstName: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="font-weight-bold">นามสกุล*</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.LastName}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      LastName: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <label className="font-weight-bold">ชื่อบริษัท</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Customer_Company}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Customer_Company: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6">
+                <label className="font-weight-bold">เบอ์โทรศัพท์</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Tel}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Tel: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="font-weight-bold">มือถือ*</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Phone}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Phone: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-12">
+                <label className="font-weight-bold">อีเมล</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Email}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Email: e.target.value,
+                    })
+                  }
+                />
+              </div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="font-weight-bold">จังหวัด*</label>
-              <DropdownProvince
-                handleEvent={getProvinceDropDown}
-                setDataFromRegister={setDataFromRegister}
-                DataFromRegister={DataFromRegister}
-                data={Province}
-              />
+          <h3 className="font-weight-bold mb-3 mt-3">ที่อยู่การติดตั้ง</h3>
+          <div className="address-container">
+            <div className="row">
+              <div className="col-md-12">
+                <label className="font-weight-bold">
+                  ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
+                </label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Address}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Address: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
             </div>
-            <div className="col-md-6">
-              <label className="font-weight-bold">อำเภอเขต*</label>
-              <DropdownDistrict
-                handleEvent={getDistrictDropDown}
-                setDataFromRegister={setDataFromRegister}
-                DataFromRegister={DataFromRegister}
-                data={District}
-              />
+            <div className="row">
+              <div className="col-md-6">
+                <label className="font-weight-bold">จังหวัด*</label>
+                <DropdownProvince
+                  handleEvent={getProvinceDropDown}
+                  setDataFromRegister={setDataFromRegister}
+                  DataFromRegister={DataFromRegister}
+                  data={Province}
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="font-weight-bold">อำเภอเขต*</label>
+                <DropdownDistrict
+                  handleEvent={getDistrictDropDown}
+                  setDataFromRegister={setDataFromRegister}
+                  DataFromRegister={DataFromRegister}
+                  data={District}
+                />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="font-weight-bold">จังหวัด*</label>
-              <DropdownSubDistrict
-                handleEvent={getSubDistrictDropDown}
-                setDataFromRegister={setDataFromRegister}
-                DataFromRegister={DataFromRegister}
-                data={SubDistrict}
-              />
+            <div className="row">
+              <div className="col-md-6">
+                <label className="font-weight-bold">จังหวัด*</label>
+                <DropdownSubDistrict
+                  handleEvent={getSubDistrictDropDown}
+                  setDataFromRegister={setDataFromRegister}
+                  DataFromRegister={DataFromRegister}
+                  data={SubDistrict}
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="font-weight-bold">รหัสไปรษณีย์*</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.ZIP_Code}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      ZIP_Code: e.target.value,
+                    })
+                  }
+                  required
+                />
+              </div>
             </div>
-            <div className="col-md-6">
-              <label className="font-weight-bold">รหัสไปรษณีย์*</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.ZIP_Code}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    ZIP_Code: e.target.value,
-                  })
-                }
-                required
-              />
+            <div className="row">
+              <div className="col-md-6">
+                <label className="font-weight-bold">ศูนย์บริการสาขา</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Service_Center}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Service_Center: e.target.value,
+                    })
+                  }
+                />
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="font-weight-bold">ศูนย์บริการสาขา</label>
-              <input
-                type="text"
-                className="as-input"
-                value={DataFromRegister.Service_Center}
-                onChange={(e) =>
-                  setDataFromRegister({
-                    ...DataFromRegister,
-                    Service_Center: e.target.value,
-                  })
-                }
-              />
-            </div>
-          </div>
 
-          <div>
-            <label className="font-weight-bold mt-3">แผนที่ (โปรดระบุ)</label>
-            <GoogleMap
-              DataFromRegister={DataFromRegister}
-              setDataFromRegister={setDataFromRegister}
-              LagLong={LagLong}
-            />
+            <div>
+              <label className="font-weight-bold mt-3">แผนที่ (โปรดระบุ)</label>
+              <GoogleMap
+                DataFromRegister={DataFromRegister}
+                setDataFromRegister={setDataFromRegister}
+                LagLong={LagLong}
+              />
+            </div>
           </div>
         </div>
+      </form>
+      <div className="row mt-3 d-flex justify-content-center">
+        <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
       </div>
-      <button>submit</button>
-    </form>
+      <div className="text-center mt-3 mb-4">
+        <ButtonMain
+          title="กลับ"
+          color="#636363"
+          BgColor="#58a7af"
+          handleClick={goBlack}
+        />
+      </div>
+    </div>
   );
 }
