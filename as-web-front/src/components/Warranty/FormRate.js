@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function FormRate({ handleChangInput }) {
+export default function FormRate({ handleChangInput, Confirm }) {
   const handleRate = (rate) => {
     document.getElementById("Score").value = rate;
     handleChangInput(document.getElementById("Score"));
@@ -111,9 +111,11 @@ export default function FormRate({ handleChangInput }) {
         <div className="col-md-4 mx-auto">
           <textarea
             onChange={handleCommend}
+            disabled={!Confirm}
             className="w-100 mt-3"
             name="Description"
             placeholder={"ข้อเสนอแนะ.........."}
+            required
           ></textarea>
         </div>
       </div>

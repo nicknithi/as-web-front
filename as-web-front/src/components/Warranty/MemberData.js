@@ -5,6 +5,7 @@ export default function MemberData({
   setFormDataWarranty,
   handleSearchByCustomerCode,
   Confirm,
+  DisableFromSearch,
 }) {
   const changeCode = (e) => {
     handleSearchByCustomerCode(e.target.value);
@@ -25,8 +26,8 @@ export default function MemberData({
               type="text"
               className="as-input"
               name="Customer_Code"
-              // disabled={Confirm}
               onChange={(e) => changeCode(e)}
+              disabled={!Confirm}
             />
           </div>
         </div>
@@ -38,6 +39,7 @@ export default function MemberData({
               id="name"
               name="Customer_Firstname"
               className="as-input"
+              disabled={DisableFromSearch || !Confirm}
               value={FormDataWarranty.Customer_Firstname}
               onChange={(e) =>
                 setFormDataWarranty({
@@ -54,6 +56,7 @@ export default function MemberData({
               id="surname"
               className="as-input"
               name="Customer_Lastname"
+              disabled={DisableFromSearch || !Confirm}
               value={FormDataWarranty.Customer_Lastname}
               onChange={(e) =>
                 setFormDataWarranty({
@@ -72,6 +75,7 @@ export default function MemberData({
               id="tel"
               className="as-input"
               name="Customer_Tel"
+              disabled={DisableFromSearch || !Confirm}
               value={FormDataWarranty.Customer_Tel}
               onChange={(e) =>
                 setFormDataWarranty({
@@ -88,6 +92,7 @@ export default function MemberData({
               id="phone"
               className="as-input"
               name="Customer_Mobile"
+              disabled={DisableFromSearch || !Confirm}
               value={FormDataWarranty.Customer_Mobile}
               onChange={(e) =>
                 setFormDataWarranty({
@@ -109,6 +114,7 @@ export default function MemberData({
               id="email"
               className="as-input"
               name="Customer_Email"
+              disabled={DisableFromSearch || !Confirm}
               value={FormDataWarranty.Customer_Email}
               onChange={(e) =>
                 setFormDataWarranty({

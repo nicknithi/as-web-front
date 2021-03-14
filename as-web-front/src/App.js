@@ -12,7 +12,9 @@ import history from "./history";
 import ExampleTest from "./components/exampleTest";
 import Testi18n from "./testi18n";
 import Register from "./layouts/Register";
+import ProfileHome from "./layouts/ProfileHome";
 import Installation from "./layouts/Installation";
+import EditProfile from "./layouts/EditProfile";
 export default function App() {
   console.log(useHistory);
   return (
@@ -48,6 +50,12 @@ export default function App() {
         </Route>
         <Route exact path="/installation">
           <Installation />
+        </Route>
+        <Route exact path="/profile">
+          <ProfileHome />
+        </Route>
+        <Route exact path="/edit-profile">
+          <EditProfile />
         </Route>
       </BrowserRouter>
       <Footer />

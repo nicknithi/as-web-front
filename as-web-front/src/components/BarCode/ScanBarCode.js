@@ -1,15 +1,41 @@
 import React from "react";
 import BarcodeScannerComponent from "react-webcam-barcode-scanner";
 import "../../assets/scss/components/barcodeScaner.scss";
-function ScanBarCode() {
+import http from "../../axios";
+function ScanBarCode({
+  index,
+  FormDataProduct,
+  setFormDataProduct,
+  handleEvent,
+  setTriggleBarcode,
+}) {
   const [data, setData] = React.useState("Not Found");
   const [sizeCamera, setSizeCamera] = React.useState({
     width: 200,
     height: 200,
   });
-  //   if (window.innerWidth >= 768) {
-  //     setSizeCamera({ width: 500, height: 500 });
-  //   }
+  const setDataScan = async (code) => {
+    const res = await http.post(`/api/Product/GetProductByBarcode`, {
+      Lang_ID: 1,
+      Product_Barcode: code,
+    });
+    const dataScanFetch = res.data.data;
+    if (res.data.message == "Success!") {
+      handleEvent(
+        dataScanFetch.id,
+        dataScanFetch.fK_Model_ID,
+        dataScanFetch.fK_Type_ID,
+        dataScanFetch.barcode,
+        dataScanFetch.product_code,
+        dataScanFetch.product_Name
+      );
+      setTriggleBarcode(false);
+    } else {
+      handleEvent("", "", 0, "", "", "");
+      alert("ไม่พบข้อมูล");
+      setTriggleBarcode(false);
+    }
+  };
   return (
     <>
       <div className="as-scan-barcode">
@@ -18,11 +44,7 @@ function ScanBarCode() {
           height={sizeCamera.height}
           onUpdate={(err, result) => {
             if (result) {
-              alert("test", result.text);
-              console.log(result);
-              setData(result.text);
-            } else {
-              setData("Not Found");
+              setDataScan(result.text);
             }
           }}
         />

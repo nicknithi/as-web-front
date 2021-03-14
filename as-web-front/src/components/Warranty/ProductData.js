@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "../../assets/scss/components/button/button-scan.scss";
 import ButtonManageForm from "../button/ButtonManageForm";
 import UploadImage from "../Warranty/uploadImage";
 import InputScanBarCode from "../Input/InputScanBarCode";
@@ -22,6 +23,10 @@ export default function ProductData({
   FormDataProduct,
   setFormDataProduct,
   Province,
+  storeData,
+  setStoreData,
+  Confirm,
+  FileWaranty,
 }) {
   useEffect(async () => {
     const resTypeID = await getProductType();
@@ -49,24 +54,36 @@ export default function ProductData({
   const [modelId, setModelId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [productCode, setProduct] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [startDate, setStartDate] = useState(new Date());
-  const [storeData, setStoreData] = useState([{ id: "", value: "กรุณาเลือก" }]);
-  const handleScan = () => {
-    setTriggleBarcode(true);
-  };
+
   const getStoreByProvince = async (Province_id) => {
     const storeDataSet = await getStoreByProvinceData(Province_id);
+    const storeDataSetTemp = [...storeData];
+
     const dpStoreData = [{ id: "", value: "กรุณาเลือก" }, ...storeDataSet];
-    setStoreData(dpStoreData);
+    storeDataSetTemp[index] = dpStoreData;
+    setStoreData(storeDataSetTemp);
   };
-  const handleChangInputProductCode = (ModelId, TypeId, product_code) => {
+  const handleChangInputProductCode = (
+    id,
+    ModelId,
+    TypeId,
+    product_code,
+    product_Barcode,
+    product_Name
+  ) => {
     const ProductCodeSet = [...FormDataProduct];
     ProductCodeSet[index].Model_ID = ModelId;
     ProductCodeSet[index].Type_ID = TypeId;
     ProductCodeSet[index].Product_code = product_code;
+    ProductCodeSet[index].Product_ID = id;
+    ProductCodeSet[index].Barcode_Number = product_Barcode;
+    ProductCodeSet[index].product_Name = product_Name;
     setFormDataProduct(ProductCodeSet);
     const type = dataTypeID.find((d) => d.id === TypeId);
     if (type !== undefined) {
       setTypeId([type]);
+    } else {
+      setTypeId(dataTypeID);
     }
     const Model = dataModelID.find((d) => d.id === ModelId);
     if (Model !== undefined) {
@@ -74,7 +91,6 @@ export default function ProductData({
     }
   };
   const handleChangInputBarcode = async (
-    e,
     id,
     ModelId,
     TypeId,
@@ -102,6 +118,8 @@ export default function ProductData({
     const type = dataTypeID.find((d) => d.id === TypeId);
     if (type !== undefined) {
       setTypeId([type]);
+    } else {
+      setTypeId(dataTypeID);
     }
     // const Product = dataProductID.find((d) => d.id === id);
     // if (Product !== undefined) {
@@ -141,6 +159,14 @@ export default function ProductData({
     Store_Name_OtherSet[index].Store_Name_Other = e.target.value;
     setFormDataProduct(Store_Name_OtherSet);
   };
+  const setOnOtherCode = (e) => {
+    const setOnOtherCodeSet = [...FormDataProduct];
+    setOnOtherCodeSet[index].Product_Code_Other = e.target.value;
+    setFormDataProduct(setOnOtherCodeSet);
+  };
+  const handleScanBarCode = () => {
+    setTriggleBarcode(true);
+  };
   return (
     <div>
       <div className="mt-3">
@@ -149,20 +175,10 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">จังหวัดที่ซื้อ*</label>
-              {/* <input
-                type="text"
-                className="as-input"
-                index={index}
-                // defaultValue={"tesetsete nickets"}
-                name="Purchase_Province"
-                onChange={handleChangInput}
-                disabled={FormDataProduct[index].Purchase_Province}
-                value={FormDataProduct[index].Purchase_Province}
-                required
-              /> */}
               <DropDownPurchaseProvince
                 data={Province}
                 index={index}
+                Confirm={Confirm}
                 handleEvent={getStoreByProvince}
                 FormDataProduct={FormDataProduct}
                 setFormDataProduct={setFormDataProduct}
@@ -179,8 +195,10 @@ export default function ProductData({
               />
               <div className="row px-3 data-picker">
                 <DatePicker
+                  disabled={!Confirm}
                   selected={FormDataProduct[index].Purchase_Date}
                   onChange={(date) => handleSetDateTime(date, index)}
+                  required
                 />
               </div>
             </div>
@@ -188,18 +206,9 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">ชื่อร้านตัวแทนจำหน่าย</label>
-              {/* <input
-                type="textarea"
-                index={index}
-                name="Store_ID"
-                onChange={handleChangInput}
-                disabled={FormDataProduct[index].Store_ID}
-                value={FormDataProduct[index].Store_ID}
-                className="as-input"
-                required
-              /> */}
               <DropDownStoreId
-                data={storeData}
+                Confirm={Confirm}
+                data={storeData[index]}
                 index={index}
                 handleEvent={handleChangInput}
                 FormDataProduct={FormDataProduct}
@@ -216,7 +225,7 @@ export default function ProductData({
                 index={index}
                 name="Store_Name_Other"
                 onChange={(e) => Store_Name_Other(e)}
-                // disabled={FormDataProduct[index].Store_Name_Other}
+                disabled={FormDataProduct[index].Store_ID || !Confirm}
                 value={FormDataProduct[index].Store_Name_Other}
               />
             </div>
@@ -230,7 +239,7 @@ export default function ProductData({
                 index={index}
                 name="Receipt_Number"
                 onChange={handleChangInput}
-                disabled={FormDataProduct[index].Receipt_Number}
+                disabled={FormDataProduct[index].Receipt_Number || !Confirm}
                 value={FormDataProduct[index].Receipt_Number}
                 required
               />
@@ -242,42 +251,47 @@ export default function ProductData({
                 รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
               </label>
               {/* <input type="text" className="as-input" required /> */}
-              <InputScanBarCode
-                handleEvent={handleChangInputBarcode}
-                handleScan={handleScan}
-                index={index}
-              />
-              {triggleBarcode && <ScanBarCode />}
+              <div className="row">
+                <div className="col-10">
+                  <InputScanBarCode
+                    Confirm={Confirm}
+                    handleEvent={handleChangInputBarcode}
+                    index={index}
+                    FormDataProduct={FormDataProduct}
+                  />
+                </div>
+                <div className="col-2 btn-scan" onClick={handleScanBarCode}>
+                  สแกนบาร์โค้ด
+                </div>
+              </div>
+
+              {triggleBarcode && (
+                <ScanBarCode
+                  index={index}
+                  setTriggleBarcode={setTriggleBarcode}
+                  FormDataProduct={FormDataProduct}
+                  setFormDataProduct={setFormDataProduct}
+                  handleEvent={handleChangInputBarcode}
+                />
+              )}
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">หมายเลขรับประกัน</label>
               <input
                 type="text"
                 className="as-input"
+                disabled={!Confirm}
                 index={index}
                 name="Warranty_Number"
                 onChange={handleChangInput}
-                required
               />
             </div>
           </div>
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">รหัสสินค้า*</label>
-              {/* <input
-                type="textarea"
-                className="as-input"
-                index={index}
-                name="Product_ID"
-                onChange={handleChangInput}
-                required
-              /> */}
-              {/* <DropDownProductId
-                index={index}
-                data={productCode}
-                handleEvent={handleChangInput}
-              /> */}
               <InputProcuctCode
+                Confirm={Confirm}
                 handleEvent={handleChangInputProductCode}
                 index={index}
                 FormDataProduct={FormDataProduct}
@@ -286,6 +300,7 @@ export default function ProductData({
             <div className="col-md-6">
               <label className="font-weight-bold">ชื่อสินค้า</label>
               <InputProcuctName
+                Confirm={Confirm}
                 handleEvent={handleChangInputProductCode}
                 index={index}
                 FormDataProduct={FormDataProduct}
@@ -305,6 +320,7 @@ export default function ProductData({
                 required
               /> */}
               <DropDownTypeId
+                Confirm={Confirm}
                 index={index}
                 data={typeId}
                 // selectedAS={typeId}
@@ -331,23 +347,30 @@ export default function ProductData({
                 className="as-input"
                 index={index}
                 name="Product_Code_Other"
-                onChange={handleChangInput}
+                disabled={FormDataProduct[index].Product_code || !Confirm}
+                value={FormDataProduct[index].Product_Code_Other}
+                onChange={setOnOtherCode}
               />
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold mt-3">จำนวนชิ้นที่ซื้อ</label>
               <input
+                disabled={!Confirm}
                 type="number"
                 index={index}
                 className="as-input"
                 name="QTY"
                 onChange={handleChangInput}
-                required
               />
             </div>
           </div>
           <div className="row mt-4">
-            <UploadImage handleGetFile={handleGetFile} index={index} />
+            <UploadImage
+              handleGetFile={handleGetFile}
+              index={index}
+              Confirm={Confirm}
+              FileWaranty={FileWaranty}
+            />
           </div>
         </div>
       </div>

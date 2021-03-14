@@ -7,6 +7,7 @@ export default function DropDownPurchaseProvince({
   index,
   FormDataProduct,
   setFormDataProduct,
+  Confirm,
 }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
@@ -14,10 +15,15 @@ export default function DropDownPurchaseProvince({
       const dataSet = [...FormDataProduct];
       dataSet[index].Purchase_Province = e.target.value;
       setFormDataProduct(dataSet);
-      const title = data.find((a) => a.id === parseInt(e.target.value))
-        .province_Name;
-      console.log("set titel province ", title);
-      setTitleState(title);
+      const tempTitle = data.find((a) => a.id === parseInt(e.target.value));
+      if (tempTitle !== undefined) {
+        const title = tempTitle.value;
+        console.log("set titel province ", title);
+        setTitleState(title);
+      } else {
+        setTitleState("กรุณาเลือก");
+      }
+
       handleEvent(e.target.value);
     }
   };
@@ -29,7 +35,7 @@ export default function DropDownPurchaseProvince({
           (a) => a.id === parseInt(FormDataProduct[index].Purchase_Province)
         );
         if (findData !== undefined) {
-          setTitleState(findData.province_Name);
+          setTitleState(findData.value);
         } else {
           setTitleState("กรุณาเลือก");
         }
@@ -44,15 +50,15 @@ export default function DropDownPurchaseProvince({
         className="form-select position-absolute w-100"
         aria-label="Default select example"
         name="Purchase_Province"
+        disabled={!Confirm}
         value={FormDataProduct[index].Purchase_Province}
         index={index}
         onChange={handleSelect}
         required
       >
-        <option selected>Open this select menu</option>
         {data.map((item, index) => (
-          <option key={index} value={item.id} titleSet={item.province_Name}>
-            {item.province_Name}
+          <option key={index} value={item.id} titleSet={item.value}>
+            {item.value}
           </option>
         ))}
       </select>

@@ -17,13 +17,40 @@ import http from "../../axios";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import cloneDeep from "lodash.clonedeep";
-import { getProductType, getStoreByProvinceData } from "../../GetDataDropDown";
+import {
+  Confirm,
+  getProductType,
+  getStoreByProvinceData,
+  GetProvinceData,
+  GetDistrictData,
+  GetSubDistrictData,
+} from "../../GetDataDropDown";
 function FormWarranty({ Confirm }) {
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
+
+  const [storeData, setStoreData] = useState([
+    [{ id: "", value: "กรุณาเลือก" }],
+  ]);
   //let formtest = new FormData()
-  const [Province, setProvince] = useState([]);
-  const [District, setDistrict] = useState([]);
-  const [SubDistrict, setSubDistrict] = useState([]);
+  const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
+
+  const [District, setDistrict] = useState([
+    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+  ]);
+
+  const [SubDistrict, setSubDistrict] = useState([
+    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+  ]);
+
+  const [DistrictDN, setDistrictDN] = useState([
+    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+  ]);
+
+  const [SubDistrictDN, setSubDistrictDN] = useState([
+    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+  ]);
+  const [DisableFromSearch, setDisableFromSearch] = useState(false);
+
   const [FileWaranty, setFileWaranty] = useState([]);
   const [checkData, setCheckData] = useState(false);
   const [FormInput, setFormInput] = useState(true);
@@ -37,37 +64,16 @@ function FormWarranty({ Confirm }) {
     const typeData = await getProductType();
     setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...typeData]);
     //GetProvince
-    http
-      .post("/api/Master/GetProvince", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        //console.log("GetProvince123", res.data.data);
-        setProvince(res.data.data);
-      })
-      .catch((e) => {});
+    const ProvinceData = await GetProvinceData();
+    setProvince([...Province, ...ProvinceData]);
 
-    //GetDistrict
-    http
-      .post("/api/Master/GetDistrict", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        //console.log("GetProvince123", res.data.data);
-        setDistrict(res.data.data);
-      })
-      .catch((e) => {});
+    const DistrictData = await GetDistrictData();
+    setDistrict([...District, ...DistrictData]);
+    setDistrictDN([...DistrictDN, ...DistrictData]);
 
-    //GetDistrict
-    http
-      .post("/api/Master/GetSubDistrict", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        //console.log("GetProvince123", res.data.data);
-        setSubDistrict(res.data.data);
-      })
-      .catch((e) => {});
+    const SubDistrictData = await GetSubDistrictData();
+    setSubDistrict([...SubDistrict, ...SubDistrictData]);
+    setSubDistrictDN([...SubDistrictDN, ...SubDistrictData]);
     http
       .post("/api/Product/GetAllProduct", {
         Lang_ID: 1,
@@ -110,10 +116,10 @@ function FormWarranty({ Confirm }) {
       Barcode_Number: null,
       Warranty_Number: null,
       Type_ID: null,
-      Product_ID: null,
+      Product_ID: 0,
       Model_ID: null,
       Product_Code_Other: null,
-      QTY: null,
+      QTY: 0,
       Product_code: null,
       product_Name: null,
     },
@@ -140,7 +146,11 @@ function FormWarranty({ Confirm }) {
       .post(`/api/Customer/GetDataCustomerByCode?Customer_Code=${code}`)
       .then((res) => {
         if (res.data.message == "Success!") {
+          setDistrict(DistrictDN);
+          setSubDistrict(SubDistrictDN);
+
           const data = res.data.data;
+          console.log("data.fK_Province_ID", data.fK_Province_ID);
           const oldData = { ...FormDataWarranty };
           console.log("old", oldData);
           console.log("new", data);
@@ -158,6 +168,7 @@ function FormWarranty({ Confirm }) {
           oldData.Customer_Latitude = data.customer_Latitude;
           oldData.Customer_Longtitude = data.customer_Longitude;
           setFormDataWarranty(oldData);
+          setDisableFromSearch(true);
         } else {
           const oldData = { ...FormDataWarranty };
           oldData.Customer_Firstname = "";
@@ -173,6 +184,7 @@ function FormWarranty({ Confirm }) {
           oldData.Customer_Latitude = "";
           oldData.Customer_Longtitude = "";
           setFormDataWarranty(oldData);
+          setDisableFromSearch(false);
         }
       });
   };
@@ -211,7 +223,10 @@ function FormWarranty({ Confirm }) {
   const uiProductForm = () => {
     return procudeForm.map((item, index) => (
       <ProductData
+        Confirm={Confirm}
         key={index}
+        storeData={storeData}
+        setStoreData={setStoreData}
         FormDataProduct={FormDataProduct}
         handleChangInput={handleInputProduct}
         handleGetFileForm={handleGetFile}
@@ -219,11 +234,11 @@ function FormWarranty({ Confirm }) {
         FormDataProduct={FormDataProduct}
         setFormDataProduct={setFormDataProduct}
         Province={Province}
+        FileWaranty={FileWaranty}
       />
     ));
   };
-  const addProductForm = () => {
-    setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
+  const addProductForm = async () => {
     const tempProduct = [...FormDataProduct];
     tempProduct.push({
       Purchase_Province: tempProduct[tempProduct.length - 1].Purchase_Province,
@@ -234,17 +249,31 @@ function FormWarranty({ Confirm }) {
       Barcode_Number: null,
       Warranty_Number: null,
       Type_ID: null,
-      Product_ID: null,
+      Product_ID: 0,
       Model_ID: null,
       Product_Code_Other: null,
-      QTY: null,
+      QTY: 0,
       Product_code: null,
       product_Name: null,
     });
-    setFormDataProduct(tempProduct);
-    FileWaranty.push([]);
-    setFileWaranty(FileWaranty);
 
+    setFormDataProduct(tempProduct);
+    FileWaranty.push(FileWaranty[FileWaranty.length - 1]);
+    setFileWaranty(FileWaranty);
+    if (tempProduct[tempProduct.length - 1].Purchase_Province) {
+      const storeDataSetLoad = await getStoreByProvinceData(
+        parseInt(tempProduct[tempProduct.length - 1].Purchase_Province)
+      );
+      const storeDataSet = [...storeData];
+      storeDataSet.push([{ id: "", value: "กรุณาเลือก" }, ...storeDataSetLoad]);
+      setStoreData(storeDataSet);
+    } else {
+      const storeDataSet = [...storeData];
+      storeDataSet.push([{ id: "", value: "กรุณาเลือก" }]);
+      setStoreData(storeDataSet);
+    }
+
+    setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
     console.log(FormDataProduct);
   };
   const addStoreForm = () => {
@@ -258,17 +287,19 @@ function FormWarranty({ Confirm }) {
       Barcode_Number: null,
       Warranty_Number: null,
       Type_ID: null,
-      Product_ID: null,
+      Product_ID: 0,
       Model_ID: null,
       Product_Code_Other: null,
-      QTY: null,
+      QTY: 0,
       Product_code: null,
       product_Name: null,
     });
     setFormDataProduct(FormDataProduct);
     FileWaranty.push([]);
     setFileWaranty(FileWaranty);
-
+    const storeDataSet = [...storeData];
+    storeDataSet.push([{ id: "", value: "กรุณาเลือก" }]);
+    setStoreData(storeDataSet);
     console.log(FormDataProduct);
   };
   const handleEdit = () => {
@@ -311,53 +342,99 @@ function FormWarranty({ Confirm }) {
       }
       // item.Purchase_Date = formatDate(item.Purchase_Date);
       item.Purchase_Province = parseInt(item.Purchase_Province);
-      item.Store_ID = parseInt(item.Store_ID);
+      item.Store_ID = parseInt(item.Store_ID) || 0;
       item.Type_ID = parseInt(item.Type_ID);
       item.Product_ID = parseInt(item.Product_ID);
       item.Model_ID = 0;
-      item.QTY = parseInt(item.QTY);
+      item.QTY = parseInt(item.QTY) || 0;
 
       return { ...item, ...FormDataWarranty };
     });
     setLastDataComToConfirm(cloneDeep(dataFromLast));
     // fix data show for form confirm
-    const dataLoop = dataFromLast;
-    const dataShow = await Promise.all(
-      dataLoop.map(async (item, index) => {
-        item.Customer_Province = Province.find(
-          (p) => p.id === item.Customer_Province
-        ).province_Name;
+    let validate = true;
+    FormDataProduct.forEach((item, index) => {
+      console.log("item", item.Product_ID);
+      if (item.Product_ID) {
+      } else {
+        alert("กรุณาเลือก รหัสสินค้า");
+        validate = false;
+        return 0;
+      }
+      console.log("FileWarantyFileWaranty", Array.isArray(FileWaranty[index]));
+      if (Array.isArray(FileWaranty[index])) {
+        alert("กรุณาเลือก รูปภาพใบเสร็จ");
+        validate = false;
+        return 0;
+      } else {
+      }
+      if (FileWaranty[index]) {
+      } else {
+        alert("กรุณาเลือก รูปภาพใบเสร็จ");
+        validate = false;
+        return 0;
+      }
+      if (FormDataWarranty.Score) {
+      } else {
+        alert("กรุณาเลือกระดับความพึงพอใจ");
+        validate = false;
+        return 0;
+      }
+    });
 
-        item.Customer_District = District.find(
-          (d) => d.id === item.Customer_District
-        ).district_Name;
-        item.Customer_SubDistrict = SubDistrict.find(
-          (d) => d.id === item.Customer_SubDistrict
-        ).sub_District_Name;
-        item.Purchase_Province = Province.find(
-          (d) => d.id === item.Purchase_Province
-        ).province_Name;
-        const storeData = await getStoreByProvinceData(
-          FormDataProduct[index].Purchase_Province
-        );
-        item.Purchase_Date = formatDate(item.Purchase_Date);
-        item.Store_ID = storeData.find((s) => s.id === item.Store_ID).value;
+    if (validate) {
+      const dataLoop = dataFromLast;
+      const dataShow = await Promise.all(
+        dataLoop.map(async (item, index) => {
+          item.Customer_Province = Province.find(
+            (p) => p.id === item.Customer_Province
+          ).province_Name;
 
-        const resTypeID = await getProductType();
-        item.Type_ID = resTypeID.find((t) => t.id === item.Type_ID).value;
-        item.Model_ID = 0;
-        return item;
-      })
-    );
+          item.Customer_District = District.find(
+            (d) => d.id === item.Customer_District
+          ).district_Name;
+          item.Customer_SubDistrict = SubDistrict.find(
+            (d) => d.id === item.Customer_SubDistrict
+          ).sub_District_Name;
+          item.Purchase_Province = Province.find(
+            (d) => d.id === item.Purchase_Province
+          ).province_Name;
+          const storeData = await getStoreByProvinceData(
+            FormDataProduct[index].Purchase_Province
+          );
+          item.Purchase_Date = formatDate(item.Purchase_Date);
+          const sotreidset = storeData.find((s) => s.id === item.Store_ID);
+          if (sotreidset !== undefined) {
+            console.log("store", sotreidset);
+            item.Store_ID = parseInt(sotreidset.value);
+          } else {
+            item.Store_ID = 0;
+          }
 
-    console.log("dataShow", dataShow);
-    setDataForComfirm(dataShow);
+          const resTypeID = await getProductType();
+          const FindREtype = resTypeID.find((t) => t.id === item.Type_ID);
+          if (FindREtype !== undefined) {
+            item.Type_ID = FindREtype.value;
+          } else {
+            item.Type_ID = 0;
+          }
 
-    setFormInput(!FormInput);
-    setCheckData(!checkData);
+          item.Model_ID = 0;
+          return item;
+        })
+      );
+
+      setDataForComfirm(dataShow);
+
+      setFormInput(!FormInput);
+      setCheckData(!checkData);
+    } else {
+      // alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    }
   };
   const handleLastSubmit = () => {
     console.log("LastDataComToConfirm", LastDataComToConfirm);
+    let successCheck = 0;
     LastDataComToConfirm.forEach((items, index) => {
       let FormLastData = new FormData();
       FormLastData.append("files", FileWaranty[index]);
@@ -375,11 +452,18 @@ function FormWarranty({ Confirm }) {
         .then((res) => {
           console.log(res);
           if (res.data.message === "Success!") {
-            window.location = "/";
           } else {
-            alert("ไม่สำเร็จ กรุณาลองใหม่");
+            successCheck = successCheck + 1;
           }
+        })
+        .catch((e) => {
+          successCheck = successCheck + 1;
         });
+      if (successCheck > 0) {
+        alert("ไม่สำเร็จ กรุณาลองใหม่");
+      } else {
+        window.location = "/";
+      }
     });
   };
   const handleGetMemberData = (code) => {
@@ -430,15 +514,26 @@ function FormWarranty({ Confirm }) {
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
         <form onSubmit={handleSubmit}>
           <MemberData
+            Confirm={Confirm}
+            DisableFromSearch={DisableFromSearch}
             FormDataWarranty={FormDataWarranty}
             setFormDataWarranty={setFormDataWarranty}
             handleSearchByCustomerCode={handleSearchByCustomerCode}
-            Confirm={Confirm}
+            DisableFromSearch={DisableFromSearch}
           />
           <AddressSetting
+            Confirm={Confirm}
             Province={Province}
             District={District}
             SubDistrict={SubDistrict}
+            setProvince={setProvince}
+            setDistrict={setDistrict}
+            setSubDistrict={setSubDistrict}
+            DistrictDN={DistrictDN}
+            SubDistrictDN={SubDistrictDN}
+            setDistrictDN={setDistrictDN}
+            setSubDistrictDN={setSubDistrictDN}
+            DisableFromSearch={DisableFromSearch}
             handleChangInput={handleChangInput}
             FormDataWarranty={FormDataWarranty}
             setFormDataWarranty={setFormDataWarranty}
@@ -449,7 +544,7 @@ function FormWarranty({ Confirm }) {
             addStoreForm={addStoreForm}
             deleteFormProduct={deleteFormProduct}
           />
-          <FormRate handleChangInput={handleChangInput} />
+          <FormRate handleChangInput={handleChangInput} Confirm={Confirm} />
           <div className="row">
             <div className="col-md-4 mx-auto text-center mt-4">
               <ButtonMain

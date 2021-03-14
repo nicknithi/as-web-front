@@ -4,7 +4,10 @@ import Button from "react-bootstrap/Button";
 export default function CardInstallation() {
   return (
     <div>
-      <Card style={{ width: "100%" }} className="installation-card border-0">
+      <Card
+        style={{ width: "100%" }}
+        className="installation-card border-0 mb-3"
+      >
         <div>
           <Card.Img
             variant="top"
@@ -13,10 +16,8 @@ export default function CardInstallation() {
         </div>
 
         <Card.Body>
-          <div className="card-content">
-            asdfasdf
-            <br />
-            asdf
+          <div className="card-content p-2 text-center">
+            วิธีการติดตั้งโถสุขภัณฑ์
           </div>
         </Card.Body>
       </Card>

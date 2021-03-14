@@ -4,187 +4,77 @@ import GoogleMap from "../map/googleMap";
 import DropDownProvince from "../Input/dropDownProvince";
 import DropDownDistrict from "../Input/dropDownDistrict";
 import DropDownSubDistrict from "../Input/dropDownSubDistrict";
-import { getDistrict, setTempInput } from "../../actions/fetchAction";
 function AddressSetting({
+  Confirm,
   handleChangInput,
   dispatch,
+  FormDataWarranty,
+  setFormDataWarranty,
   Province,
   District,
   SubDistrict,
-  FormDataWarranty,
-  setFormDataWarranty,
+  setProvince,
+  setDistrict,
+  setSubDistrict,
+  DistrictDN,
+  SubDistrictDN,
+  setDistrictDN,
+  setSubDistrictDN,
+  DisableFromSearch,
 }) {
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
-  const [ZipCode, setZipCode] = useState(null);
-  const [tempProvince, setTempProvince] = useState(0);
-  const [tempDistrict, setTempDistrict] = useState(0);
-  const [titleDistric, setTitleDistric] = useState(false);
-  const [DistrictDP, setDistrictDP] = useState([
-    {
-      id: "",
-      district_Name: "กรุณาเลือก",
-    },
-  ]);
-  const [subDistrictDP, setSubDistrictDP] = useState([
-    {
-      id: "",
-      sub_District_Name: "กรุณาเลือก",
-    },
-  ]);
-  useEffect(() => {
-    setDistrictDP([
-      {
-        id: "",
-        district_Name: "กรุณาเลือก",
-      },
-      ...District,
-    ]);
-  }, [District]);
-  useEffect(() => {
-    setSubDistrictDP([
-      {
-        id: "",
-        sub_District_Name: "กรุณาเลือก",
-      },
-      ...SubDistrict,
-    ]);
-    console.log("SubDistrict", SubDistrict);
-  }, [SubDistrict]);
-  const handleProvince = (e) => {
-    setFormDataWarranty({
-      ...FormDataWarranty,
-      Customer_Province: e.target.value,
-    });
-    setTempProvince(e.target.value);
-    setDistrictDP([
-      {
-        id: "",
-        district_Name: "กรุณาเลือก",
-      },
-    ]);
-    setSubDistrictDP([
-      {
-        id: "",
-        sub_District_Name: "กรุณาเลือก",
-      },
-    ]);
-    let data = District.filter(
-      (p) => p.fK_Province_ID === parseInt(e.target.value)
-    );
-    if (data.length) {
-      setDistrictDP([
-        {
-          id: "",
-          district_Name: "กรุณาเลือก",
-        },
-        ...data,
-      ]);
-    } else {
-      setDistrictDP([
-        {
-          id: "",
-          district_Name: "กรุณาเลือก",
-        },
-      ]);
-    }
-  };
-  useEffect(() => {
-    // let data = District.filter(
-    //   (p) => p.fK_Province_ID === parseInt(FormDataWarranty.Customer_Province)
-    // );
-    // if (data.length) {
-    //   setDistrictDP([
-    //     {
-    //       id: "",
-    //       district_Name: "กรุณาเลือก",
-    //     },
-    //     ...data,
-    //   ]);
-    // } else {
-    //   setDistrictDP([
-    //     {
-    //       id: "",
-    //       district_Name: "กรุณาเลือก",
-    //     },
-    //   ]);
-    // }
-  }, [FormDataWarranty.Customer_Province]);
-  const handleDistrict = (e) => {
-    if (e.target !== undefined) {
-      setFormDataWarranty({
-        ...FormDataWarranty,
-        Customer_District: e.target.value,
-      });
-      setTempDistrict(e.target.value);
-      let data = SubDistrict.filter(
-        (p) =>
-          p.fK_District_ID === parseInt(e.target.value) &&
-          p.fK_Province_ID === parseInt(tempProvince)
+
+  const getProvinceDropDown = (e) => {
+    if (e.target) {
+      const DataSet = { ...FormDataWarranty };
+      DataSet.Customer_Province = parseInt(e.target.value);
+      DataSet.Customer_District = "";
+      DataSet.Customer_SubDistrict = "";
+      DataSet.Customer_ZipCode = "";
+      setFormDataWarranty(DataSet);
+      const newSet = DistrictDN.filter(
+        (p) => p.fK_Province_ID === parseInt(e.target.value)
       );
-      if (data.length) {
-        setSubDistrictDP([
-          {
-            id: "",
-            sub_District_Name: "กรุณาเลือก",
-          },
-          ...data,
-        ]);
-      } else {
-        setSubDistrictDP([
-          {
-            id: "",
-            sub_District_Name: "กรุณาเลือก",
-          },
-        ]);
-      }
-    } else {
-      setFormDataWarranty({
-        ...FormDataWarranty,
-        Customer_District: "",
-      });
-    }
-  };
-  const handleSubDistrict = (e) => {
-    if (e.target !== undefined) {
-      if (e.target.value) {
-        let data = SubDistrict.find(
-          (d) =>
-            d.id === parseInt(e.target.value) &&
-            d.fK_District_ID === parseInt(tempDistrict) &&
-            d.fK_Province_ID === parseInt(tempProvince)
-        );
-        if (data !== undefined) {
-          setZipCode(data.zip_Code);
-          setFormDataWarranty({
-            ...FormDataWarranty,
-            Customer_SubDistrict: e.target.value,
-            Customer_ZipCode: data.zip_Code,
-          });
-        } else {
-          console.log("else in");
-          setZipCode("");
-          setFormDataWarranty({
-            ...FormDataWarranty,
-            Customer_SubDistrict: "",
-            Customer_ZipCode: "",
-          });
-        }
-      } else {
-        console.log("else out");
-        setFormDataWarranty({
-          ...FormDataWarranty,
-          Customer_SubDistrict: "",
-          Customer_ZipCode: "",
-        });
+      console.log("ggghhh", newSet);
+      if (newSet.length) {
+        console.log("55566888");
+        setDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
       }
     }
   };
-  // useEffect(() => {
-  //   setLagLong({ lat: 15.87, lng: 100.9925 });
-  // }, [
-  //   FormDataWarranty.Customer_Latitude,
-  //   FormDataWarranty.Customer_Longtitude,
-  // ]);
+  const getDistrictDropDown = (e) => {
+    if (e.target) {
+      const DataSet = { ...FormDataWarranty };
+      DataSet.Customer_District = parseInt(e.target.value);
+      DataSet.Customer_ZipCode = "";
+      DataSet.Customer_SubDistrict = "";
+      setFormDataWarranty(DataSet);
+      const newSet = SubDistrictDN.filter(
+        (p) =>
+          p.fK_Province_ID === parseInt(FormDataWarranty.Customer_Province) &&
+          p.fK_District_ID === parseInt(e.target.value)
+      );
+      console.log(newSet);
+      if (newSet.length) {
+        setSubDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+      }
+    }
+  };
+  const getSubDistrictDropDown = (e) => {
+    if (e.target) {
+      const DataSet = { ...FormDataWarranty };
+      DataSet.Customer_SubDistrict = parseInt(e.target.value);
+      DataSet.Customer_ZipCode = "";
+      const newSet = SubDistrictDN.find(
+        (p) => p.id === parseInt(e.target.value)
+      );
+      if (newSet !== undefined) {
+        DataSet.Customer_ZipCode = newSet.zip_Code;
+      }
+      setFormDataWarranty(DataSet);
+    }
+  };
+  useEffect(async () => {}, []);
   return (
     <div className="mt-3">
       <h3 className="font-weight-bold mb-3">ที่อยู่การติดตั้ง</h3>
@@ -199,6 +89,7 @@ function AddressSetting({
               id="addressProduct"
               className="as-input"
               name="Customer_Address"
+              disabled={DisableFromSearch || !Confirm}
               value={FormDataWarranty.Customer_Address}
               onChange={(e) =>
                 setFormDataWarranty({
@@ -214,8 +105,10 @@ function AddressSetting({
           <div className="col-md-6">
             <label className="font-weight-bold">จังหวัด*</label>
             <DropDownProvince
-              data={[{ id: "", province_Name: "กรุณาเลือก" }, ...Province]}
-              handleEvent={handleProvince}
+              data={Province}
+              Confirm={Confirm}
+              DisableFromSearch={DisableFromSearch}
+              handleEvent={getProvinceDropDown}
               FormDataWarranty={FormDataWarranty}
               setFormDataWarranty={setFormDataWarranty}
             />
@@ -223,9 +116,10 @@ function AddressSetting({
           <div className="col-md-6">
             <label className="font-weight-bold">อำเภอ/เขต*</label>
             <DropDownDistrict
-              data={DistrictDP}
-              handleEvent={handleDistrict}
-              title={titleDistric}
+              data={District}
+              Confirm={Confirm}
+              DisableFromSearch={DisableFromSearch}
+              handleEvent={getDistrictDropDown}
               FormDataWarranty={FormDataWarranty}
               setFormDataWarranty={setFormDataWarranty}
             />
@@ -235,8 +129,10 @@ function AddressSetting({
           <div className="col-md-6">
             <label className="font-weight-bold mt-3">ตำบล*</label>
             <DropDownSubDistrict
-              data={subDistrictDP}
-              handleEvent={handleSubDistrict}
+              data={SubDistrict}
+              Confirm={Confirm}
+              DisableFromSearch={DisableFromSearch}
+              handleEvent={getSubDistrictDropDown}
               FormDataWarranty={FormDataWarranty}
               setFormDataWarranty={setFormDataWarranty}
             />
@@ -248,6 +144,7 @@ function AddressSetting({
               id="postCode"
               value={FormDataWarranty.Customer_ZipCode}
               name="Customer_ZipCode"
+              disabled={DisableFromSearch || !Confirm}
               onChange={(e) =>
                 setFormDataWarranty({
                   ...FormDataWarranty,

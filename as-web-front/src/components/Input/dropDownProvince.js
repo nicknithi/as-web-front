@@ -4,17 +4,17 @@ export default function DropDown({
   data,
   handleEvent,
   FormDataWarranty,
-  setFormDataWarranty,
+  DisableFromSearch,
+  Confirm,
 }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     if (e.target.value) {
-      setTitleState(
-        data.find((a) => a.id === parseInt(e.target.value)).province_Name
-      );
+      let index1 = e.nativeEvent.target.selectedIndex;
+      setTitleState(e.nativeEvent.target[index1].text);
       handleEvent(e);
     } else {
-      setTitleState(data[0].province_Name);
+      setTitleState(data[0].value);
       handleEvent(e);
     }
   };
@@ -24,7 +24,7 @@ export default function DropDown({
         (a) => a.id === parseInt(FormDataWarranty.Customer_Province)
       );
       if (findData !== undefined) {
-        setTitleState(findData.province_Name);
+        setTitleState(findData.value);
       } else {
         setTitleState("กรุณาเลือก");
       }
@@ -38,13 +38,14 @@ export default function DropDown({
         className="form-select position-absolute w-100"
         aria-label="Default select example"
         name="Customer_Province"
-        value={FormDataWarranty.Customer_Province}
+        disabled={DisableFromSearch || !Confirm}
         onChange={handleSelect}
+        value={FormDataWarranty.Customer_Province}
         required
       >
         {data.map((item, index) => (
-          <option key={index} value={item.id} titleSet={item.province_Name}>
-            {item.province_Name}
+          <option key={index} value={item.id} titleSet={item.value}>
+            {item.value}
           </option>
         ))}
       </select>

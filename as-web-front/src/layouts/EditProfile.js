@@ -7,7 +7,7 @@ import GoogleMap from "../components/map/googleMapRegister";
 import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
 import http from "../axios";
-export default function Register() {
+export default function EditProfile() {
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
   const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
   const [District, setDistrict] = useState([
@@ -170,71 +170,9 @@ export default function Register() {
     <div>
       <form onSubmit={submit}>
         <div className="container register pb-4">
-          <h3 className="font-weight-bold mb-3">ลงทะเบียนสมัครสมาชิก</h3>
-          <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
+          <h1 className="font-weight-bold mb-3 mt-3">แก้ไขข้อมูลส่วนตัว</h1>
 
           <div className="register-container">
-            <h4 className="font-weight-bold">
-              ประเภทสมาชิก*(กรุณากดเพื่อเลือกประเภทสมาชิก)
-            </h4>
-            <div className="row ml-1">
-              <label className="as-container font-weight-bold">
-                ลงทะเบียนสมาชิกบ้านพักอาศัย
-                <input
-                  type="radio"
-                  name="radio"
-                  name="customer-type"
-                  value="1"
-                  checked={DataFromRegister.Customer_Type === "1"}
-                  onChange={(e) =>
-                    setDataFromRegister({
-                      ...DataFromRegister,
-                      Customer_Type: e.target.value,
-                    })
-                  }
-                />
-                <span className="checkmark"></span>
-              </label>
-            </div>
-            <div className="row ml-1">
-              <label className="as-container font-weight-bold">
-                ลงทะเบียนสมาชิกผู้รับเหมารายย่อย
-                <input
-                  type="radio"
-                  name="radio"
-                  name="customer-type"
-                  value="2"
-                  checked={DataFromRegister.Customer_Type === "2"}
-                  onChange={(e) =>
-                    setDataFromRegister({
-                      ...DataFromRegister,
-                      Customer_Type: e.target.value,
-                    })
-                  }
-                />
-                <span className="checkmark"></span>
-              </label>
-            </div>
-            <div className="row ml-1">
-              <label className="as-container font-weight-bold">
-                ลงทะเบียนสมาชิกโครงการสำนักงาน,โรงแรม,ออฟฟิศ ฯลฯ
-                ที่ไม่ใช่บ้านพักอาศัย
-                <input
-                  type="radio"
-                  name="radio"
-                  name="customer-type"
-                  value="3"
-                  checked={DataFromRegister.Customer_Type === "3"}
-                  onChange={(e) =>
-                    setDataFromRegister({
-                      ...DataFromRegister,
-                      Customer_Type: e.target.value,
-                    })
-                  }
-                />
-                <span className="checkmark"></span>
-              </label>
-            </div>
             <div className="row">
               <div className="col-md-6">
                 <label className="font-weight-bold">ชื่อ*</label>
@@ -426,12 +364,43 @@ export default function Register() {
               />
             </div>
           </div>
-        </div>
-        <div className="row mt-3 d-flex justify-content-center">
-          <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+          <div className="login-container mt-5">
+            <div className="row">
+              <div className="col-md-6">
+                <label className="font-weight-bold">ชื่อล็อกอิน</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Username}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Username: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="col-md-6">
+                <label className="font-weight-bold">รหัสผ่าน</label>
+                <input
+                  type="text"
+                  className="as-input"
+                  value={DataFromRegister.Password}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Password: e.target.value,
+                    })
+                  }
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </form>
-
+      <div className="row mt-3 d-flex justify-content-center">
+        <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+      </div>
       <div className="text-center mt-3 mb-4">
         <ButtonMain
           title="กลับ"

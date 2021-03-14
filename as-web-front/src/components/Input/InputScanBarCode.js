@@ -3,13 +3,20 @@ import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
 import http from "../../axios";
-export default function InputScanBarCode({ handleEvent, handleScan, index }) {
+export default function InputScanBarCode({
+  handleEvent,
+  handleScan,
+  index,
+  FormDataProduct,
+  Confirm,
+}) {
   const manualInput = (e) => {
+    console.log("555");
     if (e.length) {
       document.getElementById("Barcode_Number").value = e[0].id;
       // console.log(document.getElementById("Barcode_Number"));
+      setPD(e);
       handleEvent(
-        document.getElementById("Barcode_Number"),
         e[0].id,
         e[0].fK_Model_ID,
         e[0].fK_Type_ID,
@@ -18,9 +25,8 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
         e[0].product_Name
       );
     } else {
-      document.getElementById("Barcode_Number").value = 0;
-      // console.log(document.getElementById("Barcode_Number"));
-      handleEvent(document.getElementById("Barcode_Number"), 0, 0, 0, "");
+      handleEvent("", "", 0, "", "", "");
+      setPD([]);
     }
   };
 
@@ -60,7 +66,28 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
       });
   };
   const filterBy = () => true;
-  useEffect(() => {}, []);
+
+  const [PD, setPD] = useState([]);
+  useEffect(() => {
+    if (FormDataProduct[index].Barcode_Number) {
+      const OPD = [...PD];
+      OPD[0] = {
+        id: null,
+        value: null,
+        index: null,
+        fK_Model_ID: null,
+        fK_Type_ID: null,
+        barcode: "",
+        product_code: null,
+        product_Name: null,
+      };
+      OPD[0].barcode = FormDataProduct[index].Barcode_Number || "";
+      setPD(OPD);
+    } else {
+      const OPD = [...PD];
+      setPD((OPD[0] = []));
+    }
+  }, [FormDataProduct[index].Barcode_Number]);
   return (
     <div className="input-barcode">
       {/* <input
@@ -81,6 +108,9 @@ export default function InputScanBarCode({ handleEvent, handleScan, index }) {
       <AsyncTypeahead
         filterBy={filterBy}
         id="async-example"
+        // defaultSelected={PD}
+        disabled={!Confirm}
+        selected={PD}
         isLoading={isLoading}
         labelKey="barcode"
         minLength={3}

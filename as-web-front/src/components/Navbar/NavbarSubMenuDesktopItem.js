@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function NavbarSubMenuDesktopItem({ title }) {
+export default function NavbarSubMenuDesktopItem({ title, link }) {
   return (
-    <a href="/warranty" className="sub-menu-item">
+    <a href={link} className="sub-menu-item">
       {title}
     </a>
   );

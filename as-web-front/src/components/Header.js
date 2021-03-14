@@ -10,12 +10,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },
@@ -24,12 +27,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },
@@ -38,12 +44,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },
@@ -52,12 +61,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },
@@ -65,13 +77,16 @@ export default function header() {
       title: "การติดตั้ง",
       subMenu: [
         {
-          title: "menu1",
+          title: "การติดตั้ง",
+          link: "/installation",
         },
         {
           title: "menu1",
+          link: "/installation",
         },
         {
           title: "menu1",
+          link: "/installation",
         },
       ],
     },
@@ -80,12 +95,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },
@@ -94,12 +112,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },
@@ -108,12 +129,15 @@ export default function header() {
       subMenu: [
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
         {
           title: "menu1",
+          link: "/",
         },
       ],
     },

@@ -127,7 +127,6 @@ export default function FormProductList({ handleChangInput }) {
             className="as-input"
             name="Product_Code_Other"
             onChange={handleChangInput}
-            required
           />
         </div>
       </div>
@@ -139,7 +138,6 @@ export default function FormProductList({ handleChangInput }) {
             className="as-input"
             name="QTY"
             onChange={handleChangInput}
-            required
           />
         </div>
       </div>

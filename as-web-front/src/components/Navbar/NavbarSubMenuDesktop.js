@@ -4,7 +4,11 @@ export default function NavbarSubMenuDesktop(prop) {
   return (
     <div className="sub-menu position-absolute">
       {prop.subMenu.map((item, index) => (
-        <NavbarSubMenuDesktopItem key={index} title={item.title} />
+        <NavbarSubMenuDesktopItem
+          key={index}
+          title={item.title}
+          link={item.link}
+        />
       ))}
     </div>
   );

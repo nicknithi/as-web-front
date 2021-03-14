@@ -66,9 +66,9 @@ function FormComfirm(props) {
                 <br />
                 ประเภทสินค้า: {item.Type_ID || ""}
                 <br />
-                รหัสสินค้า: {item.Product_Code_Other || ""}
+                รหัสสินค้า: {item.Product_code || ""}
                 <br />
-                รหัสสินค้า (อื่น ๆ): ชื่อรุ่น: {item.Product_Code_Other || ""}
+                รหัสสินค้า (อื่น ๆ): {item.Product_Code_Other || ""}
                 <br />
                 จำนวนชิ้นที่ซื้อ: {item.QTY || ""}
                 <br />

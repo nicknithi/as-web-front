@@ -8,14 +8,23 @@ export default function DropDownStore_ID({
   index,
   FormDataProduct,
   setFormDataProduct,
+  Confirm,
 }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     if (e.target) {
-      setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
-      const dataSet = [...FormDataProduct];
-      dataSet[index].Store_ID = e.target.value;
-      setFormDataProduct(dataSet);
+      const tempTitle = data.find((a) => a.id === parseInt(e.target.value));
+      if (tempTitle !== undefined) {
+        setTitleState(tempTitle.value);
+        const dataSet = [...FormDataProduct];
+        dataSet[index].Store_ID = e.target.value;
+        setFormDataProduct(dataSet);
+      } else {
+        setTitleState("กรุณาเลือก");
+        const dataSet = [...FormDataProduct];
+        dataSet[index].Store_ID = "";
+        setFormDataProduct(dataSet);
+      }
     }
     //handleEvent(e);
   };
@@ -47,9 +56,9 @@ export default function DropDownStore_ID({
         name="Store_ID"
         index={index}
         value={FormDataProduct[index].Store_ID}
+        disabled={FormDataProduct[index].Store_Name_Other || !Confirm}
         onChange={handleSelect}
       >
-        <option selected>Open this select menu</option>
         {data.map((item, index) => (
           <option key={index} value={item.id} titleSet={item.value}>
             {item.value}

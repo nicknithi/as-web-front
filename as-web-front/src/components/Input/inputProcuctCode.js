@@ -7,23 +7,25 @@ export default function InputProcuctCode({
   handleEvent,
   index,
   FormDataProduct,
+  Confirm,
 }) {
   const manualInput = (e) => {
     if (e.length) {
-      handleEvent(e[0].fK_Model_ID, e[0].fK_Type_ID, e[0].product_Code);
+      setPD(e);
+      handleEvent(
+        e[0].id,
+        e[0].fK_Model_ID,
+        e[0].fK_Type_ID,
+        e[0].product_Code,
+        e[0].product_Barcode,
+        e[0].product_Name
+      );
     } else {
+      setPD([]);
+      handleEvent("", 0, "", "", "");
     }
   };
-  const [PD, setPD] = useState([
-    {
-      id: null,
-      value: null,
-      index: null,
-      fK_Model_ID: null,
-      fK_Type_ID: null,
-      product_Code: "",
-    },
-  ]);
+  const [PD, setPD] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
@@ -32,11 +34,12 @@ export default function InputProcuctCode({
     http
       .post(`/api/Product/GetProductTop20ByCode`, {
         Lang_ID: 1,
-        Product_Code: query,
+        Product_Code: query.toUpperCase(),
       })
       .then((res) => {
         console.log(res);
         if (res.data.message === "Success!") {
+          console.log("check check", res.data);
           const option = res.data.data.map((item, index) => {
             return {
               id: item.id,
@@ -45,6 +48,8 @@ export default function InputProcuctCode({
               fK_Model_ID: item.fK_Model_ID,
               fK_Type_ID: item.fK_Type_ID,
               product_Code: item.product_Code,
+              product_Barcode: item.product_Barcode,
+              product_Name: item.product_Name,
             };
           });
           setOptions(option);
@@ -57,47 +62,31 @@ export default function InputProcuctCode({
       });
   };
   const filterBy = () => true;
-  function reducer(state, action) {
-    switch (action.type) {
-      case "increment":
-        if (FormDataProduct[index].Product_code) {
-          const OPD = [...PD];
-          OPD[0].product_Code = FormDataProduct[index].Product_code;
-          setPD(OPD);
-        }
-
-        break;
-      default:
-        setPD("");
-        break;
-    }
-  }
-  const [state, dispatch] = useReducer(reducer, "");
   useEffect(() => {
-    dispatch({ type: "increment" });
-    console.log("test");
-  }, [FormDataProduct]);
+    if (FormDataProduct[index].Product_code) {
+      const OPD = [...PD];
+      OPD[0] = {
+        id: null,
+        value: null,
+        index: null,
+        fK_Model_ID: null,
+        fK_Type_ID: null,
+        product_Code: "",
+      };
+      OPD[0].product_Code = FormDataProduct[index].Product_code;
+      setPD(OPD);
+    } else {
+      const OPD = [...PD];
+      setPD((OPD[0] = []));
+    }
+  }, [FormDataProduct[index].Product_code]);
   return (
     <div className="input-barcode">
-      {/* <input
-        type="text"
-        name="Barcode_Number"
-        id="Barcode_Number"
-        className="as-input"
-        index={index}
-        onChange={manualInput}
-      /> */}
-      <input
-        type="hidden"
-        name="Barcode_Number"
-        id="Barcode_Number"
-        index={index}
-        value=""
-      />
       <AsyncTypeahead
         filterBy={filterBy}
         id="async-example"
-        defaultSelected={PD}
+        // defaultSelected={PD}
+        disabled={FormDataProduct[index].Product_Code_Other || !Confirm}
         isLoading={isLoading}
         labelKey="product_Code"
         minLength={3}
@@ -105,6 +94,8 @@ export default function InputProcuctCode({
         onChange={manualInput}
         options={options}
         placeholder=""
+        selected={PD}
+        required={true}
         renderMenuItemChildren={(option, props) => (
           <Fragment>
             {/* <img

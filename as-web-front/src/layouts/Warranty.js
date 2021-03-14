@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FormWarranty from "../components/Warranty/FormWarranty";
 import CostWarrantyDetail from "../components/Warranty/CostWarrantyDetail";
 import WarrantyConfirm from "../components/Warranty/WarrantyConfirm";
@@ -12,6 +12,19 @@ export default function Warranty() {
   const handleCheck = (e) => {
     setConfirm(e.target.checked);
   };
+  // useEffect(() => {
+  //   if (!Confirm) {
+  //     var list = document.getElementsByTagName("input");
+  //     for (let item of list) {
+  //       item.addEventListener("click", function () {
+  //         alert();
+  //       });
+  //       // item.onclick = function (event) {
+  //       //   alert("กรุณา ยอมรับนโยบายความเป็นส่วนตัว");
+  //       // };
+  //     }
+  //   }
+  // }, []);
   return (
     <div className="warranty">
       <BannerCover />
@@ -148,7 +161,7 @@ export default function Warranty() {
             </PerfectScrollbar>
           </div> */}
         </div>
-        {Confirm && <FormWarranty Confirm={Confirm} />}
+        {true && <FormWarranty Confirm={Confirm} />}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function DropDownType_ID({ data, handleEvent, index }) {
+export default function DropDownType_ID({ data, handleEvent, index, Confirm }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
@@ -24,6 +24,7 @@ export default function DropDownType_ID({ data, handleEvent, index }) {
         aria-label="Default select example"
         name="Type_ID"
         index={index}
+        disabled={!Confirm}
         onChange={handleSelect}
       >
         {data.map((item, index) => (
@@ -32,7 +33,7 @@ export default function DropDownType_ID({ data, handleEvent, index }) {
           </option>
         ))}
       </select>
-      <div className="custom-dropdown">
+      <div className="custom-dropdown text-truncate">
         {title}
         <div className="button-select">
           <div className="squre" />

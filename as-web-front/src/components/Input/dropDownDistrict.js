@@ -1,67 +1,57 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
-export default function DropDownDistrict({
+export default function DropDown({
   data,
   handleEvent,
-  titleDistrict,
   FormDataWarranty,
   setFormDataWarranty,
+  DisableFromSearch,
+  Confirm,
 }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
     if (e.target.value) {
-      setTitleState(
-        data.find((a) => a.id === parseInt(e.target.value)).district_Name
-      );
+      let index1 = e.nativeEvent.target.selectedIndex;
+      setTitleState(e.nativeEvent.target[index1].text);
       handleEvent(e);
     } else {
-      setTitleState(data[0].district_Name);
+      setTitleState(data[0].value);
       handleEvent(e);
     }
   };
   useEffect(() => {
-    let x = document.createElement("INPUT");
-    x.setAttribute("type", "text");
-    x.setAttribute("name", "Customer_District");
-    x.setAttribute("value", data[0].id);
-    handleEvent(x);
-    setTitleState(data[0].district_Name);
-  }, [data]);
-  useEffect(async () => {
-    const dataTest = await data;
-    if (dataTest[0]) {
-      if (FormDataWarranty.Customer_District) {
-        const findData = dataTest.find(
-          (a) => a.id === parseInt(FormDataWarranty.Customer_District)
-        );
-        if (findData !== undefined) {
-          setTitleState(findData.district_Name);
-        } else {
-          setTitleState("กรุณาเลือก");
-        }
+    if (FormDataWarranty.Customer_Province) {
+      const findData = data.find(
+        (a) => a.id === parseInt(FormDataWarranty.Customer_District)
+      );
+      if (findData !== undefined) {
+        setTitleState(findData.value);
       } else {
         setTitleState("กรุณาเลือก");
       }
+    } else {
+      setTitleState("กรุณาเลือก");
     }
   }, [FormDataWarranty.Customer_District]);
   return (
     <div className="position-relative as-dropdown">
       <select
         className="form-select position-absolute w-100"
-        name="Customer_District"
         aria-label="Default select example"
-        value={FormDataWarranty.Customer_District}
+        name="Customer_Province"
+        disabled={DisableFromSearch || !Confirm}
         onChange={handleSelect}
+        value={FormDataWarranty.Customer_District}
         required
       >
         {data.map((item, index) => (
-          <option key={index} value={item.id}>
-            {item.district_Name}
+          <option key={index} value={item.id} titleSet={item.value}>
+            {item.value}
           </option>
         ))}
       </select>
       <div className="custom-dropdown">
-        {titleDistrict ? "กรุณาเลือก" : title}
+        {title}
         <div className="button-select">
           <div className="squre" />
         </div>

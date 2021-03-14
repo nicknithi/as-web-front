@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/uploadImg.scss";
 import ButtonUpload from "../button/ButtonUpload";
-export default function UploadImage({ handleGetFile, index }) {
+export default function UploadImage({
+  handleGetFile,
+  index,
+  Confirm,
+  FileWaranty,
+}) {
   const [imgPreview, setImgPreview] = useState("");
   const uploadImg = (file, index) => {
     handleGetFile(file, index);
     setImgPreview(URL.createObjectURL(file));
   };
+
+  useEffect(() => {
+    if (FileWaranty[index]) {
+      if (!Array.isArray(FileWaranty[index])) {
+        setImgPreview(URL.createObjectURL(FileWaranty[index]));
+      }
+    } else {
+    }
+  }, []);
   return (
     <div className="col-md-4  mx-auto text-center">
       {imgPreview ? (
@@ -34,13 +48,19 @@ export default function UploadImage({ handleGetFile, index }) {
       <div className="button d-flex justify-content-center mt-3">
         <div className="mr-3">
           <ButtonUpload
-            title={"อัพโหลดภาพ"}
+            Confirm={Confirm}
+            title={"อัพโหลดภาพใบเสร็จ"}
             uploadImg={uploadImg}
             index={index}
           />
         </div>
         <div>
-          <ButtonUpload uploadImg={uploadImg} index={index} title={"ถ่ายภาพ"} />
+          <ButtonUpload
+            Confirm={Confirm}
+            uploadImg={uploadImg}
+            index={index}
+            title={"ถ่ายภาพใบเสร็จ"}
+          />
         </div>
       </div>
     </div>
