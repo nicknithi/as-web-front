@@ -87,6 +87,7 @@ export default function InputProductName({
       const OPD = [...PD];
       setPD((OPD[0] = []));
     }
+    typeahead.current.hideMenu();
   }, [FormDataProduct[index].product_Name]);
   return (
     <div className="input-barcode">

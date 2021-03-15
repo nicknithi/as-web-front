@@ -80,11 +80,13 @@ export default function ProductData({
     ProductCodeSet[index].product_Name = product_Name;
     setFormDataProduct(ProductCodeSet);
     const type = dataTypeID.find((d) => d.id === TypeId);
-    if (type !== undefined) {
+    console.log("type 5555", type);
+    if (type !== undefined && TypeId !== 0) {
       setTypeId([type]);
     } else {
       setTypeId(dataTypeID);
     }
+
     const Model = dataModelID.find((d) => d.id === ModelId);
     if (Model !== undefined) {
       setModelId([Model]);
@@ -239,7 +241,7 @@ export default function ProductData({
                 index={index}
                 name="Receipt_Number"
                 onChange={handleChangInput}
-                disabled={FormDataProduct[index].Receipt_Number || !Confirm}
+                disabled={!Confirm}
                 value={FormDataProduct[index].Receipt_Number}
                 required
               />
@@ -347,7 +349,7 @@ export default function ProductData({
                 className="as-input"
                 index={index}
                 name="Product_Code_Other"
-                disabled={FormDataProduct[index].Product_code || !Confirm}
+                disabled={!Confirm}
                 value={FormDataProduct[index].Product_Code_Other}
                 onChange={setOnOtherCode}
               />

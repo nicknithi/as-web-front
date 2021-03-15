@@ -1,4 +1,10 @@
-import React, { useState, useEffect, Fragment, useReducer } from "react";
+import React, {
+  useState,
+  useEffect,
+  Fragment,
+  useReducer,
+  useRef,
+} from "react";
 import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
@@ -9,6 +15,7 @@ export default function InputProcuctCode({
   FormDataProduct,
   Confirm,
 }) {
+  const typeahead = useRef(null);
   const manualInput = (e) => {
     if (e.length) {
       setPD(e);
@@ -79,6 +86,7 @@ export default function InputProcuctCode({
       const OPD = [...PD];
       setPD((OPD[0] = []));
     }
+    typeahead.current.hideMenu();
   }, [FormDataProduct[index].Product_code]);
   return (
     <div className="input-barcode">
@@ -86,7 +94,8 @@ export default function InputProcuctCode({
         filterBy={filterBy}
         id="async-example"
         // defaultSelected={PD}
-        disabled={FormDataProduct[index].Product_Code_Other || !Confirm}
+        ref={typeahead}
+        disabled={!Confirm}
         isLoading={isLoading}
         labelKey="product_Code"
         minLength={3}

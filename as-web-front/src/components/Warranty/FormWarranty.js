@@ -355,7 +355,7 @@ function FormWarranty({ Confirm }) {
     let validate = true;
     FormDataProduct.forEach((item, index) => {
       console.log("item", item.Product_ID);
-      if (item.Product_ID) {
+      if (item.Product_ID || item.Product_Code_Other) {
       } else {
         alert("กรุณาเลือก รหัสสินค้า");
         validate = false;

@@ -114,7 +114,7 @@ function AddressSetting({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">อำเภอ/เขต*</label>
+            <label className="font-weight-bold">อำเภอ*</label>
             <DropDownDistrict
               data={District}
               Confirm={Confirm}
@@ -127,7 +127,7 @@ function AddressSetting({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold mt-3">ตำบล*</label>
+            <label className="font-weight-bold mt-3">ตำบล/เขต*</label>
             <DropDownSubDistrict
               data={SubDistrict}
               Confirm={Confirm}

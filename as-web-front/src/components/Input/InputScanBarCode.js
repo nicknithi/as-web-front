@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
@@ -10,6 +10,7 @@ export default function InputScanBarCode({
   FormDataProduct,
   Confirm,
 }) {
+  const typeahead = useRef(null);
   const manualInput = (e) => {
     console.log("555");
     if (e.length) {
@@ -87,6 +88,7 @@ export default function InputScanBarCode({
       const OPD = [...PD];
       setPD((OPD[0] = []));
     }
+    typeahead.current.hideMenu();
   }, [FormDataProduct[index].Barcode_Number]);
   return (
     <div className="input-barcode">
@@ -109,6 +111,7 @@ export default function InputScanBarCode({
         filterBy={filterBy}
         id="async-example"
         // defaultSelected={PD}
+        ref={typeahead}
         disabled={!Confirm}
         selected={PD}
         isLoading={isLoading}
