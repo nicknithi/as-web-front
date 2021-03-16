@@ -33,6 +33,9 @@ export default function ProfileHome() {
     customer_Company: null,
   });
   useEffect(async () => {
+    if (true) {
+      window.location = "/login";
+    }
     const dataProfile = await getCustomerById(114);
     setProfileData(dataProfile);
     console.log(dataProfile);
@@ -82,21 +85,21 @@ export default function ProfileHome() {
         <div className="row mt-3  ml-4">
           <label className="as-container font-weight-bold">
             ประวัติการใช้บริการ
-            <input type="radio" name="radio" name="customer-type" value="1" />
+            <input type="radio" name="customer-type" value="1" />
             <span className="checkmark"></span>
           </label>
         </div>
         <div className="row  ml-4">
           <label className="as-container font-weight-bold">
             ประวัติการซื้ออะไหล่และสินค้า
-            <input type="radio" name="radio" name="customer-type" value="1" />
+            <input type="radio" name="customer-type" value="1" />
             <span className="checkmark"></span>
           </label>
         </div>
         <div className="row ml-4">
           <label className="as-container font-weight-bold">
             ประวัติการต่ออายุสมาชิก
-            <input type="radio" name="radio" name="customer-type" value="1" />
+            <input type="radio" name="customer-type" value="1" />
             <span className="checkmark"></span>
           </label>
         </div>
