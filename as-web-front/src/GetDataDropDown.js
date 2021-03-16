@@ -70,7 +70,12 @@ const GetSubDistrictData = async () => {
   });
   return subDistrictSet;
 };
-
+const getWarrantyByCustomerId = async (id) => {
+  const res = await http.post(
+    `/api/Warranty/GetDataWarranty?Customer_ID=${id}`
+  );
+  return res.data.data.warrantyData;
+};
 export {
   getProductType,
   getStoreByProvinceData,
@@ -78,4 +83,5 @@ export {
   GetProvinceData,
   GetDistrictData,
   GetSubDistrictData,
+  getWarrantyByCustomerId,
 };
