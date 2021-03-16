@@ -76,6 +76,14 @@ const getWarrantyByCustomerId = async (id) => {
   );
   return res.data.data.warrantyData;
 };
+
+const getProductByBarcode = async (barcode) => {
+  const res = await http.post("/api/Product/GetProductByBarcode", {
+    Lang_ID: 1,
+    Product_Barcode: barcode,
+  });
+  return res.data.data;
+};
 export {
   getProductType,
   getStoreByProvinceData,
@@ -84,4 +92,5 @@ export {
   GetDistrictData,
   GetSubDistrictData,
   getWarrantyByCustomerId,
+  getProductByBarcode,
 };

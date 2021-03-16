@@ -1,0 +1,52 @@
+.rdt_Table {
+  .sc-hKgILt {
+    font-size: 22px;
+    font-weight: bold;
+    color: #636363;
+  }
+  .gHOQQy {
+    position: relative;
+    &::after {
+      content: "";
+      position: absolute;
+      top: 10px;
+      bottom: 10px;
+      right: 0;
+      width: 2px;
+      background-color: #aebac6;
+    }
+    &:last-child {
+      &::after {
+        background-color: white;
+      }
+    }
+  }
+  .rdt_TableCell {
+    button {
+      border-color: white;
+      border: none;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.13);
+      font-size: 18px;
+      background-color: #58a7af;
+      color: white;
+      min-width: 45px;
+    }
+  }
+  .rdt_TableRow {
+    background-color: #f1f1f5;
+    border: none;
+    border-bottom-color: white !important;
+    &:nth-child(even) {
+      background-color: white;
+    }
+  }
+}
+.fRHOyh {
+  justify-content: center !important;
+  .gaMRwo {
+    display: none;
+  }
+  .fFngYM {
+    display: none;
+  }
+}

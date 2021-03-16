@@ -437,6 +437,7 @@ function FormWarranty({ Confirm }) {
     let successCheck = 0;
     LastDataComToConfirm.forEach((items, index) => {
       let FormLastData = new FormData();
+      items.Purchase_Date = convertDate(items.Purchase_Date);
       FormLastData.append("files", FileWaranty[index]);
       FormLastData.append("datas", JSON.stringify(items));
       axios
@@ -466,28 +467,11 @@ function FormWarranty({ Confirm }) {
       }
     });
   };
-  const handleGetMemberData = (code) => {
-    http
-      .post(`/api/Customer/GetDataCustomerByCode?Customer_Code=${code}`)
-      .then((res) => {
-        if (res.data.message === "Success!") {
-          console.log("res1", res);
-          const data = res.data.data;
-          FormDataWarranty.Customer_Firstname = data.customer_Name;
-          FormDataWarranty.Customer_Lastname = data.customer_Surname;
-          FormDataWarranty.Customer_Tel = data.customer_Tel;
-          FormDataWarranty.Customer_Mobile = data.customer_Phone;
-          FormDataWarranty.Customer_Email = data.customer_Email;
-          setFormDataWarranty(FormDataWarranty);
-        } else {
-          FormDataWarranty.Customer_Firstname = "";
-          FormDataWarranty.Customer_Lastname = "";
-          FormDataWarranty.Customer_Tel = "";
-          FormDataWarranty.Customer_Mobile = "";
-          FormDataWarranty.Customer_Email = "";
-          setFormDataWarranty(FormDataWarranty);
-        }
-      });
+  const convertDate = (str) => {
+    let date = new Date(str),
+      mnth = ("0" + (date.getMonth() + 1)).slice(-2),
+      day = ("0" + date.getDate()).slice(-2);
+    return [date.getFullYear(), mnth, day].join("-");
   };
   const deleteFormProduct = () => {
     if (procudeForm.length > 1) {
