@@ -14,6 +14,11 @@ export default function UploadImage({
   };
 
   useEffect(() => {
+    if (FileWaranty.length) {
+      if (!Array.isArray(FileWaranty[index])) {
+        setImgPreview(URL.createObjectURL(FileWaranty[index]));
+      }
+    }
     // console.log("testFile", Array.isArray(FileWaranty[index]), FileWaranty);
     // if (FileWaranty.length) {
     //   if (!Array.isArray(FileWaranty[index])) {

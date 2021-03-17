@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "../assets/scss/profile.scss";
 import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
+import TableWarranty from "../components/Customer/TableWarranty";
 import { getCustomerById } from "../GetDataDropDown";
 export default function ProfileHome() {
   const [ProfileData, setProfileData] = useState({
@@ -34,7 +35,7 @@ export default function ProfileHome() {
   });
   useEffect(async () => {
     if (true) {
-      window.location = "/login";
+      // window.location = "/login";
     }
     const dataProfile = await getCustomerById(114);
     setProfileData(dataProfile);
@@ -114,6 +115,7 @@ export default function ProfileHome() {
           }}
         />
       </div>
+      <TableWarranty customer_id={114} />
     </div>
   );
 }

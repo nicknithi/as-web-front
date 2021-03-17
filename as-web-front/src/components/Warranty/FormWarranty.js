@@ -51,7 +51,7 @@ function FormWarranty({ Confirm }) {
   ]);
   const [DisableFromSearch, setDisableFromSearch] = useState(false);
 
-  const [FileWaranty, setFileWaranty] = useState([]);
+  const [FileWaranty, setFileWaranty] = useState([[]]);
   const [checkData, setCheckData] = useState(false);
   const [FormInput, setFormInput] = useState(true);
   const [ProvinceC, setProvinceC] = useState("");
@@ -101,8 +101,9 @@ function FormWarranty({ Confirm }) {
       });
   }, []);
   const handleGetFile = (file, index) => {
-    FileWaranty[index] = file;
-    setFileWaranty(FileWaranty);
+    const fileData = [...FileWaranty];
+    fileData[index] = file;
+    setFileWaranty(fileData);
     console.log(FileWaranty);
   };
   const [procudeForm, setProcudeForm] = useState([0]);
@@ -194,6 +195,9 @@ function FormWarranty({ Confirm }) {
   useEffect(() => {
     console.log("FormDataProduct", FormDataProduct);
   }, [FormDataProduct]);
+  useEffect(() => {
+    console.log("FileWaranty", FileWaranty);
+  }, [FileWaranty]);
   const handleChangInput = (e) => {
     if (e.target) {
       FormDataWarranty[e.target.name] = e.target.value;
@@ -258,8 +262,10 @@ function FormWarranty({ Confirm }) {
     });
 
     setFormDataProduct(tempProduct);
-    FileWaranty.push(FileWaranty[FileWaranty.length - 1]);
-    setFileWaranty(FileWaranty);
+    const tempFile = [...FileWaranty];
+    tempFile.push(tempFile[tempFile.length - 1]);
+    setFileWaranty(tempFile);
+
     if (tempProduct[tempProduct.length - 1].Purchase_Province) {
       const storeDataSetLoad = await getStoreByProvinceData(
         parseInt(tempProduct[tempProduct.length - 1].Purchase_Province)
@@ -295,8 +301,9 @@ function FormWarranty({ Confirm }) {
       product_Name: null,
     });
     setFormDataProduct(FormDataProduct);
-    FileWaranty.push([]);
-    setFileWaranty(FileWaranty);
+    const tempFile = [...FileWaranty];
+    tempFile.push([]);
+    setFileWaranty(tempFile);
     const storeDataSet = [...storeData];
     storeDataSet.push([{ id: "", value: "กรุณาเลือก" }]);
     setStoreData(storeDataSet);

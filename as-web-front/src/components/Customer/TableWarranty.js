@@ -7,9 +7,9 @@ import {
   getProductByBarcode,
   getProductType,
   getAllStore,
-} from "../GetDataDropDown";
-import "../assets/scss/components/data-table.scss";
-export default function TestDataTable() {
+} from "../../GetDataDropDown";
+import "../../assets/scss/components/data-table.scss";
+export default function TestDataTable({ customer_id }) {
   const [DataProvince, setDataProvince] = useState([{}]);
   const [dataWarranty, setDataWarranty] = useState([]);
   const [trigerShow, setTrigerShow] = useState(false);
@@ -61,12 +61,11 @@ export default function TestDataTable() {
     return resWarranty;
   };
   useEffect(async () => {
-    console.log("555555");
     const res = await GetProvinceData();
     setDataProvince(res);
     Type = await getProductType();
     Store = await getAllStore();
-    const resWarranty = await getWarrantyByCustomerId(114);
+    const resWarranty = await getWarrantyByCustomerId(customer_id);
 
     const resWarrantySetProduct = await processArray(resWarranty);
     setDataWarranty(resWarrantySetProduct);
@@ -99,7 +98,7 @@ export default function TestDataTable() {
     {
       name: "ประเภทสินค้า",
       center: true,
-      cell: (row) => <div>{row.fK_Type_ID}</div>,
+      cell: (row) => <div className>{row.fK_Type_ID}</div>,
     },
     {
       name: "รหัสสินค้า",
@@ -135,19 +134,33 @@ export default function TestDataTable() {
       ),
     },
   ];
-  const test = () => {
-    let testData = [...dataWarranty];
-    setDataWarranty(testData);
-    setTrigerShow(true);
+  const customStyles = {
+    rows: {
+      style: {
+        minHeight: "72px", // override the row height
+      },
+    },
+    headCells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for head cells
+        paddingRight: "8px",
+      },
+    },
+    cells: {
+      style: {
+        paddingLeft: "8px", // override the cell padding for data cells
+        paddingRight: "8px",
+      },
+    },
   };
   return (
     <div className="container">
-      <button onClick={test}>test</button>
       <div className="font-weight-bold">
         {trigerShow && (
           <DataTable
             data={dataWarranty}
             columns={columns}
+            // customStyles={customStyles}
             pagination={true}
             paginationPerPage={5}
           />

@@ -27,7 +27,9 @@ const getStoreByProvinceData = async (Province_id) => {
 };
 
 const getCustomerById = async (id) => {
-  const res = await http.post(`/api/Customer/GetDataCustomerById?ID=${id}`);
+  const res = await http.post(`/api/Customer/GetDataCustomerById`, {
+    ID: id,
+  });
 
   return res.data.data;
 };
@@ -84,6 +86,12 @@ const getProductByBarcode = async (barcode) => {
   });
   return res.data.data;
 };
+const getAllStore = async () => {
+  const res = await http.post("/api/Master/GetStore", {
+    Lang_ID: 1,
+  });
+  return res.data.data;
+};
 export {
   getProductType,
   getStoreByProvinceData,
@@ -93,4 +101,5 @@ export {
   GetSubDistrictData,
   getWarrantyByCustomerId,
   getProductByBarcode,
+  getAllStore,
 };

@@ -161,6 +161,11 @@ export default function ProductData({
     Store_Name_OtherSet[index].Store_Name_Other = e.target.value;
     setFormDataProduct(Store_Name_OtherSet);
   };
+  const handleSetReceipNumber = (e) => {
+    const setOnOtherCodeSet = [...FormDataProduct];
+    setOnOtherCodeSet[index].Receipt_Number = e.target.value;
+    setFormDataProduct(setOnOtherCodeSet);
+  };
   const setOnOtherCode = (e) => {
     const setOnOtherCodeSet = [...FormDataProduct];
     setOnOtherCodeSet[index].Product_Code_Other = e.target.value;
@@ -240,7 +245,9 @@ export default function ProductData({
                 className="as-input"
                 index={index}
                 name="Receipt_Number"
-                onChange={handleChangInput}
+                onChange={(e) => {
+                  handleSetReceipNumber(e);
+                }}
                 disabled={!Confirm}
                 value={FormDataProduct[index].Receipt_Number}
                 required
