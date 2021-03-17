@@ -4,7 +4,12 @@ import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
 import TableWarranty from "../components/Customer/TableWarranty";
 import { getCustomerById } from "../GetDataDropDown";
+import { useCookies } from "react-cookie";
 export default function ProfileHome() {
+  const [cookies, setCookie] = useCookies(["customerID"]);
+  if (!cookies.customerID) {
+    window.location = "/login";
+  }
   const [ProfileData, setProfileData] = useState({
     id: "",
     customer_Type: null,
@@ -34,10 +39,7 @@ export default function ProfileHome() {
     customer_Company: null,
   });
   useEffect(async () => {
-    if (true) {
-      // window.location = "/login";
-    }
-    const dataProfile = await getCustomerById(114);
+    const dataProfile = await getCustomerById(cookies.customerID);
     setProfileData(dataProfile);
     console.log(dataProfile);
   }, []);
@@ -45,7 +47,7 @@ export default function ProfileHome() {
     <div className="container profile-container">
       <h1 className="font-weight-bold mt-3">
         ยินดีต้อนรับคุณ
-        {` ${ProfileData.customer_Name} ${ProfileData.customer_Surname}`}
+        {` ${ProfileData.customer_Name || ""} ${ProfileData.customer_Surname}`}
       </h1>
       <div className="row detail">
         <div className="col-md-10 font-weight-bold mb-4">
@@ -77,7 +79,7 @@ export default function ProfileHome() {
             color="#636363"
             BgColor="#f1c400"
             handleClick={() => {
-              window.location = "/edit-profile/?id=12321";
+              window.location = `/edit-profile`;
             }}
           />
         </div>
@@ -115,7 +117,7 @@ export default function ProfileHome() {
           }}
         />
       </div>
-      <TableWarranty customer_id={114} />
+      <TableWarranty customer_id={cookies.customerID} />
     </div>
   );
 }

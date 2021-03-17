@@ -11,6 +11,7 @@ import common_en from "./translations/en/common.json";
 import common_th from "./translations/th/common.json";
 import { I18nextProvider } from "react-i18next";
 import i18next from "i18next";
+import { CookiesProvider } from "react-cookie";
 // const store = createStore(
 //   postReducer,
 //   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
@@ -29,11 +30,13 @@ i18next.init({
 });
 ReactDOM.render(
   <React.StrictMode>
-    <I18nextProvider i18n={i18next}>
-      <Provider store={store}>
-        <App />
-      </Provider>
-    </I18nextProvider>
+    <CookiesProvider>
+      <I18nextProvider i18n={i18next}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </I18nextProvider>
+    </CookiesProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

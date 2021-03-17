@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import "../../assets/scss/login.scss";
 import ButtonMain from "../button/ButtonMain";
 import http from "../../axios";
+import { useCookies } from "react-cookie";
 export default function FromLogin() {
+  const [cookies, setCookie] = useCookies(["customerID"]);
   const handleLogin = async (e) => {
     e.preventDefault();
     const res = await http.post("/api/Login/CustomerLogin", DataLogin);
+    console.log(res);
     if (res.data.message === "Login Success!") {
-      //setCookie
+      console.log(res.data.data);
+      setCookie("customerID", res.data.data.customerID);
       window.location = "/profile";
     } else {
       alert("usename or password incorrect");
@@ -29,7 +33,7 @@ export default function FromLogin() {
                 type="text"
                 className="as-input"
                 onChange={(e) => {
-                  setDataLogin({ ...DataLogin, Password: e.target.value });
+                  setDataLogin({ ...DataLogin, Username: e.target.value });
                 }}
                 required
               />
@@ -42,7 +46,7 @@ export default function FromLogin() {
                 type="password"
                 className="as-input"
                 onChange={(e) => {
-                  setDataLogin({ ...DataLogin, Username: e.target.value });
+                  setDataLogin({ ...DataLogin, Password: e.target.value });
                 }}
                 required
               />

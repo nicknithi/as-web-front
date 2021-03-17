@@ -1,13 +1,23 @@
 import React, { useState, useEffect } from "react";
 import "../assets/scss/register.scss";
-import DropdownProvince from "../components/Register/DropdownProvince";
-import DropdownDistrict from "../components/Register/DropdownDistrict";
-import DropdownSubDistrict from "../components/Register/DropdownSubDistrict";
+import DropdownProvince from "../components/Register/DropdownProvinceEdit";
+import DropdownDistrict from "../components/Register/DropdownDistrictEdit";
+import DropdownSubDistrict from "../components/Register/DropdownSubDistrictEdit";
 import GoogleMap from "../components/map/googleMapRegister";
 import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
+import { useCookies } from "react-cookie";
 import http from "../axios";
+import {
+  getCustomerById,
+  GetProvinceData,
+  GetDistrictData,
+  GetSubDistrictData,
+} from "../GetDataDropDown";
 export default function EditProfile() {
+  const [cookies, setCookie] = useCookies(["customerID"]);
+
+  const [DataCustomer, setDataCustomer] = useState({});
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
   const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
   const [District, setDistrict] = useState([
@@ -26,89 +36,65 @@ export default function EditProfile() {
     { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
   ]);
   const [DataFromRegister, setDataFromRegister] = useState({
-    Customer_Type: 0,
-    FirstName: "",
-    LastName: "",
-    Username: "",
-    Password: "",
-    Member_Code: "",
-    Tel: "",
-    Phone: "",
-    Email: "",
-    Address: "",
-    ZIP_Code: "",
-    Latitude: "",
-    Longitude: "",
-    FK_Province_ID: 0,
-    FK_District_ID: 0,
-    FK_Sub_District_ID: 0,
-    Service_Center: "",
-    Quota_Service: 0,
-    IsMember: true,
-    Create_By: "",
-    Customer_Company: "",
+    id: null,
+    customer_Type: null,
+    username: null,
+    password: null,
+    customer_Code: null,
+    customer_Name: null,
+    customer_Surname: null,
+    customer_Tel: null,
+    customer_Phone: null,
+    customer_Email: null,
+    customer_Address: null,
+    customer_ZIP_Code: null,
+    customer_Latitude: null,
+    customer_Longitude: null,
+    fK_Province_ID: null,
+    fK_District_ID: null,
+    fK_Sub_District_ID: null,
+    service_Center: null,
+    quota_Service: null,
+    flag_Member: null,
+    is_Active: null,
+    create_By: null,
+    create_Date: null,
+    update_By: null,
+    update_Date: null,
+    customer_Company: null,
   });
-  useEffect(() => {
+  useEffect(async () => {
+    if (!cookies.customerID) {
+      window.location = "/login";
+    }
+
     //get Province
-    http
-      .post("/api/Master/GetProvince", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        const ProvinceSet = res.data.data.map((item, index) => {
-          return { id: item.id, value: item.province_Name };
-        });
-        // setProvinceDN([...Province, ...ProvinceSet]);
-        setProvince([...Province, ...ProvinceSet]);
-      })
-      .catch((e) => {});
+    const resProvince = await GetProvinceData();
+    setProvince([...Province, ...resProvince]);
 
     //get District
-    http
-      .post("/api/Master/GetDistrict", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        const DistrictSet = res.data.data.map((item, index) => {
-          return {
-            id: item.id,
-            value: item.district_Name,
-            fK_Province_ID: item.fK_Province_ID,
-          };
-        });
-        setDistrictDN([...District, ...DistrictSet]);
-        setDistrict([...District, ...DistrictSet]);
-      })
-      .catch((e) => {});
+    const DistrictSet = await GetDistrictData();
+    setDistrictDN([...District, ...DistrictSet]);
+    setDistrict([...District, ...DistrictSet]);
 
     //get subDistrict
-    http
-      .post("/api/Master/GetSubDistrict", {
-        Lang_ID: 1,
-      })
-      .then((res) => {
-        console.log("555", res);
-        const DistrictSet = res.data.data.map((item, index) => {
-          return {
-            id: item.id,
-            value: item.sub_District_Name,
-            fK_Province_ID: item.fK_Province_ID,
-            fK_District_ID: item.fK_District_ID,
-            zip_Code: item.zip_Code,
-          };
-        });
-        setSubDistrictDN([...SubDistrict, ...DistrictSet]);
-        setSubDistrict([...SubDistrict, ...DistrictSet]);
-      })
-      .catch((e) => {});
+    const subDistrictSet = await GetSubDistrictData();
+    setSubDistrictDN([...SubDistrict, ...subDistrictSet]);
+    setSubDistrict([...SubDistrict, ...subDistrictSet]);
+
+    //get customer
+    const dataProfile = await getCustomerById(cookies.customerID);
+    const TempCustomer = { ...DataFromRegister, ...dataProfile };
+    setDataFromRegister(TempCustomer);
   }, []);
+
   const getProvinceDropDown = (e) => {
     if (e.target) {
       const DataSet = { ...DataFromRegister };
-      DataSet.FK_Province_ID = parseInt(e.target.value);
-      DataSet.FK_Sub_District_ID = "";
-      DataSet.FK_District_ID = "";
-      DataSet.ZIP_Code = "";
+      DataSet.fK_Province_ID = parseInt(e.target.value);
+      DataSet.fK_District_ID = "";
+      DataSet.fK_Sub_District_ID = "";
+      DataSet.customer_ZIP_Code = "";
       setDataFromRegister(DataSet);
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
@@ -122,12 +108,12 @@ export default function EditProfile() {
   const getDistrictDropDown = (e) => {
     if (e.target) {
       const DataSet = { ...DataFromRegister };
-      DataSet.FK_District_ID = parseInt(e.target.value);
-      DataSet.ZIP_Code = "";
+      DataSet.fK_District_ID = parseInt(e.target.value);
+      DataSet.customer_ZIP_Code = "";
       setDataFromRegister(DataSet);
       const newSet = SubDistrictDN.filter(
         (p) =>
-          p.fK_Province_ID === parseInt(DataFromRegister.FK_Province_ID) &&
+          p.fK_Province_ID === parseInt(DataFromRegister.fK_Province_ID) &&
           p.fK_District_ID === parseInt(e.target.value)
       );
       console.log(newSet);
@@ -137,27 +123,49 @@ export default function EditProfile() {
     }
   };
   const getSubDistrictDropDown = (e) => {
+    console.log("target", e.target.value);
     if (e.target) {
       const DataSet = { ...DataFromRegister };
-      DataSet.FK_Sub_District_ID = parseInt(e.target.value);
-      DataSet.ZIP_Code = "";
-      setDataFromRegister(DataSet);
+      DataSet.fK_Sub_District_ID = parseInt(e.target.value);
+      DataSet.customer_ZIP_Code = "";
       const newSet = SubDistrictDN.find(
         (p) => p.id === parseInt(e.target.value)
       );
-      console.log(newSet);
       if (newSet !== undefined) {
-        const dataSetZipcode = { ...DataFromRegister };
-        dataSetZipcode.ZIP_Code = newSet.zip_Code;
-        setDataFromRegister(dataSetZipcode);
+        DataSet.customer_ZIP_Code = newSet.zip_Code;
       }
+      setDataFromRegister(DataSet);
     }
   };
   const submit = async (e) => {
     e.preventDefault();
-    const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
+    const res = await http.post("/api/Customer/UpdateCustomer", {
+      ID: DataFromRegister.id,
+      Customer_Type: DataFromRegister.customer_Type,
+      FirstName: DataFromRegister.customer_Name,
+      LastName: DataFromRegister.customer_Surname,
+      Username: DataFromRegister.username,
+      Password: DataFromRegister.password,
+      Member_Code: DataFromRegister.customer_Code,
+      Tel: DataFromRegister.customer_Tel,
+      Phone: DataFromRegister.customer_Phone,
+      Email: DataFromRegister.customer_Email,
+      Address: DataFromRegister.customer_Address,
+      ZIP_Code: DataFromRegister.customer_ZIP_Code,
+      Latitude: DataFromRegister.customer_Latitude,
+      Longitude: DataFromRegister.customer_Longitude,
+      FK_Province_ID: DataFromRegister.fK_Province_ID,
+      FK_District_ID: DataFromRegister.fK_District_ID,
+      FK_Sub_District_ID: DataFromRegister.fK_Sub_District_ID,
+      Service_Center: DataFromRegister.service_Center,
+      Quota_Service: DataFromRegister.quota_Service,
+      IsMember: true,
+      IsActive: DataFromRegister.is_Active,
+      Update_By: DataFromRegister.update_By,
+      Customer_Company: DataFromRegister.customer_Company,
+    });
     if (res.data.message === "Success!") {
-      window.location = "/login";
+      window.location = "/home";
     }
   };
   const goBlack = () => {
@@ -179,11 +187,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.FirstName}
+                  value={DataFromRegister.customer_Name || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      FirstName: e.target.value,
+                      customer_Name: e.target.value,
                     })
                   }
                   required
@@ -194,11 +202,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.LastName}
+                  value={DataFromRegister.customer_Surname || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      LastName: e.target.value,
+                      customer_Surname: e.target.value,
                     })
                   }
                   required
@@ -211,11 +219,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Customer_Company}
+                  value={DataFromRegister.customer_Company || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Customer_Company: e.target.value,
+                      customer_Company: e.target.value,
                     })
                   }
                 />
@@ -227,11 +235,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Tel}
+                  value={DataFromRegister.customer_Tel || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Tel: e.target.value,
+                      customer_Tel: e.target.value,
                     })
                   }
                 />
@@ -241,11 +249,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Phone}
+                  value={DataFromRegister.customer_Phone || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Phone: e.target.value,
+                      customer_Phone: e.target.value,
                     })
                   }
                   required
@@ -260,11 +268,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Email}
+                  value={DataFromRegister.customer_Email || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Email: e.target.value,
+                      customer_Email: e.target.value,
                     })
                   }
                 />
@@ -281,11 +289,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Address}
+                  value={DataFromRegister.customer_Address || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Address: e.target.value,
+                      customer_Address: e.target.value,
                     })
                   }
                   required
@@ -327,11 +335,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.ZIP_Code}
+                  value={DataFromRegister.customer_ZIP_Code || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      ZIP_Code: e.target.value,
+                      customer_ZIP_Code: e.target.value,
                     })
                   }
                   required
@@ -344,11 +352,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Service_Center}
+                  value={DataFromRegister.service_Center || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Service_Center: e.target.value,
+                      service_Center: e.target.value,
                     })
                   }
                 />
@@ -371,11 +379,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Username}
+                  value={DataFromRegister.username || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Username: e.target.value,
+                      username: e.target.value,
                     })
                   }
                 />
@@ -385,11 +393,11 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
-                  value={DataFromRegister.Password}
+                  value={DataFromRegister.password || ""}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
-                      Password: e.target.value,
+                      password: e.target.value,
                     })
                   }
                 />
@@ -397,10 +405,11 @@ export default function EditProfile() {
             </div>
           </div>
         </div>
+        <div className="row mt-3 d-flex justify-content-center">
+          <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+        </div>
       </form>
-      <div className="row mt-3 d-flex justify-content-center">
-        <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
-      </div>
+
       <div className="text-center mt-3 mb-4">
         <ButtonMain
           title="กลับ"
