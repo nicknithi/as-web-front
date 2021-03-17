@@ -24,6 +24,7 @@ import {
   GetProvinceData,
   GetDistrictData,
   GetSubDistrictData,
+  getAllStore,
 } from "../../GetDataDropDown";
 function FormWarranty({ Confirm }) {
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
@@ -60,7 +61,11 @@ function FormWarranty({ Confirm }) {
   const [dataTypeID, setDataTypeId] = useState([]);
   const [dataModelID, setDataModelID] = useState([]);
   const [dataProductID, setdataProductID] = useState([]);
+
+  const [DataStore, setDataStore] = useState([]);
   useEffect(async () => {
+    const DataStoreSet = await getAllStore();
+    setDataStore(DataStoreSet);
     const typeData = await getProductType();
     setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...typeData]);
     //GetProvince
@@ -358,6 +363,7 @@ function FormWarranty({ Confirm }) {
       return { ...item, ...FormDataWarranty };
     });
     setLastDataComToConfirm(cloneDeep(dataFromLast));
+
     // fix data show for form confirm
     let validate = true;
     FormDataProduct.forEach((item, index) => {
@@ -403,20 +409,20 @@ function FormWarranty({ Confirm }) {
           item.Customer_SubDistrict = SubDistrict.find(
             (d) => d.id === item.Customer_SubDistrict
           ).sub_District_Name;
-          item.Purchase_Province = Province.find(
-            (d) => d.id === item.Purchase_Province
-          ).province_Name;
-          const storeData = await getStoreByProvinceData(
-            FormDataProduct[index].Purchase_Province
-          );
+          // item.Purchase_Province = Province.find(
+          //   (d) => d.id === item.Purchase_Province
+          // ).province_Name;
+          // const storeData = await getStoreByProvinceData(
+          //   FormDataProduct[index].Purchase_Province
+          // );
           item.Purchase_Date = formatDate(item.Purchase_Date);
-          const sotreidset = storeData.find((s) => s.id === item.Store_ID);
-          if (sotreidset !== undefined) {
-            console.log("store", sotreidset);
-            item.Store_ID = parseInt(sotreidset.value);
-          } else {
-            item.Store_ID = 0;
-          }
+          // const sotreidset = storeData.find((s) => s.id === item.Store_ID);
+          // if (sotreidset !== undefined) {
+          //   console.log("store", sotreidset);
+          //   item.Store_ID = parseInt(sotreidset.value);
+          // } else {
+          //   item.Store_ID = 0;
+          // }
 
           const resTypeID = await getProductType();
           const FindREtype = resTypeID.find((t) => t.id === item.Type_ID);
@@ -427,6 +433,28 @@ function FormWarranty({ Confirm }) {
           }
 
           item.Model_ID = 0;
+          console.log(
+            "ProvinceProvinceProvince",
+            Province,
+            item.Purchase_Province
+          );
+          const PurchaseProvinceTemp = Province.find(
+            (p) => p.id === parseInt(item.Purchase_Province)
+          );
+          if (PurchaseProvinceTemp !== undefined) {
+            item.Purchase_Province = PurchaseProvinceTemp.value;
+          } else {
+            item.Purchase_Province = "-";
+          }
+
+          const StoreTemp = DataStore.find(
+            (s) => s.id === parseInt(item.Store_ID)
+          );
+          if (StoreTemp !== undefined) {
+            item.Store_ID = StoreTemp.store_Name;
+          } else {
+            item.Store_ID = "-";
+          }
           return item;
         })
       );
