@@ -177,7 +177,7 @@ export default function EditProfile() {
   return (
     <div>
       <form onSubmit={submit}>
-        <div className="container register pb-4">
+        <div className="container register pb-3 mb-3">
           <h1 className="font-weight-bold mb-3 mt-3">แก้ไขข้อมูลส่วนตัว</h1>
 
           <div className="register-container">
@@ -289,6 +289,7 @@ export default function EditProfile() {
                 <input
                   type="text"
                   className="as-input"
+                  disabled={true}
                   value={DataFromRegister.customer_Address || ""}
                   onChange={(e) =>
                     setDataFromRegister({
@@ -336,6 +337,7 @@ export default function EditProfile() {
                   type="text"
                   className="as-input"
                   value={DataFromRegister.customer_ZIP_Code || ""}
+                  disabled={true}
                   onChange={(e) =>
                     setDataFromRegister({
                       ...DataFromRegister,
@@ -404,20 +406,11 @@ export default function EditProfile() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-3 d-flex justify-content-center">
-          <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+          <div className="row mt-3 d-flex justify-content-center mb-4">
+            <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+          </div>
         </div>
       </form>
-
-      <div className="text-center mt-3 mb-4">
-        <ButtonMain
-          title="กลับ"
-          color="#636363"
-          BgColor="#58a7af"
-          handleClick={goBlack}
-        />
-      </div>
     </div>
   );
 }

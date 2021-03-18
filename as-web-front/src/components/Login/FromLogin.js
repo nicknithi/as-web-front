@@ -22,7 +22,7 @@ export default function FromLogin() {
     Password: "",
   });
   return (
-    <div className="as-login pt-5 pb-5 mb-4">
+    <div className="as-login  pb-5 mb-4">
       <h3 className="title">ลงทะเบียนสมัครสมาชิก</h3>
       <form onSubmit={handleLogin}>
         <div className="as-login-form py-5">

@@ -13,7 +13,7 @@ export default function header() {
       (e) => (e.id_menu === 0 || e.id_menu === null) && e.lang_ID === 1
     );
     const NavMainMenu = mainMenu.map((item, index) => {
-      return { ...item, title: item.menu, subMenu: [], link: "" };
+      return { ...item, title: item.menu, subMenu: [], link: item.menu };
     });
     NavMainMenu.forEach((item, index) => {
       const dataTempMenu = resMemu.filter(
@@ -21,7 +21,7 @@ export default function header() {
       );
       if (dataTempMenu.length) {
         const SubMenuTemp = dataTempMenu.map((item, index) => {
-          return { ...item, title: item.menu, link: "" };
+          return { ...item, title: item.menu, link: item.menu };
         });
         item.subMenu = SubMenuTemp;
       }

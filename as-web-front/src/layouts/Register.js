@@ -141,23 +141,20 @@ export default function Register() {
       const DataSet = { ...DataFromRegister };
       DataSet.FK_Sub_District_ID = parseInt(e.target.value);
       DataSet.ZIP_Code = "";
-      setDataFromRegister(DataSet);
       const newSet = SubDistrictDN.find(
         (p) => p.id === parseInt(e.target.value)
       );
-      console.log(newSet);
       if (newSet !== undefined) {
-        const dataSetZipcode = { ...DataFromRegister };
-        dataSetZipcode.ZIP_Code = newSet.zip_Code;
-        setDataFromRegister(dataSetZipcode);
+        DataSet.ZIP_Code = newSet.zip_Code;
       }
+      setDataFromRegister(DataSet);
     }
   };
   const submit = async (e) => {
     e.preventDefault();
     const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
     if (res.data.message === "Success!") {
-      window.location = "/login";
+      window.location = "/เข้าสู่ระบบสมาชิก";
     }
   };
   const goBlack = () => {
@@ -169,8 +166,7 @@ export default function Register() {
   return (
     <div>
       <form onSubmit={submit}>
-        <div className="container register pb-4">
-          <h3 className="font-weight-bold mb-3">ลงทะเบียนสมัครสมาชิก</h3>
+        <div className="container register pb-4 mb-4">
           <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
 
           <div className="register-container">
@@ -426,20 +422,11 @@ export default function Register() {
               />
             </div>
           </div>
-        </div>
-        <div className="row mt-3 d-flex justify-content-center">
-          <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+          <div className="row mt-3 d-flex justify-content-center">
+            <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+          </div>
         </div>
       </form>
-
-      <div className="text-center mt-3 mb-4">
-        <ButtonMain
-          title="กลับ"
-          color="#636363"
-          BgColor="#58a7af"
-          handleClick={goBlack}
-        />
-      </div>
     </div>
   );
 }

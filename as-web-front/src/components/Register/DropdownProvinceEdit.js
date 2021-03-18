@@ -52,6 +52,7 @@ export default function DropDown({
         className="form-select position-absolute w-100"
         aria-label="Default select example"
         value={DataFromRegister.fK_Province_ID}
+        disabled={true}
         name="Customer_Province"
         onChange={handleSelect}
         required

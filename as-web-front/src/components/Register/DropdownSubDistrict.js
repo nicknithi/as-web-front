@@ -20,6 +20,7 @@ export default function DropDown({
   };
   useEffect(() => {
     if (DataFromRegister.FK_Sub_District_ID) {
+      console.log("sd change");
       const findData = data.find(
         (a) => a.id === parseInt(DataFromRegister.FK_Sub_District_ID)
       );
