@@ -59,7 +59,7 @@ export default function Content() {
   };
   return (
     <div>
-      {Content.map((item, index) => (
+      {/* {Content.map((item, index) => (
         <div key={index}>{codition(item)}</div>
       ))}
       {coditionAddon()}
@@ -70,7 +70,7 @@ export default function Content() {
           BgColor="#f1c400"
           handleClick={() => goBack()}
         />
-      </div>
+      </div> */}
     </div>
   );
 }
