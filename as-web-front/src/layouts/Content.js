@@ -12,10 +12,10 @@ export default function Content() {
     const dataUrl = resMemu.find(
       (m) => m.menu.toLowerCase() === customPath.toLowerCase()
     );
-
-    console.log("data", dataUrl.id_main_menu);
     if (dataUrl !== undefined) {
+      console.log();
       const resContent = await getContent(dataUrl.id_main_menu);
+      console.log("resContent", resContent);
       setContent(resContent);
     } else {
       //window.location = "/";
