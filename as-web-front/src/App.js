@@ -16,6 +16,7 @@ import ProfileHome from "./layouts/ProfileHome";
 import Installation from "./layouts/Installation";
 import EditProfile from "./layouts/EditProfile";
 import TestDataTable from "./layouts/TestDataTable";
+import Content from "./layouts/Content";
 export default function App() {
   console.log(useHistory);
   return (
@@ -60,6 +61,9 @@ export default function App() {
         </Route>
         <Route exact path="/datatable">
           <TestDataTable />
+        </Route>
+        <Route exact path="/:customPath">
+          <Content />
         </Route>
       </BrowserRouter>
       <Footer />

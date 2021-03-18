@@ -1,9 +1,35 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import NavbarDesktop from "./Navbar/NavbarDesktop";
 import NavbarMobile from "./Navbar/NavbarMobile";
-import axios from "axios";
+import { getMenuAll } from "../GetDataMenu";
 export default function header() {
+  const [NavbarData, setNavbarData] = useState([]);
+  useEffect(async () => {
+    const resMemu = await getMenuAll();
+    console.log("resMemu", resMemu);
+    const mainMenu = resMemu.filter(
+      (e) => e.id_menu === 0 || e.id_menu === null
+    );
+    const NavMainMenu = mainMenu.map((item, index) => {
+      return { ...item, title: item.menu, subMenu: [], link: "" };
+    });
+    NavMainMenu.forEach((item, index) => {
+      const dataTempMenu = resMemu.filter(
+        (m) => m.id_menu === item.id_main_menu
+      );
+      if (dataTempMenu.length) {
+        const SubMenuTemp = dataTempMenu.map((item, index) => {
+          return { ...item, title: item.menu, link: "" };
+        });
+        item.subMenu = SubMenuTemp;
+      }
+    });
+    // console.log(NavMainMenu);
+    setNavbarData(NavMainMenu);
+    console.log(NavMainMenu);
+  }, []);
   const Navbar = [
     {
       title: "บริการ",
@@ -145,7 +171,7 @@ export default function header() {
   useEffect(() => {});
   return (
     <div>
-      <NavbarDesktop NavbarItem={Navbar} />
+      <NavbarDesktop NavbarItem={NavbarData} />
       <NavbarMobile />
     </div>
   );
