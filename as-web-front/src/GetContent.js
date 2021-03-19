@@ -1,6 +1,6 @@
 import http from "./axios";
 const getContent = async (id) => {
-  const res = await http.post("/api/Content/GetDataContentByID", {
+  const res = await http.post("/api/Content/GetDataContent", {
     LangID: 1,
     ID: id,
   });

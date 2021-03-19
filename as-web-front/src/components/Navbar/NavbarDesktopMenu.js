@@ -4,7 +4,12 @@ export default function NavbarDesktopMenu({ menu }) {
   return (
     <div className="d-flex justify-content-between w-100">
       {menu.map((item, index) => (
-        <NavbarMenuItem key={index} title={item.title} subMenu={item.subMenu} />
+        <NavbarMenuItem
+          key={index}
+          title={item.title}
+          subMenu={item.subMenu}
+          link={item.link}
+        />
       ))}
     </div>
   );

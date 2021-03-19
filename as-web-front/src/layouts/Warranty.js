@@ -27,7 +27,7 @@ export default function Warranty() {
   // }, []);
   return (
     <div className="warranty">
-      <BannerCover />
+      {/* <BannerCover /> */}
       <div className="container pb-4">
         <CostWarrantyDetail />
         <div>
