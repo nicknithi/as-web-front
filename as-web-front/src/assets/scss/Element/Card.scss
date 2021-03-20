@@ -4,6 +4,17 @@
     overflow: hidden;
     position: relative;
     padding-bottom: 55%;
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: auto;
+      content: "";
+      transition: all 0.3s ease-in-out;
+    }
     img {
       position: absolute;
       top: 50%;
@@ -11,6 +22,7 @@
       width: 100%;
       font-size: 22px;
       font-weight: bold;
+      transition: all 0.3s ease-in-out;
     }
   }
   a {
@@ -38,6 +50,17 @@
       width: 30px;
       height: 30px;
       fill: white;
+    }
+  }
+  &:hover {
+    .card-img {
+      &::after {
+        pointer-events: auto;
+        background-color: rgba(0, 0, 0, 0.219);
+      }
+      img {
+        transform: translateY(-50%) scale(1.03);
+      }
     }
   }
 }

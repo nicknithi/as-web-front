@@ -10,14 +10,14 @@ export default function header() {
     const resMemu = await getMenuAll();
     console.log("resMemu", resMemu);
     const mainMenu = resMemu.filter(
-      (e) => (e.id_menu === 0 || e.id_menu === null) && e.lang_ID === 1
+      (e) => e.id_menu === 0 || e.id_menu === null
     );
     const NavMainMenu = mainMenu.map((item, index) => {
       return { ...item, title: item.menu, subMenu: [], link: item.menu };
     });
     NavMainMenu.forEach((item, index) => {
       const dataTempMenu = resMemu.filter(
-        (m) => m.id_menu === item.id_main_menu && m.lang_ID === 1
+        (m) => m.id_menu === item.id_main_menu
       );
       if (dataTempMenu.length) {
         const SubMenuTemp = dataTempMenu.map((item, index) => {

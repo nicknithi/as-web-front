@@ -58,9 +58,11 @@
       .sub-menu {
         visibility: hidden;
         display: flex;
+        padding-right: 10px;
         flex-flow: column;
         box-shadow: 0 17px 20px 0 #0000002e;
         .sub-menu-item {
+          color: inherit;
           padding-left: 30px;
           text-decoration: none;
           &:hover {

@@ -94,6 +94,7 @@ export default function Content() {
     }
   };
   const codition = (data, index, col, type) => {
+    console.log(type);
     if (type === 0) {
       return (
         <div className={columcOption[col]}>
@@ -119,21 +120,29 @@ export default function Content() {
         </div>
       );
     } else if (type === 4) {
-      <div className={columcOption[col]}>
-        <ElementPDF data={data} index={index} />
-      </div>;
+      return (
+        <div className={columcOption[col]}>
+          <ElementPDF data={data} index={index} />
+        </div>
+      );
     } else if (type === 5) {
-      <div className={columcOption[col]}>
-        <ElementVideo data={data} index={index} />
-      </div>;
+      return (
+        <div className={columcOption[col]}>
+          <ElementVideo data={data} />
+        </div>
+      );
     } else if (type === 6) {
-      <div className={columcOption[col]}>
-        <ElementAudio data={data} index={index} />
-      </div>;
-    } else {
-      <div className={columcOption[col]}>
-        <ElementCarousel data={data} index={index} />
-      </div>;
+      return (
+        <div className={columcOption[col]}>
+          <ElementAudio data={data} index={index} />
+        </div>
+      );
+    } else if (type === 8) {
+      return (
+        <div className={columcOption[col]}>
+          <ElementCarousel data={data} />
+        </div>
+      );
     }
 
     // if (type === 0 && customPath !== "การรับประกัน") {
