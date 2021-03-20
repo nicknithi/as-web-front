@@ -1,10 +1,43 @@
 .element-card {
-  img {
-    max-width: 100%;
-    max-height: 100%;
-    font-size: 22px;
-    font-weight: bold;
+  position: relative;
+  .card-img {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 55%;
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%) scale(1);
+      width: 100%;
+      font-size: 22px;
+      font-weight: bold;
+    }
   }
-  button {
+  a {
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: auto;
+      content: "";
+      background-color: transparent;
+    }
+  }
+  .button-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #6e717f;
+    svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
   }
 }

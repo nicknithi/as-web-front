@@ -6,9 +6,12 @@ import { useParams } from "react-router-dom";
 
 import ElementBanner from "../components/Content/ElementBanner";
 import ElementTextBox from "../components/Content/ElementTextBox";
-import ElementCol1 from "../components/Content/ElementCol1";
-import ElementCol2 from "../components/Content/ElementCol2";
 import ElementPicture from "../components/Content/ElementPicture";
+import ElementVideo from "../components/Content/ElementVideo";
+import ElementCard from "../components/Content/ElementCard";
+import ElementPDF from "../components/Content/ElementPDF";
+import ElementAudio from "../components/Content/ElementAudio";
+import ElementCarousel from "../components/Content/ElementCarousel";
 
 import ButtonMain from "../components/button/ButtonMain";
 import Login from "../layouts/Login";
@@ -21,11 +24,12 @@ export default function Content() {
   let { customPath } = useParams();
   const [Content, setContent] = useState([]);
   const columcOption = {
+    0: "col-md-12",
     1: "col-md-12",
     2: "col-md-6",
     3: "col-md-4",
     4: "col-md-3",
-    5: "col-md-3",
+    5: "col-md-2_5",
   };
   useEffect(async () => {
     const resMemu = await getMenuAll();
@@ -49,25 +53,97 @@ export default function Content() {
     window.history.back();
   };
   const RenderColumn = (data) => {
-    let count = data.content_col;
-    if (count === 0) {
-      count = 1;
-    }
-    for (let i = 0; i < count; i++) {
+    return (
+      <div className="content">
+        {data.content_Title && (
+          <h1 className="font-weight-bold">{data.content_Title}</h1>
+        )}
+        {data.content_Desc && (
+          <h3 className="font-weight-bold">{data.content_Desc}</h3>
+        )}
+        {data.content_body && (
+          <div
+            className="font-weight-bold content-body"
+            dangerouslySetInnerHTML={{ __html: data.content_body }}
+          />
+        )}
+        <div>{RenderElement(data)}</div>
+      </div>
+    );
+
+    // for (let i = 0; i < count; i++) {
+    //   return (
+    //     <div className={columcOption[count]}>{codition(data, i, count)}</div>
+    //   );
+    // }
+  };
+  const RenderElement = (data) => {
+    const dataRender = data.file;
+    const col = data.content_col;
+    const type = data.content_Type;
+    if (dataRender.length) {
       return (
-        <div className={columcOption[count]}>{codition(data, i, count)}</div>
+        <div className="row">
+          {dataRender.map((item, index) => (
+            <React.Fragment key={item.id}>
+              {codition(item, index, col, type)}
+            </React.Fragment>
+          ))}
+        </div>
       );
     }
   };
-  const codition = (data, index, col) => {
-    if (data.content_Type === 0 && customPath !== "การรับประกัน") {
-      console.log("test nick nithi");
-      return <ElementTextBox data={data} col={col} />;
-    } else if (data.content_Type === 2) {
-      return <ElementBanner img={data.file[index].path} />;
-    } else if (data.content_Type === 3) {
-      return <ElementPicture data={data} index={index} />;
+  const codition = (data, index, col, type) => {
+    if (type === 0) {
+      return (
+        <div className={columcOption[col]}>
+          <ElementTextBox data={data} />
+        </div>
+      );
+    } else if (type === 1) {
+      return (
+        <div className={columcOption[col]}>
+          <ElementCard data={data} />
+        </div>
+      );
+    } else if (type === 2) {
+      return (
+        <div className={columcOption[col]}>
+          <ElementBanner img={data.path} />
+        </div>
+      );
+    } else if (type === 3) {
+      return (
+        <div className={columcOption[col]}>
+          <ElementPicture data={data} index={index} />
+        </div>
+      );
+    } else if (type === 4) {
+      <div className={columcOption[col]}>
+        <ElementPDF data={data} index={index} />
+      </div>;
+    } else if (type === 5) {
+      <div className={columcOption[col]}>
+        <ElementVideo data={data} index={index} />
+      </div>;
+    } else if (type === 6) {
+      <div className={columcOption[col]}>
+        <ElementAudio data={data} index={index} />
+      </div>;
+    } else {
+      <div className={columcOption[col]}>
+        <ElementCarousel data={data} index={index} />
+      </div>;
     }
+
+    // if (type === 0 && customPath !== "การรับประกัน") {
+    //   console.log("test nick nithi");
+    //   return <ElementTextBox data={data} col={col} />;
+    // } else if (type === 2) {
+    //   return <ElementBanner img={data.file[index].path} />;
+    // } else if (type === 3) {
+    //   return <ElementPicture data={data} index={index} />;
+    // }
 
     // if (data.content_Type === 0) {
 
@@ -95,12 +171,7 @@ export default function Content() {
       {Content.map((item, index) => (
         <div key={index}>
           <div className={`${item.content_Type !== 2 && "container"}`}>
-            <div className={`row`}>
-              {item.contentTitle && (
-                <h1 className="font-weight-bold">{item.contentTitle || ""}</h1>
-              )}
-              {RenderColumn(item)}
-            </div>
+            <div>{RenderColumn(item)}</div>
           </div>
         </div>
       ))}

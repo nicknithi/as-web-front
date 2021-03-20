@@ -1,20 +1,12 @@
 import React from "react";
-import "../../assets/scss/Element/Card.scss";
-export default function ElementCard({ data }) {
+import "../../assets/scss/Element/Video.scss";
+export default function ElementVideo({ data }) {
   return (
-    <div className="element-card mb-3">
-      <div className="d-flex justify-content-center mb-4 card-img">
+    <div className="element-video mb-3">
+      <div className="d-flex justify-content-center mb-4 video-img">
+        {data.link && <a href={data.link} target="_blank" />}
         {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
-      </div>
-      {data.link && <a href={data.link} target="_blank" />}
-      <div className="d-flex justify-content-between">
-        {data.description && (
-          <h1
-            className="font-weight-bold mb-3"
-            dangerouslySetInnerHTML={{ __html: data.description }}
-          />
-        )}
-        <div className="button-card">
+        <div className="play">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -29,6 +21,15 @@ export default function ElementCard({ data }) {
             />
           </svg>
         </div>
+      </div>
+
+      <div className="d-flex justify-content-between">
+        {data.description && (
+          <h1
+            className="font-weight-bold mb-3"
+            dangerouslySetInnerHTML={{ __html: data.description }}
+          />
+        )}
       </div>
     </div>
   );

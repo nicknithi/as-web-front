@@ -1,3 +1,31 @@
 .element-picture {
-  border-bottom: 3px solid #f1c400;
+  // border-bottom: 3px solid #f1c400;
+  .picture-img {
+    overflow: hidden;
+    position: relative;
+    // padding-bottom: 100%;
+    img {
+      // position: absolute;
+      // top: 50%;
+      // transform: translateY(-50%) scale(1);
+      // width: 100%;
+    }
+  }
+  .img-detail {
+    font-size: 23px;
+    font-weight: bold;
+  }
+  a {
+    &::after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: auto;
+      content: "";
+      background-color: transparent;
+    }
+  }
 }

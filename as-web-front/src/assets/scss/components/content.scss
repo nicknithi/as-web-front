@@ -1,3 +1,18 @@
+@import "../variables";
+@import "../mixins";
 .content {
   border-bottom: 3px solid #f1c400;
+  .col-md-2_5 {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    @include breakpoint("md") {
+      flex: 0 0 20%;
+      max-width: 20%;
+    }
+  }
+  .content-body {
+    font-size: 22px;
+  }
 }
