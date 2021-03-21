@@ -70,18 +70,34 @@ export default function Content() {
         <div>{RenderElement(data)}</div>
       </div>
     );
-
-    // for (let i = 0; i < count; i++) {
-    //   return (
-    //     <div className={columcOption[count]}>{codition(data, i, count)}</div>
-    //   );
-    // }
   };
   const RenderElement = (data) => {
-    const dataRender = data.file;
+    let dataRender = data.file;
     const col = data.content_col;
     const type = data.content_Type;
+
     if (dataRender.length) {
+      if (data.content_Type === 8) {
+        const group = [];
+        let tempOrder = dataRender[0].file_order;
+        group.push(dataRender.filter((d) => d.file_order === tempOrder));
+
+        data.file.forEach((item, index) => {
+          if (item.file_order !== tempOrder) {
+            group.push(dataRender.filter((d) => d.file_order === tempOrder));
+            tempOrder = item.file_order;
+          }
+        });
+        return (
+          <div className="row position-relative">
+            {group.map((item, index) => (
+              <React.Fragment key={index}>
+                {codition(item, index, col, type)}
+              </React.Fragment>
+            ))}
+          </div>
+        );
+      }
       return (
         <div className="row">
           {dataRender.map((item, index) => (
@@ -139,32 +155,11 @@ export default function Content() {
       );
     } else if (type === 8) {
       return (
-        <div className={columcOption[col]}>
+        <div className={`${columcOption[col]} position-static`}>
           <ElementCarousel data={data} />
         </div>
       );
     }
-
-    // if (type === 0 && customPath !== "การรับประกัน") {
-    //   console.log("test nick nithi");
-    //   return <ElementTextBox data={data} col={col} />;
-    // } else if (type === 2) {
-    //   return <ElementBanner img={data.file[index].path} />;
-    // } else if (type === 3) {
-    //   return <ElementPicture data={data} index={index} />;
-    // }
-
-    // if (data.content_Type === 0) {
-
-    // } else if (data.content_Type === 1) {
-    //   return <ElementCol1 data={data} />;
-    // } else if (data.content_Type === 2) {
-    //   return <ElementCol2 data={data} />;
-    // } else if (data.content_Type === 1) {
-    //   return <ElementBanner img={data.image} />;
-    // } else if (data.content_Type === 6) {
-    //   return <ElementPicture data={data} />;
-    // }
   };
   const coditionAddon = () => {
     if (customPath === "เข้าสู่ระบบสมาชิก") {
