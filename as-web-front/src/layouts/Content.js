@@ -53,6 +53,8 @@ export default function Content() {
     window.history.back();
   };
   const RenderColumn = (data) => {
+    // fix content
+
     return (
       <div className="content">
         {data.content_Title && (
@@ -98,6 +100,17 @@ export default function Content() {
           </div>
         );
       }
+      if (type === 2) {
+        return (
+          <div className="row no-gutters">
+            {dataRender.map((item, index) => (
+              <React.Fragment key={item.id}>
+                {codition(item, index, col, type)}
+              </React.Fragment>
+            ))}
+          </div>
+        );
+      }
       return (
         <div className="row">
           {dataRender.map((item, index) => (
@@ -125,7 +138,7 @@ export default function Content() {
       );
     } else if (type === 2) {
       return (
-        <div className={columcOption[col]}>
+        <div className={`${columcOption[col]} p-0`}>
           <ElementBanner img={data.path} />
         </div>
       );
@@ -170,24 +183,31 @@ export default function Content() {
       return <Warranty />;
     }
   };
-  return (
-    <div>
-      {Content.map((item, index) => (
-        <div key={index}>
-          <div className={`${item.content_Type !== 2 && "container"}`}>
-            <div>{RenderColumn(item)}</div>
+
+  if (customPath === "การรับประกัน" || customPath === "warranty") {
+    return <Warranty data={Content} />;
+  } else {
+    return (
+      <div>
+        {Content.map((item, index) => (
+          <div key={index}>
+            <div className={`${item.content_Type !== 2 && "container"}`}>
+              <div>{RenderColumn(item)}</div>
+            </div>
+          </div>
+        ))}
+        {/* {coditionAddon()} */}
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title="กลับ"
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
           </div>
         </div>
-      ))}
-      {coditionAddon()}
-      <div className="row d-flex justify-content-center mb-5">
-        <ButtonMain
-          title="กลับ"
-          color="#636363"
-          BgColor="#f1c400"
-          handleClick={() => goBack()}
-        />
       </div>
-    </div>
-  );
+    );
+  }
 }

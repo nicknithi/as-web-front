@@ -6,30 +6,34 @@ import BannerCover from "../components/Banner/BannerCover";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import "../assets/scss/warranty.scss";
-export default function Warranty() {
+export default function Warranty({ data }) {
   const [Confirm, setConfirm] = useState(false);
   const [readConfirm, setReadConfirm] = useState(false);
+  const [ImgBanner, setImgBanner] = useState("");
+  const [CarouselData, setCarouselData] = useState([]);
   const handleCheck = (e) => {
     setConfirm(e.target.checked);
   };
-  // useEffect(() => {
-  //   if (!Confirm) {
-  //     var list = document.getElementsByTagName("input");
-  //     for (let item of list) {
-  //       item.addEventListener("click", function () {
-  //         alert();
-  //       });
-  //       // item.onclick = function (event) {
-  //       //   alert("กรุณา ยอมรับนโยบายความเป็นส่วนตัว");
-  //       // };
-  //     }
-  //   }
-  // }, []);
+
+  useEffect(() => {
+    const banner = data.find((b) => b.content_Type === 2);
+    if (banner !== undefined) {
+      console.log("bannerbanner", banner.image);
+      setImgBanner(banner.image);
+    }
+    const Carousel = data.find((b) => b.content_Type === 8);
+    if (Carousel !== undefined) {
+      setCarouselData(Carousel);
+    }
+  }, [data]);
   return (
     <div className="warranty">
-      {/* <BannerCover /> */}
+      {ImgBanner && (
+        <BannerCover img={`http://www.mostactive.info/${ImgBanner}`} />
+      )}
       <div className="container pb-4">
-        <CostWarrantyDetail />
+        {/* <CostWarrantyDetail /> */}
+        {CarouselData && <CostWarrantyDetail data={CarouselData} />}
         <div>
           <WarrantyConfirm
             title={"การลงทะเบียนรับประกันสินค้า"}
