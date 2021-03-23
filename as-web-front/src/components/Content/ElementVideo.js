@@ -42,7 +42,7 @@ export default function ElementVideo({ data }) {
       <div className="d-flex justify-content-between">
         {data.description && (
           <h1
-            className="font-weight-bold mb-3"
+            className="mb-3"
             dangerouslySetInnerHTML={{ __html: data.description }}
           />
         )}

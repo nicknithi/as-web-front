@@ -2,6 +2,7 @@ import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Warranty from "./layouts/Warranty";
+import { useCookies } from "react-cookie";
 import { BrowserRouter, Route, useHistory } from "react-router-dom";
 import Home from "./layouts/Home";
 import Login from "./layouts/Login";
@@ -14,6 +15,7 @@ import Testi18n from "./testi18n";
 import Register from "./layouts/Register";
 import ProfileHome from "./layouts/ProfileHome";
 import Installation from "./layouts/Installation";
+import Spare from "./layouts/Spare";
 import EditProfile from "./layouts/EditProfile";
 import TestDataTable from "./layouts/TestDataTable";
 import Content from "./layouts/Content";
@@ -52,6 +54,9 @@ export default function App() {
         </Route>
         <Route exact path="/installation">
           <Installation />
+        </Route>
+        <Route exact path="/spare">
+          <Spare />
         </Route>
         <Route exact path="/profile">
           <ProfileHome />

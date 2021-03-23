@@ -15,7 +15,7 @@ export default function ElementPicture({ data, index }) {
       {data.link && <a href={data.link} target="_blank" />}
       {data.description && (
         <div
-          className="img-detail font-weight-bold mb-3"
+          className="img-detail mb-3"
           dangerouslySetInnerHTML={{ __html: data.description }}
         />
       )}

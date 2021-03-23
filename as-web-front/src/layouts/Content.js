@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { getContent } from "../GetContent";
+import { GetContent } from "../GetContent";
 import { getMenuAll } from "../GetDataMenu";
 import { useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import ElementBanner from "../components/Content/ElementBanner";
 import ElementTextBox from "../components/Content/ElementTextBox";
@@ -23,6 +24,7 @@ import "../assets/scss/components/content.scss";
 export default function Content() {
   let { customPath } = useParams();
   const [Content, setContent] = useState([]);
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const columcOption = {
     0: "col-md-12",
     1: "col-md-12",
@@ -32,7 +34,12 @@ export default function Content() {
     5: "col-md-2_5",
   };
   useEffect(async () => {
-    const resMemu = await getMenuAll();
+    let lang = "TH";
+
+    if (cookies.as_lang) {
+      lang = cookies.as_lang;
+    }
+    const resMemu = await getMenuAll(lang);
     const dataUrl = resMemu.find(
       (m) =>
         m.menu.toLowerCase().replace(/\s/g, "") ===
@@ -41,7 +48,7 @@ export default function Content() {
     console.log("dataUrl", resMemu, customPath);
     if (dataUrl !== undefined) {
       console.log();
-      const resContent = await getContent(dataUrl.id_main_menu);
+      const resContent = await GetContent(dataUrl.id_main_menu, lang);
       console.log("resContent", resContent);
 
       setContent(resContent);
@@ -56,7 +63,7 @@ export default function Content() {
     // fix content
 
     return (
-      <div className="content">
+      <div className={`content ${!data.line_status && "disable-underline"}`}>
         {data.content_Title && (
           <h1 className="font-weight-bold">{data.content_Title}</h1>
         )}
@@ -65,7 +72,7 @@ export default function Content() {
         )}
         {data.content_body && (
           <div
-            className="font-weight-bold content-body"
+            className="content-body"
             dangerouslySetInnerHTML={{ __html: data.content_body }}
           />
         )}

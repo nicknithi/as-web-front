@@ -2,12 +2,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import React, { useState, useEffect } from "react";
 import NavbarDesktop from "./Navbar/NavbarDesktop";
+import { useCookies } from "react-cookie";
 import NavbarMobile from "./Navbar/NavbarMobile";
 import { getMenuAll } from "../GetDataMenu";
 export default function header() {
   const [NavbarData, setNavbarData] = useState([]);
+  let lang = "TH";
+  const [cookies, setCookie] = useCookies(["as_lang"]);
+  if (cookies.as_lang) {
+    lang = cookies.as_lang;
+  }
+
   useEffect(async () => {
-    const resMemu = await getMenuAll();
+    const resMemu = await getMenuAll(lang);
     console.log("resMemu", resMemu);
     const mainMenu = resMemu.filter(
       (e) => e.id_menu === 0 || e.id_menu === null

@@ -1,22 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "../../assets/scss/components/navbar.scss";
 import logo from "../../assets/img/Logo_300ppi.png";
 import InputSearch from "../Input/InputSearch";
 import NavbarDesktopMenu from "./NavbarDesktopMenu";
+import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 export default function NavbarDesktop({ NavbarItem }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
+  const [lang, setLang] = useState(cookies.as_lan);
+  // let lang = "TH";
+
+  // if (cookies.as_lang) {
+  //   setLang(cookies.as_lang);
+  // }
+
   const [t, i18n] = useTranslation("common");
   const placeholderSearch = "ค้นหา...";
+
+  // if (!cookies.as_lang) {
+  //   setCookie("as_lang", "TH");
+  // }
+
+  // if (cookies.as_lang) {
+  //   if (cookies.as_lang === "TH") {
+  //     document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
+  //     document.body.style.fontSize = "22px !important";
+  //   } else {
+  //     document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
+  //     document.body.style.fontSize = "12px !important";
+  //   }
+  // }
+  useEffect(() => {
+    if (cookies.as_lang) {
+      if (cookies.as_lang === "TH") {
+        document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
+        document.body.style.setProperty("font-size", "22px", "important");
+      } else {
+        document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
+        document.body.style.setProperty("font-size", "16px", "important");
+      }
+    }
+  }, [lang]);
   const changToThai = () => {
     i18n.changeLanguage("th");
-    document.querySelector("body").style.fontFamily =
-      "helvetica_neueregular,sans-serif";
+    setCookie("as_lang", "TH");
+    setLang("TH");
+    window.location.reload(false);
   };
   const changToEng = () => {
     i18n.changeLanguage("en");
-    document.querySelector("body").style.fontFamily =
-      "psl_kittithadaregular,sans-serif";
+    setCookie("as_lang", "EN");
+    setLang("EN");
+    window.location.reload(false);
   };
   return (
     <div>
