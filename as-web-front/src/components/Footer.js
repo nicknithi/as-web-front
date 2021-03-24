@@ -1,11 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/scss/footer.scss";
+import { useCookies } from "react-cookie";
 import logoFooter from "../assets/img/Logo2INAX.png";
+import { getMenuAll } from "../GetDataMenu";
+
 export default function Footer() {
+  function RendersubMenu(dataList) {
+    console.log("data2131,", dataList);
+    return (
+      <ul>
+        {dataList.subMenu.map((item, index) => (
+          <li>{item.menu}</li>
+        ))}
+      </ul>
+    );
+  }
+  const [NavbarData, setNavbarData] = useState([]);
+  let lang = "TH";
+  const [cookies, setCookie] = useCookies(["as_lang"]);
+  if (cookies.as_lang) {
+    lang = cookies.as_lang;
+  }
+
+  useEffect(async () => {
+    const resMemu = await getMenuAll(lang);
+    console.log("resMemu", resMemu);
+    const mainMenu = resMemu.filter(
+      (e) => e.id_menu === 0 || e.id_menu === null
+    );
+    const NavMainMenu = mainMenu.map((item, index) => {
+      return { ...item, title: item.menu, subMenu: [], link: item.menu };
+    });
+    NavMainMenu.forEach((item, index) => {
+      const dataTempMenu = resMemu.filter(
+        (m) => m.id_menu === item.id_main_menu
+      );
+      if (dataTempMenu.length) {
+        const SubMenuTemp = dataTempMenu.map((item, index) => {
+          return { ...item, title: item.menu, link: item.menu };
+        });
+        item.subMenu = SubMenuTemp;
+      }
+    });
+    // console.log(NavMainMenu);
+    setNavbarData(NavMainMenu);
+    console.log("ggg", NavMainMenu);
+  }, []);
   return (
     <footer className="as-footer pt-5 pb-5">
       <div class="site-content">
-        <div className="row">
+        <div className="footer-menu">
+          {NavbarData.map((item, index) => (
+            <div>
+              <div>{item.menu}</div>
+              <div>{item.subMenu.length > 0 && RendersubMenu(item)}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* <div className="row">
           <div className="col-md-4">
             <ul>
               <li>
@@ -48,7 +101,7 @@ export default function Footer() {
               <li>สมาชิกการบริการ</li>
             </ul>
           </div>
-        </div>
+        </div> */}
         <div className="logo-footer d-flex mt-4">
           <div className="ml-auto">
             <img src={logoFooter} />

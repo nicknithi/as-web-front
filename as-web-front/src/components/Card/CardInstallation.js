@@ -1,7 +1,8 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-export default function CardInstallation() {
+export default function CardInstallation({ data }) {
+  console.log("testData123123123", data);
   return (
     <div>
       <Card
@@ -11,14 +12,12 @@ export default function CardInstallation() {
         <div>
           <Card.Img
             variant="top"
-            src="https://beelievehub.com/wp-content/uploads/2019/11/%E0%B8%AA%E0%B8%B8%E0%B8%82%E0%B8%A0%E0%B8%B1%E0%B8%93%E0%B8%91%E0%B9%8C-TF-2103-American-Standard-1.jpg"
+            src="https://www.questionpro.com/userimages/site_media/no-image.png"
           />
         </div>
 
         <Card.Body>
-          <div className="card-content p-2 text-center">
-            วิธีการติดตั้งโถสุขภัณฑ์
-          </div>
+          <div className="card-content p-2 text-center">{data.title}</div>
         </Card.Body>
       </Card>
     </div>

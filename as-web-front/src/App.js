@@ -19,6 +19,8 @@ import Spare from "./layouts/Spare";
 import EditProfile from "./layouts/EditProfile";
 import TestDataTable from "./layouts/TestDataTable";
 import Content from "./layouts/Content";
+import SpareListByModel from "./layouts/SpareListByModel";
+import SpareDetail from "./layouts/SpareDetail";
 export default function App() {
   console.log(useHistory);
   return (
@@ -66,6 +68,12 @@ export default function App() {
         </Route>
         <Route exact path="/datatable">
           <TestDataTable />
+        </Route>
+        <Route exact path="/SpareListByModel">
+          <SpareListByModel />
+        </Route>
+        <Route exact path="/SpareDetail">
+          <SpareDetail />
         </Route>
         <Route exact path="/:customPath">
           <Content />

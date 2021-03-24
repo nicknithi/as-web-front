@@ -11,7 +11,7 @@ function SubMenu({ menu }) {
         {menu.map((item, index) => (
           <Card key={index}>
             <Accordion.Toggle eventKey={index + 1} className="main-menu p-0">
-              <svg
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="10"
                 height="10"
@@ -20,10 +20,12 @@ function SubMenu({ menu }) {
                 viewBox="0 0 16 16"
               >
                 <circle cx="8" cy="8" r="8" />
-              </svg>
-              {item.title}
+              </svg> */}
+              <a href={`/SpareDetail?id=${item.id}`} className="text-truncate">
+                {item.name}
+              </a>
             </Accordion.Toggle>
-            {item.subMenu.length > 0 && (
+            {/* {item.subMenu.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
                 <Card.Body>
                   {item.subMenu &&
@@ -44,7 +46,7 @@ function SubMenu({ menu }) {
                     ))}
                 </Card.Body>
               </Accordion.Collapse>
-            )}
+            )} */}
           </Card>
         ))}
       </Accordion>

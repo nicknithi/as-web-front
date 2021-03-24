@@ -18,7 +18,7 @@ import ButtonMain from "../components/button/ButtonMain";
 import Login from "../layouts/Login";
 import Register from "../layouts/Register";
 import Warranty from "../layouts/Warranty";
-
+import Spare from "../layouts/Spare";
 import "../assets/scss/components/content.scss";
 
 export default function Content() {
@@ -193,6 +193,8 @@ export default function Content() {
 
   if (customPath === "การรับประกัน" || customPath === "warranty") {
     return <Warranty data={Content} />;
+  } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
+    return <Spare data={Content} />;
   } else {
     return (
       <div>

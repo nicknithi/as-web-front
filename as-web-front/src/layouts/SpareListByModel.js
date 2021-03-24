@@ -7,13 +7,18 @@ import CardInstallation from "../components/Card/CardInstallation";
 import SubMenu from "../components/installation/SubMenu";
 import InputSearch from "../components/Input/InputSearch";
 import BannerInstallation from "../components/Banner/BannerInstallation";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 
 import {
   GetAllProductModelSpare,
   GetAllClassifiedTypeSpare,
   GetAllProduct_SparepartList,
 } from "../GetProduct";
-export default function Installation() {
+export default function Installation(props) {
+  const { search } = useLocation();
+  const query = queryString.parse(search);
+
   const [menuSpare, setMenuSpare] = useState([]);
   const [SpareList, setSpareList] = useState([]);
   useEffect(async () => {
@@ -33,7 +38,14 @@ export default function Installation() {
     TempMenu = MenuSpare;
     setMenuSpare(TempMenu);
 
-    const dataProduct = await GetAllProduct_SparepartList();
+    let dataProduct = await GetAllProduct_SparepartList();
+    dataProduct = dataProduct.map((item, index) => {
+      return { ...item, title: item.product_name };
+    });
+    if (query.id) {
+      dataProduct = dataProduct.filter((p) => p.product_model === query.id);
+    }
+
     let TempSpare = [...SpareList];
     TempSpare = dataProduct;
     setSpareList(TempSpare);
@@ -91,10 +103,10 @@ export default function Installation() {
     <div className="container mb-5">
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3 as-border-top">
-        <div className="col-md-10">
+        <div className="col-md-9">
           <h2 className="font-weight-bold p-0">วิธีการติดตั้ง</h2>
         </div>
-        <div className="col-md-2">
+        <div className="col-md-3">
           <InputSearch />
         </div>
       </div>
@@ -149,11 +161,11 @@ export default function Installation() {
           <div className="col-md-8">
             <h3 className="title-section">วิธีการติดตั้ง</h3>
             <div className="row">
-              {menuSpare.length && (
+              {SpareList.length > 0 && (
                 <>
-                  {menuSpare.map((item, index) => (
+                  {SpareList.map((item, index) => (
                     <a
-                      href={`/SpareListByModel?id=${item.title}`}
+                      href={`/SpareDetail?id=${item.id}`}
                       className="col-md-4 px-2"
                     >
                       <CardInstallation data={item} />
