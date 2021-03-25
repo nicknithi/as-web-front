@@ -20,11 +20,13 @@ import Register from "../layouts/Register";
 import Warranty from "../layouts/Warranty";
 import Spare from "../layouts/Spare";
 import "../assets/scss/components/content.scss";
+import Maintain from "./Maintain";
 
 export default function Content() {
   let { customPath } = useParams();
   const [Content, setContent] = useState([]);
   const [cookies, setCookie] = useCookies(["as_lang"]);
+  const [maintain, setMaintain] = useState(0);
   const columcOption = {
     0: "col-md-12",
     1: "col-md-12",
@@ -45,7 +47,9 @@ export default function Content() {
         m.menu.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
-    console.log("dataUrl", resMemu, customPath);
+    setMaintain(dataUrl.id_menu);
+    console.log("maintain", maintain);
+    console.log("dataUrl", dataUrl, resMemu);
     if (dataUrl !== undefined) {
       console.log();
       const resContent = await GetContent(dataUrl.id_main_menu, lang);
@@ -90,13 +94,16 @@ export default function Content() {
         const group = [];
         let tempOrder = dataRender[0].file_order;
         group.push(dataRender.filter((d) => d.file_order === tempOrder));
-
+        console.log("tempOrder", tempOrder);
         data.file.forEach((item, index) => {
           if (item.file_order !== tempOrder) {
-            group.push(dataRender.filter((d) => d.file_order === tempOrder));
+            group.push(
+              dataRender.filter((d) => d.file_order === item.file_order)
+            );
             tempOrder = item.file_order;
           }
         });
+        console.log("group", group);
         return (
           <div className="row position-relative">
             {group.map((item, index) => (
@@ -181,16 +188,7 @@ export default function Content() {
       );
     }
   };
-  const coditionAddon = () => {
-    if (customPath === "เข้าสู่ระบบสมาชิก") {
-      return <Login />;
-    } else if (customPath === "ลงทะเบียนสมัครสมาชิก") {
-      return <Register />;
-    } else if (customPath === "การรับประกัน") {
-      return <Warranty />;
-    }
-  };
-
+  console.log("maintainmaintainmaintain", maintain);
   if (customPath === "การรับประกัน" || customPath === "warranty") {
     return <Warranty data={Content} />;
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
@@ -202,9 +200,11 @@ export default function Content() {
     return <Login data={Content} />;
   } else if (
     customPath === "ลงทะเบียนสมัครสมาชิก" ||
-    customPath === "SPARE PARTS"
+    customPath === "Membership Registration"
   ) {
     return <Register data={Content} />;
+  } else if (maintain === 20 || maintain === 38) {
+    return <Maintain data={Content} RenderColumn={RenderColumn} />;
   } else {
     return (
       <div>

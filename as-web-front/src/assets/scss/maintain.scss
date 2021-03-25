@@ -1,0 +1,25 @@
+.maintain {
+  border-top: 3px solid #f1c400;
+  margin-left: -15px;
+  margin-right: -15px;
+  .tab {
+    width: 100%;
+    .tab-menu {
+      &:hover {
+        cursor: pointer;
+      }
+      &.active {
+        background-color: #58a7af;
+        color: white;
+      }
+    }
+  }
+  .tab-content {
+    .maintain-content {
+      background-color: #e9e9e9;
+      .content {
+        padding: 1rem;
+      }
+    }
+  }
+}
