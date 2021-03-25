@@ -10,4 +10,19 @@
     font-size: 22px;
     font-weight: bold;
   }
+  .button-element {
+    a {
+      text-align: center;
+      border-color: white;
+      border: none;
+      width: 9rem;
+      height: 3rem;
+      border-bottom: 4px solid rgba(0, 0, 0, 0.13);
+      font-size: 26px;
+      font-weight: bold;
+      color: white;
+
+      background-color: #58a7af;
+    }
+  }
 }

@@ -18,9 +18,9 @@ export default function NavbarDesktop({ NavbarItem }) {
   const [t, i18n] = useTranslation("common");
   const placeholderSearch = "ค้นหา...";
 
-  // if (!cookies.as_lang) {
-  //   setCookie("as_lang", "TH");
-  // }
+  if (!cookies.as_lang) {
+    setCookie("as_lang", "TH");
+  }
 
   // if (cookies.as_lang) {
   //   if (cookies.as_lang === "TH") {
@@ -35,10 +35,12 @@ export default function NavbarDesktop({ NavbarItem }) {
     if (cookies.as_lang) {
       if (cookies.as_lang === "TH") {
         document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
-        document.body.style.setProperty("font-size", "22px", "important");
+        document.body.style.setProperty("font-size", "24px", "important");
+        document.body.style.setProperty("font-weight", "bold", "important");
       } else {
         document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
         document.body.style.setProperty("font-size", "16px", "important");
+        document.body.style.setProperty("font-weight", "normal", "important");
       }
     }
   }, [lang]);
@@ -46,13 +48,15 @@ export default function NavbarDesktop({ NavbarItem }) {
     i18n.changeLanguage("th");
     setCookie("as_lang", "TH");
     setLang("TH");
-    window.location.reload(false);
+    window.location = "/หน้าแรก";
+    // window.location.reload(false);
   };
   const changToEng = () => {
     i18n.changeLanguage("en");
     setCookie("as_lang", "EN");
     setLang("EN");
-    window.location.reload(false);
+    window.location = "/home";
+    // window.location.reload(false);
   };
   return (
     <div>

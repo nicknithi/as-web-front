@@ -12,14 +12,14 @@ export default function ElementCarousel({ data }) {
   };
   let DataSlide = [...data];
   //DataSlide.shift();
-  if (DataSlide.length >= 2) {
-    DataSlide.splice(0, 1);
-  }
+  // if (DataSlide.length >= 2) {
+  //   DataSlide.splice(0, 1);
+  // }
   return (
     <div className="element-carousel pb-4">
       {data[0].path && (
         <div className="img-carousel text-center">
-          <img src={`http://www.mostactive.info/${data[0].path}`} />
+          <img src={`http://www.mostactive.info/${data[0].coverimage_path}`} />
           <div className="button-show" onClick={handleShow}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

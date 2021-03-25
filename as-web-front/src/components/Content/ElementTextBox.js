@@ -14,6 +14,11 @@ export default function ElementTextBox({ data, col }) {
         <div className="d-flex justify-content-center">
           {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
         </div>
+        {data.flag_button === 1 && (
+          <div className="d-flex justify-content-center mb-3 button-element">
+            <a href={data.link_download}>download</a>
+          </div>
+        )}
       </div>
     </div>
   );

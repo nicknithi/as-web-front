@@ -195,6 +195,16 @@ export default function Content() {
     return <Warranty data={Content} />;
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
     return <Spare data={Content} />;
+  } else if (
+    customPath === "เข้าสู่ระบบสมาชิก" ||
+    customPath === "Membership Login"
+  ) {
+    return <Login data={Content} />;
+  } else if (
+    customPath === "ลงทะเบียนสมัครสมาชิก" ||
+    customPath === "SPARE PARTS"
+  ) {
+    return <Register data={Content} />;
   } else {
     return (
       <div>

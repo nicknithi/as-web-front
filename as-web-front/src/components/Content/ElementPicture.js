@@ -19,6 +19,11 @@ export default function ElementPicture({ data, index }) {
           dangerouslySetInnerHTML={{ __html: data.description }}
         />
       )}
+      {data.flag_button === 1 && (
+        <div className="d-flex justify-content-center mb-3 button-element">
+          <a href={data.link_download}>download</a>
+        </div>
+      )}
     </div>
   );
 }

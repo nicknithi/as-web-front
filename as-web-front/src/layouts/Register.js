@@ -6,8 +6,19 @@ import DropdownSubDistrict from "../components/Register/DropdownSubDistrict";
 import GoogleMap from "../components/map/googleMapRegister";
 import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
+import ElementBanner from "../components/Content/ElementBanner";
 import http from "../axios";
-export default function Register() {
+export default function Register({ data }) {
+  const [ImgBanner, setImgBanner] = useState("");
+  useEffect(() => {
+    console.log("tests ggggg");
+    const banner = data.find((b) => b.content_Type === 2);
+    if (banner !== undefined) {
+      console.log("bannerbanner", banner.image);
+      setImgBanner(banner.image);
+    }
+  }, [data]);
+
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
   const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
   const [District, setDistrict] = useState([
@@ -165,6 +176,7 @@ export default function Register() {
   }, [DataFromRegister]);
   return (
     <div>
+      <ElementBanner img={ImgBanner} />
       <form onSubmit={submit}>
         <div className="container register pb-4 mb-4">
           <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
