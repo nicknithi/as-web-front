@@ -21,7 +21,9 @@ export default function ElementVideo({ data }) {
         {(data.path || data.link) && (
           <div class="play-video" onClick={() => playvideo()} />
         )}
-        {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
+        {data.coverimage_path && (
+          <img src={`http://www.mostactive.info/${data.coverimage_path}`} />
+        )}
         <div className="play">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -50,7 +52,13 @@ export default function ElementVideo({ data }) {
       {IsShowVidio && (
         <div className="overlay-video">
           {IsYoutube ? (
-            <iframe width="800px" height="500px" src={data.link}></iframe>
+            <iframe
+              width="800px"
+              height="500px"
+              src={`https://www.youtube.com/embed/${
+                data.link.split("/").reverse()[0]
+              }`}
+            ></iframe>
           ) : (
             <video autoPlay controls>
               <source src={`http://www.mostactive.info/${data.path}`} />

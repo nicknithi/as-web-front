@@ -4,6 +4,10 @@ import "../assets/scss/footer.scss";
 import { useCookies } from "react-cookie";
 import logoFooter from "../assets/img/Logo2INAX.png";
 import { getMenuAll } from "../GetDataMenu";
+import Button from "react-bootstrap/Button";
+import Collapse from "react-bootstrap/Collapse";
+import Accordion from "react-bootstrap/Accordion";
+import Card from "react-bootstrap/Card";
 
 export default function Footer() {
   function RendersubMenu(dataList) {
@@ -11,7 +15,9 @@ export default function Footer() {
     return (
       <ul>
         {dataList.subMenu.map((item, index) => (
-          <li>{item.menu}</li>
+          <li>
+            <a href={item.link}>{item.menu}</a>
+          </li>
         ))}
       </ul>
     );
@@ -51,59 +57,53 @@ export default function Footer() {
   return (
     <footer className="as-footer pt-5 pb-5">
       <div class="site-content">
-        <div className="footer-menu">
+        <div className="footer-menu d-none d-md-block">
           {NavbarData.map((item, index) => (
             <div>
-              <div>{item.menu}</div>
+              {item.subMenu.length > 0 ? (
+                <div>{item.menu}</div>
+              ) : (
+                <a href={item.link}>{item.menu}</a>
+              )}
+
               <div>{item.subMenu.length > 0 && RendersubMenu(item)}</div>
             </div>
           ))}
         </div>
+        <div className="footer-mobile d-lg-none">
+          <Accordion defaultActiveKey={1}>
+            {NavbarData.map((item, index) => (
+              <Card>
+                {item.subMenu.length > 0 ? (
+                  <Accordion.Toggle
+                    as={Card.Header}
+                    eventKey={index + 1}
+                    className="item-menu"
+                  >
+                    {item.menu}
+                  </Accordion.Toggle>
+                ) : (
+                  <div className="item-menu card-header">
+                    <a href={item.link}>{item.menu}</a>
+                  </div>
+                )}
 
-        {/* <div className="row">
-          <div className="col-md-4">
-            <ul>
-              <li>
-                บริการ
-                <ul>
-                  <li>ขอบเขตการบริการ</li>
-                  <li>ศูนย์บริการ สาขา</li>
-                </ul>
-              </li>
-              <li>
-                โปรโมชั่น
-                <ul>
-                  <li>ฟรีบริการติดตั้ง </li>
-                  <li>(ความครอบคลุมและเงื่อนไข)</li>
-                  <li>คูปองส่วนลด</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div className="col-md-4">
-            <ul>
-              <li>
-                ความรู้ด้านเทคนิค
-                <ul>
-                  <li>ระบบการชำระล้าง</li>
-                  <li>เทคโนโลยี่ไฮยีนคลีน</li>
-                  <li>อะควาเซรามิก</li>
-                  <li>ขนาดท่อและแรงดันน้ำสำหรับสุขภัณฑ์</li>
-                  <li>การแก้ไขปัญหาผลิตภัณฑ์</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-          <div className="col-md-4">
-            <ul>
-              <li>การบำรุงรักษาและการแก้ไขปัญหา</li>
-              <li>การติดตั้ง</li>
-              <li>อะไหล่</li>
-              <li>การรับประกัน</li>
-              <li>สมาชิกการบริการ</li>
-            </ul>
-          </div>
-        </div> */}
+                {item.subMenu.length > 0 && (
+                  <Accordion.Collapse eventKey={index + 1}>
+                    <Card.Body>
+                      {item.subMenu.map((item, index) => (
+                        <div className="item-sub-menu card-header border-0">
+                          <a href={item.link}>{item.menu}</a>
+                        </div>
+                      ))}
+                    </Card.Body>
+                  </Accordion.Collapse>
+                )}
+              </Card>
+            ))}
+          </Accordion>
+        </div>
+
         <div className="logo-footer d-flex mt-4">
           <div className="ml-auto">
             <img src={logoFooter} />

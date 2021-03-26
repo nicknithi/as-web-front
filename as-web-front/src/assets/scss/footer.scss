@@ -2,12 +2,33 @@
 .as-footer {
   font-weight: bold;
   // font-size: 1.5rem;
-  background-color: #ececec;
+  background-color: #f1f1f5;
   height: 100%;
   .footer-menu {
     column-count: 3;
   }
   ul {
     list-style-type: none;
+  }
+  a {
+    color: inherit;
+    &:hover {
+      text-decoration: none;
+      color: #58a7af;
+    }
+  }
+  .footer-mobile {
+    .card {
+      border: none;
+      background-color: #f1f1f5;
+      .card-header {
+        padding: 0.4rem 1.25rem;
+        border: none;
+        background-color: #f1f1f5;
+      }
+      .card-body {
+        padding: 0 0 0 2rem;
+      }
+    }
   }
 }

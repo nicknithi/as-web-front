@@ -60,7 +60,7 @@ export default function NavbarDesktop({ NavbarItem }) {
   };
   return (
     <div>
-      <div className="as-navbar-desktop mx-auto d-none d-md-block">
+      <div className="as-navbar-desktop mx-auto d-none d-lg-block">
         <div className="navbar-header d-flex">
           <a href="/" className="logo position-relative">
             <img className="img-fluid" src={logo} />

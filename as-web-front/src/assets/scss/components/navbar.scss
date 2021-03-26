@@ -75,11 +75,43 @@
 }
 
 .navbar-mobile {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  .navbar-toggler {
+    border: none;
+  }
   background-color: white;
+
   .navbar-brand {
+    width: 79%;
     img {
       max-width: 31%;
       max-height: 90%;
+    }
+  }
+  .item-menu {
+    border: none;
+    a:hover {
+      text-decoration: none;
+    }
+    a {
+      color: inherit !important;
+    }
+    background-color: white;
+  }
+  .item-sub-menu {
+    padding-left: 2rem;
+    background-color: white;
+    a {
+      color: inherit !important;
+    }
+    a:hover {
+      text-decoration: none;
+    }
+  }
+  .card {
+    border: none;
+    .card-body {
+      padding: 0px;
     }
   }
 }

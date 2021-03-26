@@ -56,7 +56,7 @@ export default function Content() {
         m.menu.toLowerCase().replace(/\s/g, "") ===
         tempCustomPath.toLowerCase().replace(/\s/g, "")
     );
-
+    setMaintain(dataUrl.id_menu);
     console.log("maintain", maintain);
     console.log("dataUrl", dataUrl, resMemu);
     if (dataUrl !== undefined) {
@@ -225,6 +225,7 @@ export default function Content() {
   ) {
     return <Register data={Content} />;
   } else if (maintain === 20 || maintain === 38) {
+    console.log("งงงงงงงงง");
     return <Maintain data={Content} RenderColumn={RenderColumn} />;
   } else {
     return (
