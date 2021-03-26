@@ -13,6 +13,8 @@ import ElementCard from "../components/Content/ElementCard";
 import ElementPDF from "../components/Content/ElementPDF";
 import ElementAudio from "../components/Content/ElementAudio";
 import ElementCarousel from "../components/Content/ElementCarousel";
+import SpareListByModel from "../layouts/SpareListByModel";
+import SpareDetail from "../layouts/SpareDetail";
 
 import ButtonMain from "../components/button/ButtonMain";
 import Login from "../layouts/Login";
@@ -41,13 +43,20 @@ export default function Content() {
     if (cookies.as_lang) {
       lang = cookies.as_lang;
     }
+    let tempCustomPath = customPath;
+    if (
+      tempCustomPath === "SpareListByModel" ||
+      tempCustomPath === "SpareDetail"
+    ) {
+      tempCustomPath = "อะไหล่";
+    }
     const resMemu = await getMenuAll(lang);
     const dataUrl = resMemu.find(
       (m) =>
         m.menu.toLowerCase().replace(/\s/g, "") ===
-        customPath.toLowerCase().replace(/\s/g, "")
+        tempCustomPath.toLowerCase().replace(/\s/g, "")
     );
-    setMaintain(dataUrl.id_menu);
+
     console.log("maintain", maintain);
     console.log("dataUrl", dataUrl, resMemu);
     if (dataUrl !== undefined) {
@@ -188,11 +197,23 @@ export default function Content() {
       );
     }
   };
-  console.log("maintainmaintainmaintain", maintain);
+  const getBannerContent = (data) => {
+    const banner = data.find((b) => b.content_Type === 2);
+    if (banner !== undefined) {
+      return banner.image;
+    }
+    return "";
+  };
   if (customPath === "การรับประกัน" || customPath === "warranty") {
     return <Warranty data={Content} />;
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
-    return <Spare data={Content} />;
+    return <Spare data={Content} RenderColumn={RenderColumn} />;
+  } else if (customPath === "SpareListByModel") {
+    return (
+      <SpareListByModel data={Content} getBannerContent={getBannerContent} />
+    );
+  } else if (customPath === "SpareDetail") {
+    return <SpareDetail data={Content} getBannerContent={getBannerContent} />;
   } else if (
     customPath === "เข้าสู่ระบบสมาชิก" ||
     customPath === "Membership Login"

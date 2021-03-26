@@ -7,8 +7,7 @@ import {
   GetAllClassifiedTypeSpare,
   GetAllProduct_SparepartList,
 } from "../GetProduct";
-export default function Spare({ data }) {
-  const [ImgBanner, setImgBanner] = useState("");
+export default function Spare({ data, RenderColumn }) {
   const [menuSpare, setMenuSpare] = useState([]);
   const [SpareList, setSpareList] = useState([]);
   useEffect(async () => {
@@ -29,17 +28,15 @@ export default function Spare({ data }) {
     TempMenu = MenuSpare;
     setMenuSpare(TempMenu);
   }, []);
-  useEffect(() => {
-    console.log("tests ggggg");
-    const banner = data.find((b) => b.content_Type === 2);
-    if (banner !== undefined) {
-      console.log("bannerbanner", banner.image);
-      setImgBanner(banner.image);
-    }
-  }, [data]);
   return (
     <div>
-      <ElementBanner img={ImgBanner} />
+      {data.map((item, index) => (
+        <div key={index}>
+          <div className={`${item.content_Type !== 2 && "container"}`}>
+            <div className="maintain-content">{RenderColumn(item)}</div>
+          </div>
+        </div>
+      ))}
       <SpareMenu menuSpare={menuSpare} SpareList={menuSpare} />
     </div>
   );

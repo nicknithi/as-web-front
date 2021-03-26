@@ -70,12 +70,12 @@ export default function App() {
         <Route exact path="/datatable">
           <TestDataTable />
         </Route>
-        <Route exact path="/SpareListByModel">
+        {/* <Route exact path="/SpareListByModel">
           <SpareListByModel />
         </Route>
         <Route exact path="/SpareDetail">
           <SpareDetail />
-        </Route>
+        </Route> */}
         <Route exact path="/maintain">
           <Maintain />
         </Route>

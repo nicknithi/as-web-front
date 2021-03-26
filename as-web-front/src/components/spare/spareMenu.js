@@ -10,7 +10,7 @@ export default function SpareMenu({ menuSpare, SpareList }) {
   return (
     <div className="container mb-5">
       {/* <BannerInstallation className="banner-installation" /> */}
-      <div className="row mb-3 pt-3 as-border-top">
+      <div className="row mb-3 pt-3">
         <div className="col-md-10">
           <h2 className="font-weight-bold p-0">วิธีการติดตั้ง</h2>
         </div>

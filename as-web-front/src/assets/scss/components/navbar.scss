@@ -75,10 +75,8 @@
 }
 
 .navbar-mobile {
-  height: 3.75rem;
-  width: 100%;
   background-color: white;
-  a {
+  .navbar-brand {
     img {
       max-width: 31%;
       max-height: 90%;
