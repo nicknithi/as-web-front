@@ -14,7 +14,8 @@ export default function header() {
   }
 
   useEffect(async () => {
-    const resMemu = await getMenuAll(lang);
+    let resMemu = await getMenuAll(lang);
+    resMemu = resMemu.filter((e) => e.hide_header !== 0);
     console.log("resMemu", resMemu);
     const mainMenu = resMemu.filter(
       (e) => e.id_menu === 0 || e.id_menu === null

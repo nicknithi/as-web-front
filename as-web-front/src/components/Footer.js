@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "../assets/scss/footer.scss";
 import { useCookies } from "react-cookie";
@@ -23,7 +24,8 @@ export default function Footer() {
   }
 
   useEffect(async () => {
-    const resMemu = await getMenuAll(lang);
+    let resMemu = await getMenuAll(lang);
+    resMemu = resMemu.filter((e) => e.hide_Footer !== 0);
     console.log("resMemu", resMemu);
     const mainMenu = resMemu.filter(
       (e) => e.id_menu === 0 || e.id_menu === null
