@@ -22,13 +22,24 @@ import Content from "./layouts/Content";
 import SpareListByModel from "./layouts/SpareListByModel";
 import SpareDetail from "./layouts/SpareDetail";
 import Maintain from "./layouts/Maintain";
-export default function App() {
-  console.log(useHistory);
+import Loading from "./components/Loading";
+export default function App(props) {
+  console.log("55555ooo0", props);
+  const [cookies, setCookie] = useCookies(["as_lang"]);
+  const pathWithOutDomain = window.location.href.split("/").reverse()[0];
+  if (!pathWithOutDomain) {
+    if (cookies.as_lang === "TH") {
+      window.location = "/หน้าแรก";
+    } else if (cookies.as_lang === "EN") {
+      window.location = "/home";
+    }
+  }
   return (
     <div>
+      <Loading />
       <Header />
       <BrowserRouter history={history}>
-        <Route exact path="/">
+        {/* <Route exact path="/">
           <Home />
         </Route>
         <Route exact path="/warranty">
@@ -76,9 +87,9 @@ export default function App() {
         <Route exact path="/SpareDetail">
           <SpareDetail />
         </Route> */}
-        <Route exact path="/maintain">
+        {/* <Route exact path="/maintain">
           <Maintain />
-        </Route>
+        </Route>  */}
         <Route exact path="/:customPath">
           <Content />
         </Route>

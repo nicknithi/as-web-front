@@ -86,4 +86,37 @@
       }
     }
   }
+  .product-detail {
+    .detail {
+      label {
+        color: #aebac6;
+        span {
+          color: #636363;
+        }
+      }
+      background-color: #f1f1f5;
+      .relate-menu {
+        display: flex;
+        justify-content: space-between;
+        button {
+          min-width: 6rem;
+          border: none;
+          background-color: #58a7af;
+          color: white;
+          &.active {
+            background-color: #f1c400;
+            color: #636363;
+          }
+        }
+      }
+    }
+    .relate-contet {
+      & > div {
+        display: none;
+        &.active {
+          display: block !important;
+        }
+      }
+    }
+  }
 }

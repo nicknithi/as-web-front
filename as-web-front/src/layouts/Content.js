@@ -56,11 +56,11 @@ export default function Content() {
         m.menu.toLowerCase().replace(/\s/g, "") ===
         tempCustomPath.toLowerCase().replace(/\s/g, "")
     );
-    setMaintain(dataUrl.id_menu);
+
     console.log("maintain", maintain);
     console.log("dataUrl", dataUrl, resMemu);
     if (dataUrl !== undefined) {
-      console.log();
+      setMaintain(dataUrl.id_menu);
       const resContent = await GetContent(dataUrl.id_main_menu, lang);
       console.log("resContent", resContent);
 
@@ -68,6 +68,9 @@ export default function Content() {
     } else {
       //window.location = "/";
     }
+    setTimeout(() => {
+      document.querySelector(".as-loading").style.display = "none";
+    }, 800);
   }, []);
   const goBack = () => {
     window.history.back();

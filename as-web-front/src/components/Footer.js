@@ -57,7 +57,7 @@ export default function Footer() {
   return (
     <footer className="as-footer pt-5 pb-5">
       <div class="site-content">
-        <div className="footer-menu d-none d-md-block">
+        <div className="footer-menu d-none d-lg-block">
           {NavbarData.map((item, index) => (
             <div>
               {item.subMenu.length > 0 ? (
