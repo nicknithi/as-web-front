@@ -1,0 +1,27 @@
+.content-tab {
+  .tab-header {
+    border-top: 3px solid #f1c400;
+    border-bottom: 3px solid #f1c400;
+    .header-menu {
+      position: relative;
+      padding-left: 15px;
+      cursor: pointer;
+      &:before {
+        position: absolute;
+        content: "";
+        width: 10px;
+        transform: translate(0, -50%);
+        height: 10px;
+        top: 50%;
+        left: 0;
+        background-color: #aebac6;
+        border-radius: 50%;
+      }
+      &.active {
+        &:before {
+          background-color: #58a7af;
+        }
+      }
+    }
+  }
+}

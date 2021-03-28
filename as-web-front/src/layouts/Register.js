@@ -38,6 +38,7 @@ export default function Register({ data }) {
   ]);
   const [DataFromRegister, setDataFromRegister] = useState({
     Customer_Type: 0,
+    Customer_Contractor_Type: 0,
     FirstName: "",
     LastName: "",
     Username: "",
@@ -223,6 +224,90 @@ export default function Register({ data }) {
                 <span className="checkmark"></span>
               </label>
             </div>
+            {DataFromRegister.Customer_Type === "2" && (
+              <div className="ml-5">
+                <div className="row">
+                  <label className="as-container font-weight-bold">
+                    งานซ่อม/ติดตั้งสุขภัณฑ์
+                    <input
+                      type="radio"
+                      name="customer-type-sub"
+                      value="1"
+                      checked={
+                        DataFromRegister.Customer_Contractor_Type === "1"
+                      }
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Contractor_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+                <div className="row">
+                  <label className="as-container font-weight-bold">
+                    งานไฟฟ้า
+                    <input
+                      type="radio"
+                      name="customer-type-sub"
+                      value="2"
+                      checked={
+                        DataFromRegister.Customer_Contractor_Type === "2"
+                      }
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Contractor_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+                <div className="row">
+                  <label className="as-container font-weight-bold">
+                    งานประปา
+                    <input
+                      type="radio"
+                      name="customer-type-sub"
+                      value="3"
+                      checked={
+                        DataFromRegister.Customer_Contractor_Type === "3"
+                      }
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Contractor_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+                <div className="row">
+                  <label className="as-container font-weight-bold">
+                    งานทั่วไป
+                    <input
+                      type="radio"
+                      name="customer-type-sub"
+                      value="4"
+                      checked={
+                        DataFromRegister.Customer_Contractor_Type === "4"
+                      }
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Contractor_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+              </div>
+            )}
             <div className="row ml-1">
               <label className="as-container font-weight-bold">
                 ลงทะเบียนสมาชิกโครงการสำนักงาน,โรงแรม,ออฟฟิศ ฯลฯ
@@ -341,7 +426,11 @@ export default function Register({ data }) {
               </div>
             </div>
           </div>
-          <h3 className="font-weight-bold mb-3 mt-3">ที่อยู่การติดตั้ง</h3>
+          <h3 className="font-weight-bold mb-3 mt-3">
+            {DataFromRegister.Customer_Type === "2"
+              ? "ที่อยู่การติดตั้งเพื่อออกใบเสร็จ"
+              : "ที่อยู่การติดตั้ง"}
+          </h3>
           <div className="address-container">
             <div className="row">
               <div className="col-md-12">

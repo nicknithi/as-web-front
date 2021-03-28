@@ -87,6 +87,20 @@
     }
   }
   .product-detail {
+    .img-detail {
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      img {
+        position: absolute;
+        top: 50%;
+        height: 100%;
+        transform: translateY(-50%) scale(1);
+        // width: 100%;
+      }
+    }
     .detail {
       label {
         color: #aebac6;
@@ -110,12 +124,12 @@
         }
       }
     }
-    .relate-contet {
-      & > div {
-        display: none;
-        &.active {
-          display: block !important;
-        }
+  }
+  .relate-contet {
+    & > div {
+      display: none;
+      &.active {
+        display: block !important;
       }
     }
   }

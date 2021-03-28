@@ -21,7 +21,9 @@ export default function ElementPicture({ data, index }) {
       )}
       {data.flag_button === 1 && (
         <div className="d-flex justify-content-center mb-3 button-element">
-          <a href={data.link_download}>download</a>
+          <a href={`http://www.mostactive.info/${data.path}`} download>
+            download
+          </a>
         </div>
       )}
     </div>

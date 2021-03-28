@@ -38,7 +38,7 @@ export default function NavbarDesktop({ NavbarItem }) {
         document.body.style.setProperty("font-weight", "bold", "important");
       } else {
         document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
-        document.body.style.setProperty("font-size", "16px", "important");
+        document.body.style.setProperty("font-size", "14px", "important");
         document.body.style.setProperty("font-weight", "normal", "important");
         document.body.style.setProperty("line-height", "1.8", "important");
 

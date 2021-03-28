@@ -24,15 +24,14 @@
     .emotion {
       display: flex;
       align-items: center;
+      justify-content: center;
+      width: 100%;
+      text-align: center;
+      font-weight: bold;
+      font-size: 25px;
       cursor: pointer;
-      &:hover {
-        svg {
-          fill: #f1c400;
-        }
-      }
-      .motion-text {
-        font-size: 20px;
-        font-weight: bold;
+      &.active {
+        border: 3px solid black;
       }
     }
     textarea {

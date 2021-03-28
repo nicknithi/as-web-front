@@ -21,8 +21,11 @@ function SubMenu({ menu }) {
               >
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
-              <a href={`/SpareDetail?id=${item.id}`} className="text-truncate">
-                {item.name}
+              <a
+                href={`/SpareListByModel?id=${item}`}
+                className="text-truncate"
+              >
+                {item}
               </a>
             </Accordion.Toggle>
             {/* {item.subMenu.length > 0 && (

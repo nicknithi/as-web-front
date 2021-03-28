@@ -285,7 +285,9 @@ export default function ProductData({
               )}
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">หมายเลขรับประกัน</label>
+              <label className="font-weight-bold">
+                หมายเลขรับประกัน/หมายเลขซีเรียลผลิตภัณฑ์
+              </label>
               <input
                 type="text"
                 className="as-input"

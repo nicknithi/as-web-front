@@ -75,6 +75,12 @@
 }
 
 .navbar-mobile {
+  .nav-lang-mobile {
+    button {
+      border: none;
+      min-width: 2.5rem;
+    }
+  }
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
   .navbar-toggler {
     border: none;
@@ -90,6 +96,20 @@
   }
   .item-menu {
     border: none;
+    &.has-sub-menu {
+      position: relative;
+      &::after {
+        position: absolute;
+        content: "";
+        right: 12px;
+        top: 50%;
+        transform: translate(0, -50%) rotate(315deg);
+        width: 10px;
+        height: 10px;
+        border-left: 2px solid black;
+        border-bottom: 2px solid black;
+      }
+    }
     a:hover {
       text-decoration: none;
     }
@@ -114,8 +134,8 @@
       padding: 0px;
     }
   }
-  // .navbar-collapse {
-  //   max-height: 500px;
-  //   overflow-y: scroll;
-  // }
+  .navbar-collapse {
+    max-height: 500px;
+    overflow-y: scroll;
+  }
 }

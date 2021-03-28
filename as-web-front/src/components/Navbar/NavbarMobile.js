@@ -8,13 +8,29 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
+import { useCookies } from "react-cookie";
+import { useTranslation } from "react-i18next";
 export default function NavbarMobile({ NavbarItem }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
+  const [t, i18n] = useTranslation("common");
   useEffect(() => {
     responsive();
     window.addEventListener("resize", () => {
       responsive();
     });
   }, []);
+  const changToThai = () => {
+    i18n.changeLanguage("th");
+    setCookie("as_lang", "TH");
+    window.location = "/หน้าแรก";
+    // window.location.reload(false);
+  };
+  const changToEng = () => {
+    i18n.changeLanguage("en");
+    setCookie("as_lang", "EN");
+    window.location = "/home";
+    // window.location.reload(false);
+  };
   const responsive = () => {
     if (window.innerWidth < 992) {
       const navMobile = document.querySelector(".navbar-mobile").clientHeight;
@@ -35,6 +51,10 @@ export default function NavbarMobile({ NavbarItem }) {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
+        <div className="nav-lang-mobile mt-2 ml-3">
+          <button onClick={() => changToThai()}>TH</button> |
+          <button onClick={() => changToEng()}>EN</button>
+        </div>
         <Nav>
           <Accordion defaultActiveKey={1}>
             {NavbarItem.map((item, index) => (
@@ -43,7 +63,7 @@ export default function NavbarMobile({ NavbarItem }) {
                   <Accordion.Toggle
                     as={Card.Header}
                     eventKey={index + 1}
-                    className="item-menu"
+                    className="item-menu has-sub-menu"
                   >
                     {item.menu}
                   </Accordion.Toggle>

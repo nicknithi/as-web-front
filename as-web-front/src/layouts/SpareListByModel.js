@@ -26,7 +26,8 @@ export default function SpareListByModel({ data, getBannerContent }) {
       return { ...item, title: item.product_name };
     });
     if (query.id) {
-      dataProduct = dataProduct.filter((p) => p.product_model === query.id);
+      console.log("id", query.id, dataProduct);
+      dataProduct = dataProduct.filter((p) => p.product_type === query.id);
     }
 
     let TempSpare = [...SpareList];

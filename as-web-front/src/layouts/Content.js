@@ -15,12 +15,14 @@ import ElementAudio from "../components/Content/ElementAudio";
 import ElementCarousel from "../components/Content/ElementCarousel";
 import SpareListByModel from "../layouts/SpareListByModel";
 import SpareDetail from "../layouts/SpareDetail";
+import TabContent from "../layouts/TabContent";
 
 import ButtonMain from "../components/button/ButtonMain";
 import Login from "../layouts/Login";
 import Register from "../layouts/Register";
 import Warranty from "../layouts/Warranty";
 import Spare from "../layouts/Spare";
+import Installation from "../layouts/Installation";
 import "../assets/scss/components/content.scss";
 import Maintain from "./Maintain";
 
@@ -211,6 +213,8 @@ export default function Content() {
     return <Warranty data={Content} />;
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
     return <Spare data={Content} RenderColumn={RenderColumn} />;
+  } else if (customPath === "การติดตั้ง" || customPath === "INSTALLATION") {
+    return <Installation data={Content} RenderColumn={RenderColumn} />;
   } else if (customPath === "SpareListByModel") {
     return (
       <SpareListByModel data={Content} getBannerContent={getBannerContent} />
@@ -228,8 +232,24 @@ export default function Content() {
   ) {
     return <Register data={Content} />;
   } else if (maintain === 20 || maintain === 38) {
-    console.log("งงงงงงงงง");
     return <Maintain data={Content} RenderColumn={RenderColumn} />;
+  } else if (customPath === "ศูนย์บริการ สาขา") {
+    return (
+      <TabContent
+        title={"ศูนย์บริการ สาขา"}
+        data={Content}
+        RenderColumn={RenderColumn}
+        getBannerContent={getBannerContent}
+      />
+    );
+  } else if (customPath === "การแก้ไขปัญหาผลิตภัณฑ์") {
+    return (
+      <TabContent
+        data={Content}
+        RenderColumn={RenderColumn}
+        getBannerContent={getBannerContent}
+      />
+    );
   } else {
     return (
       <div>
