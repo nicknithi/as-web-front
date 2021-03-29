@@ -33,7 +33,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
     if (typePage === "Spare") {
       return `/SpareListByModel?id=${item.classified[0]}`;
     } else if (typePage === "SpareListByModel") {
-      return `/SpareDetail?id=${item.product_type_id}`;
+      return `/SpareDetail?id=${item.product_id}`;
     }
   };
   const contentTitle = () => {
