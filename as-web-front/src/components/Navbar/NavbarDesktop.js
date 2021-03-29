@@ -33,10 +33,12 @@ export default function NavbarDesktop({ NavbarItem }) {
   useEffect(() => {
     if (cookies.as_lang) {
       if (cookies.as_lang === "TH") {
+        i18n.changeLanguage("th");
         document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
         document.body.style.setProperty("font-size", "24px", "important");
         document.body.style.setProperty("font-weight", "bold", "important");
       } else {
+        i18n.changeLanguage("en");
         document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
         document.body.style.setProperty("font-size", "14px", "important");
         document.body.style.setProperty("font-weight", "normal", "important");
@@ -49,13 +51,11 @@ export default function NavbarDesktop({ NavbarItem }) {
     }
   }, []);
   const changToThai = () => {
-    i18n.changeLanguage("th");
     setCookie("as_lang", "TH");
     window.location = "/หน้าแรก";
     // window.location.reload(false);
   };
   const changToEng = () => {
-    i18n.changeLanguage("en");
     setCookie("as_lang", "EN");
     window.location = "/home";
     // window.location.reload(false);

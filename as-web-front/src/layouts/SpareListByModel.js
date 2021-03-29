@@ -21,21 +21,37 @@ export default function SpareListByModel({ data, getBannerContent }) {
   const [SpareList, setSpareList] = useState([]);
   useEffect(async () => {
     let dataProduct = await GetAllProduct_SparepartList();
-    console.log("dataProduct");
     dataProduct = dataProduct.map((item, index) => {
-      return { ...item, title: item.product_name };
+      return {
+        title: item.model_name,
+        model_id: item.model_id,
+        classified: item.classified,
+      };
     });
-    if (query.id) {
-      console.log("id", query.id, dataProduct);
-      dataProduct = dataProduct.filter((p) => p.product_type === query.id);
-    }
 
-    let TempSpare = [...SpareList];
-    TempSpare = dataProduct;
-    setSpareList(TempSpare);
-    console.log("TempSpare", TempSpare);
+    if (query.id) {
+      let renderClassofied = {};
+
+      dataProduct.forEach((item, index) => {
+        const dataClassiFied = item.classified.find(
+          (c) => c.classified_id === parseInt(query.id)
+        );
+        if (dataClassiFied !== undefined) {
+          renderClassofied = dataClassiFied;
+        }
+      });
+
+      if (Object.keys(renderClassofied).length > 0) {
+        console.log("renderClassofied", renderClassofied);
+        let TempSpare = [...SpareList];
+        TempSpare = renderClassofied.product_sparepart;
+        TempSpare = TempSpare.map((item, index) => {
+          return { ...item, title: item.product_name };
+        });
+        setSpareList(TempSpare);
+      }
+    }
   }, []);
-  console.log("5555555555555k", getBannerContent(data));
   return (
     <div>
       <ElementBanner img={getBannerContent(data)} />

@@ -210,7 +210,7 @@ export default function Content() {
     return "";
   };
   if (customPath === "การรับประกัน" || customPath === "warranty") {
-    return <Warranty data={Content} />;
+    return <Warranty data={Content} RenderColumn={RenderColumn} />;
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
     return <Spare data={Content} RenderColumn={RenderColumn} />;
   } else if (customPath === "การติดตั้ง" || customPath === "INSTALLATION") {

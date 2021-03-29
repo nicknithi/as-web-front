@@ -428,14 +428,17 @@ export default function Register({ data }) {
           </div>
           <h3 className="font-weight-bold mb-3 mt-3">
             {DataFromRegister.Customer_Type === "2"
-              ? "ที่อยู่การติดตั้งเพื่อออกใบเสร็จ"
-              : "ที่อยู่การติดตั้ง"}
+              ? "ที่อยู่สำหรับออกใบเสร็จ"
+              : "ที่อยู่การติดตั้งเพื่อออกใบเสร็จ"}
           </h3>
           <div className="address-container">
             <div className="row">
               <div className="col-md-12">
                 <label className="font-weight-bold">
-                  ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
+                  {DataFromRegister.Customer_Type === "2"
+                    ? "ที่อยู่สำหรับออกใบเสร็จ"
+                    : "ที่อยู่การติดตั้งเพื่อออกใบเสร็จ "}
+                  *(ไม่สามารถเปลี่ยนแปลงได้)
                 </label>
                 <input
                   type="text"

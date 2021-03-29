@@ -6,42 +6,75 @@ import BannerCover from "../components/Banner/BannerCover";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import "../assets/scss/warranty.scss";
-export default function Warranty({ data }) {
+import Modal from "react-bootstrap/Modal";
+export default function Warranty({ data, RenderColumn }) {
   const [Confirm, setConfirm] = useState(false);
-  const [readConfirm, setReadConfirm] = useState(false);
-  const [ImgBanner, setImgBanner] = useState("");
-  const [CarouselData, setCarouselData] = useState([]);
+  const [show, setShow] = useState(false);
+  let dataWarrantyConfirm = {};
+  let dataWarrantyPolicy = {};
+  const bannerAndCarousel = [];
+  data.forEach((item, index) => {
+    if (item.content_Type === 2 || item.content_Type === 8) {
+      bannerAndCarousel.push(item);
+    }
+
+    if (item.content_Title === "การลงทะเบียนรับประกันสินค้า ") {
+      dataWarrantyConfirm = item;
+    }
+    if (item.content_Title === "การลงทะเบียนรับประกันสินค้า ") {
+      dataWarrantyPolicy = item;
+    }
+  });
+
+  console.log("nicknithi", dataWarrantyConfirm);
+
   const handleCheck = (e) => {
     setConfirm(e.target.checked);
   };
+  const handleShowModal = () => {
+    setShow(true);
+  };
 
-  useEffect(() => {
-    const banner = data.find((b) => b.content_Type === 2);
-    if (banner !== undefined) {
-      console.log("bannerbanner", banner.image);
-      setImgBanner(banner.image);
-    }
-    const Carousel = data.find((b) => b.content_Type === 8);
-    if (Carousel !== undefined) {
-      setCarouselData(Carousel);
-    }
-  }, [data]);
   return (
     <div className="warranty">
-      {ImgBanner && (
-        <BannerCover img={`http://www.mostactive.info/${ImgBanner}`} />
-      )}
+      {bannerAndCarousel.map((item, index) => (
+        <div key={index}>
+          <div className={`${item.content_Type !== 2 && "container"}`}>
+            <div className="maintain-content">{RenderColumn(item)}</div>
+          </div>
+        </div>
+      ))}
       <div className="container pb-4">
-        {/* <CostWarrantyDetail /> */}
-        {CarouselData && <CostWarrantyDetail data={CarouselData} />}
         <div>
           <WarrantyConfirm
-            title={"การลงทะเบียนรับประกันสินค้า"}
-            description={
-              "การลงทะเบียนการรับประกันสินค้าเพื่ออำนวยความสะดวกในการแสดงข้อมูลและหลักฐานการซื้อขายเป็นไปตามเงื่อนไขอัตราค่าบริการและการรับประกันบริษัทฯขอสงวนสิทธิในการตรวจสอบข้อมูลที่แสดง กับสินค่าที่ซื้อหรือติดตั้งเพื่อความถูกต้องของข้อมูล"
-            }
+            title={dataWarrantyConfirm.content_Title}
+            description={dataWarrantyConfirm.content_body}
             handleCheck={handleCheck}
+            handleShowModal={handleShowModal}
           />
+          <Modal
+            show={show}
+            onHide={() => setShow(false)}
+            dialogClassName="modal-90w"
+            aria-labelledby="example-custom-modal-styling-title"
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="example-custom-modal-styling-title">
+                Custom Modal Styling
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <p>
+                Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae
+                unde commodi aspernatur enim, consectetur. Cumque deleniti
+                temporibus ipsam atque a dolores quisquam quisquam adipisci
+                possimus laboriosam. Quibusdam facilis doloribus debitis! Sit
+                quasi quod accusamus eos quod. Ab quos consequuntur eaque quo
+                rem! Mollitia reiciendis porro quo magni incidunt dolore amet
+                atque facilis ipsum deleniti rem!
+              </p>
+            </Modal.Body>
+          </Modal>
           {/* <div className="detail p-4">
             <PerfectScrollbar>
               การใชบริการของเราอาจเกี่ยวของกับการเก็บรวบรวมและใชขอมูลของทาน

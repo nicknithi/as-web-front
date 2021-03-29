@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
@@ -16,44 +17,23 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
   const [ActiveRelate, setActiveRelate] = useState(1);
   useEffect(async () => {
     const resSpareList = await GetAllProduct_SparepartList();
-    const resSpareModel = await GetAllProductModelSpare();
 
-    let MenuSpare = resSpareModel.map((item, index) => {
-      const filterModel = resSpareList.filter(
-        (s) => s.product_model === item.name
-      );
-      if (filterModel.length > 0) {
-        return { title: item.name, classified1: [], product: filterModel };
-      } else {
-        return { title: item.name, classified1: [], product: [] };
-      }
+    let MenuSpare = resSpareList.map((item, index) => {
+      return {
+        title: item.model_name,
+        model_id: item.model_id,
+        classified: item.classified,
+      };
     });
-
-    MenuSpare = MenuSpare.map((item, index) => {
-      const arrayTemp = [];
-      if (item.product.length > 0) {
-        let tempProduct = item.product[0].product_type;
-        arrayTemp.push(item.product[0].product_type);
-        item.product.forEach((itemPD, index) => {
-          if (itemPD.product_type !== tempProduct) {
-            arrayTemp.push(itemPD.product_type);
-            tempProduct = item.product_type;
-          }
-        });
-      }
-
-      return { ...item, product: arrayTemp };
-    });
-    let TempMenu = [...menuSpareRender];
-    TempMenu = MenuSpare;
-    setMenuSpareRender(TempMenu);
-    console.log("123123123123555", TempMenu);
+    let tempMenu = [...menuSpareRender];
+    tempMenu = MenuSpare;
+    setMenuSpareRender(tempMenu);
   }, []);
   const setLink = (item) => {
     if (typePage === "Spare") {
-      return `/SpareListByModel?id=${item.product[0]}`;
+      return `/SpareListByModel?id=${item.classified[0]}`;
     } else if (typePage === "SpareListByModel") {
-      return `/SpareDetail?id=${item.id}`;
+      return `/SpareDetail?id=${item.product_type_id}`;
     }
   };
   const contentTitle = () => {
@@ -90,7 +70,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
               <Accordion defaultActiveKey={1}>
                 {menuSpareRender.map((item, index) => (
                   <Card>
-                    {item.product.length > 0 && (
+                    {item.classified.length > 0 && (
                       <>
                         <Accordion.Toggle
                           as={Card.Header}
@@ -116,7 +96,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={index + 1}>
                           <Card.Body className="p-0">
-                            <SubMenu menu={item.product} />
+                            <SubMenu menu={item.classified} />
                           </Card.Body>
                         </Accordion.Collapse>
                       </>
@@ -135,7 +115,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
                     <>
                       {menuSpareRender.map((item, index) => (
                         <>
-                          {item.product.length > 0 && (
+                          {item.classified.length > 0 && (
                             <>
                               <a href={setLink(item)} className="col-md-4 px-2">
                                 <CardInstallation data={item} />

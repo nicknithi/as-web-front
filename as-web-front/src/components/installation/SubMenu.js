@@ -22,17 +22,17 @@ function SubMenu({ menu }) {
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
               <a
-                href={`/SpareListByModel?id=${item}`}
+                href={`/SpareListByModel?id=${item.classified_id}`}
                 className="text-truncate"
               >
-                {item}
+                {item.classified_name}
               </a>
             </Accordion.Toggle>
-            {/* {item.subMenu.length > 0 && (
+            {item.sub_classified.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
                 <Card.Body>
-                  {item.subMenu &&
-                    item.subMenu.map((item2) => (
+                  {item.sub_classified &&
+                    item.sub_classified.map((item2) => (
                       <div className="sub-menu">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -44,12 +44,12 @@ function SubMenu({ menu }) {
                         >
                           <circle cx="8" cy="8" r="8" />
                         </svg>
-                        {item2.title}
+                        {item2.sub_classified_name}
                       </div>
                     ))}
                 </Card.Body>
               </Accordion.Collapse>
-            )} */}
+            )}
           </Card>
         ))}
       </Accordion>

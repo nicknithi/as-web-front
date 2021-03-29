@@ -4,5 +4,10 @@
   },
   "website": {
     "navbar": "Official Website"
+  },
+  "maintain": {
+    "article": "บทความ",
+    "download": "ดาวน์โหลด",
+    "Audio": "ฟังคลิปเสียง"
   }
 }
