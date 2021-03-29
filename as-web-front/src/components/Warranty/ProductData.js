@@ -15,6 +15,7 @@ import "../../assets/scss/components/input/dataPicker.scss";
 import InputProcuctCode from "../Input/inputProcuctCode";
 import InputProcuctName from "../Input/inputProductName";
 import http from "../../axios";
+import { useTranslation } from "react-i18next";
 import { getProductType, getStoreByProvinceData } from "../../GetDataDropDown";
 export default function ProductData({
   handleChangInput,
@@ -28,6 +29,7 @@ export default function ProductData({
   Confirm,
   FileWaranty,
 }) {
+  const [t, i18n] = useTranslation("common");
   useEffect(async () => {
     const resTypeID = await getProductType();
     setDataTypeId([...dataTypeID, ...resTypeID]);
@@ -181,7 +183,9 @@ export default function ProductData({
         <div className="product-data">
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">จังหวัดที่ซื้อ*</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.productProvince")}
+              </label>
               <DropDownPurchaseProvince
                 data={Province}
                 index={index}
@@ -192,7 +196,9 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">วัน/เดือน/ปี ที่ซื้อ*</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.productDate")}
+              </label>
               <input
                 type="hidden"
                 index={index}
@@ -212,7 +218,9 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">ชื่อร้านตัวแทนจำหน่าย</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.storeName")}
+              </label>
               <DropDownStoreId
                 Confirm={Confirm}
                 data={storeData[index]}
@@ -224,7 +232,7 @@ export default function ProductData({
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">
-                ชื่อร้านตัวแทนจำหน่าย (กรณีค้นหาไม่พบ)
+                {t("warranthForm.OtherStoreName")}
               </label>
               <input
                 type="textarea"
@@ -239,7 +247,9 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">หมายเลขใบเสร็จ*</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.recipe")}
+              </label>
               <input
                 type="textarea"
                 className="as-input"
@@ -257,7 +267,7 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold">
-                รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
+                {t("warranthForm.barCode")}
               </label>
               {/* <input type="text" className="as-input" required /> */}
               <div className="row">
@@ -286,7 +296,7 @@ export default function ProductData({
             </div>
             <div className="col-md-6">
               <label className="font-weight-bold">
-                หมายเลขรับประกัน/หมายเลขซีเรียลผลิตภัณฑ์
+                {t("warranthForm.warrantyCode")}
               </label>
               <input
                 type="text"
@@ -300,7 +310,9 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">รหัสสินค้า*</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.productCode")}
+              </label>
               <InputProcuctCode
                 Confirm={Confirm}
                 handleEvent={handleChangInputProductCode}
@@ -309,7 +321,9 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">ชื่อสินค้า</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.productName")}
+              </label>
               <InputProcuctName
                 Confirm={Confirm}
                 handleEvent={handleChangInputProductCode}
@@ -321,7 +335,9 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">ประเภทสินค้า*</label>
+              <label className="font-weight-bold">
+                {t("warranthForm.productType")}
+              </label>
               {/* <input
                 type="text"
                 className="as-input"
@@ -351,7 +367,7 @@ export default function ProductData({
           <div className="row">
             <div className="col-md-6">
               <label className="font-weight-bold mt-3">
-                รหัสสินค้า (กรณีค้นหาไม่พบ)
+                {t("warranthForm.OtherProductCode")}
               </label>
               <input
                 type="textarea"
@@ -364,7 +380,9 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold mt-3">จำนวนชิ้นที่ซื้อ</label>
+              <label className="font-weight-bold mt-3">
+                {t("warranthForm.qty")}
+              </label>
               <input
                 disabled={!Confirm}
                 type="number"

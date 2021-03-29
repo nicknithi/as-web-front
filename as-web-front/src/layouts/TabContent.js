@@ -7,7 +7,7 @@ export default function TabContent({
   getBannerContent,
   title,
 }) {
-  const [Active, setActive] = useState(0);
+  const [Active, setActive] = useState(1);
   const isActive = (tab) => {
     if (Active === tab) {
       return "d-block";

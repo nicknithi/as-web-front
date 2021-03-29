@@ -9,6 +9,7 @@ export default function WarrantyConfirm({
   description,
   handleCheck,
   handleShowModal,
+  checked,
 }) {
   return (
     <div className="warranty-confirm px-3">
@@ -20,6 +21,7 @@ export default function WarrantyConfirm({
       <InputCheckBox
         lable={"ยอมรับนโยบายความเป็นส่วนตัว"}
         handleCheck={handleCheck}
+        checked={checked}
       />
       <ButtonConfirmWarranty
         title={"อ่านรายละเอียด"}

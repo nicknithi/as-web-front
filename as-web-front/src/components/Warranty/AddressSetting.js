@@ -4,6 +4,7 @@ import GoogleMap from "../map/googleMap";
 import DropDownProvince from "../Input/dropDownProvince";
 import DropDownDistrict from "../Input/dropDownDistrict";
 import DropDownSubDistrict from "../Input/dropDownSubDistrict";
+import { useTranslation } from "react-i18next";
 function AddressSetting({
   Confirm,
   handleChangInput,
@@ -22,6 +23,7 @@ function AddressSetting({
   setSubDistrictDN,
   DisableFromSearch,
 }) {
+  const [t, i18n] = useTranslation("common");
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
 
   const getProvinceDropDown = (e) => {
@@ -82,7 +84,7 @@ function AddressSetting({
         <div className="row">
           <div className="col-md-12">
             <label className="font-weight-bold">
-              ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
+              {t("warranthForm.address")}
             </label>
             <input
               type="text"
@@ -103,7 +105,9 @@ function AddressSetting({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">จังหวัด*</label>
+            <label className="font-weight-bold">
+              {t("warranthForm.province")}
+            </label>
             <DropDownProvince
               data={Province}
               Confirm={Confirm}
@@ -114,7 +118,10 @@ function AddressSetting({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">อำเภอ*</label>
+            <label className="font-weight-bold">
+              {" "}
+              {t("warranthForm.district")}
+            </label>
             <DropDownDistrict
               data={District}
               Confirm={Confirm}
@@ -127,7 +134,9 @@ function AddressSetting({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold mt-3">ตำบล/เขต*</label>
+            <label className="font-weight-bold mt-3">
+              {t("warranthForm.subDistrict")}
+            </label>
             <DropDownSubDistrict
               data={SubDistrict}
               Confirm={Confirm}
@@ -138,7 +147,9 @@ function AddressSetting({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold mt-3">รหัสไปรษณีย์*</label>
+            <label className="font-weight-bold mt-3">
+              {t("warranthForm.zipCode")}
+            </label>
             <input
               type="text"
               id="postCode"
@@ -157,7 +168,9 @@ function AddressSetting({
           </div>
         </div>
         <div>
-          <label className="font-weight-bold mt-3">แผนที่ (โปรดระบุ)</label>
+          <label className="font-weight-bold mt-3">
+            {t("warranthForm.map")}
+          </label>
           <GoogleMap
             FormDataWarranty={FormDataWarranty}
             setFormDataWarranty={setFormDataWarranty}

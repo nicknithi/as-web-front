@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import http from "../../axios";
+import { useTranslation } from "react-i18next";
 export default function MemberData({
   FormDataWarranty,
   setFormDataWarranty,
@@ -7,6 +8,7 @@ export default function MemberData({
   Confirm,
   DisableFromSearch,
 }) {
+  const [t, i18n] = useTranslation("common");
   const changeCode = (e) => {
     handleSearchByCustomerCode(e.target.value);
     const data = { ...FormDataWarranty };
@@ -21,7 +23,9 @@ export default function MemberData({
       <div className="member-data">
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">สมาชิกบริการ (ถ้ามี)</label>
+            <label className="font-weight-bold">
+              {t("warranthForm.customerService")}
+            </label>
             <input
               type="text"
               className="as-input"
@@ -33,7 +37,10 @@ export default function MemberData({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">ชื่อ</label>
+            <label className="font-weight-bold">
+              {" "}
+              {t("warranthForm.name")}
+            </label>
             <input
               type="textarea"
               id="name"
@@ -50,7 +57,9 @@ export default function MemberData({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">นามสกุล</label>
+            <label className="font-weight-bold">
+              {t("warranthForm.surname")}
+            </label>
             <input
               type="textarea"
               id="surname"
@@ -69,7 +78,7 @@ export default function MemberData({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">เบอร์โทรศัพท์</label>
+            <label className="font-weight-bold">{t("warranthForm.tel")}</label>
             <input
               type="textarea"
               id="tel"
@@ -86,7 +95,9 @@ export default function MemberData({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">มือถือ*</label>
+            <label className="font-weight-bold">
+              {t("warranthForm.phone")}
+            </label>
             <input
               type="textarea"
               id="phone"
@@ -107,7 +118,7 @@ export default function MemberData({
         <div className="row">
           <div className="col-md-12">
             <label className="font-weight-bold">
-              อีเมล (โปรดระบุเพื่อให้ระบบส่งข้อความยืนยันการลงทะเบียน)
+              {t("warranthForm.email")}
             </label>
             <input
               type="textarea"

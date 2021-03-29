@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-
+import { useTranslation } from "react-i18next";
 export default function FormRate({ handleChangInput, Confirm }) {
+  const [t, i18n] = useTranslation("common");
   const handleRate = (rate) => {
     document.getElementById("Score").value = rate;
     handleChangInput(document.getElementById("Score"));
@@ -23,9 +24,7 @@ export default function FormRate({ handleChangInput, Confirm }) {
       <input type="hidden" name="Score" id="Score" />
       <div className="row">
         <div className="col-md-4 mx-auto">
-          <h3 className="title">
-            ประเมินความพึงพอใจต่อสินค้าอเมริกันสแตนดาร์ด
-          </h3>
+          <h3 className="title">{t("warranthForm.Evaluate")}</h3>
           <div className="d-flex justify-content-between">
             <div
               style={{ backgroundColor: "red" }}
@@ -63,6 +62,12 @@ export default function FormRate({ handleChangInput, Confirm }) {
               5
             </div>
           </div>
+        </div>
+      </div>
+      <div className="row text-status">
+        <div className="col-md-4 d-flex justify-content-between mx-auto">
+          <span style={{ color: "red" }}>{t("warranty.rateLow")}</span>
+          <span style={{ color: "#349a27" }}>{t("warranty.rateHeight")}</span>
         </div>
       </div>
       <div className="row">

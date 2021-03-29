@@ -209,7 +209,7 @@ export default function Content() {
     }
     return "";
   };
-  if (customPath === "การรับประกัน" || customPath === "warranty") {
+  if (customPath === "การรับประกัน" || customPath === "WARRANTY") {
     return <Warranty data={Content} RenderColumn={RenderColumn} />;
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
     return <Spare data={Content} RenderColumn={RenderColumn} />;
@@ -245,6 +245,18 @@ export default function Content() {
   } else if (customPath === "การแก้ไขปัญหาผลิตภัณฑ์") {
     return (
       <TabContent
+        data={Content}
+        RenderColumn={RenderColumn}
+        getBannerContent={getBannerContent}
+      />
+    );
+  } else if (
+    customPath === "สิทธิประโยชน์ของสมาชิก" ||
+    customPath === "Benefit"
+  ) {
+    return (
+      <TabContent
+        title={"สิทธิประโยชน์ของสมาชิก"}
         data={Content}
         RenderColumn={RenderColumn}
         getBannerContent={getBannerContent}

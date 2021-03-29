@@ -9,5 +9,39 @@
     "article": "Article",
     "download": "Download",
     "Audio": "Audio Clip"
+  },
+  "button": {
+    "confirm": "Confirm"
+  },
+  "warranty": {
+    "rateLow": "Very Low",
+    "rateHeight": "Very High"
+  },
+  "warranthForm": {
+    "customerService": "Member ID (if applicable)",
+    "name": "Name",
+    "surname": "Surname",
+    "tel": "Telephone Number",
+    "phone": "Mobile Number*",
+    "email": "Email (Please specify for sending message for confirming the registration)",
+    "address": "Product installation address* (Can not be changed)",
+    "province": "Province*",
+    "district": "District*",
+    "subDistrict": "Sub District*",
+    "zipCode": "ZIP Code*",
+    "map": "Map (Please Specify)",
+    "productProvince": "Province of purchase*",
+    "productDate": "Day / Month / Year of purchase*",
+    "storeName": "Dealer Name",
+    "OtherStoreName": "Dealer Name (If none in searching)",
+    "recipe": "Receipt number*",
+    "barCode": "Barcode (shown on the sticker of the package)",
+    "warrantyCode": "Warranty number",
+    "productCode": "Product Code*",
+    "productName": "Product Name*",
+    "productType": "Product Type*",
+    "OtherProductCode": "Product Code (If none in searching)",
+    "qty": "Number of pieces purchased",
+    "Evaluate": "Evaluate your satisfaction with American Standard products."
   }
 }
