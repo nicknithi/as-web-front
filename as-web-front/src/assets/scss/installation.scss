@@ -126,6 +126,26 @@
         }
       }
     }
+    .spare-detail {
+      position: relative;
+      .spare-img {
+        overflow: hidden;
+        position: relative;
+        padding-bottom: 100%;
+        display: flex;
+        justify-content: center;
+        img {
+          position: absolute;
+          top: 50%;
+          height: 100%;
+          transform: translateY(-50%) scale(1);
+          width: 100%;
+        }
+      }
+      .detail {
+        background-color: white;
+      }
+    }
   }
   .relate-contet {
     & > div {

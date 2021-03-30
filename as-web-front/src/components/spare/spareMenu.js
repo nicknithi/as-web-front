@@ -5,21 +5,21 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "../../assets/scss/installation.scss";
 import CardInstallation from "../Card/CardInstallation";
-import SubMenu from "../installation/SubMenu";
+import SpareSubMenu from "../spare/SpareSubMenu";
 import InputSearch from "../Input/InputSearch";
 import LoadingContent from "../LoadingContent";
+import ItemSpare from "../spare/ItemSpare";
 import {
-  GetAllProductModelSpare,
-  GetAllClassifiedTypeSpare,
-  GetAllProduct_SparepartList,
+  GetManageProductById,
   GetAllMenuProduct_Sparepart,
   GetDataProduct_SparepartByClassified1,
   GetDataProduct_SparepartByClassified2,
 } from "../../GetProduct";
-export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
+export default function SpareMenu() {
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
-  const [ActiveRelate, setActiveRelate] = useState(1);
+  const [SpateDetail, setSpateDetail] = useState({});
+  const [ActiveRelate, setActiveRelate] = useState(2);
   const [loading, setLoading] = useState(false);
   useEffect(async () => {
     const resMenu = await GetAllMenuProduct_Sparepart();
@@ -49,6 +49,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
   };
   const handleClickClassified = async (id) => {
     setLoading(true);
+    setSpateDetail({});
     console.log("id", id);
     let resClassified1 = await GetDataProduct_SparepartByClassified1(id);
     let tempClassified1 = [...ContentRender];
@@ -67,6 +68,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
   };
   const handleClickClassified2 = async (id) => {
     setLoading(true);
+    setSpateDetail({});
     console.log("id12", id);
     let resClassified2 = await GetDataProduct_SparepartByClassified2(id);
     let tempClassified2 = [...ContentRender];
@@ -84,7 +86,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
     setLoading(false);
   };
   const handleClickCard = async (id, type) => {
-    setLoading(false);
+    setLoading(true);
     if (type === "model") {
       let resMenu = await GetAllMenuProduct_Sparepart();
       console.log(id);
@@ -93,19 +95,12 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
       console.log("resMenuresMenu", resMenu);
       if (resMenu.classified.length > 0) {
         let tempindex = 0;
-        // resMenu.classified.forEach((item,index))
-        let dataresProduct = {};
-        await Promise.all(
-          resMenu.classified.forEach(async (item, index) => {
-            let resClassified1 = await GetDataProduct_SparepartByClassified1();
-            if (resClassified1.classified) {
-              dataresProduct = resClassified1.classified;
-            }
-          })
+        let resClassified1 = await GetDataProduct_SparepartByClassified1(
+          resMenu.classified[0].classified_id
         );
-        console.log("dataresProduct", dataresProduct);
+
         let tempClassified1 = [...ContentRender];
-        tempClassified1 = dataresProduct;
+        tempClassified1 = resClassified1;
         tempClassified1 = tempClassified1.map((item, index) => {
           return {
             ...item,
@@ -116,8 +111,19 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
         });
         setContentRender(tempClassified1);
       }
-      setLoading(false);
+    } else if (type === "classified1") {
+      const ProductClass1 = await GetManageProductById(id);
+      let temp = { ...SpateDetail };
+      temp = ProductClass1;
+      setSpateDetail(temp);
+      console.log("ProductClass1", ProductClass1);
+    } else if (type === "classified2") {
+      const ProductClass2 = await GetManageProductById(id);
+      let temp = { ...SpateDetail };
+      temp = ProductClass2;
+      setSpateDetail(temp);
     }
+    setLoading(false);
   };
   return (
     <div className="container mb-5">
@@ -126,9 +132,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
         <div className="col-md-10">
           <h2 className="font-weight-bold p-0">อะไหล่</h2>
         </div>
-        <div className="col-md-2">
-          <InputSearch />
-        </div>
+        <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
       <div className="installation-container">
         <div className="row">
@@ -165,7 +169,7 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={index + 1}>
                           <Card.Body className="p-0">
-                            <SubMenu
+                            <SpareSubMenu
                               menu={item.classified}
                               handleClickClassified={handleClickClassified}
                               handleClickClassified2={handleClickClassified2}
@@ -181,111 +185,120 @@ export default function SpareMenu({ SpareList, SpateDetail, typePage }) {
           </div>
           <div className="col-md-8">
             <h3 className="title-section">{}</h3>
-            <div className="row">
-              <>
-                {loading ? (
-                  <LoadingContent />
-                ) : (
-                  <>
-                    {ContentRender.length > 0 ? (
-                      <>
-                        {ContentRender.map((item, index) => (
-                          <>
-                            <div className="col-md-4 px-2">
-                              <CardInstallation
-                                data={item}
-                                handleClickCard={handleClickCard}
-                              />
-                            </div>
-                          </>
-                        ))}
-                      </>
-                    ) : (
-                      <div className="d-flex justify-content-center w-100 ">
-                        <h1 className="font-weight-bold">Not Found</h1>
+            {Object.keys(SpateDetail).length > 0 ? (
+              <div className="container product-detail">
+                <div>
+                  {SpateDetail.product_name && (
+                    <h3 className="title">{SpateDetail.product_name}</h3>
+                  )}
+                  <div className="row">
+                    <div className="col-md-5">
+                      {SpateDetail.file.length > 0 && (
+                        <div className="img-detail">
+                          <img
+                            src={`http://www.mostactive.info/${SpateDetail.file[0].path}`}
+                          />
+                        </div>
+                      )}
+                    </div>
+                    <div className="col-md-7">
+                      <div className="detail p-3">
+                        {SpateDetail.product_code && (
+                          <label>
+                            รหัส
+                            <span className="ml-2">
+                              {SpateDetail.product_code}
+                            </span>
+                          </label>
+                        )}
+                        <br />
+                        {SpateDetail.product_name && (
+                          <label>
+                            ชื่อสินค้า
+                            <span className="ml-2">
+                              {SpateDetail.product_name}
+                            </span>
+                          </label>
+                        )}
+                        <br />
+                        {SpateDetail.model && SpateDetail.model.label && (
+                          <label>
+                            ชื่อรุ่น
+                            <span className="ml-2">
+                              {SpateDetail.model.label}
+                            </span>
+                          </label>
+                        )}
+                        <div className="relate-menu">
+                          <a
+                            className={`${isActive(1)} `}
+                            href={`/การติดตั้ง?id=${SpateDetail.spare_id}`}
+                            // onClick={() => setActiveMenu(1)}
+                          >
+                            วิธีติดตั้ง
+                          </a>
+                          <button
+                            className={`${isActive(2)}`}
+                            onClick={() => setActiveMenu(2)}
+                          >
+                            ชิ้นส่วนอะไหล่
+                          </button>
+                          <button
+                            className={`${isActive(3)}`}
+                            onClick={() => setActiveMenu(3)}
+                          >
+                            คลิปวิดีโอ
+                          </button>
+                        </div>
                       </div>
-                    )}
-                  </>
-                )}
-              </>
-            </div>
+
+                      <br />
+                    </div>
+                  </div>
+                </div>
+                <div className="relate-contet mt-5">
+                  <div className={`${isActive(2)}`}>
+                    <div className="row">
+                      {SpateDetail.sparepart.map((item, index) => (
+                        <ItemSpare data={item} />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div className="row">
+                <>
+                  {loading ? (
+                    <LoadingContent />
+                  ) : (
+                    <>
+                      {ContentRender.length > 0 ? (
+                        <>
+                          {ContentRender.map((item, index) => (
+                            <>
+                              <div className="col-md-4 px-2">
+                                <CardInstallation
+                                  data={item}
+                                  handleClickCard={handleClickCard}
+                                />
+                              </div>
+                            </>
+                          ))}
+                        </>
+                      ) : (
+                        <div className="d-flex justify-content-center w-100 ">
+                          <h1 className="font-weight-bold">Not Found</h1>
+                        </div>
+                      )}
+                    </>
+                  )}
+                </>
+              </div>
+            )}
           </div>
         </div>
       </div>
     </div>
-    //   <div className="container product-detail">
-    //     {Object.keys(SpateDetail).length > 0 && (
-    //       <div>
-    //         {SpateDetail.product_name && (
-    //           <h3 className="title">{SpateDetail.product_name}</h3>
-    //         )}
-
-    //         <div className="row">
-    //           <div className="col-md-5">
-    //             {SpateDetail.file.length > 0 && (
-    //               <div className="img-detail">
-    //                 <img
-    //                   src={`http://www.mostactive.info/${SpateDetail.file[0].path}`}
-    //                 />
-    //               </div>
-    //             )}
-    //           </div>
-    //           <div className="col-md-7">
-    //             <div className="detail p-3">
-    //               {SpateDetail.product_code && (
-    //                 <label>
-    //                   รหัส
-    //                   <span className="ml-2">
-    //                     {SpateDetail.product_code}
-    //                   </span>
-    //                 </label>
-    //               )}
-    //               <br />
-    //               {SpateDetail.product_name && (
-    //                 <label>
-    //                   ชื่อสินค้า
-    //                   <span className="ml-2">
-    //                     {SpateDetail.product_name}
-    //                   </span>
-    //                 </label>
-    //               )}
-    //               <br />
-    //               {SpateDetail.model && SpateDetail.model.label && (
-    //                 <label>
-    //                   ชื่อรุ่น
-    //                   <span className="ml-2">
-    //                     {SpateDetail.model.label}
-    //                   </span>
-    //                 </label>
-    //               )}
-    //               <div className="relate-menu">
-    //                 <button
-    //                   className={`${isActive(1)} `}
-    //                   onClick={() => setActiveMenu(1)}
-    //                 >
-    //                   วิธีติดตั้ง
-    //                 </button>
-    //                 <button
-    //                   className={`${isActive(2)}`}
-    //                   onClick={() => setActiveMenu(2)}
-    //                 >
-    //                   ชิ้นส่วนอะไหล่
-    //                 </button>
-    //                 <button
-    //                   className={`${isActive(3)}`}
-    //                   onClick={() => setActiveMenu(3)}
-    //                 >
-    //                   คลิปวิดีโอ
-    //                 </button>
-    //               </div>
-    //             </div>
-
-    //             <br />
-    //           </div>
-    //         </div>
-    //       </div>
-    //     )}
-    //   </div>
-    // )}
   );
 }

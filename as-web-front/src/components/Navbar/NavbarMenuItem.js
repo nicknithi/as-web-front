@@ -5,9 +5,21 @@ export default function NavbarMenuItem({ title, subMenu, link }) {
     window.location = `${url}`;
   };
   return (
-    <div className="navbar-item position-relative" onClick={() => goPage(link)}>
-      {title}
-      <NavbarSubMenuDesktop subMenu={subMenu} />
-    </div>
+    <>
+      {subMenu.length > 0 ? (
+        <div className="navbar-item position-relative">
+          {title}
+          <NavbarSubMenuDesktop subMenu={subMenu} />
+        </div>
+      ) : (
+        <div
+          className="navbar-item position-relative"
+          onClick={() => goPage(link)}
+        >
+          {title}
+          <NavbarSubMenuDesktop subMenu={subMenu} />
+        </div>
+      )}
+    </>
   );
 }

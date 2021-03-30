@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-import SpareMenu from "../components/spare/spareMenu";
+import InstallationMenu from "../components/installation/installationMenu";
 import ElementBanner from "../components/Content/ElementBanner";
 import {
   GetAllProductModelSpare,
@@ -17,7 +17,7 @@ export default function Spare({ data, RenderColumn }) {
           </div>
         </div>
       ))}
-      <SpareMenu typePage="Spare" />
+      <InstallationMenu typePage="Spare" />
     </div>
   );
 }

@@ -12,9 +12,7 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
             <Accordion.Toggle
               eventKey={index + 1}
               className="main-menu p-0"
-              onClick={() =>
-                handleClickClassified(item.installation_classified_id)
-              }
+              onClick={() => handleClickClassified(item.classified_id)}
             >
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -26,21 +24,17 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
               >
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
-              <div className="text-truncate">
-                {item.installation_classified_name}
-              </div>
+              <div className="text-truncate">{item.classified_name}</div>
             </Accordion.Toggle>
-            {item.installation_sub_classified.length > 0 && (
+            {item.sub_classified.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
                 <Card.Body>
-                  {item.installation_sub_classified &&
-                    item.installation_sub_classified.map((item2) => (
+                  {item.sub_classified &&
+                    item.sub_classified.map((item2) => (
                       <div
                         className="sub-menu"
                         onClick={() =>
-                          handleClickClassified2(
-                            item2.installation_sub_classified
-                          )
+                          handleClickClassified2(item2.sub_classified_id)
                         }
                       >
                         {/* <svg
@@ -54,7 +48,7 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
                           <circle cx="8" cy="8" r="8" />
                         </svg> */}
                         <span className="text-truncate">
-                          {item2.installation_sub_classified_name}
+                          {item2.sub_classified_name}
                         </span>
                       </div>
                     ))}
