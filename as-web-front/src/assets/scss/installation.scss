@@ -14,6 +14,7 @@
     font-weight: bold;
   }
   .installation-card {
+    cursor: pointer;
     .card-content {
       background-color: #58a7af;
       border-bottom: 4px solid rgba(0, 0, 0, 0.13);
@@ -70,6 +71,7 @@
       }
     }
     .sub-menu {
+      cursor: pointer;
       height: 40px;
       font-size: 22px;
       //font-weight: bold;

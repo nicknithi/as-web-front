@@ -3,14 +3,17 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-function SubMenu({ menu }) {
-  console.log("menu", menu);
+function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
   return (
     <div>
       <Accordion defaultActiveKey={1}>
         {menu.map((item, index) => (
           <Card key={index}>
-            <Accordion.Toggle eventKey={index + 1} className="main-menu p-0">
+            <Accordion.Toggle
+              eventKey={index + 1}
+              className="main-menu p-0"
+              onClick={() => handleClickClassified(item.classified_id)}
+            >
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="10"
@@ -21,19 +24,19 @@ function SubMenu({ menu }) {
               >
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
-              <a
-                href={`/SpareListByModel?id=${item.classified_id}`}
-                className="text-truncate"
-              >
-                {item.classified_name}
-              </a>
+              <div className="text-truncate">{item.classified_name}</div>
             </Accordion.Toggle>
             {item.sub_classified.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
                 <Card.Body>
                   {item.sub_classified &&
                     item.sub_classified.map((item2) => (
-                      <div className="sub-menu">
+                      <div
+                        className="sub-menu"
+                        onClick={() =>
+                          handleClickClassified2(item2.sub_classified_id)
+                        }
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="10"
@@ -44,7 +47,9 @@ function SubMenu({ menu }) {
                         >
                           <circle cx="8" cy="8" r="8" />
                         </svg>
-                        {item2.sub_classified_name}
+                        <span className="text-truncate">
+                          {item2.sub_classified_name}
+                        </span>
                       </div>
                     ))}
                 </Card.Body>

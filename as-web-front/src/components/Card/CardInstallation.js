@@ -1,10 +1,10 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
-export default function CardInstallation({ data }) {
-  console.log("testData123123123", data);
+export default function CardInstallation({ data, handleClickCard }) {
+  console.log("55667788", data);
   return (
-    <div>
+    <div onClick={() => handleClickCard(data.id, data.type)}>
       <Card
         style={{ width: "100%" }}
         className="installation-card border-0 mb-3"
