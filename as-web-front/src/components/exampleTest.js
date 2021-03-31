@@ -1,56 +1,50 @@
-import React, { useState, Fragment } from "react";
-import { AsyncTypeahead } from "react-bootstrap-typeahead";
-import "react-bootstrap-typeahead/css/Typeahead.css";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react/style-prop-object */
+import React, { useEffect } from "react";
+import jsPDF from "jspdf";
 export default function ExampleTest() {
-  const SEARCH_URI = "https://api.github.com/search/users";
-  const [isLoading, setIsLoading] = useState(false);
-  const [options, setOptions] = useState([]);
+  useEffect(async () => {
+    var newImg = new Image();
 
-  const handleSearch = (query) => {
-    setIsLoading(true);
-
-    fetch(`${SEARCH_URI}?q=${query}+in:login&page=1&per_page=50`)
-      .then((resp) => resp.json())
-      .then(({ items }) => {
-        const options = items.map((i) => ({
-          avatar_url: i.avatar_url,
-          id: i.id,
-          login: i.login,
-        }));
-
-        setOptions(options);
-        setIsLoading(false);
-      });
+    newImg.onload = function () {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      ctx.canvas.width = this.width;
+      ctx.canvas.height = this.height;
+      ctx.drawImage(this, 0, 0, this.width, this.height);
+      ctx.font = "40pt Calibri";
+      ctx.fillText("My TEXT!", this.height - 50, 20);
+    };
+    newImg.crossOrigin = "anonymous";
+    newImg.src =
+      "http://www.mostactive.info/Resources/File/SIZE807x11412021-03-19_11-09-07-744.png";
+    document.querySelector(".as-loading").style.display = "none";
+  }, []);
+  const getImgData = () => {
+    var canvas = document.getElementById("canvas");
+    var imgData = canvas.toDataURL("image/jpeg", 1.0);
+    var pdf = new jsPDF();
+    pdf.addImage(imgData, "JPEG", 0, 0);
+    pdf.save("download.pdf");
   };
+  const getPdf = () => {
+    var doc = new jsPDF();
 
-  // Bypass client-side filtering by returning `true`. Results are already
-  // filtered by the search endpoint, so no need to do it again.
-  const filterBy = () => true;
+    doc.text(20, 20, "<h1>Hello world!</h1");
+    doc.text(20, 30, "This is client-side Javascript to generate a PDF.");
 
+    // Add new page
+    doc.addPage();
+    doc.text(20, 20, "Visit CodexWorld.com");
+
+    // Save the PDF
+    doc.save("document.pdf");
+  };
   return (
-    <AsyncTypeahead
-      filterBy={filterBy}
-      id="async-example"
-      isLoading={isLoading}
-      labelKey="login"
-      minLength={3}
-      onSearch={handleSearch}
-      options={options}
-      placeholder="Search for a Github user..."
-      renderMenuItemChildren={(option, props) => (
-        <Fragment>
-          <img
-            alt={option.login}
-            src={option.avatar_url}
-            style={{
-              height: "24px",
-              marginRight: "10px",
-              width: "24px",
-            }}
-          />
-          <span>{option.login}</span>
-        </Fragment>
-      )}
-    />
+    <div>
+      <canvas id="canvas"></canvas>
+      <button onClick={() => getPdf()}>download</button>
+      <img id="id1" alt="tes"></img>
+    </div>
   );
 }

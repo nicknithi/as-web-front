@@ -39,6 +39,9 @@ export default function App(props) {
       <Loading />
       <Header />
       <BrowserRouter history={history}>
+        <Route exact path="/warranty/test">
+          <ExampleTest />
+        </Route>
         {/* <Route exact path="/">
           <Home />
         </Route>
