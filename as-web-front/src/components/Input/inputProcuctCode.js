@@ -55,11 +55,24 @@ export default function InputProcuctCode({
               fK_Model_ID: item.fK_Model_ID,
               fK_Type_ID: item.fK_Type_ID,
               product_Code: item.product_Code,
+              product_Old_Code: item.product_Old_Code,
               product_Barcode: item.product_Barcode,
               product_Name: item.product_Name,
             };
           });
-          setOptions(option);
+          const setNewOption = [];
+          option.forEach((item, index) => {
+            setNewOption.push({
+              ...item,
+              optionShow: `${item.product_Code} (new)`,
+            });
+            setNewOption.push({
+              ...item,
+              optionShow: `${item.product_Old_Code} (old)`,
+            });
+          });
+
+          setOptions(setNewOption);
           setIsLoading(false);
         } else {
         }
@@ -116,7 +129,7 @@ export default function InputProcuctCode({
                 width: "24px",
               }}
             /> */}
-            <span>{option.product_Code}</span>
+            <span>{option.optionShow}</span>
           </Fragment>
         )}
       />

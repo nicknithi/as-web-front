@@ -8,6 +8,7 @@ import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
 import ElementBanner from "../components/Content/ElementBanner";
 import http from "../axios";
+import { GetAllDataCareCenter } from "../GetDataDropDown";
 export default function Register({ data }) {
   const [ImgBanner, setImgBanner] = useState("");
   useEffect(() => {
@@ -114,13 +115,18 @@ export default function Register({ data }) {
       })
       .catch((e) => {});
   }, []);
-  const getProvinceDropDown = (e) => {
+  const getProvinceDropDown = async (e) => {
     if (e.target) {
       const DataSet = { ...DataFromRegister };
       DataSet.FK_Province_ID = parseInt(e.target.value);
       DataSet.FK_Sub_District_ID = "";
       DataSet.FK_District_ID = "";
       DataSet.ZIP_Code = "";
+      //get serviceCenter
+      const resServiceCenter = await GetAllDataCareCenter();
+      DataSet.Service_Center = "";
+
+      console.log("resServiceCenter", resServiceCenter);
       setDataFromRegister(DataSet);
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
@@ -506,6 +512,7 @@ export default function Register({ data }) {
                 <input
                   type="text"
                   className="as-input"
+                  readOnly={true}
                   value={DataFromRegister.Service_Center}
                   onChange={(e) =>
                     setDataFromRegister({

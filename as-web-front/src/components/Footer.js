@@ -106,7 +106,7 @@ export default function Footer() {
 
         <div className="logo-footer d-flex mt-4">
           <div className="ml-auto">
-            <img src={logoFooter} />
+            <img src={logoFooter} className="img-fluid" />
           </div>
         </div>
       </div>

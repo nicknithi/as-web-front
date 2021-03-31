@@ -23,6 +23,7 @@ import SpareListByModel from "./layouts/SpareListByModel";
 import SpareDetail from "./layouts/SpareDetail";
 import Maintain from "./layouts/Maintain";
 import Loading from "./components/Loading";
+import testpicture from "./layouts/testPicture";
 export default function App(props) {
   console.log("55555ooo0", props);
   const [cookies, setCookie] = useCookies(["as_lang"]);
@@ -42,6 +43,10 @@ export default function App(props) {
         <Route exact path="/warranty/test">
           <ExampleTest />
         </Route>
+        <Route exact path="/test/picture">
+          <testPicture />
+        </Route>
+
         {/* <Route exact path="/">
           <Home />
         </Route>

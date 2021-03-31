@@ -277,7 +277,7 @@ export default function SpareMenu() {
                         <>
                           {ContentRender.map((item, index) => (
                             <>
-                              <div className="col-md-4 px-2">
+                              <div className="col-6 col-md-4 px-2">
                                 <CardInstallation
                                   data={item}
                                   handleClickCard={handleClickCard}

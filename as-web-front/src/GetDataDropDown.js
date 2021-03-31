@@ -92,6 +92,13 @@ const getAllStore = async () => {
   });
   return res.data.data;
 };
+const GetAllDataCareCenter = async (lang, id) => {
+  const res = await http.post("/api/CareCenter/GetAllDataCareCenter", {
+    ProvinceID: id,
+    Lang_ID: lang,
+  });
+  return res.data.data;
+};
 export {
   getProductType,
   getStoreByProvinceData,
@@ -102,4 +109,5 @@ export {
   getWarrantyByCustomerId,
   getProductByBarcode,
   getAllStore,
+  GetAllDataCareCenter,
 };

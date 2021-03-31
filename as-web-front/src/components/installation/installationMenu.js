@@ -131,7 +131,9 @@ export default function InstallationMenu() {
         temp = ProductClass1;
         setSpateDetail(temp);
       } else {
-        setSpateDetail({});
+        let temp = { ...SpateDetail };
+        temp = {};
+        setSpateDetail(temp);
       }
 
       console.log("ProductClass1", ProductClass1);
@@ -294,7 +296,7 @@ export default function InstallationMenu() {
                         <>
                           {ContentRender.map((item, index) => (
                             <>
-                              <div className="col-md-4 px-2">
+                              <div className="col-6 col-md-4 px-2">
                                 <CardInstallation
                                   data={item}
                                   handleClickCard={handleClickCard}

@@ -23,7 +23,7 @@
     "surname": "Surname",
     "tel": "Telephone Number",
     "phone": "Mobile Number*",
-    "email": "Email (Please specify for sending message for confirming the registration)",
+    "email": "Email (Please specify for confirming the registration)",
     "address": "Product installation address* (Can not be changed)",
     "province": "Province*",
     "district": "District*",

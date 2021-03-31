@@ -41,10 +41,18 @@ export default function ExampleTest() {
     doc.save("document.pdf");
   };
   return (
-    <div>
+    <div className="container">
       <canvas id="canvas"></canvas>
       <button onClick={() => getPdf()}>download</button>
       <img id="id1" alt="tes"></img>
+      <div className="row">
+        <div className="col-md-12">
+          <img
+            src="http://www.mostactive.info/Resources\File\SIZE1200X6382021-03-24_12-14-57-417.png"
+            className="img-fluid"
+          />
+        </div>
+      </div>
     </div>
   );
 }
