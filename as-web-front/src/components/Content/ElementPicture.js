@@ -12,7 +12,7 @@ export default function ElementPicture({ data, index }) {
           />
         )}
       </div>
-      {data.link && <a href={data.link} target="_blank" />}
+      {data.link && <a href={data.link} />}
       {data.description && (
         <div
           className="img-detail mb-3"

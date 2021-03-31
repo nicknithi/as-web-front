@@ -114,7 +114,13 @@
       .relate-menu {
         display: flex;
         justify-content: space-between;
-        button {
+
+        button,
+        a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-decoration: none;
           min-width: 6rem;
           border: none;
           background-color: #58a7af;

@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import InstallationMenu from "../components/installation/installationMenu";
 import ElementBanner from "../components/Content/ElementBanner";
+import ButtonMain from "../components/button/ButtonMain";
 import {
   GetAllProductModelSpare,
   GetAllClassifiedTypeSpare,
@@ -18,6 +19,18 @@ export default function Spare({ data, RenderColumn }) {
         </div>
       ))}
       <InstallationMenu typePage="Spare" />
+      <div className="container">
+        <div className="row d-flex justify-content-center mb-5">
+          <ButtonMain
+            title="กลับ"
+            color="#636363"
+            BgColor="#f1c400"
+            handleClick={() => {
+              window.location = "/";
+            }}
+          />
+        </div>
+      </div>
     </div>
   );
 }

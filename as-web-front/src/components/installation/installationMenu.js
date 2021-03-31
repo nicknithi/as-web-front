@@ -31,19 +31,20 @@ export default function InstallationMenu() {
     const resMenu = await GetAllMenuProduct_Installation();
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
-    setMenuSpareRender(tempMenu);
+    if (resMenu) {
+      setMenuSpareRender(tempMenu);
 
-    const TempModelRender = tempMenu.map((item, index) => {
-      return {
-        ...item,
-        id: item.installation_model_id,
-        title: item.installation_model_name,
-        type: "model",
-      };
-    });
-    console.log("TempModelRender", TempModelRender);
-    setContentRender(TempModelRender);
-
+      const TempModelRender = tempMenu.map((item, index) => {
+        return {
+          ...item,
+          id: item.installation_model_id,
+          title: item.installation_model_name,
+          type: "model",
+        };
+      });
+      console.log("TempModelRender", TempModelRender);
+      setContentRender(TempModelRender);
+    }
     //on init get product from query
     if (query.id) {
       handleClickCard(query.id, "classified1");
@@ -64,8 +65,8 @@ export default function InstallationMenu() {
     setSpateDetail({});
     console.log("id", id);
     let resClassified1 = await GetDataProduct_InstallationByClassified1(id);
+    console.log("gghhjj", resClassified1);
     let tempClassified1 = [...ContentRender];
-
     tempClassified1 = resClassified1 ? resClassified1 : [];
     tempClassified1 = tempClassified1.map((item, index) => {
       return {
@@ -125,9 +126,14 @@ export default function InstallationMenu() {
       }
     } else if (type === "classified1") {
       const ProductClass1 = await GetManageProductById(id);
-      let temp = { ...SpateDetail };
-      temp = ProductClass1;
-      setSpateDetail(temp);
+      if (ProductClass1) {
+        let temp = { ...SpateDetail };
+        temp = ProductClass1;
+        setSpateDetail(temp);
+      } else {
+        setSpateDetail({});
+      }
+
       console.log("ProductClass1", ProductClass1);
     } else if (type === "classified2") {
       const ProductClass2 = await GetManageProductById(id);
@@ -267,7 +273,7 @@ export default function InstallationMenu() {
                     </div>
                   </div>
                 </div>
-                <div className="relate-contet mt-5">
+                {/* <div className="relate-contet mt-5">
                   <div className={`${isActive(2)}`}>
                     <div className="row">
                       {SpateDetail.sparepart.map((item, index) => (
@@ -275,7 +281,7 @@ export default function InstallationMenu() {
                       ))}
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
             ) : (
               <div className="row">
