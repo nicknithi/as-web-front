@@ -14,9 +14,9 @@ const GetAllProduct_SparepartList = async (lang) => {
   return res.data.data;
 };
 
-const GetManageProductById = async (id) => {
+const GetManageProductSparePartById = async (id) => {
   console.log("id", id);
-  const res = await http.post(`/api/Sparepart/GetManageProductById`, {
+  const res = await http.post(`/api/Sparepart/GetManageProductSparePartById`, {
     ID: id,
   });
   return res.data.data;
@@ -72,7 +72,7 @@ export {
   GetAllProductModelSpare,
   GetAllClassifiedTypeSpare,
   GetAllProduct_SparepartList,
-  GetManageProductById,
+  GetManageProductSparePartById,
   GetAllMenuProduct_Sparepart,
   GetDataProduct_SparepartByClassified1,
   GetDataProduct_SparepartByClassified2,

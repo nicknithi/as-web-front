@@ -12,7 +12,7 @@ import ItemSpare from "../spare/ItemSpare";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import {
-  GetManageProductById,
+  GetManageProductSparePartById,
   GetAllMenuProduct_Installation,
   GetDataProduct_InstallationByClassified1,
   GetDataProduct_InstallationByClassified2,
@@ -73,6 +73,7 @@ export default function InstallationMenu() {
         ...item,
         id: item.installation_product_id,
         title: item.installation_product_name,
+        product_picture: item.installation_product_picture,
         type: "classified1",
       };
     });
@@ -125,7 +126,7 @@ export default function InstallationMenu() {
         setContentRender(tempClassified1);
       }
     } else if (type === "classified1") {
-      const ProductClass1 = await GetManageProductById(id);
+      const ProductClass1 = await GetManageProductSparePartById(id);
       if (ProductClass1) {
         let temp = { ...SpateDetail };
         temp = ProductClass1;
@@ -138,7 +139,7 @@ export default function InstallationMenu() {
 
       console.log("ProductClass1", ProductClass1);
     } else if (type === "classified2") {
-      const ProductClass2 = await GetManageProductById(id);
+      const ProductClass2 = await GetManageProductSparePartById(id);
       let temp = { ...SpateDetail };
       temp = ProductClass2;
       setSpateDetail(temp);

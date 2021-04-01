@@ -10,10 +10,21 @@ export default function CardInstallation({ data, handleClickCard }) {
         className="installation-card border-0 mb-3"
       >
         <div>
-          <Card.Img
-            variant="top"
-            src="https://www.questionpro.com/userimages/site_media/no-image.png"
-          />
+          {data.product_picture ? (
+            <>
+              <Card.Img
+                variant="top"
+                src={`http://www.mostactive.info/${data.product_picture[0].path}`}
+              />
+            </>
+          ) : (
+            <>
+              <Card.Img
+                variant="top"
+                src="https://www.questionpro.com/userimages/site_media/no-image.png"
+              />
+            </>
+          )}
         </div>
 
         <Card.Body>

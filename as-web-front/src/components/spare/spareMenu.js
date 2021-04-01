@@ -10,7 +10,7 @@ import InputSearch from "../Input/InputSearch";
 import LoadingContent from "../LoadingContent";
 import ItemSpare from "../spare/ItemSpare";
 import {
-  GetManageProductById,
+  GetManageProductSparePartById,
   GetAllMenuProduct_Sparepart,
   GetDataProduct_SparepartByClassified1,
   GetDataProduct_SparepartByClassified2,
@@ -21,6 +21,7 @@ export default function SpareMenu() {
   const [SpateDetail, setSpateDetail] = useState({});
   const [ActiveRelate, setActiveRelate] = useState(2);
   const [loading, setLoading] = useState(false);
+  const [Title, setTitle] = useState("รายการอะไหล่");
   useEffect(async () => {
     const resMenu = await GetAllMenuProduct_Sparepart();
     let tempMenu = [...menuSpareRender];
@@ -47,9 +48,10 @@ export default function SpareMenu() {
     }
     return "";
   };
-  const handleClickClassified = async (id) => {
+  const handleClickClassified = async (id, name) => {
     setLoading(true);
     setSpateDetail({});
+    setTitle(name);
     console.log("id", id);
     let resClassified1 = await GetDataProduct_SparepartByClassified1(id);
     let tempClassified1 = [...ContentRender];
@@ -60,15 +62,17 @@ export default function SpareMenu() {
         ...item,
         id: item.product_id,
         title: item.product_name,
+        product_picture: item.product_picture,
         type: "classified1",
       };
     });
     setContentRender(tempClassified1);
     setLoading(false);
   };
-  const handleClickClassified2 = async (id) => {
+  const handleClickClassified2 = async (id, name) => {
     setLoading(true);
     setSpateDetail({});
+    setTitle(`${Title} / ${name}`);
     console.log("id12", id);
     let resClassified2 = await GetDataProduct_SparepartByClassified2(id);
     let tempClassified2 = [...ContentRender];
@@ -79,6 +83,7 @@ export default function SpareMenu() {
         ...item,
         id: item.product_id,
         title: item.product_name,
+        product_picture: item.product_picture,
         type: "classified2",
       };
     });
@@ -89,16 +94,15 @@ export default function SpareMenu() {
     setLoading(true);
     if (type === "model") {
       let resMenu = await GetAllMenuProduct_Sparepart();
-      console.log(id);
-      console.log(resMenu);
       resMenu = resMenu.find((m) => m.model_id === id);
       console.log("resMenuresMenu", resMenu);
+
       if (resMenu.classified.length > 0) {
         let tempindex = 0;
         let resClassified1 = await GetDataProduct_SparepartByClassified1(
           resMenu.classified[0].classified_id
         );
-
+        setTitle(resMenu.classified[0].classified_name);
         let tempClassified1 = [...ContentRender];
         tempClassified1 = resClassified1;
         tempClassified1 = tempClassified1.map((item, index) => {
@@ -109,16 +113,17 @@ export default function SpareMenu() {
             type: "classified1",
           };
         });
+
         setContentRender(tempClassified1);
       }
     } else if (type === "classified1") {
-      const ProductClass1 = await GetManageProductById(id);
+      const ProductClass1 = await GetManageProductSparePartById(id);
       let temp = { ...SpateDetail };
       temp = ProductClass1;
       setSpateDetail(temp);
       console.log("ProductClass1", ProductClass1);
     } else if (type === "classified2") {
-      const ProductClass2 = await GetManageProductById(id);
+      const ProductClass2 = await GetManageProductSparePartById(id);
       let temp = { ...SpateDetail };
       temp = ProductClass2;
       setSpateDetail(temp);
@@ -130,7 +135,7 @@ export default function SpareMenu() {
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3">
         <div className="col-md-10">
-          <h2 className="font-weight-bold p-0">อะไหล่</h2>
+          <h2 className="font-weight-bold p-0"></h2>
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
@@ -184,13 +189,13 @@ export default function SpareMenu() {
             )}
           </div>
           <div className="col-md-8">
-            <h3 className="title-section">{}</h3>
+            <h3 className="title-section">{Title}</h3>
             {Object.keys(SpateDetail).length > 0 ? (
               <div className="container product-detail">
                 <div>
-                  {SpateDetail.product_name && (
+                  {/* {SpateDetail.product_name && (
                     <h3 className="title">{SpateDetail.product_name}</h3>
-                  )}
+                  )} */}
                   <div className="row">
                     <div className="col-md-5">
                       {SpateDetail.file.length > 0 && (

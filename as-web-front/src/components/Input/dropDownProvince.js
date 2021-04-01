@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
+import { useTranslation } from "react-i18next";
 export default function DropDown({
   data,
   handleEvent,
@@ -7,7 +8,8 @@ export default function DropDown({
   DisableFromSearch,
   Confirm,
 }) {
-  const [title, setTitleState] = useState("กรุณาเลือก");
+  const [t, i18n] = useTranslation("common");
+  const [title, setTitleState] = useState(t("register.selectProvince"));
   const handleSelect = (e) => {
     if (e.target.value) {
       let index1 = e.nativeEvent.target.selectedIndex;
@@ -26,10 +28,10 @@ export default function DropDown({
       if (findData !== undefined) {
         setTitleState(findData.value);
       } else {
-        setTitleState("กรุณาเลือก");
+        setTitleState(t("register.selectProvince"));
       }
     } else {
-      setTitleState("กรุณาเลือก");
+      setTitleState(t("register.selectProvince"));
     }
   }, [FormDataWarranty.Customer_Province]);
   return (

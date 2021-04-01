@@ -43,5 +43,29 @@
     "OtherProductCode": "หัสสินค้า (กรณีค้นหาไม่พบ)",
     "qty": "จำนวนชิ้นที่ซื้อ",
     "Evaluate": "ประเมินความพึงพอใจต่อสินค้าอเมริกันสแตนดาร์ด"
+  },
+  "register": {
+    "title": "Customer Information",
+    "customerType": "Type of Membership (Please select)",
+    "residential": "Register for residential membership",
+    "contractor": "Register for contractor membership",
+    "subType1": "Repair/installation of sanitary ware",
+    "subType2": "Electricty",
+    "subType3": "Plumber",
+    "subType4": "General",
+    "otherType": "Register for office project, hotel and office membership (non-residential)",
+    "name": "Name",
+    "surname": "Surname",
+    "CompanyName": "Company Name",
+    "tel": "Telephone Number",
+    "mobile": "Mobile Number",
+    "Email": "Email (Please specify for confirming the registration)",
+    "titleAddress": "Imstallation Address",
+    "installAddress": "Product installation address* (Can not be changed)",
+    "province": "Province",
+    "district": "District",
+    "zipCode": "ZIP Code",
+    "careCenter": "Customer Care Center Branch",
+    "map": "Map (Please Specify)"
   }
 }

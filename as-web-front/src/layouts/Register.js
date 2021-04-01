@@ -9,7 +9,9 @@ import "../assets/scss/components/input/radio.scss";
 import ElementBanner from "../components/Content/ElementBanner";
 import http from "../axios";
 import { GetAllDataCareCenter } from "../GetDataDropDown";
+import { useTranslation } from "react-i18next";
 export default function Register({ data }) {
+  const [t, i18n] = useTranslation("common");
   const [ImgBanner, setImgBanner] = useState("");
   useEffect(() => {
     console.log("tests ggggg");
@@ -21,21 +23,33 @@ export default function Register({ data }) {
   }, [data]);
 
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
-  const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
+  const [Province, setProvince] = useState([
+    { id: "", value: t("register.selectProvince") },
+  ]);
   const [District, setDistrict] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+    { id: "", value: t("register.selectDistrict"), fK_Province_ID: "" },
   ]);
   const [SubDistrict, setSubDistrict] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+    {
+      id: "",
+      value: t("register.selectSubDistrict"),
+      fK_Province_ID: "",
+      fK_District_ID: "",
+    },
   ]);
   // const [ProvinceDN, setProvinceDN] = useState([
   //   { id: "", value: "กรุณาเลือก" },
   // ]);
   const [DistrictDN, setDistrictDN] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+    { id: "", value: t("register.selectDistrict"), fK_Province_ID: "" },
   ]);
   const [SubDistrictDN, setSubDistrictDN] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+    {
+      id: "",
+      value: t("register.selectSubDistrict"),
+      fK_Province_ID: "",
+      fK_District_ID: "",
+    },
   ]);
   const [DataFromRegister, setDataFromRegister] = useState({
     Customer_Type: 0,
@@ -186,15 +200,13 @@ export default function Register({ data }) {
       <ElementBanner img={ImgBanner} />
       <form onSubmit={submit}>
         <div className="container register pb-4 mb-4">
-          <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
+          <h3 className="font-weight-bold mb-3">{t("register.title")}</h3>
 
           <div className="register-container">
-            <h4 className="font-weight-bold">
-              ประเภทสมาชิก*(กรุณากดเพื่อเลือกประเภทสมาชิก)
-            </h4>
+            <h4 className="font-weight-bold">{t("register.customerType")}</h4>
             <div className="row ml-1">
               <label className="as-container font-weight-bold">
-                ลงทะเบียนสมาชิกบ้านพักอาศัย
+                {t("register.residential")}
                 <input
                   type="radio"
                   name="radio"
@@ -213,7 +225,7 @@ export default function Register({ data }) {
             </div>
             <div className="row ml-1">
               <label className="as-container font-weight-bold">
-                ลงทะเบียนสมาชิกผู้รับเหมารายย่อย
+                {t("register.contractor")}
                 <input
                   type="radio"
                   name="radio"
@@ -234,7 +246,7 @@ export default function Register({ data }) {
               <div className="ml-5">
                 <div className="row">
                   <label className="as-container font-weight-bold">
-                    งานซ่อม/ติดตั้งสุขภัณฑ์
+                    {t("register.subType1")}
                     <input
                       type="radio"
                       name="customer-type-sub"
@@ -254,7 +266,7 @@ export default function Register({ data }) {
                 </div>
                 <div className="row">
                   <label className="as-container font-weight-bold">
-                    งานไฟฟ้า
+                    {t("register.subType2")}
                     <input
                       type="radio"
                       name="customer-type-sub"
@@ -274,7 +286,7 @@ export default function Register({ data }) {
                 </div>
                 <div className="row">
                   <label className="as-container font-weight-bold">
-                    งานประปา
+                    {t("register.subType3")}
                     <input
                       type="radio"
                       name="customer-type-sub"
@@ -294,7 +306,7 @@ export default function Register({ data }) {
                 </div>
                 <div className="row">
                   <label className="as-container font-weight-bold">
-                    งานทั่วไป
+                    {t("register.subType4")}
                     <input
                       type="radio"
                       name="customer-type-sub"
@@ -316,8 +328,7 @@ export default function Register({ data }) {
             )}
             <div className="row ml-1">
               <label className="as-container font-weight-bold">
-                ลงทะเบียนสมาชิกโครงการสำนักงาน,โรงแรม,ออฟฟิศ ฯลฯ
-                ที่ไม่ใช่บ้านพักอาศัย
+                {t("register.otherType")}
                 <input
                   type="radio"
                   name="radio"
@@ -336,7 +347,9 @@ export default function Register({ data }) {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">ชื่อ*</label>
+                <label className="font-weight-bold">
+                  {t("register.name")}*
+                </label>
                 <input
                   type="text"
                   className="as-input"
@@ -351,7 +364,9 @@ export default function Register({ data }) {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">นามสกุล*</label>
+                <label className="font-weight-bold">
+                  {t("register.surname")}*
+                </label>
                 <input
                   type="text"
                   className="as-input"
@@ -368,7 +383,9 @@ export default function Register({ data }) {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <label className="font-weight-bold">ชื่อบริษัท</label>
+                <label className="font-weight-bold">
+                  {t("register.CompanyName")}
+                </label>
                 <input
                   type="text"
                   className="as-input"
@@ -384,7 +401,7 @@ export default function Register({ data }) {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">เบอร์โทรศัพท์</label>
+                <label className="font-weight-bold">{t("register.tel")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -398,7 +415,9 @@ export default function Register({ data }) {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">มือถือ*</label>
+                <label className="font-weight-bold">
+                  {t("register.mobile")}*
+                </label>
                 <input
                   type="text"
                   className="as-input"
@@ -416,7 +435,7 @@ export default function Register({ data }) {
             <div className="row">
               <div className="col-md-12">
                 <label className="font-weight-bold">
-                  อีเมล (โปรดระบุเพื่อให้ระบบส่งข้อความยืนยันการลงทะเบียน)
+                  {t("register.Email")}
                 </label>
                 <input
                   type="text"
@@ -434,17 +453,17 @@ export default function Register({ data }) {
           </div>
           <h3 className="font-weight-bold mb-3 mt-3">
             {DataFromRegister.Customer_Type === "2"
-              ? "ที่อยู่สำหรับออกใบเสร็จ"
-              : "ที่อยู่การติดตั้งเพื่อออกใบเสร็จ"}
+              ? t("register.titleAddress2")
+              : t("register.titleAddress1")}
           </h3>
           <div className="address-container">
             <div className="row">
               <div className="col-md-12">
                 <label className="font-weight-bold">
                   {DataFromRegister.Customer_Type === "2"
-                    ? "ที่อยู่สำหรับออกใบเสร็จ"
-                    : "ที่อยู่การติดตั้งเพื่อออกใบเสร็จ "}
-                  *(ไม่สามารถเปลี่ยนแปลงได้)
+                    ? t("register.titleAddress2")
+                    : t("register.titleAddress1")}
+                  * {t("register.canChanged")}
                 </label>
                 <input
                   type="text"
@@ -462,7 +481,9 @@ export default function Register({ data }) {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">จังหวัด*</label>
+                <label className="font-weight-bold">
+                  {t("register.province")}*
+                </label>
                 <DropdownProvince
                   handleEvent={getProvinceDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -471,7 +492,9 @@ export default function Register({ data }) {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">อำเภอเขต*</label>
+                <label className="font-weight-bold">
+                  {t("register.district")}*
+                </label>
                 <DropdownDistrict
                   handleEvent={getDistrictDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -482,7 +505,9 @@ export default function Register({ data }) {
             </div>
             <div className="row">
               <div className="col-md-6 mt-3">
-                <label className="font-weight-bold">ตำบล/เขต*</label>
+                <label className="font-weight-bold">
+                  {t("register.subdistrict")}*
+                </label>
                 <DropdownSubDistrict
                   handleEvent={getSubDistrictDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -491,7 +516,9 @@ export default function Register({ data }) {
                 />
               </div>
               <div className="col-md-6 mt-3">
-                <label className="font-weight-bold">รหัสไปรษณีย์*</label>
+                <label className="font-weight-bold">
+                  {t("register.zipCode")}*
+                </label>
                 <input
                   type="text"
                   className="as-input"
@@ -508,7 +535,9 @@ export default function Register({ data }) {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">ศูนย์บริการสาขา</label>
+                <label className="font-weight-bold">
+                  {t("register.careCenter")}
+                </label>
                 <input
                   type="text"
                   className="as-input"
@@ -525,7 +554,9 @@ export default function Register({ data }) {
             </div>
 
             <div>
-              <label className="font-weight-bold mt-3">แผนที่ (โปรดระบุ)</label>
+              <label className="font-weight-bold mt-3">
+                {t("register.map")}
+              </label>
               <GoogleMap
                 DataFromRegister={DataFromRegister}
                 setDataFromRegister={setDataFromRegister}
@@ -534,7 +565,11 @@ export default function Register({ data }) {
             </div>
           </div>
           <div className="row mt-3 d-flex justify-content-center">
-            <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+            <ButtonMain
+              title={t("register.Submit")}
+              color="#636363"
+              BgColor="#f1c400"
+            />
           </div>
         </div>
       </form>

@@ -12,7 +12,9 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
             <Accordion.Toggle
               eventKey={index + 1}
               className="main-menu p-0"
-              onClick={() => handleClickClassified(item.classified_id)}
+              onClick={() =>
+                handleClickClassified(item.classified_id, item.classified_name)
+              }
             >
               {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +36,10 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
                       <div
                         className="sub-menu"
                         onClick={() =>
-                          handleClickClassified2(item2.sub_classified_id)
+                          handleClickClassified2(
+                            item2.sub_classified_id,
+                            item2.sub_classified_name
+                          )
                         }
                       >
                         {/* <svg
