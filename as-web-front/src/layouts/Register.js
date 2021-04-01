@@ -10,7 +10,9 @@ import ElementBanner from "../components/Content/ElementBanner";
 import http from "../axios";
 import { GetAllDataCareCenter } from "../GetDataDropDown";
 import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
 export default function Register({ data }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [ImgBanner, setImgBanner] = useState("");
   useEffect(() => {
@@ -76,10 +78,14 @@ export default function Register({ data }) {
     Customer_Company: "",
   });
   useEffect(() => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
     //get Province
     http
       .post("/api/Master/GetProvince", {
-        Lang_ID: 1,
+        Lang_ID: lang,
       })
       .then((res) => {
         const ProvinceSet = res.data.data.map((item, index) => {
@@ -93,7 +99,7 @@ export default function Register({ data }) {
     //get District
     http
       .post("/api/Master/GetDistrict", {
-        Lang_ID: 1,
+        Lang_ID: lang,
       })
       .then((res) => {
         const DistrictSet = res.data.data.map((item, index) => {
@@ -111,7 +117,7 @@ export default function Register({ data }) {
     //get subDistrict
     http
       .post("/api/Master/GetSubDistrict", {
-        Lang_ID: 1,
+        Lang_ID: lang,
       })
       .then((res) => {
         console.log("555", res);
@@ -147,7 +153,10 @@ export default function Register({ data }) {
       );
       console.log("ggghhh", newSet);
       if (newSet.length) {
-        setDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+        setDistrict([
+          { id: "", value: t("register.selectDistrict") },
+          ...newSet,
+        ]);
       }
     }
   };
@@ -164,7 +173,10 @@ export default function Register({ data }) {
       );
       console.log(newSet);
       if (newSet.length) {
-        setSubDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+        setSubDistrict([
+          { id: "", value: t("register.selectDistrict") },
+          ...newSet,
+        ]);
       }
     }
   };

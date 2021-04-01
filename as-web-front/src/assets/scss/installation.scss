@@ -87,6 +87,13 @@
         margin-right: 10px;
       }
     }
+    &:hover {
+      .card-body {
+        .card-content {
+          background-color: #f1c400;
+        }
+      }
+    }
   }
   .product-detail {
     .img-detail {

@@ -10,7 +10,7 @@ export default function CardInstallation({ data, handleClickCard }) {
         className="installation-card border-0 mb-3"
       >
         <div>
-          {data.product_picture ? (
+          {data.product_picture && data.product_picture.length > 0 ? (
             <>
               <Card.Img
                 variant="top"

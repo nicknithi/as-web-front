@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import "../../assets/scss/components/input/dropdown.scss";
 export default function DropDown({
   data,
@@ -6,7 +7,8 @@ export default function DropDown({
   DataFromRegister,
   setDataFromRegister,
 }) {
-  const [title, setTitleState] = useState("กรุณาเลือก");
+  const [t, i18n] = useTranslation("common");
+  const [title, setTitleState] = useState(t("register.selectProvince"));
   const handleSelect = (e) => {
     console.log("eeeee");
     if (e.target.value) {

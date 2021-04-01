@@ -13,6 +13,7 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import {
   GetManageProductSparePartById,
+  GetManageProductInstallationById,
   GetAllMenuProduct_Installation,
   GetDataProduct_InstallationByClassified1,
   GetDataProduct_InstallationByClassified2,
@@ -126,8 +127,18 @@ export default function InstallationMenu() {
         setContentRender(tempClassified1);
       }
     } else if (type === "classified1") {
-      const ProductClass1 = await GetManageProductSparePartById(id);
+      // const ProductClass1 = await GetManageProductSparePartById(id);
+      let ProductClass1 = await GetManageProductInstallationById(id);
+      // console.log("ProductClass11", ProductClass11);
       if (ProductClass1) {
+        ProductClass1 = {
+          ...ProductClass1,
+          file: ProductClass1.installation_file,
+          product_id: ProductClass1.installation_product_id,
+          product_name: ProductClass1.installation_product_name,
+          product_old_code: ProductClass1.product_old_code,
+          product_picture: ProductClass1.product_picture,
+        };
         let temp = { ...SpateDetail };
         temp = ProductClass1;
         setSpateDetail(temp);
@@ -139,7 +150,16 @@ export default function InstallationMenu() {
 
       console.log("ProductClass1", ProductClass1);
     } else if (type === "classified2") {
-      const ProductClass2 = await GetManageProductSparePartById(id);
+      let ProductClass2 = await GetManageProductSparePartById(id);
+
+      ProductClass2 = {
+        ...ProductClass2,
+        file: ProductClass2.installation_file,
+        product_id: ProductClass2.installation_product_id,
+        product_name: ProductClass2.installation_product_name,
+        product_old_code: ProductClass2.product_old_code,
+        product_picture: ProductClass2.product_picture,
+      };
       let temp = { ...SpateDetail };
       temp = ProductClass2;
       setSpateDetail(temp);

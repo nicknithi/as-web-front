@@ -21,6 +21,18 @@ const GetManageProductSparePartById = async (id) => {
   });
   return res.data.data;
 };
+
+const GetManageProductInstallationById = async (id) => {
+  console.log("id", id);
+  const res = await http.post(
+    `/api/Installation/GetManageProductInstallationById`,
+    {
+      ID: id,
+    }
+  );
+  return res.data.data;
+};
+
 const GetAllMenuProduct_Sparepart = async () => {
   const res = await http.post(`/api/Sparepart/GetAllMenuProduct_Sparepart`);
   return res.data.data;
@@ -79,4 +91,5 @@ export {
   GetAllMenuProduct_Installation,
   GetDataProduct_InstallationByClassified1,
   GetDataProduct_InstallationByClassified2,
+  GetManageProductInstallationById,
 };

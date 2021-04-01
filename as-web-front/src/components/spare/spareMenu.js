@@ -26,6 +26,7 @@ export default function SpareMenu() {
     const resMenu = await GetAllMenuProduct_Sparepart();
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
+    console.log("resMenu12", resMenu);
     setMenuSpareRender(tempMenu);
 
     const TempModelRender = tempMenu.map((item, index) => {
@@ -146,7 +147,7 @@ export default function SpareMenu() {
               <Accordion defaultActiveKey={1}>
                 {menuSpareRender.map((item, index) => (
                   <Card>
-                    {item.classified.length > 0 && (
+                    {item && (
                       <>
                         <Accordion.Toggle
                           as={Card.Header}
