@@ -20,7 +20,9 @@ export default function DropDown({
       handleEvent(e);
     }
   };
-
+  useEffect(() => {
+    setTitleState(t("register.selectProvince"));
+  }, []);
   return (
     <div className="position-relative as-dropdown">
       <select

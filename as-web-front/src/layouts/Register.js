@@ -235,6 +235,26 @@ export default function Register({ data }) {
                 <span className="checkmark"></span>
               </label>
             </div>
+
+            <div className="row ml-1">
+              <label className="as-container font-weight-bold">
+                {t("register.otherType")}
+                <input
+                  type="radio"
+                  name="radio"
+                  name="customer-type"
+                  value="3"
+                  checked={DataFromRegister.Customer_Type === "3"}
+                  onChange={(e) =>
+                    setDataFromRegister({
+                      ...DataFromRegister,
+                      Customer_Type: e.target.value,
+                    })
+                  }
+                />
+                <span className="checkmark"></span>
+              </label>
+            </div>
             <div className="row ml-1">
               <label className="as-container font-weight-bold">
                 {t("register.contractor")}
@@ -338,25 +358,6 @@ export default function Register({ data }) {
                 </div>
               </div>
             )}
-            <div className="row ml-1">
-              <label className="as-container font-weight-bold">
-                {t("register.otherType")}
-                <input
-                  type="radio"
-                  name="radio"
-                  name="customer-type"
-                  value="3"
-                  checked={DataFromRegister.Customer_Type === "3"}
-                  onChange={(e) =>
-                    setDataFromRegister({
-                      ...DataFromRegister,
-                      Customer_Type: e.target.value,
-                    })
-                  }
-                />
-                <span className="checkmark"></span>
-              </label>
-            </div>
             <div className="row">
               <div className="col-md-6">
                 <label className="font-weight-bold">
@@ -583,6 +584,13 @@ export default function Register({ data }) {
               BgColor="#f1c400"
             />
           </div>
+          {/* <div className="row mt-3 d-flex justify-content-center">
+            <ButtonMain
+              title={t("register.Submit")}
+              color="#636363"
+              BgColor="#f1c400"
+            />
+          </div> */}
         </div>
       </form>
     </div>
