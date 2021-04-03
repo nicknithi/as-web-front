@@ -28,7 +28,7 @@ export default function FromLogin() {
         <div className="as-login-form py-5">
           <div className="row">
             <div className="col-md-4 mx-auto">
-              <label className="font-weight-bold">ชื่อล็อกอิน</label>
+              <label className="">ชื่อล็อกอิน</label>
               <input
                 type="text"
                 className="as-input"
@@ -41,7 +41,7 @@ export default function FromLogin() {
           </div>
           <div className="row">
             <div className="col-md-4 mx-auto">
-              <label className="font-weight-bold">รหัสผ่าน</label>
+              <label className="">รหัสผ่าน</label>
               <input
                 type="password"
                 className="as-input"

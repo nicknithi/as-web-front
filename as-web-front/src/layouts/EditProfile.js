@@ -178,12 +178,12 @@ export default function EditProfile() {
     <div>
       <form onSubmit={submit}>
         <div className="container register pb-3 mb-3">
-          <h1 className="font-weight-bold mb-3 mt-3">แก้ไขข้อมูลส่วนตัว</h1>
+          <h1 className=" mb-3 mt-3">แก้ไขข้อมูลส่วนตัว</h1>
 
           <div className="register-container">
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">ชื่อ*</label>
+                <label className="">ชื่อ*</label>
                 <input
                   type="text"
                   className="as-input"
@@ -198,7 +198,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">นามสกุล*</label>
+                <label className="">นามสกุล*</label>
                 <input
                   type="text"
                   className="as-input"
@@ -215,7 +215,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <label className="font-weight-bold">ชื่อบริษัท</label>
+                <label className="">ชื่อบริษัท</label>
                 <input
                   type="text"
                   className="as-input"
@@ -231,7 +231,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">เบอร์โทรศัพท์</label>
+                <label className="">เบอร์โทรศัพท์</label>
                 <input
                   type="text"
                   className="as-input"
@@ -245,7 +245,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">มือถือ*</label>
+                <label className="">มือถือ*</label>
                 <input
                   type="text"
                   className="as-input"
@@ -262,7 +262,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <label className="font-weight-bold">
+                <label className="">
                   อีเมล (โปรดระบุเพื่อให้ระบบส่งข้อความยืนยันการลงทะเบียน)
                 </label>
                 <input
@@ -279,11 +279,11 @@ export default function EditProfile() {
               </div>
             </div>
           </div>
-          <h3 className="font-weight-bold mb-3 mt-3">ที่อยู่การติดตั้ง</h3>
+          <h3 className="mb-3 mt-3">ที่อยู่การติดตั้ง</h3>
           <div className="address-container">
             <div className="row">
               <div className="col-md-12">
-                <label className="font-weight-bold">
+                <label className="">
                   ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
                 </label>
                 <input
@@ -303,7 +303,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">จังหวัด*</label>
+                <label className="">จังหวัด*</label>
                 <DropdownProvince
                   handleEvent={getProvinceDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -312,7 +312,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">อำเภอเขต*</label>
+                <label className="">อำเภอเขต*</label>
                 <DropdownDistrict
                   handleEvent={getDistrictDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -323,7 +323,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6 mt-3">
-                <label className="font-weight-bold">ตำบล/เขต*</label>
+                <label className="">ตำบล/เขต*</label>
                 <DropdownSubDistrict
                   handleEvent={getSubDistrictDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -332,7 +332,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6 mt-3">
-                <label className="font-weight-bold">รหัสไปรษณีย์*</label>
+                <label className="">รหัสไปรษณีย์*</label>
                 <input
                   type="text"
                   className="as-input"
@@ -350,7 +350,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">ศูนย์บริการสาขา</label>
+                <label className="">ศูนย์บริการสาขา</label>
                 <input
                   type="text"
                   className="as-input"
@@ -366,7 +366,7 @@ export default function EditProfile() {
             </div>
 
             <div>
-              <label className="font-weight-bold mt-3">แผนที่ (โปรดระบุ)</label>
+              <label className="mt-3">แผนที่ (โปรดระบุ)</label>
               <GoogleMap
                 DataFromRegister={DataFromRegister}
                 setDataFromRegister={setDataFromRegister}
@@ -377,7 +377,7 @@ export default function EditProfile() {
           <div className="login-container mt-5">
             <div className="row">
               <div className="col-md-6">
-                <label className="font-weight-bold">ชื่อล็อกอิน</label>
+                <label className="">ชื่อล็อกอิน</label>
                 <input
                   type="text"
                   className="as-input"
@@ -391,7 +391,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="font-weight-bold">รหัสผ่าน</label>
+                <label className="">รหัสผ่าน</label>
                 <input
                   type="text"
                   className="as-input"

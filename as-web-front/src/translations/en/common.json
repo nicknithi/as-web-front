@@ -18,6 +18,9 @@
     "rateHeight": "Very High"
   },
   "warranthForm": {
+    "customerTitle": "Customer Information",
+    "addressTitle": "Installation Address",
+    "productTitle": "Product Information",
     "customerService": "Member ID (if applicable)",
     "name": "Name",
     "surname": "Surname",
@@ -42,7 +45,21 @@
     "productType": "Product Type*",
     "OtherProductCode": "Product Code (If none in searching)",
     "qty": "Number of pieces purchased",
-    "Evaluate": "Evaluate your satisfaction with American Standard products."
+    "Evaluate": "Evaluate your satisfaction with American Standard products.",
+    "selectProvince": "- Please select Province -",
+    "selectDistrict": "- Please select District -",
+    "selectSubDistrict": "- Please select Subdistrict -",
+    "selectStore": "- Please select Store -",
+    "selectType": "- Please select Product Type -",
+    "btnRemoveProduct": "Remove the warranty product",
+    "btnAddProductStore": "Add the warranty product",
+    "btnAddStore": "Add Store",
+    "uploadRecipt": "Upload Picture",
+    "TakePicture": "Take a Picture",
+    "Suggestion": "Suggestion.....",
+    "scanBarcode": "Scan Barcode",
+    "confirmInput": "I accept the privacy policy.",
+    "readDetail": "Read more"
   },
   "register": {
     "title": "Customer Information",
@@ -73,6 +90,7 @@
     "Submit": "Confirm",
     "selectProvince": "- Please select Province -",
     "selectDistrict": "- Please select District -",
-    "selectSubDistrict": "- Please select Subdistrict -"
+    "selectSubDistrict": "- Please select Subdistrict -",
+    "btnedit": "Edit"
   }
 }

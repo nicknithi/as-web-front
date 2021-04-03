@@ -11,7 +11,7 @@ export default function FormProductList({ handleChangInput }) {
     <div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">จังหวัดที่ซื้อ*</label>
+          <label className="">จังหวัดที่ซื้อ*</label>
           <input
             type="text"
             className="as-input"
@@ -21,7 +21,7 @@ export default function FormProductList({ handleChangInput }) {
           />
         </div>
         <div className="col-md-6">
-          <label className="font-weight-bold">วัน/เดือน/ปี ที่ซื้อ*</label>
+          <label className="">วัน/เดือน/ปี ที่ซื้อ*</label>
           <input
             type="text"
             name="Purchase_Date "
@@ -33,7 +33,7 @@ export default function FormProductList({ handleChangInput }) {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">ชื่อร้านตัวแทนจำหน่าย</label>
+          <label className="">ชื่อร้านตัวแทนจำหน่าย</label>
           <input
             type="textarea"
             name="Store_ID"
@@ -43,9 +43,7 @@ export default function FormProductList({ handleChangInput }) {
           />
         </div>
         <div className="col-md-6">
-          <label className="font-weight-bold">
-            ชื่อร้านตัวแทนจำหน่าย (อื่นๆ)
-          </label>
+          <label className="">ชื่อร้านตัวแทนจำหน่าย (อื่นๆ)</label>
           <input
             type="textarea"
             className="as-input"
@@ -57,7 +55,7 @@ export default function FormProductList({ handleChangInput }) {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">หมายเลขใบเสร็จ*</label>
+          <label className="">หมายเลขใบเสร็จ*</label>
           <input
             type="textarea"
             className="as-input"
@@ -69,7 +67,7 @@ export default function FormProductList({ handleChangInput }) {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">
+          <label className="">
             รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
           </label>
           {/* <input type="text" className="as-input" required /> */}
@@ -77,7 +75,7 @@ export default function FormProductList({ handleChangInput }) {
           {triggleBarcode && <ScanBarCode />}
         </div>
         <div className="col-md-6">
-          <label className="font-weight-bold">หมายเลขรับประกัน</label>
+          <label className="">หมายเลขรับประกัน</label>
           <input
             type="text"
             className="as-input"
@@ -89,7 +87,7 @@ export default function FormProductList({ handleChangInput }) {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">ประเภทสินค้า*</label>
+          <label className="">ประเภทสินค้า*</label>
           <input
             type="text"
             className="as-input"
@@ -99,7 +97,7 @@ export default function FormProductList({ handleChangInput }) {
           />
         </div>
         <div className="col-md-6">
-          <label className="font-weight-bold">รหัสสินค้า*</label>
+          <label className="">รหัสสินค้า*</label>
           <input
             type="textarea"
             className="as-input"
@@ -111,7 +109,7 @@ export default function FormProductList({ handleChangInput }) {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">ชื่อรุ่น*</label>
+          <label className="">ชื่อรุ่น*</label>
           <input
             type="text"
             className="as-input"
@@ -121,7 +119,7 @@ export default function FormProductList({ handleChangInput }) {
           />
         </div>
         <div className="col-md-6">
-          <label className="font-weight-bold">รหัสสินค้า (อื่นๆ)</label>
+          <label className="">รหัสสินค้า (อื่นๆ)</label>
           <input
             type="textarea"
             className="as-input"
@@ -132,7 +130,7 @@ export default function FormProductList({ handleChangInput }) {
       </div>
       <div className="row">
         <div className="col-md-6">
-          <label className="font-weight-bold">จำนวนชิ้นที่ซื้อ</label>
+          <label className="">จำนวนชิ้นที่ซื้อ</label>
           <input
             type="text"
             className="as-input"

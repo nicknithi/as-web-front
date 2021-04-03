@@ -18,6 +18,9 @@
     "rateHeight": "มากสุด"
   },
   "warranthForm": {
+    "customerTitle": "ข้อมูลลูกค้า",
+    "addressTitle": "ที่อยู่การติดตั้ง",
+    "productTitle": "ข้อมูลสินค้า",
     "customerService": "สมาชิกบริการ (ถ้ามี)",
     "name": "ชื่อ",
     "surname": "นามสกุล",
@@ -42,7 +45,21 @@
     "productType": "ประเภทสินค้า*",
     "OtherProductCode": "หัสสินค้า (กรณีค้นหาไม่พบ)",
     "qty": "จำนวนชิ้นที่ซื้อ",
-    "Evaluate": "ประเมินความพึงพอใจต่อสินค้าอเมริกันสแตนดาร์ด"
+    "Evaluate": "ประเมินความพึงพอใจต่อสินค้าอเมริกันสแตนดาร์ด",
+    "selectProvince": "- กรุณาเลือกจังหวัด -",
+    "selectDistrict": "- กรุณาเลือกเขต -",
+    "selectSubDistrict": "- กรุณาเลือกตำบล -",
+    "selectStore": "- กรุณาเลือกร้านค้า -",
+    "selectType": "- กรุณาเลือกประเภทสินค้า -",
+    "btnRemoveProduct": "ลบสินค้ารับประกัน",
+    "btnAddProductStore": "เพิ่มสินค้ารับประกัน",
+    "btnAddStore": "เพิ่มร้านค้า",
+    "uploadRecipt": "อัพโหลดภาพใบเสร็จ",
+    "TakePicture": "ใส่ภาพใบเสร็จ",
+    "Suggestion": "ข้อเสนอแนะ.....",
+    "scanBarcode": "สแกนบาร์โค้ด",
+    "confirmInput": "ยอมรับนโยบายความเป็นส่วนตัว",
+    "readDetail": "อ่านรายละเอียด"
   },
   "register": {
     "title": "ข้อมูลลูกค้า",
@@ -73,6 +90,7 @@
     "Submit": "ส่งข้อมูล",
     "selectProvince": "- กรุณาเลือกจังหวัด -",
     "selectDistrict": "- กรุณาเลือกเขต -",
-    "selectSubDistrict": "- กรุณาเลือกตำบล -"
+    "selectSubDistrict": "- กรุณาเลือกตำบล -",
+    "btnedit": "แก้ไข"
   }
 }

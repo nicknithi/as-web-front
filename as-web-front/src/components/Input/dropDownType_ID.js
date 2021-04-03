@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
+import { useTranslation } from "react-i18next";
 export default function DropDownType_ID({ data, handleEvent, index, Confirm }) {
-  const [title, setTitleState] = useState("กรุณาเลือก");
+  const [t, i18n] = useTranslation("common");
+  const [title, setTitleState] = useState(t("warranthForm.selectType"));
   const handleSelect = (e) => {
     setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
     handleEvent(e);
   };
+
   useEffect(() => {
     // let x = document.createElement("INPUT");
     // x.setAttribute("type", "text");
@@ -13,10 +16,12 @@ export default function DropDownType_ID({ data, handleEvent, index, Confirm }) {
     // x.setAttribute("index", index);
     // x.setAttribute("value", data[0].id);
     // handleEvent(x);
-
+    console.log("jjjj", data);
     setTitleState(data[0].value);
-    console.log("testes 55", data);
   }, [data]);
+  useEffect(() => {
+    setTitleState(t("warranthForm.selectType"));
+  }, []);
   return (
     <div className="position-relative as-dropdown">
       <select

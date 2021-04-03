@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
+import { useTranslation } from "react-i18next";
 export default function DropDown({
   data,
   handleEvent,
@@ -8,7 +9,8 @@ export default function DropDown({
   DisableFromSearch,
   Confirm,
 }) {
-  const [title, setTitleState] = useState("กรุณาเลือก");
+  const [t, i18n] = useTranslation("common");
+  const [title, setTitleState] = useState(t("warranthForm.selectSubDistrict"));
   const handleSelect = (e) => {
     console.log("eeeee");
     if (e.target.value) {
@@ -28,10 +30,10 @@ export default function DropDown({
       if (findData !== undefined) {
         setTitleState(findData.value);
       } else {
-        setTitleState("กรุณาเลือก");
+        setTitleState(t("warranthForm.selectSubDistrict"));
       }
     } else {
-      setTitleState("กรุณาเลือก");
+      setTitleState(t("warranthForm.selectSubDistrict"));
     }
   }, [FormDataWarranty.Customer_SubDistrict]);
   return (

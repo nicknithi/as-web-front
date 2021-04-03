@@ -77,7 +77,7 @@ export default function FormRate({ handleChangInput, Confirm }) {
             disabled={!Confirm}
             className="w-100 mt-3"
             name="Description"
-            placeholder={"ข้อเสนอแนะ.........."}
+            placeholder={t("warranthForm.Suggestion")}
             required
           ></textarea>
         </div>

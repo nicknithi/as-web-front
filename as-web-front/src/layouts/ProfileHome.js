@@ -45,12 +45,12 @@ export default function ProfileHome() {
   }, []);
   return (
     <div className="container profile-container">
-      <h1 className="font-weight-bold mt-3">
+      <h1 className=" mt-3">
         ยินดีต้อนรับคุณ
         {` ${ProfileData.customer_Name || ""} ${ProfileData.customer_Surname}`}
       </h1>
       <div className="row detail">
-        <div className="col-md-10 font-weight-bold mb-4">
+        <div className="col-md-10 mb-4">
           <span>ข้อมูลส่วนตัว</span>
           <br />
           <span>ที่อยู่การติดตั้งสินค้า</span>
@@ -84,23 +84,23 @@ export default function ProfileHome() {
           />
         </div>
       </div>
-      <div className="menu font-weight-bold">
+      <div className="menu">
         <div className="row mt-3  ml-4">
-          <label className="as-container font-weight-bold">
+          <label className="as-container">
             ประวัติการใช้บริการ
             <input type="radio" name="customer-type" value="1" />
             <span className="checkmark"></span>
           </label>
         </div>
         <div className="row  ml-4">
-          <label className="as-container font-weight-bold">
+          <label className="as-container">
             ประวัติการซื้ออะไหล่และสินค้า
             <input type="radio" name="customer-type" value="1" />
             <span className="checkmark"></span>
           </label>
         </div>
         <div className="row ml-4">
-          <label className="as-container font-weight-bold">
+          <label className="as-container">
             ประวัติการต่ออายุสมาชิก
             <input type="radio" name="customer-type" value="1" />
             <span className="checkmark"></span>

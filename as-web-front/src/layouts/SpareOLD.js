@@ -94,7 +94,7 @@ export default function Installation() {
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3 as-border-top">
         <div className="col-md-10">
-          <h2 className="font-weight-bold p-0">วิธีการติดตั้ง</h2>
+          <h2 className=" p-0">วิธีการติดตั้ง</h2>
         </div>
         <div className="col-md-2">
           <InputSearch />

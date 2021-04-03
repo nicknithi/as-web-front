@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/uploadImg.scss";
 import ButtonUpload from "../button/ButtonUpload";
+import { useTranslation } from "react-i18next";
 export default function UploadImage({
   handleGetFile,
   index,
   Confirm,
   FileWaranty,
 }) {
+  const [t, i18n] = useTranslation("common");
   const [imgPreview, setImgPreview] = useState("");
   const uploadImg = (file, index) => {
     handleGetFile(file, index);
@@ -65,7 +67,7 @@ export default function UploadImage({
         <div className="mr-3">
           <ButtonUpload
             Confirm={Confirm}
-            title={"อัพโหลดภาพใบเสร็จ"}
+            title={t("warranthForm.uploadRecipt")}
             uploadImg={uploadImg}
             index={index}
           />
@@ -75,7 +77,7 @@ export default function UploadImage({
             Confirm={Confirm}
             uploadImg={uploadImg}
             index={index}
-            title={"ถ่ายภาพใบเสร็จ"}
+            title={t("warranthForm.TakePicture")}
           />
         </div>
       </div>

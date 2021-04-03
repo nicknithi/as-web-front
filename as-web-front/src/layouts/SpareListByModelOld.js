@@ -60,7 +60,7 @@ export default function Installation({ data, getBannerContent }) {
       <div className="container mb-5">
         <div className="row mb-3 pt-3 as-border-top">
           <div className="col-md-9">
-            <h2 className="font-weight-bold p-0">วิธีการติดตั้ง</h2>
+            <h2 className=" p-0">วิธีการติดตั้ง</h2>
           </div>
           <div className="col-md-3">
             <InputSearch />

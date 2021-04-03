@@ -5,6 +5,7 @@ import ProductData from "../Warranty/ProductData";
 import FormRate from "../Warranty/FormRate";
 import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
+import { useTranslation } from "react-i18next";
 import {
   getProvince,
   setTempInput,
@@ -27,28 +28,41 @@ import {
   getAllStore,
 } from "../../GetDataDropDown";
 function FormWarranty({ Confirm }) {
+  const [t, i18n] = useTranslation("common");
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
 
   const [storeData, setStoreData] = useState([
-    [{ id: "", value: "กรุณาเลือก" }],
+    [{ id: "", value: t("warranthForm.selectStore") }],
   ]);
   //let formtest = new FormData()
-  const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
+  const [Province, setProvince] = useState([
+    { id: "", value: t("warranthForm.selectProvince") },
+  ]);
 
   const [District, setDistrict] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+    { id: "", value: t("warranthForm.selectDistrict"), fK_Province_ID: "" },
   ]);
 
   const [SubDistrict, setSubDistrict] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+    {
+      id: "",
+      value: t("warranthForm.selectSubDistrict"),
+      fK_Province_ID: "",
+      fK_District_ID: "",
+    },
   ]);
 
   const [DistrictDN, setDistrictDN] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+    { id: "", value: t("warranthForm.selectDistrict"), fK_Province_ID: "" },
   ]);
 
   const [SubDistrictDN, setSubDistrictDN] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+    {
+      id: "",
+      value: t("warranthForm.selectSubDistrict"),
+      fK_Province_ID: "",
+      fK_District_ID: "",
+    },
   ]);
   const [DisableFromSearch, setDisableFromSearch] = useState(false);
 
@@ -67,7 +81,10 @@ function FormWarranty({ Confirm }) {
     const DataStoreSet = await getAllStore();
     setDataStore(DataStoreSet);
     const typeData = await getProductType();
-    setDataTypeId([{ id: 0, value: "กรุณาเลือก" }, ...typeData]);
+    setDataTypeId([
+      { id: 0, value: t("warranthForm.selectType") },
+      ...typeData,
+    ]);
     //GetProvince
     const ProvinceData = await GetProvinceData();
     setProvince([...Province, ...ProvinceData]);
@@ -276,11 +293,14 @@ function FormWarranty({ Confirm }) {
         parseInt(tempProduct[tempProduct.length - 1].Purchase_Province)
       );
       const storeDataSet = [...storeData];
-      storeDataSet.push([{ id: "", value: "กรุณาเลือก" }, ...storeDataSetLoad]);
+      storeDataSet.push([
+        { id: "", value: t("warranthForm.selectStore") },
+        ...storeDataSetLoad,
+      ]);
       setStoreData(storeDataSet);
     } else {
       const storeDataSet = [...storeData];
-      storeDataSet.push([{ id: "", value: "กรุณาเลือก" }]);
+      storeDataSet.push([{ id: "", value: t("warranthForm.selectStore") }]);
       setStoreData(storeDataSet);
     }
 
@@ -310,7 +330,7 @@ function FormWarranty({ Confirm }) {
     tempFile.push([]);
     setFileWaranty(tempFile);
     const storeDataSet = [...storeData];
-    storeDataSet.push([{ id: "", value: "กรุณาเลือก" }]);
+    storeDataSet.push([{ id: "", value: t("warranthForm.selectStore") }]);
     setStoreData(storeDataSet);
     console.log(FormDataProduct);
   };

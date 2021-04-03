@@ -19,13 +19,11 @@ export default function MemberData({
   };
   return (
     <div className="mt-3">
-      <h3 className="font-weight-bold mb-3">ข้อมูลลูกค้า</h3>
+      <h3 className=" mb-3">{t("warranthForm.customerTitle")}</h3>
       <div className="member-data">
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">
-              {t("warranthForm.customerService")}
-            </label>
+            <label className="">{t("warranthForm.customerService")}</label>
             <input
               type="text"
               className="as-input"
@@ -37,10 +35,7 @@ export default function MemberData({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">
-              {" "}
-              {t("warranthForm.name")}
-            </label>
+            <label className=""> {t("warranthForm.name")}</label>
             <input
               type="textarea"
               id="name"
@@ -57,9 +52,7 @@ export default function MemberData({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">
-              {t("warranthForm.surname")}
-            </label>
+            <label className="">{t("warranthForm.surname")}</label>
             <input
               type="textarea"
               id="surname"
@@ -78,7 +71,7 @@ export default function MemberData({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">{t("warranthForm.tel")}</label>
+            <label className="">{t("warranthForm.tel")}</label>
             <input
               type="textarea"
               id="tel"
@@ -95,9 +88,7 @@ export default function MemberData({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">
-              {t("warranthForm.phone")}
-            </label>
+            <label className="">{t("warranthForm.phone")}</label>
             <input
               type="textarea"
               id="phone"
@@ -117,9 +108,7 @@ export default function MemberData({
         </div>
         <div className="row">
           <div className="col-md-12">
-            <label className="font-weight-bold">
-              {t("warranthForm.email")}
-            </label>
+            <label className="">{t("warranthForm.email")}</label>
             <input
               type="textarea"
               id="email"

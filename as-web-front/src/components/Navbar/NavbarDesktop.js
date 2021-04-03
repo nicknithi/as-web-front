@@ -37,6 +37,11 @@ export default function NavbarDesktop({ NavbarItem }) {
         document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
         document.body.style.setProperty("font-size", "24px", "important");
         document.body.style.setProperty("font-weight", "bold", "important");
+        let h1Elements = document.getElementsByTagName("h1");
+        console.log("h1Elements", h1Elements);
+        for (let i = 0; i < h1Elements.length; i++) {
+          h1Elements[i].classList.add("eng");
+        }
       } else {
         i18n.changeLanguage("en");
         document.body.style.fontFamily = "helvetica_neueregular,sans-serif";

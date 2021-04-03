@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
 import http from "../../axios";
-
+import { useTranslation } from "react-i18next";
 export default function DropDownStore_ID({
   data,
   handleEvent,
@@ -10,7 +10,8 @@ export default function DropDownStore_ID({
   setFormDataProduct,
   Confirm,
 }) {
-  const [title, setTitleState] = useState("กรุณาเลือก");
+  const [t, i18n] = useTranslation("common");
+  const [title, setTitleState] = useState(t("warranthForm.selectStore"));
   const handleSelect = (e) => {
     if (e.target) {
       const tempTitle = data.find((a) => a.id === parseInt(e.target.value));
@@ -20,7 +21,7 @@ export default function DropDownStore_ID({
         dataSet[index].Store_ID = e.target.value;
         setFormDataProduct(dataSet);
       } else {
-        setTitleState("กรุณาเลือก");
+        setTitleState(t("warranthForm.selectStore"));
         const dataSet = [...FormDataProduct];
         dataSet[index].Store_ID = "";
         setFormDataProduct(dataSet);
@@ -38,10 +39,10 @@ export default function DropDownStore_ID({
         if (findData !== undefined) {
           setTitleState(findData.value);
         } else {
-          setTitleState("กรุณาเลือก");
+          setTitleState(t("warranthForm.selectStore"));
         }
       } else {
-        setTitleState("กรุณาเลือก");
+        setTitleState(t("warranthForm.selectStore"));
       }
     }
   }, [FormDataProduct[index].Store_ID]);

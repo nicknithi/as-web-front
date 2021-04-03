@@ -98,11 +98,11 @@ export default function ProductData({
   return (
     <div>
       <div className="mt-3">
-        <h3 className="font-weight-bold mb-3">ข้อมูลสินค้า {index + 1}</h3>
+        <h3 className="mb-3">ข้อมูลสินค้า {index + 1}</h3>
         <div className="product-data">
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">จังหวัดที่ซื้อ*</label>
+              <label className="">จังหวัดที่ซื้อ*</label>
               <input
                 type="text"
                 className="as-input"
@@ -120,7 +120,7 @@ export default function ProductData({
               /> */}
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">วัน/เดือน/ปี ที่ซื้อ*</label>
+              <label className="">วัน/เดือน/ปี ที่ซื้อ*</label>
               <input
                 type="text"
                 index={index}
@@ -138,7 +138,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">ชื่อร้านตัวแทนจำหน่าย</label>
+              <label className="">ชื่อร้านตัวแทนจำหน่าย</label>
               <input
                 type="textarea"
                 index={index}
@@ -152,9 +152,7 @@ export default function ProductData({
               {/* <DropDownStoreId index={index} handleEvent={handleChangInput} /> */}
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                ชื่อร้านตัวแทนจำหน่าย (กรณีค้นหาไม่พบ)
-              </label>
+              <label className="">ชื่อร้านตัวแทนจำหน่าย (กรณีค้นหาไม่พบ)</label>
               <input
                 type="textarea"
                 className="as-input"
@@ -168,7 +166,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">หมายเลขใบเสร็จ*</label>
+              <label className="">หมายเลขใบเสร็จ*</label>
               <input
                 type="textarea"
                 className="as-input"
@@ -183,7 +181,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
+              <label className="">
                 รหัสบาร์โค้ด (แสดงที่สติกเกอร์ของกล่องสินค้า)
               </label>
               {/* <input type="text" className="as-input" required /> */}
@@ -195,7 +193,7 @@ export default function ProductData({
               {triggleBarcode && <ScanBarCode />}
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">หมายเลขรับประกัน</label>
+              <label className="">หมายเลขรับประกัน</label>
               <input
                 type="text"
                 className="as-input"
@@ -208,7 +206,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">ประเภทสินค้า*</label>
+              <label className="">ประเภทสินค้า*</label>
               {/* <input
                 type="text"
                 className="as-input"
@@ -225,7 +223,7 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">รหัสสินค้า*</label>
+              <label className="">รหัสสินค้า*</label>
               {/* <input
                 type="textarea"
                 className="as-input"
@@ -243,7 +241,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold mt-3">ชื่อรุ่น*</label>
+              <label className=" mt-3">ชื่อรุ่น*</label>
               {/* <input
                 type="text"
                 className="as-input"
@@ -259,9 +257,7 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold mt-3">
-                รหัสสินค้า (กรณีค้นหาไม่พบ)
-              </label>
+              <label className=" mt-3">รหัสสินค้า (กรณีค้นหาไม่พบ)</label>
               <input
                 type="textarea"
                 className="as-input"
@@ -273,7 +269,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">จำนวนชิ้นที่ซื้อ</label>
+              <label className="">จำนวนชิ้นที่ซื้อ</label>
               <input
                 type="number"
                 index={index}

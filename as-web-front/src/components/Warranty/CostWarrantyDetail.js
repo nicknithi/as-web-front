@@ -31,9 +31,7 @@ export default function CostWarrantyDetail({ data }) {
   }, [data]);
   return (
     <div className="cost-warranty-detail py-4 position-relative px-3">
-      <h3 className="title mb-4 font-weight-bold">
-        อัตราค่าบริการและการรับประกัน
-      </h3>
+      <h3 className="title mb-4">อัตราค่าบริการและการรับประกัน</h3>
       <div className="row">
         {DataCarousel.map((item, index) => (
           <div className={`${columcOption[DataListSet]} position-static`}>

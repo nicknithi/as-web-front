@@ -9,6 +9,7 @@ import SpareSubMenu from "../spare/SpareSubMenu";
 import InputSearch from "../Input/InputSearch";
 import LoadingContent from "../LoadingContent";
 import ItemSpare from "../spare/ItemSpare";
+import ButtonMain from "../button/ButtonMain";
 import {
   GetManageProductSparePartById,
   GetAllMenuProduct_Sparepart,
@@ -20,6 +21,8 @@ export default function SpareMenu() {
   const [ContentRender, setContentRender] = useState([]);
   const [SpateDetail, setSpateDetail] = useState({});
   const [ActiveRelate, setActiveRelate] = useState(2);
+  const [ActiveClass1, setActiveClass1] = useState(0);
+  const [ActiveClass2, setActiveClass2] = useState(0);
   const [loading, setLoading] = useState(false);
   const [Title, setTitle] = useState("รายการอะไหล่");
   useEffect(async () => {
@@ -39,7 +42,19 @@ export default function SpareMenu() {
     });
     setContentRender(TempModelRender);
   }, []);
-
+  const isActiveClass1 = (id) => {
+    if (ActiveClass1 === id) {
+      return "active";
+    }
+    return "";
+  };
+  const isActiveClass2 = (id) => {
+    console.log("55555", ActiveClass2, id);
+    if (ActiveClass2 === id) {
+      return "active";
+    }
+    return "";
+  };
   const setActiveMenu = (menu) => {
     setActiveRelate(menu);
   };
@@ -53,6 +68,7 @@ export default function SpareMenu() {
     setLoading(true);
     setSpateDetail({});
     setTitle(name);
+    setActiveClass1(id);
     console.log("id", id);
     let resClassified1 = await GetDataProduct_SparepartByClassified1(id);
     let tempClassified1 = [...ContentRender];
@@ -74,6 +90,7 @@ export default function SpareMenu() {
     setLoading(true);
     setSpateDetail({});
     setTitle(`${Title} / ${name}`);
+    setActiveClass2(id);
     console.log("id12", id);
     let resClassified2 = await GetDataProduct_SparepartByClassified2(id);
     let tempClassified2 = [...ContentRender];
@@ -119,24 +136,50 @@ export default function SpareMenu() {
       }
     } else if (type === "classified1") {
       const ProductClass1 = await GetManageProductSparePartById(id);
-      let temp = { ...SpateDetail };
-      temp = ProductClass1;
-      setSpateDetail(temp);
-      console.log("ProductClass1", ProductClass1);
+      if (ProductClass1) {
+        let temp = { ...SpateDetail };
+        temp = ProductClass1;
+        setSpateDetail(temp);
+        console.log("ProductClass1", ProductClass1);
+      } else {
+        alert("not found data");
+      }
     } else if (type === "classified2") {
+      // let resMenu = await GetAllMenuProduct_Sparepart();
+      // resMenu = resMenu.filter((m) => {
+      //   return m.classified.filter((c1) => {
+      //     return c1.sub_classified.filter((c2) => {
+      //       console.log("test c2", c2);
+      //       return c2.sub_classified_id === id;
+      //     });
+      //   });
+      // });
+      // console.log("resMenunithi atsiri", resMenu);
+
       const ProductClass2 = await GetManageProductSparePartById(id);
-      let temp = { ...SpateDetail };
-      temp = ProductClass2;
-      setSpateDetail(temp);
+      if (ProductClass2) {
+        let temp = { ...SpateDetail };
+        temp = ProductClass2;
+        setSpateDetail(temp);
+      } else {
+        alert("not found data");
+      }
     }
     setLoading(false);
+  };
+  const goBack = () => {
+    if (ContentRender[0].type === "model") {
+      window.location = "/";
+    } else {
+      window.location.reload(false);
+    }
   };
   return (
     <div className="container mb-5">
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3">
         <div className="col-md-10">
-          <h2 className="font-weight-bold p-0"></h2>
+          <h2 className="p-0"></h2>
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
@@ -154,9 +197,7 @@ export default function SpareMenu() {
                           eventKey={index + 1}
                           className="p-0 d-flex"
                         >
-                          <span className="text-truncate">
-                            {item.model_name}
-                          </span>
+                          <span className="text-wrap">{item.model_name}</span>
                           <button className="ml-auto">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -177,6 +218,8 @@ export default function SpareMenu() {
                           <Card.Body className="p-0">
                             <SpareSubMenu
                               menu={item.classified}
+                              isActiveClass1={isActiveClass1}
+                              isActiveClass2={isActiveClass2}
                               handleClickClassified={handleClickClassified}
                               handleClickClassified2={handleClickClassified2}
                             />
@@ -209,11 +252,11 @@ export default function SpareMenu() {
                     </div>
                     <div className="col-md-7">
                       <div className="detail p-3">
-                        {SpateDetail.product_code && (
+                        {SpateDetail.product_old_code && (
                           <label>
                             รหัส
                             <span className="ml-2">
-                              {SpateDetail.product_code}
+                              {SpateDetail.product_old_code}
                             </span>
                           </label>
                         )}
@@ -235,10 +278,19 @@ export default function SpareMenu() {
                             </span>
                           </label>
                         )}
+                        <br />
+                        {SpateDetail.active !== null && (
+                          <label>
+                            สถานะ
+                            <span className="ml-2">
+                              {SpateDetail.active ? "Active" : "Discontinuted"}
+                            </span>
+                          </label>
+                        )}
                         <div className="relate-menu">
                           <a
                             className={`${isActive(1)} `}
-                            href={`/การติดตั้ง?id=${SpateDetail.spare_id}`}
+                            href={`/การติดตั้ง?id=${SpateDetail.id}`}
                             // onClick={() => setActiveMenu(1)}
                           >
                             วิธีติดตั้ง
@@ -294,7 +346,7 @@ export default function SpareMenu() {
                         </>
                       ) : (
                         <div className="d-flex justify-content-center w-100 ">
-                          <h1 className="font-weight-bold">Not Found</h1>
+                          <h1 className="">Not Found</h1>
                         </div>
                       )}
                     </>
@@ -303,6 +355,18 @@ export default function SpareMenu() {
               </div>
             )}
           </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row d-flex justify-content-center mb-5">
+          <ButtonMain
+            title="กลับ"
+            color="#636363"
+            BgColor="#f1c400"
+            handleClick={() => {
+              goBack();
+            }}
+          />
         </div>
       </div>
     </div>

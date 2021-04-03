@@ -3,6 +3,7 @@
 import React, { useEffect } from "react";
 import jsPDF from "jspdf";
 import { fileDownload } from "../ManageFIle";
+import "../assets/scss/test.scss";
 export default function ExampleTest() {
   useEffect(async () => {
     const blob = await fileDownload(
@@ -78,6 +79,8 @@ export default function ExampleTest() {
       <canvas id="canvas" className="d-none"></canvas>
       <button onClick={() => {}}>download</button>
       <img id="id1" alt="tes"></img>
+      <div className="font1">test</div>
+      <div className="font2">test</div>
     </div>
   );
 }

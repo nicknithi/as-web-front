@@ -9,7 +9,7 @@ export default function DropDown({
   Confirm,
 }) {
   const [t, i18n] = useTranslation("common");
-  const [title, setTitleState] = useState(t("register.selectProvince"));
+  const [title, setTitleState] = useState(t("warranthForm.selectProvince"));
   const handleSelect = (e) => {
     if (e.target.value) {
       let index1 = e.nativeEvent.target.selectedIndex;
@@ -28,10 +28,10 @@ export default function DropDown({
       if (findData !== undefined) {
         setTitleState(findData.value);
       } else {
-        setTitleState(t("register.selectProvince"));
+        setTitleState(t("warranthForm.selectProvince"));
       }
     } else {
-      setTitleState(t("register.selectProvince"));
+      setTitleState(t("warranthForm.selectProvince"));
     }
   }, [FormDataWarranty.Customer_Province]);
   return (

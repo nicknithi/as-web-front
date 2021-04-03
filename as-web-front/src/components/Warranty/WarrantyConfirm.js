@@ -4,6 +4,7 @@ import ButtonConfirmWarranty from "../button/WarrantyConfirm";
 import InputCheckBox from "../Input/inputCheckBox";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
+import { useTranslation } from "react-i18next";
 export default function WarrantyConfirm({
   title,
   description,
@@ -11,6 +12,7 @@ export default function WarrantyConfirm({
   handleShowModal,
   checked,
 }) {
+  const [t, i18n] = useTranslation("common");
   return (
     <div className="warranty-confirm px-3">
       <h3 className="title">{title}</h3>
@@ -19,12 +21,12 @@ export default function WarrantyConfirm({
         dangerouslySetInnerHTML={{ __html: description }}
       />
       <InputCheckBox
-        lable={"ยอมรับนโยบายความเป็นส่วนตัว"}
+        lable={t("warranthForm.confirmInput")}
         handleCheck={handleCheck}
         checked={checked}
       />
       <ButtonConfirmWarranty
-        title={"อ่านรายละเอียด"}
+        title={t("warranthForm.readDetail")}
         handleClick={handleShowModal}
       />
     </div>

@@ -155,7 +155,7 @@ export default function TestDataTable({ customer_id }) {
   };
   return (
     <div className="container">
-      <div className="font-weight-bold">
+      <div className="">
         {trigerShow && (
           <DataTable
             data={dataWarranty}

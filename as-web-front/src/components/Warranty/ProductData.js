@@ -32,12 +32,15 @@ export default function ProductData({
   const [t, i18n] = useTranslation("common");
   useEffect(async () => {
     const resTypeID = await getProductType();
-    setDataTypeId([...dataTypeID, ...resTypeID]);
-    setTypeId([...typeId, ...resTypeID]);
+    setDataTypeId([
+      { id: 0, value: t("warranthForm.selectType") },
+      ...resTypeID,
+    ]);
+    setTypeId([{ id: 0, value: t("warranthForm.selectType") }, ...resTypeID]);
   }, []);
 
   const [dataTypeID, setDataTypeId] = useState([
-    { id: 0, value: "กรุณาเลือก" },
+    { id: 0, value: t("warranthForm.selectType") },
   ]);
   const [dataModelID, setDataModelID] = useState([
     { id: 0, value: "กรุณาเลือก" },
@@ -52,7 +55,10 @@ export default function ProductData({
     });
     return ProductDataSet;
   };
-  const [typeId, setTypeId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
+
+  const [typeId, setTypeId] = useState([
+    { id: 0, value: t("warranthForm.selectType") },
+  ]);
   const [modelId, setModelId] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [productCode, setProduct] = useState([{ id: 0, value: "กรุณาเลือก" }]);
   const [startDate, setStartDate] = useState(new Date());
@@ -61,7 +67,10 @@ export default function ProductData({
     const storeDataSet = await getStoreByProvinceData(Province_id);
     const storeDataSetTemp = [...storeData];
 
-    const dpStoreData = [{ id: "", value: "กรุณาเลือก" }, ...storeDataSet];
+    const dpStoreData = [
+      { id: "", value: t("warranthForm.selectStore") },
+      ...storeDataSet,
+    ];
     storeDataSetTemp[index] = dpStoreData;
     setStoreData(storeDataSetTemp);
   };
@@ -82,7 +91,7 @@ export default function ProductData({
     ProductCodeSet[index].product_Name = product_Name;
     setFormDataProduct(ProductCodeSet);
     const type = dataTypeID.find((d) => d.id === TypeId);
-    console.log("type 5555", type);
+
     if (type !== undefined && TypeId !== 0) {
       setTypeId([type]);
     } else {
@@ -179,13 +188,13 @@ export default function ProductData({
   return (
     <div>
       <div className="mt-3">
-        <h3 className="font-weight-bold mb-3">ข้อมูลสินค้า {index + 1}</h3>
+        <h3 className=" mb-3">
+          {t("warranthForm.productTitle")} {index + 1}
+        </h3>
         <div className="product-data">
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.productProvince")}
-              </label>
+              <label className="">{t("warranthForm.productProvince")}</label>
               <DropDownPurchaseProvince
                 data={Province}
                 index={index}
@@ -196,9 +205,7 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.productDate")}
-              </label>
+              <label className="">{t("warranthForm.productDate")}</label>
               <input
                 type="hidden"
                 index={index}
@@ -218,9 +225,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.storeName")}
-              </label>
+              <label className="">{t("warranthForm.storeName")}</label>
               <DropDownStoreId
                 Confirm={Confirm}
                 data={storeData[index]}
@@ -231,9 +236,7 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.OtherStoreName")}
-              </label>
+              <label className="">{t("warranthForm.OtherStoreName")}</label>
               <input
                 type="textarea"
                 className="as-input"
@@ -247,9 +250,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.recipe")}
-              </label>
+              <label className="">{t("warranthForm.recipe")}</label>
               <input
                 type="textarea"
                 className="as-input"
@@ -266,9 +267,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.barCode")}
-              </label>
+              <label className="">{t("warranthForm.barCode")}</label>
               {/* <input type="text" className="as-input" required /> */}
               <div className="row">
                 <div className="col-10">
@@ -280,7 +279,7 @@ export default function ProductData({
                   />
                 </div>
                 <div className="col-2 btn-scan" onClick={handleScanBarCode}>
-                  สแกนบาร์โค้ด
+                  {t("warranthForm.scanBarcode")}
                 </div>
               </div>
 
@@ -295,9 +294,7 @@ export default function ProductData({
               )}
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.warrantyCode")}
-              </label>
+              <label className="">{t("warranthForm.warrantyCode")}</label>
               <input
                 type="text"
                 className="as-input"
@@ -310,9 +307,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.productCode")}
-              </label>
+              <label className="">{t("warranthForm.productCode")}</label>
               <InputProcuctCode
                 Confirm={Confirm}
                 handleEvent={handleChangInputProductCode}
@@ -321,9 +316,7 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.productName")}
-              </label>
+              <label className="">{t("warranthForm.productName")}</label>
               <InputProcuctName
                 Confirm={Confirm}
                 handleEvent={handleChangInputProductCode}
@@ -335,9 +328,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold">
-                {t("warranthForm.productType")}
-              </label>
+              <label className="">{t("warranthForm.productType")}</label>
               {/* <input
                 type="text"
                 className="as-input"
@@ -355,7 +346,7 @@ export default function ProductData({
               />
             </div>
             {/* <div className="col-md-6">
-              <label className="font-weight-bold">ชื่อรุ่น*</label>
+              <label className="">ชื่อรุ่น*</label>
 
               <DropDownModelId
                 index={index}
@@ -366,7 +357,7 @@ export default function ProductData({
           </div>
           <div className="row">
             <div className="col-md-6">
-              <label className="font-weight-bold mt-3">
+              <label className=" mt-3">
                 {t("warranthForm.OtherProductCode")}
               </label>
               <input
@@ -380,9 +371,7 @@ export default function ProductData({
               />
             </div>
             <div className="col-md-6">
-              <label className="font-weight-bold mt-3">
-                {t("warranthForm.qty")}
-              </label>
+              <label className=" mt-3">{t("warranthForm.qty")}</label>
               <input
                 disabled={!Confirm}
                 type="number"

@@ -6,11 +6,11 @@ export default function ElementCard({ data }) {
       <div className="d-flex justify-content-center mb-4 card-img">
         {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
       </div>
-      {data.link && <a href={data.link} target="_blank" />}
+      {data.link && <a href={data.link} />}
       <div className="d-flex justify-content-between">
         {data.description && (
           <h1
-            className="font-weight-bold mb-3"
+            className="mb-3"
             dangerouslySetInnerHTML={{ __html: data.description }}
           />
         )}

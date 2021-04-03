@@ -143,7 +143,7 @@ export default function TestDataTable() {
   return (
     <div className="container">
       <button onClick={test}>test</button>
-      <div className="font-weight-bold">
+      <div className="">
         {trigerShow && (
           <DataTable
             data={dataWarranty}

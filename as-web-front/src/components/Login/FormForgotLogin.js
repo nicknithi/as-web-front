@@ -12,9 +12,7 @@ export default function FormForgotLogin() {
       <div className="as-login-form py-5">
         <div className="row">
           <div className="col-md-4 mx-auto">
-            <label className="font-weight-bold">
-              กรุณากรอกอีเมลที่สมัครไว้
-            </label>
+            <label className="">กรุณากรอกอีเมลที่สมัครไว้</label>
             <input type="text" className="as-input" required />
           </div>
         </div>

@@ -79,13 +79,11 @@ function AddressSetting({
   useEffect(async () => {}, []);
   return (
     <div className="mt-3">
-      <h3 className="font-weight-bold mb-3">ที่อยู่การติดตั้ง</h3>
+      <h3 className="mb-3">{t("warranthForm.addressTitle")}</h3>
       <div className="member-data">
         <div className="row">
           <div className="col-md-12">
-            <label className="font-weight-bold">
-              {t("warranthForm.address")}
-            </label>
+            <label className="">{t("warranthForm.address")}</label>
             <input
               type="text"
               id="addressProduct"
@@ -105,9 +103,7 @@ function AddressSetting({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold">
-              {t("warranthForm.province")}
-            </label>
+            <label className="">{t("warranthForm.province")}</label>
             <DropDownProvince
               data={Province}
               Confirm={Confirm}
@@ -118,10 +114,7 @@ function AddressSetting({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold">
-              {" "}
-              {t("warranthForm.district")}
-            </label>
+            <label className=""> {t("warranthForm.district")}</label>
             <DropDownDistrict
               data={District}
               Confirm={Confirm}
@@ -134,9 +127,7 @@ function AddressSetting({
         </div>
         <div className="row">
           <div className="col-md-6">
-            <label className="font-weight-bold mt-3">
-              {t("warranthForm.subDistrict")}
-            </label>
+            <label className="mt-3">{t("warranthForm.subDistrict")}</label>
             <DropDownSubDistrict
               data={SubDistrict}
               Confirm={Confirm}
@@ -147,9 +138,7 @@ function AddressSetting({
             />
           </div>
           <div className="col-md-6">
-            <label className="font-weight-bold mt-3">
-              {t("warranthForm.zipCode")}
-            </label>
+            <label className="mt-3">{t("warranthForm.zipCode")}</label>
             <input
               type="text"
               id="postCode"
@@ -168,9 +157,7 @@ function AddressSetting({
           </div>
         </div>
         <div>
-          <label className="font-weight-bold mt-3">
-            {t("warranthForm.map")}
-          </label>
+          <label className="mt-3">{t("warranthForm.map")}</label>
           <GoogleMap
             FormDataWarranty={FormDataWarranty}
             setFormDataWarranty={setFormDataWarranty}

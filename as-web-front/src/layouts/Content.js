@@ -82,12 +82,8 @@ export default function Content() {
 
     return (
       <div className={`content ${!data.line_status && "disable-underline"}`}>
-        {data.content_Title && (
-          <h1 className="font-weight-bold">{data.content_Title}</h1>
-        )}
-        {data.content_Desc && (
-          <h3 className="font-weight-bold">{data.content_Desc}</h3>
-        )}
+        {data.content_Title && <h1 className="">{data.content_Title}</h1>}
+        {data.content_Desc && <h3 className="">{data.content_Desc}</h3>}
         {data.content_body && (
           <div
             className="content-body"

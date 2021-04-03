@@ -171,7 +171,7 @@ export default function InstallationMenu() {
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3">
         <div className="col-md-10">
-          <h2 className="font-weight-bold p-0">ติดตั้ง</h2>
+          <h2 className="p-0">ติดตั้ง</h2>
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
@@ -244,11 +244,11 @@ export default function InstallationMenu() {
                     </div>
                     <div className="col-md-7">
                       <div className="detail p-3">
-                        {SpateDetail.product_code && (
+                        {SpateDetail.installation_product_old_code && (
                           <label>
                             รหัส
                             <span className="ml-2">
-                              {SpateDetail.product_code}
+                              {SpateDetail.installation_product_old_code}
                             </span>
                           </label>
                         )}
@@ -328,7 +328,7 @@ export default function InstallationMenu() {
                         </>
                       ) : (
                         <div className="d-flex justify-content-center w-100 ">
-                          <h1 className="font-weight-bold">Not Found</h1>
+                          <h1 className="">Not Found</h1>
                         </div>
                       )}
                     </>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import "../../assets/scss/components/input/dropdown.scss";
+import { useTranslation } from "react-i18next";
 export default function DropDownPurchaseProvince({
   data,
   handleEvent,
@@ -9,7 +10,8 @@ export default function DropDownPurchaseProvince({
   setFormDataProduct,
   Confirm,
 }) {
-  const [title, setTitleState] = useState("กรุณาเลือก");
+  const [t, i18n] = useTranslation("common");
+  const [title, setTitleState] = useState(t("warranthForm.selectProvince"));
   const handleSelect = (e) => {
     if (e.target) {
       const dataSet = [...FormDataProduct];
@@ -21,7 +23,7 @@ export default function DropDownPurchaseProvince({
         console.log("set titel province ", title);
         setTitleState(title);
       } else {
-        setTitleState("กรุณาเลือก");
+        setTitleState(t("warranthForm.selectProvince"));
       }
 
       handleEvent(e.target.value);
@@ -37,10 +39,10 @@ export default function DropDownPurchaseProvince({
         if (findData !== undefined) {
           setTitleState(findData.value);
         } else {
-          setTitleState("กรุณาเลือก");
+          setTitleState(t("warranthForm.selectProvince"));
         }
       } else {
-        setTitleState("กรุณาเลือก");
+        setTitleState(t("warranthForm.selectProvince"));
       }
     }
   }, [FormDataProduct[index].Purchase_Province]);

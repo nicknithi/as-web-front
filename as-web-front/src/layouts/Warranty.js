@@ -9,6 +9,7 @@ import "../assets/scss/warranty.scss";
 import Modal from "react-bootstrap/Modal";
 import { useTranslation } from "react-i18next";
 import ButtonMain from "../components/button/ButtonMain";
+
 export default function Warranty({ data, RenderColumn }) {
   const [t, i18n] = useTranslation("common");
   const [Confirm, setConfirm] = useState(false);
@@ -21,7 +22,10 @@ export default function Warranty({ data, RenderColumn }) {
       bannerAndCarousel.push(item);
     }
 
-    if (item.content_Title === "การลงทะเบียนรับประกันสินค้า ") {
+    if (
+      item.content_Title === "การลงทะเบียนรับประกันสินค้า " ||
+      item.content_Title === "Warranty Registration"
+    ) {
       dataWarrantyConfirm = item;
     }
     if (item.content_Title === "Privacy Policy") {

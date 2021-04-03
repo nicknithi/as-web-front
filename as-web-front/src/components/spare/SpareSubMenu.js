@@ -3,7 +3,13 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
+function SubMenu({
+  menu,
+  handleClickClassified,
+  handleClickClassified2,
+  isActiveClass1,
+  isActiveClass2,
+}) {
   return (
     <div>
       <Accordion defaultActiveKey={1}>
@@ -11,7 +17,7 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
           <Card key={index}>
             <Accordion.Toggle
               eventKey={index + 1}
-              className="main-menu p-0"
+              className={`main-menu p-0 ${isActiveClass1(item.classified_id)}`}
               onClick={() =>
                 handleClickClassified(item.classified_id, item.classified_name)
               }
@@ -26,7 +32,7 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
               >
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
-              <div className="text-truncate">{item.classified_name}</div>
+              <div className="text-wrap">{item.classified_name}</div>
             </Accordion.Toggle>
             {item.sub_classified.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
@@ -34,7 +40,9 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
                   {item.sub_classified &&
                     item.sub_classified.map((item2) => (
                       <div
-                        className="sub-menu"
+                        className={`sub-menu ${isActiveClass2(
+                          item2.sub_classified_id
+                        )}`}
                         onClick={() =>
                           handleClickClassified2(
                             item2.sub_classified_id,
@@ -52,7 +60,7 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
                         >
                           <circle cx="8" cy="8" r="8" />
                         </svg> */}
-                        <span className="text-truncate">
+                        <span className="text-wrap">
                           {item2.sub_classified_name}
                         </span>
                       </div>
