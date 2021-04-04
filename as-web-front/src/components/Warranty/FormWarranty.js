@@ -6,6 +6,7 @@ import FormRate from "../Warranty/FormRate";
 import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
 import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
 import {
   getProvince,
   setTempInput,
@@ -28,6 +29,7 @@ import {
   getAllStore,
 } from "../../GetDataDropDown";
 function FormWarranty({ Confirm }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
 
@@ -78,22 +80,27 @@ function FormWarranty({ Confirm }) {
 
   const [DataStore, setDataStore] = useState([]);
   useEffect(async () => {
-    const DataStoreSet = await getAllStore();
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    const DataStoreSet = await getAllStore(lang);
     setDataStore(DataStoreSet);
-    const typeData = await getProductType();
+    //console.log("555566677888", lang);
+    const typeData = await getProductType(lang);
     setDataTypeId([
       { id: 0, value: t("warranthForm.selectType") },
       ...typeData,
     ]);
     //GetProvince
-    const ProvinceData = await GetProvinceData();
+    const ProvinceData = await GetProvinceData(lang);
     setProvince([...Province, ...ProvinceData]);
 
-    const DistrictData = await GetDistrictData();
+    const DistrictData = await GetDistrictData(lang);
     setDistrict([...District, ...DistrictData]);
     setDistrictDN([...DistrictDN, ...DistrictData]);
 
-    const SubDistrictData = await GetSubDistrictData();
+    const SubDistrictData = await GetSubDistrictData(lang);
     setSubDistrict([...SubDistrict, ...SubDistrictData]);
     setSubDistrictDN([...SubDistrictDN, ...SubDistrictData]);
     http
@@ -111,7 +118,7 @@ function FormWarranty({ Confirm }) {
 
     http
       .post("/api/Product/GetAllProductModel", {
-        Lang_ID: 1,
+        Lang_ID: lang,
       })
       .then((res) => {
         console.log("model ", res.data.data);
@@ -163,6 +170,8 @@ function FormWarranty({ Confirm }) {
     Customer_Longtitude: null,
     Score: null,
     Description: null,
+    Service_Center: "",
+    Service_Center_Name: "",
   });
   const handleSearchByCustomerCode = async (code) => {
     await http
@@ -289,8 +298,13 @@ function FormWarranty({ Confirm }) {
     setFileWaranty(tempFile);
 
     if (tempProduct[tempProduct.length - 1].Purchase_Province) {
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
       const storeDataSetLoad = await getStoreByProvinceData(
-        parseInt(tempProduct[tempProduct.length - 1].Purchase_Province)
+        parseInt(tempProduct[tempProduct.length - 1].Purchase_Province),
+        lang
       );
       const storeDataSet = [...storeData];
       storeDataSet.push([
@@ -443,8 +457,11 @@ function FormWarranty({ Confirm }) {
           // } else {
           //   item.Store_ID = 0;
           // }
-
-          const resTypeID = await getProductType();
+          let lang = 1;
+          if (cookies.as_lang) {
+            lang = cookies.as_lang === "TH" ? 1 : 2;
+          }
+          const resTypeID = await getProductType(lang);
           const FindREtype = resTypeID.find((t) => t.id === item.Type_ID);
           if (FindREtype !== undefined) {
             item.Type_ID = FindREtype.value;
@@ -587,7 +604,7 @@ function FormWarranty({ Confirm }) {
           <div className="row">
             <div className="col-md-4 mx-auto text-center mt-4">
               <ButtonMain
-                title="ตรวจสอบข้อมูล"
+                title={t("warranthForm.btnCheck")}
                 color="#636363"
                 BgColor="#f1c400"
               />
@@ -604,7 +621,7 @@ function FormWarranty({ Confirm }) {
           <div className="d-flex justify-content-center mt-3 mb-4">
             <div className="mr-4">
               <ButtonMain
-                title="ยืนยัน"
+                title={t("warrantyConfirm.btnConfirm")}
                 color="#636363"
                 BgColor="#f1c400"
                 handleClick={handleLastSubmit}
@@ -612,7 +629,7 @@ function FormWarranty({ Confirm }) {
             </div>
             <div>
               <ButtonMain
-                title="แก้ไขข้อมูล"
+                title={t("warrantyConfirm.btnEdit")}
                 color="#636363"
                 BgColor="#58a7af"
                 handleClick={handleEdit}

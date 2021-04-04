@@ -114,11 +114,26 @@ export default function Register({ data }) {
     FK_District_ID: 0,
     FK_Sub_District_ID: 0,
     Service_Center: "",
+    Service_Center_Name: "",
     Quota_Service: 0,
     IsMember: true,
     Create_By: "",
     Customer_Company: "",
   });
+
+  const typeMember = [
+    t("register.residential"),
+    t("register.contractor"),
+    t("register.otherType"),
+  ];
+  const subTypeMember = [
+    t("register.subType1"),
+    t("register.subType2"),
+    t("register.subType3"),
+    t("register.subType4"),
+  ];
+  const [DataFromRegisterShow, setDataFromRegisterShow] = useState({});
+
   useEffect(() => {
     let lang = 1;
     if (cookies.as_lang) {
@@ -185,10 +200,20 @@ export default function Register({ data }) {
       DataSet.FK_District_ID = "";
       DataSet.ZIP_Code = "";
       //get serviceCenter
-      const resServiceCenter = await GetAllDataCareCenter();
-      DataSet.Service_Center = "";
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      const resServiceCenter = await GetAllDataCareCenter(lang, e.target.value);
+      if (resServiceCenter && resServiceCenter.length) {
+        DataSet.Service_Center = resServiceCenter[0].id;
+        DataSet.Service_Center_Name = resServiceCenter[0].name;
+        console.log("test", resServiceCenter);
+        // Service_Center: "",
+        // Service_Center_Name: "",
+        console.log("resServiceCenter", resServiceCenter);
+      }
 
-      console.log("resServiceCenter", resServiceCenter);
       setDataFromRegister(DataSet);
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
@@ -208,15 +233,20 @@ export default function Register({ data }) {
       DataSet.FK_District_ID = parseInt(e.target.value);
       DataSet.ZIP_Code = "";
       setDataFromRegister(DataSet);
+      console.log(
+        DataFromRegister.FK_Province_ID,
+        e.target.value,
+        SubDistrictDN
+      );
       const newSet = SubDistrictDN.filter(
         (p) =>
           p.fK_Province_ID === parseInt(DataFromRegister.FK_Province_ID) &&
           p.fK_District_ID === parseInt(e.target.value)
       );
-      console.log(newSet);
+      console.log("test", newSet);
       if (newSet.length) {
         setSubDistrict([
-          { id: "", value: t("register.selectDistrict") },
+          { id: "", value: t("register.selectSubDistrict") },
           ...newSet,
         ]);
       }
@@ -238,6 +268,33 @@ export default function Register({ data }) {
   };
   const submit = async (e) => {
     e.preventDefault();
+    let tempFormData = { ...DataFromRegister };
+    tempFormData.Customer_Type =
+      typeMember[parseInt(tempFormData.Customer_Type) - 1];
+    tempFormData.Customer_Contractor_Type =
+      subTypeMember[parseInt(tempFormData.Customer_Contractor_Type) - 1];
+
+    let tempProvince = Province.find(
+      (p) => p.id === parseInt(tempFormData.FK_Province_ID)
+    );
+    if (tempProvince !== undefined) {
+      tempFormData.FK_Province_ID = tempProvince.value;
+    }
+
+    let tempDistrict = DistrictDN.find(
+      (p) => p.id === parseInt(tempFormData.FK_District_ID)
+    );
+    if (tempDistrict !== undefined) {
+      tempFormData.FK_District_ID = tempDistrict.value;
+    }
+
+    let tempSubDistrict = SubDistrictDN.find(
+      (p) => p.id === parseInt(tempFormData.FK_Sub_District_ID)
+    );
+    if (tempSubDistrict !== undefined) {
+      tempFormData.FK_Sub_District_ID = tempSubDistrict.value;
+    }
+    setDataFromRegisterShow(tempFormData);
     setCheckData(true);
     // const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
     // if (res.data.message === "Success!") {
@@ -260,430 +317,435 @@ export default function Register({ data }) {
     <div>
       <ElementBanner img={ImgBanner} />
       <>
-        {checkData ? (
+        {checkData && (
           <RegisterConfirm
-            data={DataFromRegister}
+            data={DataFromRegisterShow}
             setCheckData={setCheckData}
             Lastsubmit={Lastsubmit}
           />
-        ) : (
-          <>
-            <div className="container mb-3">
-              <WarrantyConfirm
-                title={dataWarrantyConfirm.content_Title}
-                description={dataWarrantyConfirm.content_body}
-                handleCheck={handleCheck}
-                handleShowModal={handleShowModal}
-                checked={Confirm}
-              />
-              <Modal
-                show={show}
-                onHide={() => setShow(false)}
-                dialogClassName=""
-                aria-labelledby="example-custom-modal-styling-title"
-              >
-                <Modal.Header closeButton>
-                  <Modal.Title id="example-custom-modal-styling-title">
-                    <h1>{dataWarrantyPolicy.content_Title}</h1>
-                  </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                  <div className="detail">
-                    <PerfectScrollbar
-                      dangerouslySetInnerHTML={{
-                        __html: dataWarrantyPolicy.detail,
-                      }}
-                    />
-                  </div>
-                  <div className="row justify-content-center mt-3">
-                    <ButtonMain
-                      title={t("button.confirm")}
-                      color="#636363"
-                      BgColor="#f1c400"
-                      handleClick={ConfirmFromModal}
-                    />
-                  </div>
-                </Modal.Body>
-              </Modal>
-            </div>
-            <form onSubmit={submit}>
-              <div className="container register pb-4 mb-4">
-                <h3 className=" mb-3">{t("register.title")}</h3>
-
-                <div className="register-container">
-                  <h4 className="">{t("register.customerType")}</h4>
-                  <div className="row ml-1">
-                    <label className="as-container ">
-                      {t("register.residential")}
-                      <input
-                        type="radio"
-                        name="radio"
-                        name="customer-type"
-                        value="1"
-                        disabled={!Confirm}
-                        checked={DataFromRegister.Customer_Type === "1"}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Customer_Type: e.target.value,
-                          })
-                        }
-                      />
-                      <span className="checkmark"></span>
-                    </label>
-                  </div>
-
-                  <div className="row ml-1">
-                    <label className="as-container ">
-                      {t("register.otherType")}
-                      <input
-                        type="radio"
-                        name="radio"
-                        name="customer-type"
-                        value="3"
-                        disabled={!Confirm}
-                        checked={DataFromRegister.Customer_Type === "3"}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Customer_Type: e.target.value,
-                          })
-                        }
-                      />
-                      <span className="checkmark"></span>
-                    </label>
-                  </div>
-                  <div className="row ml-1">
-                    <label className="as-container ">
-                      {t("register.contractor")}
-                      <input
-                        type="radio"
-                        name="radio"
-                        name="customer-type"
-                        value="2"
-                        disabled={!Confirm}
-                        checked={DataFromRegister.Customer_Type === "2"}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Customer_Type: e.target.value,
-                          })
-                        }
-                      />
-                      <span className="checkmark"></span>
-                    </label>
-                  </div>
-                  {DataFromRegister.Customer_Type === "2" && (
-                    <div className="ml-5">
-                      <div className="row">
-                        <label className="as-container ">
-                          {t("register.subType1")}
-                          <input
-                            type="radio"
-                            name="customer-type-sub"
-                            value="1"
-                            disabled={!Confirm}
-                            checked={
-                              DataFromRegister.Customer_Contractor_Type === "1"
-                            }
-                            onChange={(e) =>
-                              setDataFromRegister({
-                                ...DataFromRegister,
-                                Customer_Contractor_Type: e.target.value,
-                              })
-                            }
-                          />
-                          <span className="checkmark"></span>
-                        </label>
-                      </div>
-                      <div className="row">
-                        <label className="as-container ">
-                          {t("register.subType2")}
-                          <input
-                            type="radio"
-                            name="customer-type-sub"
-                            value="2"
-                            disabled={!Confirm}
-                            checked={
-                              DataFromRegister.Customer_Contractor_Type === "2"
-                            }
-                            onChange={(e) =>
-                              setDataFromRegister({
-                                ...DataFromRegister,
-                                Customer_Contractor_Type: e.target.value,
-                              })
-                            }
-                          />
-                          <span className="checkmark"></span>
-                        </label>
-                      </div>
-                      <div className="row">
-                        <label className="as-container ">
-                          {t("register.subType3")}
-                          <input
-                            type="radio"
-                            name="customer-type-sub"
-                            value="3"
-                            disabled={!Confirm}
-                            checked={
-                              DataFromRegister.Customer_Contractor_Type === "3"
-                            }
-                            onChange={(e) =>
-                              setDataFromRegister({
-                                ...DataFromRegister,
-                                Customer_Contractor_Type: e.target.value,
-                              })
-                            }
-                          />
-                          <span className="checkmark"></span>
-                        </label>
-                      </div>
-                      <div className="row">
-                        <label className="as-container ">
-                          {t("register.subType4")}
-                          <input
-                            type="radio"
-                            name="customer-type-sub"
-                            value="4"
-                            disabled={!Confirm}
-                            checked={
-                              DataFromRegister.Customer_Contractor_Type === "4"
-                            }
-                            onChange={(e) =>
-                              setDataFromRegister({
-                                ...DataFromRegister,
-                                Customer_Contractor_Type: e.target.value,
-                              })
-                            }
-                          />
-                          <span className="checkmark"></span>
-                        </label>
-                      </div>
-                    </div>
-                  )}
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label className="">{t("register.name")}*</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.FirstName}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            FirstName: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="">{t("register.surname")}*</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.LastName}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            LastName: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <label className="">{t("register.CompanyName")}</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.Customer_Company}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Customer_Company: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label className="">{t("register.tel")}</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.Tel}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Tel: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="">{t("register.mobile")}*</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.Phone}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Phone: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12">
-                      <label className="">{t("register.Email")}</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.Email}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Email: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
-                </div>
-                <h3 className=" mb-3 mt-3">
-                  {DataFromRegister.Customer_Type === "2"
-                    ? t("register.titleAddress2")
-                    : t("register.titleAddress1")}
-                </h3>
-                <div className="address-container">
-                  <div className="row">
-                    <div className="col-md-12">
-                      <label className="">
-                        {DataFromRegister.Customer_Type === "2"
-                          ? t("register.titleAddress2")
-                          : t("register.titleAddress1")}
-                        * {t("register.canChanged")}
-                      </label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.Address}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Address: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label className="">{t("register.province")}*</label>
-                      <DropdownProvince
-                        handleEvent={getProvinceDropDown}
-                        setDataFromRegister={setDataFromRegister}
-                        DataFromRegister={DataFromRegister}
-                        data={Province}
-                      />
-                    </div>
-                    <div className="col-md-6">
-                      <label className="">{t("register.district")}*</label>
-                      <DropdownDistrict
-                        handleEvent={getDistrictDropDown}
-                        setDataFromRegister={setDataFromRegister}
-                        DataFromRegister={DataFromRegister}
-                        data={District}
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6 mt-3">
-                      <label className="">{t("register.subdistrict")}*</label>
-                      <DropdownSubDistrict
-                        handleEvent={getSubDistrictDropDown}
-                        setDataFromRegister={setDataFromRegister}
-                        DataFromRegister={DataFromRegister}
-                        data={SubDistrict}
-                      />
-                    </div>
-                    <div className="col-md-6 mt-3">
-                      <label className="">{t("register.zipCode")}*</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        value={DataFromRegister.ZIP_Code}
-                        disabled={!Confirm}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            ZIP_Code: e.target.value,
-                          })
-                        }
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <label className="">{t("register.careCenter")}</label>
-                      <input
-                        type="text"
-                        className="as-input"
-                        readOnly={true}
-                        value={DataFromRegister.Service_Center}
-                        onChange={(e) =>
-                          setDataFromRegister({
-                            ...DataFromRegister,
-                            Service_Center: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className=" mt-3">{t("register.map")}</label>
-                    <GoogleMap
-                      DataFromRegister={DataFromRegister}
-                      setDataFromRegister={setDataFromRegister}
-                      LagLong={LagLong}
-                    />
-                  </div>
-                </div>
-                <div className="row mt-3 d-flex justify-content-center">
-                  <ButtonMain
-                    title={t("register.Submit")}
-                    color="#636363"
-                    BgColor="#f1c400"
+        )}
+        <div className={`${checkData ? "d-none" : "d-block"}`}>
+          <div className="container mb-3">
+            <WarrantyConfirm
+              title={dataWarrantyConfirm.content_Title}
+              description={dataWarrantyConfirm.content_body}
+              handleCheck={handleCheck}
+              handleShowModal={handleShowModal}
+              checked={Confirm}
+            />
+            <Modal
+              show={show}
+              onHide={() => setShow(false)}
+              dialogClassName=""
+              aria-labelledby="example-custom-modal-styling-title"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title id="example-custom-modal-styling-title">
+                  <h1>{dataWarrantyPolicy.content_Title}</h1>
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <div className="detail">
+                  <PerfectScrollbar
+                    dangerouslySetInnerHTML={{
+                      __html: dataWarrantyPolicy.detail,
+                    }}
                   />
                 </div>
-                {/* <div className="row mt-3 d-flex justify-content-center">
+                <div className="row justify-content-center mt-3">
+                  <ButtonMain
+                    title={t("button.confirm")}
+                    color="#636363"
+                    BgColor="#f1c400"
+                    handleClick={ConfirmFromModal}
+                  />
+                </div>
+              </Modal.Body>
+            </Modal>
+          </div>
+          <form onSubmit={submit}>
+            <div className="container register pb-4 mb-4">
+              <h3 className=" mb-3">{t("register.title")}</h3>
+
+              <div className="register-container">
+                <h4 className="">{t("register.customerType")}</h4>
+                <div className="row ml-1">
+                  <label className="as-container ">
+                    {t("register.residential")}
+                    <input
+                      type="radio"
+                      name="radio"
+                      name="customer-type"
+                      value="1"
+                      disabled={!Confirm}
+                      checked={DataFromRegister.Customer_Type === "1"}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+
+                <div className="row ml-1">
+                  <label className="as-container ">
+                    {t("register.otherType")}
+                    <input
+                      type="radio"
+                      name="radio"
+                      name="customer-type"
+                      value="3"
+                      disabled={!Confirm}
+                      checked={DataFromRegister.Customer_Type === "3"}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+                <div className="row ml-1">
+                  <label className="as-container ">
+                    {t("register.contractor")}
+                    <input
+                      type="radio"
+                      name="radio"
+                      name="customer-type"
+                      value="2"
+                      disabled={!Confirm}
+                      checked={DataFromRegister.Customer_Type === "2"}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Type: e.target.value,
+                        })
+                      }
+                    />
+                    <span className="checkmark"></span>
+                  </label>
+                </div>
+                {DataFromRegister.Customer_Type === "2" && (
+                  <div className="ml-5">
+                    <div className="row">
+                      <label className="as-container ">
+                        {t("register.subType1")}
+                        <input
+                          type="radio"
+                          name="customer-type-sub"
+                          value="1"
+                          disabled={!Confirm}
+                          checked={
+                            DataFromRegister.Customer_Contractor_Type === "1"
+                          }
+                          onChange={(e) =>
+                            setDataFromRegister({
+                              ...DataFromRegister,
+                              Customer_Contractor_Type: e.target.value,
+                            })
+                          }
+                        />
+                        <span className="checkmark"></span>
+                      </label>
+                    </div>
+                    <div className="row">
+                      <label className="as-container ">
+                        {t("register.subType2")}
+                        <input
+                          type="radio"
+                          name="customer-type-sub"
+                          value="2"
+                          disabled={!Confirm}
+                          checked={
+                            DataFromRegister.Customer_Contractor_Type === "2"
+                          }
+                          onChange={(e) =>
+                            setDataFromRegister({
+                              ...DataFromRegister,
+                              Customer_Contractor_Type: e.target.value,
+                            })
+                          }
+                        />
+                        <span className="checkmark"></span>
+                      </label>
+                    </div>
+                    <div className="row">
+                      <label className="as-container ">
+                        {t("register.subType3")}
+                        <input
+                          type="radio"
+                          name="customer-type-sub"
+                          value="3"
+                          disabled={!Confirm}
+                          checked={
+                            DataFromRegister.Customer_Contractor_Type === "3"
+                          }
+                          onChange={(e) =>
+                            setDataFromRegister({
+                              ...DataFromRegister,
+                              Customer_Contractor_Type: e.target.value,
+                            })
+                          }
+                        />
+                        <span className="checkmark"></span>
+                      </label>
+                    </div>
+                    <div className="row">
+                      <label className="as-container ">
+                        {t("register.subType4")}
+                        <input
+                          type="radio"
+                          name="customer-type-sub"
+                          value="4"
+                          disabled={!Confirm}
+                          checked={
+                            DataFromRegister.Customer_Contractor_Type === "4"
+                          }
+                          onChange={(e) =>
+                            setDataFromRegister({
+                              ...DataFromRegister,
+                              Customer_Contractor_Type: e.target.value,
+                            })
+                          }
+                        />
+                        <span className="checkmark"></span>
+                      </label>
+                    </div>
+                  </div>
+                )}
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="">{t("register.name")}</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.FirstName}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          FirstName: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="">{t("register.surname")}</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.LastName}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          LastName: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <label className="">{t("register.CompanyName")}</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.Customer_Company}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Customer_Company: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="">{t("register.tel")}</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.Tel}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Tel: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="">{t("register.mobile")}*</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.Phone}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Phone: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <label className="">{t("register.Email")}</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.Email}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Email: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+              </div>
+              <h3 className=" mb-3 mt-3">
+                {DataFromRegister.Customer_Type === "2"
+                  ? t("register.titleAddress2")
+                  : t("register.titleAddress1")}
+              </h3>
+              <div className="address-container">
+                <div className="row">
+                  <div className="col-md-12">
+                    <label className="">
+                      {DataFromRegister.Customer_Type === "2"
+                        ? t("register.titleAddress2")
+                        : t("register.titleAddress1")}
+                      * {t("register.canChanged")}
+                    </label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.Address}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Address: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="">{t("register.province")}*</label>
+                    <DropdownProvince
+                      handleEvent={getProvinceDropDown}
+                      setDataFromRegister={setDataFromRegister}
+                      DataFromRegister={DataFromRegister}
+                      data={Province}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <label className="">{t("register.district")}*</label>
+                    <DropdownDistrict
+                      handleEvent={getDistrictDropDown}
+                      setDataFromRegister={setDataFromRegister}
+                      DataFromRegister={DataFromRegister}
+                      data={District}
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6 mt-3">
+                    <label className="">{t("register.subdistrict")}*</label>
+                    <DropdownSubDistrict
+                      handleEvent={getSubDistrictDropDown}
+                      setDataFromRegister={setDataFromRegister}
+                      DataFromRegister={DataFromRegister}
+                      data={SubDistrict}
+                    />
+                  </div>
+                  <div className="col-md-6 mt-3">
+                    <label className="">{t("register.zipCode")}*</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      value={DataFromRegister.ZIP_Code}
+                      disabled={!Confirm}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          ZIP_Code: e.target.value,
+                        })
+                      }
+                      required
+                    />
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <label className="">{t("register.careCenter")}</label>
+                    <input
+                      type="text"
+                      className="as-input"
+                      readOnly={true}
+                      value={DataFromRegister.Service_Center_Name}
+                      onChange={(e) =>
+                        setDataFromRegister({
+                          ...DataFromRegister,
+                          Service_Center: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="alert pl-0" role="alert">
+                  service center
+                  <a href={t("link.serviceCenter")} className="alert-link">
+                    {" "}
+                    click
+                  </a>
+                </div>
+                <div>
+                  <label className=" mt-3">{t("register.map")}</label>
+                  <GoogleMap
+                    DataFromRegister={DataFromRegister}
+                    setDataFromRegister={setDataFromRegister}
+                    LagLong={LagLong}
+                  />
+                </div>
+              </div>
+              <div className="row mt-3 d-flex justify-content-center">
+                <ButtonMain
+                  title={t("register.Submit")}
+                  color="#636363"
+                  BgColor="#f1c400"
+                />
+              </div>
+              {/* <div className="row mt-3 d-flex justify-content-center">
             <ButtonMain
               title={t("register.Submit")}
               color="#636363"
               BgColor="#f1c400"
             />
           </div> */}
-              </div>
-            </form>
-          </>
-        )}
+            </div>
+          </form>
+        </div>
       </>
     </div>
   );

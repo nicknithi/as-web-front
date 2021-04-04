@@ -3,7 +3,8 @@
     "title": "ยินดีต้อนรับ {{framework}}"
   },
   "website": {
-    "navbar": "Official Website"
+    "navbar": "Official Website",
+    "btnBack": "กลับ"
   },
   "maintain": {
     "article": "บทความ",
@@ -16,6 +17,9 @@
   "warranty": {
     "rateLow": "น้อยสุด",
     "rateHeight": "มากสุด"
+  },
+  "link": {
+    "serviceCenter": "/ศูนย์บริการ สาขา"
   },
   "warranthForm": {
     "customerTitle": "ข้อมูลลูกค้า",
@@ -54,6 +58,7 @@
     "btnRemoveProduct": "ลบสินค้ารับประกัน",
     "btnAddProductStore": "เพิ่มสินค้ารับประกัน",
     "btnAddStore": "เพิ่มร้านค้า",
+    "btnCheck": "ตรวจสอบข้อมูล",
     "uploadRecipt": "อัพโหลดภาพใบเสร็จ",
     "TakePicture": "ใส่ภาพใบเสร็จ",
     "Suggestion": "ข้อเสนอแนะ.....",
@@ -70,7 +75,7 @@
     "subType2": "งานไฟฟ้า",
     "subType3": "งานประปา",
     "subType4": "งานทั่วไป",
-    "otherType": "ลงทะเบียนสมาชิกโครงการสำนักงาน,โรงแรม,ออฟฟิศ ฯลฯ ที่ไม่ใช่บ้านพักอาศัย",
+    "otherType": "สมาชิกโครงการ สำนักงานโรงแรม ฯลฯ ที่ไม่ใช่บ้านพักอาศัย",
     "name": "ชื่อที่จะระบุสมาชิกหรือผู้ติดต่อ (กรณีบุคคล)",
     "surname": "นามสกุล",
     "CompanyName": "ชื่อที่จะระบุสมาชิก (กรณี บริษัท, โรงแรม, สำนักงาน, ฯลฯ",
@@ -92,5 +97,40 @@
     "selectDistrict": "- กรุณาเลือกเขต -",
     "selectSubDistrict": "- กรุณาเลือกตำบล -",
     "btnedit": "แก้ไข"
+  },
+  "registerConfirm": {
+    "type": "ประเภทสมาชิก",
+    "name": "ชื่อ",
+    "surname": "นามสกุล",
+    "company": "ชื่อบริษัท",
+    "tel": "เบอร์โทรศัพท์",
+    "mobile": "มือถือ",
+    "email": "Email",
+    "address": "ที่อยู่",
+    "serviceCenter": "ศูนย์บริการสาขา"
+  },
+  "warrantyConfirm": {
+    "title": "การลงทะเบียนรับประกันสินค้า",
+    "titleCustomerData": "ข้อมูลลูกค้า",
+    "MemberID": "สมาชิกบริการ (ถ้ามี) ",
+    "Name": "ชื่อ",
+    "TelephoneNumber": "เบอร์โทรศัพท์",
+    "MobileNumber": "มือถือ",
+    "Email": "อีเมล์",
+    "titleAddress": "ที่อยู่การติดตั้ง",
+    "address": "ที่อยู่ที่ติดตั้งสินค้า",
+    "titleProduct": "ข้อมูลสินค้า",
+    "ProvinceOfPurchase": "จังหวัดที่ซื้อ",
+    "date": "วันที่ซื้อ",
+    "StoreName": "ชื่อร้านค้า",
+    "ReceiptNumber": "หมายเลขใบเสร็จ",
+    "WarrantyNumber": "หมายเลขรับประกัน",
+    "ProductType": "ประเภทสินค้า",
+    "ProductCode": "รหัสสินค้า",
+    "OtherProductCode": "รหัสสินค้า (อื่นๆ)",
+    "Qty": "จำนวนชิ้นที่ซื้อ",
+    "Barcode": "รหัสบาร์โค้ด",
+    "btnEdit": "แก้ไข",
+    "btnConfirm": "ยืนยัน"
   }
 }

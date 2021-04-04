@@ -5,39 +5,43 @@ import GoogleMapDisabled from "../map/googleMapDisabled";
 import ButtonMain from "../button/ButtonMain";
 import "../../assets/scss/form-comfirm.scss";
 import http from "../../axios";
-
+import { useTranslation } from "react-i18next";
 function FormComfirm(props) {
   const dataSet = props.DataComfirm;
   console.log("dataSet", dataSet);
-
+  const [t, i18n] = useTranslation("common");
   return (
     <div className="form-comfirm">
       {props.ProvinceC}
       <div className="container">
-        <h1 className="mt-3">การลงทะเบียนสินค้า</h1>
+        <h1 className="mt-3">{t("warrantyConfirm.title")}</h1>
         <div className="mb-4">
-          <h2>ข้อมูลลูกค้า</h2>
+          <h2>{t("warrantyConfirm.titleCustomerData")}</h2>
           <div className="customer-section p-4">
-            สมาชิกบริการ (ถ้ามี) : {dataSet.datas[0].Customer_Code || ""}
+            {t("warrantyConfirm.MemberID")} :{" "}
+            {dataSet.datas[0].Customer_Code || ""}
             <br />
-            ชื่อ:
+            {t("warrantyConfirm.Name")}:
             {`${dataSet.datas[0].Customer_Firstname || ""} ${
               dataSet.datas[0].Customer_Lastname || ""
             }`}
             <br />
-            เบอร์โทรศัพท์: {dataSet.datas[0].Customer_Tel}
+            {t("warrantyConfirm.TelephoneNumber")}:{" "}
+            {dataSet.datas[0].Customer_Tel}
             <br />
-            มือถือ: {dataSet.datas[0].Customer_Mobile}
+            {t("warrantyConfirm.MobileNumber")}:{" "}
+            {dataSet.datas[0].Customer_Mobile}
             <br />
-            อีเมล: {dataSet.datas[0].Customer_Email}
+            {t("warrantyConfirm.Email")}: {dataSet.datas[0].Customer_Email}
             <br />
           </div>
         </div>
         <div className="mb-4">
-          <h2>ที่อยู่การติดตั้ง</h2>
+          <h2>{t("warrantyConfirm.titleAddress")}</h2>
           <div className="address-section p-4">
             <div className="mb-3">
-              ที่อยู่การติดตั้งสินค้า : {dataSet.datas[0].Customer_Address}{" "}
+              {t("warrantyConfirm.address")} :{" "}
+              {dataSet.datas[0].Customer_Address}{" "}
               {dataSet.datas[0].Customer_Province}{" "}
               {dataSet.datas[0].Customer_District}{" "}
               {dataSet.datas[0].Customer_SubDistrict}{" "}
@@ -51,28 +55,32 @@ function FormComfirm(props) {
         </div>
         {dataSet.datas.map((item, index) => (
           <div>
-            <h2>ข้อมูลสินค้า</h2>
+            <h2>{t("warrantyConfirm.titleProduct")}</h2>
             <div className="product-section p-4 mb-4">
               <div>
-                จังหวัดที่ซื้อ : {item.Purchase_Province || ""}
+                {t("warrantyConfirm.ProvinceOfPurchase")} :{" "}
+                {item.Purchase_Province || ""}
                 <br />
-                วันที่ซื้อ: {item.Purchase_Date || ""}
+                {t("warrantyConfirm.date")} : {item.Purchase_Date || ""}
                 <br />
-                ชื่อร้านค้า: {item.Store_ID || ""}
+                {t("warrantyConfirm.StoreName")}: {item.Store_ID || ""}
                 <br />
-                หมายเลขใบเสร็จ: {item.Receipt_Number || ""}
+                {t("warrantyConfirm.ReceiptNumber")}:{" "}
+                {item.Receipt_Number || ""}
                 <br />
-                หมายเลขรับประกัน: {item.Warranty_Number || ""}
+                {t("warrantyConfirm.WarrantyNumber")}:{" "}
+                {item.Warranty_Number || ""}
                 <br />
-                ประเภทสินค้า: {item.Type_ID || ""}
+                {t("warrantyConfirm.ProductType")}: {item.Type_ID || ""}
                 <br />
-                รหัสสินค้า: {item.Product_code || ""}
+                {t("warrantyConfirm.ProductCode")}: {item.Product_code || ""}
                 <br />
-                รหัสสินค้า (อื่น ๆ): {item.Product_Code_Other || ""}
+                {t("warrantyConfirm.OtherProductCode")}:{" "}
+                {item.Product_Code_Other || ""}
                 <br />
-                จำนวนชิ้นที่ซื้อ: {item.QTY || ""}
+                {t("warrantyConfirm.Qty")}: {item.QTY || ""}
                 <br />
-                รหัสบาร์โค๊ด : {item.Barcode_Number || ""}
+                {t("warrantyConfirm.Barcode")} : {item.Barcode_Number || ""}
               </div>
               <div className="img-preview row">
                 <div className="col-md-4 mx-auto">

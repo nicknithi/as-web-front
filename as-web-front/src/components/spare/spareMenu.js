@@ -89,7 +89,8 @@ export default function SpareMenu() {
   const handleClickClassified2 = async (id, name) => {
     setLoading(true);
     setSpateDetail({});
-    setTitle(`${Title} / ${name}`);
+    const tempTitle = Title.split("/")[0];
+    setTitle(`${tempTitle} / ${name}`);
     setActiveClass2(id);
     console.log("id12", id);
     let resClassified2 = await GetDataProduct_SparepartByClassified2(id);

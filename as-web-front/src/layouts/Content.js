@@ -25,8 +25,9 @@ import Spare from "../layouts/Spare";
 import Installation from "../layouts/Installation";
 import "../assets/scss/components/content.scss";
 import Maintain from "./Maintain";
-
+import { useTranslation } from "react-i18next";
 export default function Content() {
+  const [t, i18n] = useTranslation("common");
   let { customPath } = useParams();
   const [Content, setContent] = useState([]);
   const [cookies, setCookie] = useCookies(["as_lang"]);
@@ -272,7 +273,7 @@ export default function Content() {
         <div className="container">
           <div className="row d-flex justify-content-center mb-5">
             <ButtonMain
-              title="กลับ"
+              title={t("website.btnBack")}
               color="#636363"
               BgColor="#f1c400"
               handleClick={() => goBack()}

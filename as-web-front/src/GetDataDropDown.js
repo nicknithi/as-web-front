@@ -1,12 +1,14 @@
 import http from "./axios";
-const getProductType = async () => {
-  const res = await http.post("/api/Product/GetAllProductType", { Lang_ID: 1 });
+const getProductType = async (lang) => {
+  const res = await http.post("/api/Product/GetAllProductType", {
+    Lang_ID: 1,
+  });
   const data = res.data.data.map((item, index) => {
     return { id: item.id, value: item.type_Name };
   });
   return data;
 };
-const getStoreByProvinceData = async (Province_id) => {
+const getStoreByProvinceData = async (Province_id, lang) => {
   console.log("Province_id", Province_id);
   const res = await http.post("/api/Product/GetStoreByName", {
     Lang_ID: 1,
@@ -34,18 +36,18 @@ const getCustomerById = async (id) => {
   return res.data.data;
 };
 
-const GetProvinceData = async () => {
+const GetProvinceData = async (lang) => {
   const res = await http.post("/api/Master/GetProvince", {
-    Lang_ID: 1,
+    Lang_ID: lang,
   });
   const ProvinceSet = res.data.data.map((item, index) => {
     return { id: item.id, value: item.province_Name };
   });
   return ProvinceSet;
 };
-const GetDistrictData = async () => {
+const GetDistrictData = async (lang) => {
   const res = await http.post("/api/Master/GetDistrict", {
-    Lang_ID: 1,
+    Lang_ID: lang,
   });
   const DistrictSet = res.data.data.map((item, index) => {
     return {
@@ -57,9 +59,9 @@ const GetDistrictData = async () => {
   return DistrictSet;
 };
 
-const GetSubDistrictData = async () => {
+const GetSubDistrictData = async (lang) => {
   const res = await http.post("/api/Master/GetSubDistrict", {
-    Lang_ID: 1,
+    Lang_ID: lang,
   });
   const subDistrictSet = res.data.data.map((item, index) => {
     return {
@@ -86,7 +88,7 @@ const getProductByBarcode = async (barcode) => {
   });
   return res.data.data;
 };
-const getAllStore = async () => {
+const getAllStore = async (lang) => {
   const res = await http.post("/api/Master/GetStore", {
     Lang_ID: 1,
   });

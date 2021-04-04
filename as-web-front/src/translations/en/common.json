@@ -3,7 +3,8 @@
     "title": "Welcome to {{framework}}"
   },
   "website": {
-    "navbar": "Official Website"
+    "navbar": "Official Website",
+    "btnBack": "Back"
   },
   "maintain": {
     "article": "Article",
@@ -16,6 +17,9 @@
   "warranty": {
     "rateLow": "Very Low",
     "rateHeight": "Very High"
+  },
+  "link": {
+    "serviceCenter": "/Customer Care Center Branch"
   },
   "warranthForm": {
     "customerTitle": "Customer Information",
@@ -54,6 +58,7 @@
     "btnRemoveProduct": "Remove the warranty product",
     "btnAddProductStore": "Add the warranty product",
     "btnAddStore": "Add Store",
+    "btnCheck": "Check information",
     "uploadRecipt": "Upload Picture",
     "TakePicture": "Take a Picture",
     "Suggestion": "Suggestion.....",
@@ -70,14 +75,14 @@
     "subType2": "Electricty",
     "subType3": "Plumber",
     "subType4": "General",
-    "otherType": "Register for office project, hotel and office membership (non-residential)",
-    "name": "Name to identify membership or contact person (in case of individual)",
+    "otherType": "Register for project membership such as hotel, office (non-residential)",
+    "name": "Name to identify membership or contact person (in case of personal)",
     "surname": "Surname",
     "CompanyName": "Name to identify membership (in case of company, hotel, office, etc.)",
     "tel": "Telephone Number",
     "mobile": "Mobile Number",
     "Email": "Email (Please specify for confirming the registration)",
-    "titleAddress1": "Installation address to issue the receipt",
+    "titleAddress1": "Installation address",
     "titleAddress2": "Billing address",
     "installAddress": "Product installation address* (Can not be changed)",
     "canChanged": "(Can not be changed)",
@@ -92,5 +97,40 @@
     "selectDistrict": "- Please select District -",
     "selectSubDistrict": "- Please select Subdistrict -",
     "btnedit": "Edit"
+  },
+  "registerConfirm": {
+    "type": "Type of Membership",
+    "name": "Name",
+    "surname": "Surname",
+    "company": "Company Name",
+    "tel": "Telephone Number",
+    "mobile": "Mobile Number",
+    "email": "Email",
+    "address": "Address",
+    "serviceCenter": "Service Center"
+  },
+  "warrantyConfirm": {
+    "title": "Warranty Registration",
+    "titleCustomerData": "Customer Information",
+    "MemberID": "Member ID",
+    "Name": "Name",
+    "TelephoneNumber": "Telephone Number",
+    "MobileNumber": "Mobile Number",
+    "Email": "Email",
+    "titleAddress": "Installation Address",
+    "address": "Product installation address",
+    "titleProduct": "Product Information",
+    "ProvinceOfPurchase": "Province of purchase",
+    "date": "Day / Month / Year of purchase",
+    "StoreName": "Store Name",
+    "ReceiptNumber": "Receipt number",
+    "WarrantyNumber": "Warranty number",
+    "ProductType": "Product Type",
+    "ProductCode": "Product Code",
+    "OtherProductCode": "Product Code (other)",
+    "Qty": "Number of pieces purchased",
+    "Barcode": "Barcode",
+    "btnEdit": "Edit",
+    "btnConfirm": "Confirm"
   }
 }

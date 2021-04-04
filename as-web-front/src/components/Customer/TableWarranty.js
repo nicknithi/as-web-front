@@ -61,10 +61,10 @@ export default function TestDataTable({ customer_id }) {
     return resWarranty;
   };
   useEffect(async () => {
-    const res = await GetProvinceData();
+    const res = await GetProvinceData(1);
     setDataProvince(res);
-    Type = await getProductType();
-    Store = await getAllStore();
+    Type = await getProductType(1);
+    Store = await getAllStore(1);
     const resWarranty = await getWarrantyByCustomerId(customer_id);
 
     const resWarrantySetProduct = await processArray(resWarranty);

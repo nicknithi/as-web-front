@@ -96,6 +96,16 @@ export default function Warranty({ data, RenderColumn }) {
         </div>
         {true && <FormWarranty Confirm={Confirm} />}
       </div>
+      <div className="row justify-content-center mt-3">
+        <ButtonMain
+          title={t("website.btnBack")}
+          color="#636363"
+          BgColor="#f1c400"
+          handleClick={() => {
+            window.location = "/";
+          }}
+        />
+      </div>
     </div>
   );
 }

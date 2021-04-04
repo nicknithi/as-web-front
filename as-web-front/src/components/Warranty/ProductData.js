@@ -16,6 +16,7 @@ import InputProcuctCode from "../Input/inputProcuctCode";
 import InputProcuctName from "../Input/inputProductName";
 import http from "../../axios";
 import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
 import { getProductType, getStoreByProvinceData } from "../../GetDataDropDown";
 export default function ProductData({
   handleChangInput,
@@ -29,9 +30,14 @@ export default function ProductData({
   Confirm,
   FileWaranty,
 }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   useEffect(async () => {
-    const resTypeID = await getProductType();
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    const resTypeID = await getProductType(lang);
     setDataTypeId([
       { id: 0, value: t("warranthForm.selectType") },
       ...resTypeID,
@@ -64,7 +70,11 @@ export default function ProductData({
   const [startDate, setStartDate] = useState(new Date());
 
   const getStoreByProvince = async (Province_id) => {
-    const storeDataSet = await getStoreByProvinceData(Province_id);
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    const storeDataSet = await getStoreByProvinceData(Province_id, lang);
     const storeDataSetTemp = [...storeData];
 
     const dpStoreData = [

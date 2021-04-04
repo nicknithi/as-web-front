@@ -5,6 +5,8 @@ import DropDownProvince from "../Input/dropDownProvince";
 import DropDownDistrict from "../Input/dropDownDistrict";
 import DropDownSubDistrict from "../Input/dropDownSubDistrict";
 import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
+import { GetAllDataCareCenter } from "../../GetDataDropDown";
 function AddressSetting({
   Confirm,
   handleChangInput,
@@ -23,16 +25,31 @@ function AddressSetting({
   setSubDistrictDN,
   DisableFromSearch,
 }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
 
-  const getProvinceDropDown = (e) => {
+  const getProvinceDropDown = async (e) => {
     if (e.target) {
       const DataSet = { ...FormDataWarranty };
       DataSet.Customer_Province = parseInt(e.target.value);
       DataSet.Customer_District = "";
       DataSet.Customer_SubDistrict = "";
       DataSet.Customer_ZipCode = "";
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      const resServiceCenter = await GetAllDataCareCenter(lang, e.target.value);
+      if (resServiceCenter && resServiceCenter.length) {
+        DataSet.Service_Center = resServiceCenter[0].id;
+        DataSet.Service_Center_Name = resServiceCenter[0].name;
+        console.log("test", resServiceCenter);
+        // Service_Center: "",
+        // Service_Center_Name: "",
+        console.log("resServiceCenter", resServiceCenter);
+      }
+
       setFormDataWarranty(DataSet);
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
@@ -153,6 +170,17 @@ function AddressSetting({
               }
               className="as-input"
               required
+            />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-6">
+            <label className="">{t("register.careCenter")}</label>
+            <input
+              type="text"
+              className="as-input"
+              readOnly={true}
+              value={FormDataWarranty.Service_Center_Name}
             />
           </div>
         </div>
