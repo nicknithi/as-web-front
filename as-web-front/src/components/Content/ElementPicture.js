@@ -34,7 +34,8 @@ export default function ElementPicture({ data, index }) {
       )}
       {data.flag_button === 1 && (
         <div className="d-flex justify-content-center mb-3 button-element">
-          {data.name == "SIZE807x1141.png" ? (
+          {data.name == "SIZE807x1141.png" ||
+          data.name == "SIZE807x1141_2.png" ? (
             <a
               className="btn rounded-0"
               onClick={() => {

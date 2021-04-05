@@ -3,7 +3,9 @@ import "../../assets/scss/login.scss";
 import ButtonMain from "../button/ButtonMain";
 import http from "../../axios";
 import { useCookies } from "react-cookie";
+import { useTranslation } from "react-i18next";
 export default function FromLogin() {
+  const [t, i18n] = useTranslation("common");
   const [cookies, setCookie] = useCookies(["customerID"]);
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,12 +25,12 @@ export default function FromLogin() {
   });
   return (
     <div className="as-login  pb-5 mb-4">
-      <h3 className="title">ลงทะเบียนสมัครสมาชิก</h3>
+      <h3 className="title">{t("Login.title")}</h3>
       <form onSubmit={handleLogin}>
         <div className="as-login-form py-5">
           <div className="row">
             <div className="col-md-4 mx-auto">
-              <label className="">ชื่อล็อกอิน</label>
+              <label className="">{t("Login.username")}</label>
               <input
                 type="text"
                 className="as-input"
@@ -41,7 +43,7 @@ export default function FromLogin() {
           </div>
           <div className="row">
             <div className="col-md-4 mx-auto">
-              <label className="">รหัสผ่าน</label>
+              <label className="">{t("Login.password")}</label>
               <input
                 type="password"
                 className="as-input"
@@ -55,14 +57,14 @@ export default function FromLogin() {
           <div className="row">
             <div className="col-md-4 mx-auto text-right">
               <label>
-                <a href="/forgotpassowrd">ลืมรหัสผ่าน</a>
+                <a href="/forgotpassowrd">{t("Login.forget")}</a>
               </label>
             </div>
           </div>
           <div className="row">
             <div className="mx-auto">
               <ButtonMain
-                title="เข้าสู่ระบบ"
+                title={t("Login.btn")}
                 color="#636363"
                 BgColor="#f1c400"
               />

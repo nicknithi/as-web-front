@@ -48,7 +48,7 @@ export default function RegisterConfirm({ data, setCheckData, Lastsubmit }) {
         <div className="">
           {t("registerConfirm.serviceCenter")}:{" "}
           <span className="font-weight-normal">
-            {data.Service_Center || ""}
+            {data.Service_Center_Name || ""}
           </span>
         </div>
         <div className="">

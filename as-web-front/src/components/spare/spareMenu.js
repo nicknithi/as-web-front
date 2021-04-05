@@ -10,6 +10,7 @@ import InputSearch from "../Input/InputSearch";
 import LoadingContent from "../LoadingContent";
 import ItemSpare from "../spare/ItemSpare";
 import ButtonMain from "../button/ButtonMain";
+import { useTranslation } from "react-i18next";
 import {
   GetManageProductSparePartById,
   GetAllMenuProduct_Sparepart,
@@ -17,6 +18,7 @@ import {
   GetDataProduct_SparepartByClassified2,
 } from "../../GetProduct";
 export default function SpareMenu() {
+  const [t, i18n] = useTranslation("common");
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
   const [SpateDetail, setSpateDetail] = useState({});
@@ -255,7 +257,7 @@ export default function SpareMenu() {
                       <div className="detail p-3">
                         {SpateDetail.product_old_code && (
                           <label>
-                            รหัส
+                            {t("Product.code")}
                             <span className="ml-2">
                               {SpateDetail.product_old_code}
                             </span>
@@ -264,25 +266,25 @@ export default function SpareMenu() {
                         <br />
                         {SpateDetail.product_name && (
                           <label>
-                            ชื่อสินค้า
+                            {t("Product.ProductName")}
                             <span className="ml-2">
                               {SpateDetail.product_name}
                             </span>
                           </label>
                         )}
-                        <br />
+                        {/* <br />
                         {SpateDetail.model && SpateDetail.model.label && (
                           <label>
-                            ชื่อรุ่น
+                            {t("Product.ProductName")}
                             <span className="ml-2">
                               {SpateDetail.model.label}
                             </span>
                           </label>
-                        )}
+                        )} */}
                         <br />
                         {SpateDetail.active !== null && (
                           <label>
-                            สถานะ
+                            {t("Product.Status")}
                             <span className="ml-2">
                               {SpateDetail.active ? "Active" : "Discontinuted"}
                             </span>
@@ -294,19 +296,19 @@ export default function SpareMenu() {
                             href={`/การติดตั้ง?id=${SpateDetail.id}`}
                             // onClick={() => setActiveMenu(1)}
                           >
-                            วิธีติดตั้ง
+                            {t("Product.installation")}
                           </a>
                           <button
                             className={`${isActive(2)}`}
                             onClick={() => setActiveMenu(2)}
                           >
-                            ชิ้นส่วนอะไหล่
+                            {t("Product.spare")}
                           </button>
                           <button
                             className={`${isActive(3)}`}
                             onClick={() => setActiveMenu(3)}
                           >
-                            คลิปวิดีโอ
+                            {t("Product.video")}
                           </button>
                         </div>
                       </div>

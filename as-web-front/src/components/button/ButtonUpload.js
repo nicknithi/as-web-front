@@ -12,7 +12,6 @@ export default function ButtonUpload({ title, uploadImg, index, Confirm }) {
       </label>
       <input
         type="file"
-        name="photo"
         id={`upload-photo${index}`}
         disabled={!Confirm}
         index={index}

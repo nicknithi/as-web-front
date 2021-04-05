@@ -385,6 +385,7 @@ export default function Register({ data }) {
                           Customer_Type: e.target.value,
                         })
                       }
+                      required
                     />
                     <span className="checkmark"></span>
                   </label>
@@ -406,6 +407,7 @@ export default function Register({ data }) {
                           Customer_Type: e.target.value,
                         })
                       }
+                      required
                     />
                     <span className="checkmark"></span>
                   </label>
@@ -426,6 +428,7 @@ export default function Register({ data }) {
                           Customer_Type: e.target.value,
                         })
                       }
+                      required
                     />
                     <span className="checkmark"></span>
                   </label>
@@ -449,6 +452,7 @@ export default function Register({ data }) {
                               Customer_Contractor_Type: e.target.value,
                             })
                           }
+                          required
                         />
                         <span className="checkmark"></span>
                       </label>
@@ -470,6 +474,7 @@ export default function Register({ data }) {
                               Customer_Contractor_Type: e.target.value,
                             })
                           }
+                          required
                         />
                         <span className="checkmark"></span>
                       </label>
@@ -491,6 +496,7 @@ export default function Register({ data }) {
                               Customer_Contractor_Type: e.target.value,
                             })
                           }
+                          required
                         />
                         <span className="checkmark"></span>
                       </label>
@@ -512,6 +518,7 @@ export default function Register({ data }) {
                               Customer_Contractor_Type: e.target.value,
                             })
                           }
+                          required
                         />
                         <span className="checkmark"></span>
                       </label>
@@ -532,7 +539,6 @@ export default function Register({ data }) {
                           FirstName: e.target.value,
                         })
                       }
-                      required
                     />
                   </div>
                   <div className="col-md-6">
@@ -548,7 +554,6 @@ export default function Register({ data }) {
                           LastName: e.target.value,
                         })
                       }
-                      required
                     />
                   </div>
                 </div>
@@ -717,7 +722,7 @@ export default function Register({ data }) {
                   service center
                   <a href={t("link.serviceCenter")} className="alert-link">
                     {" "}
-                    click
+                    Click
                   </a>
                 </div>
                 <div>

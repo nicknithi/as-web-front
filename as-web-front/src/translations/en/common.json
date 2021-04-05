@@ -132,5 +132,20 @@
     "Barcode": "Barcode",
     "btnEdit": "Edit",
     "btnConfirm": "Confirm"
+  },
+  "Login": {
+    "title": "Membership Login",
+    "username": "Login Name",
+    "password": "Password",
+    "btn": "Login",
+    "forget": "Forgot Password"
+  },
+  "Product": {
+    "code": "Code",
+    "ProductName": "Product Name",
+    "Status": "Status",
+    "spare": "Spare Parts",
+    "installation": "Installation",
+    "video": "Video Clip"
   }
 }

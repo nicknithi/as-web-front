@@ -11,6 +11,7 @@ import LoadingContent from "../LoadingContent";
 import ItemSpare from "../spare/ItemSpare";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
+import { useTranslation } from "react-i18next";
 import {
   GetManageProductSparePartById,
   GetManageProductInstallationById,
@@ -19,6 +20,7 @@ import {
   GetDataProduct_InstallationByClassified2,
 } from "../../GetProduct";
 export default function InstallationMenu() {
+  const [t, i18n] = useTranslation("common");
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
   const [SpateDetail, setSpateDetail] = useState({});
@@ -246,7 +248,7 @@ export default function InstallationMenu() {
                       <div className="detail p-3">
                         {SpateDetail.installation_product_old_code && (
                           <label>
-                            รหัส
+                            {t("Product.code")}
                             <span className="ml-2">
                               {SpateDetail.installation_product_old_code}
                             </span>
@@ -255,39 +257,39 @@ export default function InstallationMenu() {
                         <br />
                         {SpateDetail.product_name && (
                           <label>
-                            ชื่อสินค้า
+                            {t("Product.ProductName")}
                             <span className="ml-2">
                               {SpateDetail.product_name}
                             </span>
                           </label>
                         )}
                         <br />
-                        {SpateDetail.model && SpateDetail.model.label && (
+                        {/* {SpateDetail.model && SpateDetail.model.label && (
                           <label>
                             ชื่อรุ่น
                             <span className="ml-2">
                               {SpateDetail.model.label}
                             </span>
                           </label>
-                        )}
+                        )} */}
                         <div className="relate-menu">
                           <button
                             className={`${isActive(1)} `}
                             onClick={() => setActiveMenu(1)}
                           >
-                            วิธีติดตั้ง
+                            {t("Product.installation")}
                           </button>
                           <button
                             className={`${isActive(2)}`}
                             onClick={() => setActiveMenu(2)}
                           >
-                            ชิ้นส่วนอะไหล่
+                            {t("Product.spare")}
                           </button>
                           <button
                             className={`${isActive(3)}`}
                             onClick={() => setActiveMenu(3)}
                           >
-                            คลิปวิดีโอ
+                            {t("Product.video")}
                           </button>
                         </div>
                       </div>

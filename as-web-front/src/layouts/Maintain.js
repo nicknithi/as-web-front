@@ -100,7 +100,7 @@ export default function Maintain({ data, RenderColumn }) {
 
       <div className="row d-flex justify-content-center mb-5">
         <ButtonMain
-          title="กลับ"
+          title={t("website.btnBack")}
           color="#636363"
           BgColor="#f1c400"
           handleClick={() => {

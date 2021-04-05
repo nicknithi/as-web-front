@@ -203,6 +203,7 @@ function FormWarranty({ Confirm }) {
           setDisableFromSearch(true);
         } else {
           const oldData = { ...FormDataWarranty };
+          oldData.Customer_Code = code;
           oldData.Customer_Firstname = "";
           oldData.Customer_Lastname = "";
           oldData.Customer_Tel = "";
@@ -433,16 +434,24 @@ function FormWarranty({ Confirm }) {
       const dataLoop = dataFromLast;
       const dataShow = await Promise.all(
         dataLoop.map(async (item, index) => {
-          item.Customer_Province = Province.find(
-            (p) => p.id === item.Customer_Province
-          ).province_Name;
-
-          item.Customer_District = District.find(
-            (d) => d.id === item.Customer_District
-          ).district_Name;
-          item.Customer_SubDistrict = SubDistrict.find(
+          //console.log("5555", item.Customer_Province, Province);
+          let tempAddressID = 0;
+          tempAddressID = Province.find((p) => p.id === item.Customer_Province);
+          if (tempAddressID) {
+            item.Customer_Province = tempAddressID.value;
+          }
+          tempAddressID = 0;
+          tempAddressID = District.find((d) => d.id === item.Customer_District);
+          if (tempAddressID) {
+            item.Customer_District = tempAddressID.value;
+          }
+          tempAddressID = 0;
+          tempAddressID = SubDistrict.find(
             (d) => d.id === item.Customer_SubDistrict
-          ).sub_District_Name;
+          ).value;
+          if (tempAddressID) {
+            item.Customer_SubDistrict = tempAddressID.value;
+          }
           // item.Purchase_Province = Province.find(
           //   (d) => d.id === item.Purchase_Province
           // ).province_Name;
@@ -636,9 +645,9 @@ function FormWarranty({ Confirm }) {
               />
             </div>
           </div>
-          <div className="text-center mt-3 mb-4">
+          {/* <div className="text-center mt-3 mb-4">
             <ButtonMain title="กลับ" color="#636363" BgColor="#f1c400" />
-          </div>
+          </div> */}
         </div>
       )}
     </div>

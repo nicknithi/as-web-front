@@ -184,6 +184,13 @@ function AddressSetting({
             />
           </div>
         </div>
+        <div className="alert pl-0" role="alert">
+          service center
+          <a href={t("link.serviceCenter")} className="alert-link">
+            {" "}
+            Click
+          </a>
+        </div>
         <div>
           <label className="mt-3">{t("warranthForm.map")}</label>
           <GoogleMap

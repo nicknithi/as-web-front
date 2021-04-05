@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FromLogin from "../components/Login/FromLogin";
 import ElementBanner from "../../src/components/Content/ElementBanner";
+
 export default function Login({ data }) {
   const [ImgBanner, setImgBanner] = useState("");
   useEffect(() => {

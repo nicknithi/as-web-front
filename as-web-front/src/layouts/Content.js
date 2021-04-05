@@ -16,7 +16,7 @@ import ElementCarousel from "../components/Content/ElementCarousel";
 import SpareListByModel from "../layouts/SpareListByModel";
 import SpareDetail from "../layouts/SpareDetail";
 import TabContent from "../layouts/TabContent";
-
+import TapBenefit from "../layouts/TapBenefit";
 import ButtonMain from "../components/button/ButtonMain";
 import Login from "../layouts/Login";
 import Register from "../layouts/Register";
@@ -230,16 +230,22 @@ export default function Content() {
     return <Register data={Content} />;
   } else if (maintain === 20 || maintain === 38) {
     return <Maintain data={Content} RenderColumn={RenderColumn} />;
-  } else if (customPath === "ศูนย์บริการ สาขา") {
+  } else if (
+    customPath === "ศูนย์บริการ สาขา" ||
+    customPath === "Customer Care Center Branch"
+  ) {
     return (
-      <TabContent
-        title={"ศูนย์บริการ สาขา"}
+      <TapBenefit
+        title={""}
         data={Content}
         RenderColumn={RenderColumn}
         getBannerContent={getBannerContent}
       />
     );
-  } else if (customPath === "การแก้ไขปัญหาผลิตภัณฑ์") {
+  } else if (
+    customPath === "การแก้ไขปัญหาผลิตภัณฑ์" ||
+    customPath === "Troubleshooting"
+  ) {
     return (
       <TabContent
         data={Content}
@@ -252,8 +258,8 @@ export default function Content() {
     customPath === "Benefit"
   ) {
     return (
-      <TabContent
-        title={"สิทธิประโยชน์ของสมาชิก"}
+      <TapBenefit
+        title={""}
         data={Content}
         RenderColumn={RenderColumn}
         getBannerContent={getBannerContent}
