@@ -22,7 +22,7 @@ export default function SpareMenu() {
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
   const [SpateDetail, setSpateDetail] = useState({});
-  const [ActiveRelate, setActiveRelate] = useState(2);
+  const [ActiveRelate, setActiveRelate] = useState(0);
   const [ActiveClass1, setActiveClass1] = useState(0);
   const [ActiveClass2, setActiveClass2] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -292,24 +292,26 @@ export default function SpareMenu() {
                         )}
                         <div className="relate-menu">
                           <a
-                            className={`${isActive(1)} `}
+                            className={`${isActive(1)} mr-3`}
                             href={`/การติดตั้ง?id=${SpateDetail.id}`}
                             // onClick={() => setActiveMenu(1)}
                           >
                             {t("Product.installation")}
                           </a>
-                          <button
-                            className={`${isActive(2)}`}
-                            onClick={() => setActiveMenu(2)}
-                          >
-                            {t("Product.spare")}
-                          </button>
-                          <button
+                          {SpateDetail.sparepart.length > 0 && (
+                            <button
+                              className={`${isActive(2)}`}
+                              onClick={() => setActiveMenu(2)}
+                            >
+                              {t("Product.spare")}
+                            </button>
+                          )}
+                          {/* <button
                             className={`${isActive(3)}`}
                             onClick={() => setActiveMenu(3)}
                           >
                             {t("Product.video")}
-                          </button>
+                          </button> */}
                         </div>
                       </div>
 
@@ -363,7 +365,7 @@ export default function SpareMenu() {
       <div className="container">
         <div className="row d-flex justify-content-center mb-5">
           <ButtonMain
-            title="กลับ"
+            title={t("website.btnBack")}
             color="#636363"
             BgColor="#f1c400"
             handleClick={() => {

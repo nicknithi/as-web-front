@@ -58,13 +58,14 @@
     "btnRemoveProduct": "Remove the warranty product",
     "btnAddProductStore": "Add the warranty product",
     "btnAddStore": "Add Store",
-    "btnCheck": "Check information",
+    "btnCheck": "Check Information",
     "uploadRecipt": "Upload Picture",
     "TakePicture": "Take a Picture",
     "Suggestion": "Suggestion.....",
     "scanBarcode": "Scan Barcode",
     "confirmInput": "I accept the privacy policy.",
-    "readDetail": "Read more"
+    "readDetail": "Read more",
+    "alertSuccess": "Thank you for registering your product warranty with American Standard. The system has already saved your registration information."
   },
   "register": {
     "title": "Customer Information",
@@ -72,8 +73,8 @@
     "residential": "Register for residential membership",
     "contractor": "Register for contractor membership",
     "subType1": "Repair/installation of sanitary ware",
-    "subType2": "Electricty",
-    "subType3": "Plumber",
+    "subType2": "Electric",
+    "subType3": "Plumbing",
     "subType4": "General",
     "otherType": "Register for project membership such as hotel, office (non-residential)",
     "name": "Name to identify membership or contact person (in case of personal)",
@@ -84,19 +85,21 @@
     "Email": "Email (Please specify for confirming the registration)",
     "titleAddress1": "Installation address",
     "titleAddress2": "Billing address",
-    "installAddress": "Product installation address* (Can not be changed)",
+    "installAddress": "Installation address to issue the receipt",
     "canChanged": "(Can not be changed)",
     "province": "Province",
     "district": "District",
     "subdistrict": "Subdistrict",
     "zipCode": "ZIP Code",
-    "careCenter": "Customer Care Center Branch",
+    "careCenter": "ศูนย์บริการสาขา / Customer Care Center Branch",
     "map": "Map (Please Specify)",
     "Submit": "Confirm",
     "selectProvince": "- Please select Province -",
     "selectDistrict": "- Please select District -",
     "selectSubDistrict": "- Please select Subdistrict -",
-    "btnedit": "Edit"
+    "btnedit": "Edit",
+    "btnCheck": "Check Information",
+    "alertSuccess": "Thank you for your interest in registering American Standard Membership. Our officer who responsible on your area will contact you for informing the detail of benefits soon."
   },
   "registerConfirm": {
     "type": "Type of Membership",
@@ -107,7 +110,7 @@
     "mobile": "Mobile Number",
     "email": "Email",
     "address": "Address",
-    "serviceCenter": "Service Center"
+    "serviceCenter": "ศูนย์บริการสาขา / Customer Care Center Branch"
   },
   "warrantyConfirm": {
     "title": "Warranty Registration",
@@ -123,6 +126,7 @@
     "ProvinceOfPurchase": "Province of purchase",
     "date": "Day / Month / Year of purchase",
     "StoreName": "Store Name",
+    "OtherStoreName": "Store Name (other)",
     "ReceiptNumber": "Receipt number",
     "WarrantyNumber": "Warranty number",
     "ProductType": "Product Type",

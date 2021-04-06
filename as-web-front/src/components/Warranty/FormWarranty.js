@@ -439,18 +439,24 @@ function FormWarranty({ Confirm }) {
           tempAddressID = Province.find((p) => p.id === item.Customer_Province);
           if (tempAddressID) {
             item.Customer_Province = tempAddressID.value;
+          } else {
+            item.Customer_Province = "";
           }
           tempAddressID = 0;
           tempAddressID = District.find((d) => d.id === item.Customer_District);
           if (tempAddressID) {
             item.Customer_District = tempAddressID.value;
+          } else {
+            item.Customer_District = "";
           }
           tempAddressID = 0;
           tempAddressID = SubDistrict.find(
             (d) => d.id === item.Customer_SubDistrict
-          ).value;
+          );
           if (tempAddressID) {
             item.Customer_SubDistrict = tempAddressID.value;
+          } else {
+            item.Customer_SubDistrict = "";
           }
           // item.Purchase_Province = Province.find(
           //   (d) => d.id === item.Purchase_Province
@@ -544,6 +550,7 @@ function FormWarranty({ Confirm }) {
       if (successCheck > 0) {
         alert("ไม่สำเร็จ กรุณาลองใหม่");
       } else {
+        alert(t("warranthForm.alertSuccess"));
         window.location = "/";
       }
     });

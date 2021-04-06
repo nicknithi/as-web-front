@@ -6,6 +6,7 @@ export default function DropDown({
   handleEvent,
   DataFromRegister,
   setDataFromRegister,
+  Confirm,
 }) {
   const [t, i18n] = useTranslation("common");
   const [title, setTitleState] = useState(t("register.selectSubDistrict"));
@@ -43,6 +44,7 @@ export default function DropDown({
         name="Customer_Province"
         onChange={handleSelect}
         required
+        disabled={!Confirm}
       >
         {data.map((item, index) => (
           <option key={index} value={item.id} titleSet={item.value}>

@@ -190,8 +190,22 @@ export default function ProductData({
   const setOnOtherCode = (e) => {
     const setOnOtherCodeSet = [...FormDataProduct];
     setOnOtherCodeSet[index].Product_Code_Other = e.target.value;
+
     setFormDataProduct(setOnOtherCodeSet);
   };
+  useEffect(() => {
+    if (FormDataProduct[index].Product_Code_Other) {
+      console.log("if");
+      document.querySelector(
+        `.input-product-code-${index} .rbt input`
+      ).required = false;
+    } else {
+      console.log("else test12");
+      document.querySelector(
+        `.input-product-code-${index} .rbt input`
+      ).required = true;
+    }
+  }, [FormDataProduct[index].Product_Code_Other]);
   const handleScanBarCode = () => {
     setTriggleBarcode(true);
   };

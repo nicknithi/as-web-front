@@ -73,6 +73,8 @@ export default function FormRate({ handleChangInput, Confirm }) {
       <div className="row">
         <div className="col-md-4 mx-auto">
           <textarea
+            rows="3"
+            maxlength="200"
             onChange={handleCommend}
             disabled={!Confirm}
             className="w-100 mt-3"

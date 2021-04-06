@@ -304,6 +304,7 @@ export default function Register({ data }) {
   const Lastsubmit = async () => {
     const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
     if (res.data.message === "Success!") {
+      alert(t("register.alertSuccess"));
       window.location = "/เข้าสู่ระบบสมาชิก";
     }
   };
@@ -636,7 +637,7 @@ export default function Register({ data }) {
                     <label className="">
                       {DataFromRegister.Customer_Type === "2"
                         ? t("register.titleAddress2")
-                        : t("register.titleAddress1")}
+                        : t("register.installAddress")}
                       * {t("register.canChanged")}
                     </label>
                     <input
@@ -658,6 +659,7 @@ export default function Register({ data }) {
                   <div className="col-md-6">
                     <label className="">{t("register.province")}*</label>
                     <DropdownProvince
+                      Confirm={Confirm}
                       handleEvent={getProvinceDropDown}
                       setDataFromRegister={setDataFromRegister}
                       DataFromRegister={DataFromRegister}
@@ -667,6 +669,7 @@ export default function Register({ data }) {
                   <div className="col-md-6">
                     <label className="">{t("register.district")}*</label>
                     <DropdownDistrict
+                      Confirm={Confirm}
                       handleEvent={getDistrictDropDown}
                       setDataFromRegister={setDataFromRegister}
                       DataFromRegister={DataFromRegister}
@@ -678,6 +681,7 @@ export default function Register({ data }) {
                   <div className="col-md-6 mt-3">
                     <label className="">{t("register.subdistrict")}*</label>
                     <DropdownSubDistrict
+                      Confirm={Confirm}
                       handleEvent={getSubDistrictDropDown}
                       setDataFromRegister={setDataFromRegister}
                       DataFromRegister={DataFromRegister}
@@ -736,7 +740,8 @@ export default function Register({ data }) {
               </div>
               <div className="row mt-3 d-flex justify-content-center">
                 <ButtonMain
-                  title={t("register.Submit")}
+                  Confirm={Confirm}
+                  title={t("register.btnCheck")}
                   color="#636363"
                   BgColor="#f1c400"
                 />

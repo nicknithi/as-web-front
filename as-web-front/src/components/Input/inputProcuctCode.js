@@ -101,8 +101,14 @@ export default function InputProcuctCode({
     }
     typeahead.current.hideMenu();
   }, [FormDataProduct[index].Product_code]);
+
+  useEffect(() => {
+    document.querySelector(
+      `.input-product-code-${index} .rbt input`
+    ).required = true;
+  }, []);
   return (
-    <div className="input-barcode">
+    <div className={`input-barcode input-product-code-${index}`}>
       <AsyncTypeahead
         filterBy={filterBy}
         id="async-example"

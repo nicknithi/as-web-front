@@ -65,6 +65,9 @@ function FormComfirm(props) {
                 <br />
                 {t("warrantyConfirm.StoreName")}: {item.Store_ID || ""}
                 <br />
+                {t("warrantyConfirm.OtherStoreName")}:{" "}
+                {item.Store_Name_Other || ""}
+                <br />
                 {t("warrantyConfirm.ReceiptNumber")}:{" "}
                 {item.Receipt_Number || ""}
                 <br />

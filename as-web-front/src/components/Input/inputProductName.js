@@ -89,8 +89,13 @@ export default function InputProductName({
     }
     typeahead.current.hideMenu();
   }, [FormDataProduct[index].product_Name]);
+  useEffect(() => {
+    document.querySelector(
+      `.input-product-name-${index} .rbt input`
+    ).required = true;
+  }, []);
   return (
-    <div className="input-barcode">
+    <div className={`input-barcode input-product-name-${index}`}>
       <AsyncTypeahead
         ref={typeahead}
         disabled={!Confirm}

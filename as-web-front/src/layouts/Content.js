@@ -222,7 +222,21 @@ export default function Content() {
     customPath === "เข้าสู่ระบบสมาชิก" ||
     customPath === "Membership Login"
   ) {
-    return <Login data={Content} />;
+    return (
+      <>
+        <Login data={Content} />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
+    );
   } else if (
     customPath === "ลงทะเบียนสมัครสมาชิก" ||
     customPath === "Membership Registration"
@@ -247,11 +261,23 @@ export default function Content() {
     customPath === "Troubleshooting"
   ) {
     return (
-      <TabContent
-        data={Content}
-        RenderColumn={RenderColumn}
-        getBannerContent={getBannerContent}
-      />
+      <>
+        <TabContent
+          data={Content}
+          RenderColumn={RenderColumn}
+          getBannerContent={getBannerContent}
+        />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
     );
   } else if (
     customPath === "สิทธิประโยชน์ของสมาชิก" ||

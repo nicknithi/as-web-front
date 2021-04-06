@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import ElementBanner from "../components/Content/ElementBanner";
 import "../assets/scss/content-tab.scss";
+import { useTranslation } from "react-i18next";
+import ButtonMain from "../components/button/ButtonMain";
 export default function TabContent({
   data,
   RenderColumn,
   getBannerContent,
   title,
 }) {
+  const [t, i18n] = useTranslation("common");
   let dataTitle = data[1] === undefined ? [] : [data[1]];
   let dataTap = [...data];
   dataTap.splice(1, 1);
@@ -40,7 +43,7 @@ export default function TabContent({
           </div>
         </div>
       ))}
-      <div className="container tab-header mb-3 py-3 border-top-0">
+      <div className="container tab-header mb-3 py-3 border-top-0 mt--">
         {title && <h3>{title}</h3>}
         {dataTap.map((item, index) => (
           <>
@@ -64,6 +67,14 @@ export default function TabContent({
           </div>
         </div>
       ))}
+      <div className="row d-flex justify-content-center mb-5">
+        <ButtonMain
+          title={t("website.btnBack")}
+          color="#636363"
+          BgColor="#f1c400"
+          handleClick={() => (window.location = "/")}
+        />
+      </div>
     </div>
   );
 }

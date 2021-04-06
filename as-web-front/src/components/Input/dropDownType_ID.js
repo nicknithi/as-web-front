@@ -31,6 +31,7 @@ export default function DropDownType_ID({ data, handleEvent, index, Confirm }) {
         index={index}
         disabled={!Confirm}
         onChange={handleSelect}
+        required
       >
         {data.map((item, index) => (
           <option key={index} value={item.id} titleSet={item.value}>

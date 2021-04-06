@@ -57,7 +57,10 @@ function AddressSetting({
       console.log("ggghhh", newSet);
       if (newSet.length) {
         console.log("55566888");
-        setDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+        setDistrict([
+          { id: "", value: t("warranthForm.selectDistrict") },
+          ...newSet,
+        ]);
       }
     }
   };
@@ -75,7 +78,10 @@ function AddressSetting({
       );
       console.log(newSet);
       if (newSet.length) {
-        setSubDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+        setSubDistrict([
+          { id: "", value: t("warranthForm.selectSubDistrict") },
+          ...newSet,
+        ]);
       }
     }
   };
