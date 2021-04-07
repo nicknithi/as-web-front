@@ -10,7 +10,10 @@ import InputSearch from "../Input/InputSearch";
 import LoadingContent from "../LoadingContent";
 import ItemSpare from "../spare/ItemSpare";
 import ButtonMain from "../button/ButtonMain";
+import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
+import queryString from "query-string";
+import { useLocation } from "react-router-dom";
 import {
   GetManageProductSparePartById,
   GetAllMenuProduct_Sparepart,
@@ -18,6 +21,7 @@ import {
   GetDataProduct_SparepartByClassified2,
 } from "../../GetProduct";
 export default function SpareMenu() {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
@@ -27,8 +31,15 @@ export default function SpareMenu() {
   const [ActiveClass2, setActiveClass2] = useState(0);
   const [loading, setLoading] = useState(false);
   const [Title, setTitle] = useState("รายการอะไหล่");
+
+  const { search } = useLocation();
+  const query = queryString.parse(search);
   useEffect(async () => {
-    const resMenu = await GetAllMenuProduct_Sparepart();
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    const resMenu = await GetAllMenuProduct_Sparepart(lang);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     console.log("resMenu12", resMenu);
@@ -43,6 +54,9 @@ export default function SpareMenu() {
       };
     });
     setContentRender(TempModelRender);
+    if (query.id) {
+      handleClickCard(query.id, "classified1");
+    }
   }, []);
   const isActiveClass1 = (id) => {
     if (ActiveClass1 === id) {
@@ -72,7 +86,11 @@ export default function SpareMenu() {
     setTitle(name);
     setActiveClass1(id);
     console.log("id", id);
-    let resClassified1 = await GetDataProduct_SparepartByClassified1(id);
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    let resClassified1 = await GetDataProduct_SparepartByClassified1(id, lang);
     let tempClassified1 = [...ContentRender];
 
     tempClassified1 = resClassified1 ? resClassified1 : [];
@@ -94,8 +112,11 @@ export default function SpareMenu() {
     const tempTitle = Title.split("/")[0];
     setTitle(`${tempTitle} / ${name}`);
     setActiveClass2(id);
-    console.log("id12", id);
-    let resClassified2 = await GetDataProduct_SparepartByClassified2(id);
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    let resClassified2 = await GetDataProduct_SparepartByClassified2(id, lang);
     let tempClassified2 = [...ContentRender];
 
     tempClassified2 = resClassified2 ? resClassified2 : [];
@@ -114,14 +135,19 @@ export default function SpareMenu() {
   const handleClickCard = async (id, type) => {
     setLoading(true);
     if (type === "model") {
-      let resMenu = await GetAllMenuProduct_Sparepart();
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      let resMenu = await GetAllMenuProduct_Sparepart(lang);
       resMenu = resMenu.find((m) => m.model_id === id);
       console.log("resMenuresMenu", resMenu);
 
       if (resMenu.classified.length > 0) {
         let tempindex = 0;
         let resClassified1 = await GetDataProduct_SparepartByClassified1(
-          resMenu.classified[0].classified_id
+          resMenu.classified[0].classified_id,
+          lang
         );
         setTitle(resMenu.classified[0].classified_name);
         let tempClassified1 = [...ContentRender];
@@ -138,7 +164,12 @@ export default function SpareMenu() {
         setContentRender(tempClassified1);
       }
     } else if (type === "classified1") {
-      const ProductClass1 = await GetManageProductSparePartById(id);
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      console.log("lang", lang);
+      const ProductClass1 = await GetManageProductSparePartById(id, lang);
       if (ProductClass1) {
         let temp = { ...SpateDetail };
         temp = ProductClass1;
@@ -158,8 +189,11 @@ export default function SpareMenu() {
       //   });
       // });
       // console.log("resMenunithi atsiri", resMenu);
-
-      const ProductClass2 = await GetManageProductSparePartById(id);
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      const ProductClass2 = await GetManageProductSparePartById(id, lang);
       if (ProductClass2) {
         let temp = { ...SpateDetail };
         temp = ProductClass2;
@@ -245,10 +279,10 @@ export default function SpareMenu() {
                   )} */}
                   <div className="row">
                     <div className="col-md-5">
-                      {SpateDetail.file.length > 0 && (
+                      {SpateDetail.sparepart_product_picture.length > 0 && (
                         <div className="img-detail">
                           <img
-                            src={`http://www.mostactive.info/${SpateDetail.file[0].path}`}
+                            src={`http://www.mostactive.info/${SpateDetail.sparepart_product_picture[0].path}`}
                           />
                         </div>
                       )}

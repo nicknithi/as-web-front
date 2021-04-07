@@ -8,11 +8,10 @@ export default function CardInstallation({ data, handleClickCard }) {
         style={{ width: "100%" }}
         className="installation-card border-0 mb-3"
       >
-        <div>
+        <div className="product-img">
           {data.product_picture && data.product_picture.length > 0 ? (
             <>
-              <Card.Img
-                variant="top"
+              <img
                 src={`http://www.mostactive.info/${data.product_picture[0].path}`}
               />
             </>

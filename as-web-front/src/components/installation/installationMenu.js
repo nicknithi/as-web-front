@@ -12,6 +12,7 @@ import ItemSpare from "../spare/ItemSpare";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
+import { useCookies } from "react-cookie";
 import {
   GetManageProductSparePartById,
   GetManageProductInstallationById,
@@ -20,6 +21,7 @@ import {
   GetDataProduct_InstallationByClassified2,
 } from "../../GetProduct";
 export default function InstallationMenu() {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
@@ -31,7 +33,11 @@ export default function InstallationMenu() {
   const query = queryString.parse(search);
 
   useEffect(async () => {
-    const resMenu = await GetAllMenuProduct_Installation();
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    const resMenu = await GetAllMenuProduct_Installation(lang);
     console.log("installation_menu", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
@@ -66,7 +72,14 @@ export default function InstallationMenu() {
   const handleClickClassified = async (id) => {
     setLoading(true);
     setSpateDetail({});
-    let resClassified1 = await GetDataProduct_InstallationByClassified1(id);
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    let resClassified1 = await GetDataProduct_InstallationByClassified1(
+      id,
+      lang
+    );
     let tempClassified1 = [...ContentRender];
     tempClassified1 = resClassified1 ? resClassified1 : [];
     tempClassified1 = tempClassified1.map((item, index) => {
@@ -84,7 +97,14 @@ export default function InstallationMenu() {
   const handleClickClassified2 = async (id) => {
     setLoading(true);
     setSpateDetail({});
-    let resClassified2 = await GetDataProduct_InstallationByClassified2(id);
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    let resClassified2 = await GetDataProduct_InstallationByClassified2(
+      id,
+      lang
+    );
     let tempClassified2 = [...ContentRender];
     tempClassified2 = resClassified2 ? resClassified2 : [];
     tempClassified2 = tempClassified2.map((item, index) => {
@@ -99,14 +119,19 @@ export default function InstallationMenu() {
     setLoading(false);
   };
   const handleClickCard = async (id, type) => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
     setLoading(true);
     if (type === "model") {
-      let resMenu = await GetAllMenuProduct_Installation();
+      let resMenu = await GetAllMenuProduct_Installation(lang);
       resMenu = resMenu.find((m) => m.installation_model_id === id);
       if (resMenu.installation_classified.length > 0) {
         let tempindex = 0;
         let resClassified1 = await GetDataProduct_InstallationByClassified1(
-          resMenu.installation_classified[0].installation_classified_id
+          resMenu.installation_classified[0].installation_classified_id,
+          lang
         );
 
         let tempClassified1 = [...ContentRender];
@@ -123,7 +148,7 @@ export default function InstallationMenu() {
       }
     } else if (type === "classified1") {
       // const ProductClass1 = await GetManageProductSparePartById(id);
-      let ProductClass1 = await GetManageProductInstallationById(id);
+      let ProductClass1 = await GetManageProductInstallationById(id, lang);
       if (ProductClass1) {
         ProductClass1 = {
           ...ProductClass1,
@@ -142,7 +167,7 @@ export default function InstallationMenu() {
         setSpateDetail(temp);
       }
     } else if (type === "classified2") {
-      let ProductClass2 = await GetManageProductSparePartById(id);
+      let ProductClass2 = await GetManageProductSparePartById(id, lang);
 
       ProductClass2 = {
         ...ProductClass2,
@@ -264,17 +289,17 @@ export default function InstallationMenu() {
                         )} */}
                         <div className="relate-menu">
                           <button
-                            className={`${isActive(1)} `}
+                            className={`${isActive(1)} mr-3`}
                             onClick={() => setActiveMenu(1)}
                           >
                             {t("Product.installation")}
                           </button>
-                          <button
-                            className={`${isActive(2)}`}
-                            onClick={() => setActiveMenu(2)}
+                          <a
+                            href={`/อะไหล่?id=${SpateDetail.product_id}`}
+                            className="mr-3"
                           >
                             {t("Product.spare")}
-                          </button>
+                          </a>
                           <button
                             className={`${isActive(3)}`}
                             onClick={() => setActiveMenu(3)}
@@ -288,15 +313,31 @@ export default function InstallationMenu() {
                     </div>
                   </div>
                 </div>
-                {/* <div className="relate-contet mt-5">
-                  <div className={`${isActive(2)}`}>
-                    <div className="row">
-                      {SpateDetail.sparepart.map((item, index) => (
-                        <ItemSpare data={item} />
-                      ))}
+                {SpateDetail.installation_file.length > 0 && (
+                  <>
+                    <div className="relate-contet mt-5">
+                      <div className={`${isActive(1)}`}>
+                        <div className="install-content pl-4">การติดตั้ง</div>
+                        <div className="container">
+                          <div className="row">
+                            {SpateDetail.installation_file.map(
+                              (item, index) => (
+                                <a
+                                  href={`http://www.mostactive.info/${item.path}`}
+                                  target="_blank"
+                                >
+                                  <div className="title-install pl-3">{`การติดตั้ง ${
+                                    index + 1
+                                  }`}</div>
+                                </a>
+                              )
+                            )}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div> */}
+                  </>
+                )}
               </div>
             ) : (
               <div className="row">

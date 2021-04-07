@@ -23,6 +23,29 @@
     }
   }
   .card {
+    .product-img {
+      position: relative;
+      overflow: hidden;
+      padding-bottom: 100%;
+      &::after {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: auto;
+        content: "";
+        transition: all 0.3s ease-in-out;
+      }
+      img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%) scale(1);
+        width: 100%;
+        transition: all 0.3s ease-in-out;
+      }
+    }
     border: none;
     border-radius: 0%;
     .card-header {
@@ -52,19 +75,23 @@
       }
     }
     .card-body {
+      .card-content {
+        line-height: 2;
+        transition: all 0.3s ease-in-out;
+      }
       padding: 0px;
     }
     .main-menu {
       //height: 40px;
-      font-size: 22px;
-      // font-weight: bold;
+
+      font-weight: bold;
       text-align: left;
       background-color: #efeff0;
       width: 100%;
       display: inline-flex;
       align-items: center;
       padding-left: 10px !important;
-      border-bottom: 1px solid rgb(189, 189, 189) !important;
+      border-bottom: 1px solid rgba(233, 233, 233, 0.397) !important;
       border: none;
       color: inherit;
       &.active {
@@ -77,8 +104,7 @@
     .sub-menu {
       cursor: pointer;
       height: auto;
-      font-size: 22px;
-      //font-weight: bold;
+      font-weight: bold;
       text-align: left;
       background-color: #efeff0;
       width: 100%;
@@ -89,13 +115,22 @@
       border: none;
       color: inherit;
       &.active {
-        color: #58a7af;
+        color: #f1c400;
       }
       svg {
         margin-right: 10px;
       }
     }
     &:hover {
+      .product-img {
+        &::after {
+          pointer-events: auto;
+          background-color: rgba(0, 0, 0, 0.219);
+        }
+        img {
+          transform: translateY(-50%) scale(1.1);
+        }
+      }
       .card-body {
         .card-content {
           background-color: #f1c400;
@@ -168,11 +203,33 @@
       }
     }
   }
+
   .relate-contet {
     & > div {
       display: none;
       &.active {
         display: block !important;
+      }
+      .install-content {
+        border-left: 3px solid #f1c400;
+      }
+      .title-install {
+        position: relative;
+        text-decoration: none;
+        display: inline-block;
+
+        &::before {
+          position: absolute;
+          content: "";
+          left: 0;
+          z-index: 1;
+          width: 8px;
+          height: 8px;
+          background-color: #58a7af;
+          top: 50%;
+          transform: translate(0, -50%);
+          border-radius: 50%;
+        }
       }
     }
   }
