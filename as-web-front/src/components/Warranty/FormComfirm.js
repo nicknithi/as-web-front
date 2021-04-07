@@ -94,6 +94,11 @@ function FormComfirm(props) {
                   />
                 </div>
               </div>
+              <div className="row">
+                <div className="col-12 p-4 mt-4">
+                  {t("warrantyConfirm.remark")}
+                </div>
+              </div>
             </div>
           </div>
         ))}

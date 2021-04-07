@@ -2,7 +2,6 @@ import React from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 export default function CardInstallation({ data, handleClickCard }) {
-  console.log("55667788", data);
   return (
     <div onClick={() => handleClickCard(data.id, data.type)}>
       <Card

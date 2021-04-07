@@ -32,6 +32,7 @@ export default function InstallationMenu() {
 
   useEffect(async () => {
     const resMenu = await GetAllMenuProduct_Installation();
+    console.log("installation_menu", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     if (resMenu) {
@@ -45,7 +46,6 @@ export default function InstallationMenu() {
           type: "model",
         };
       });
-      console.log("TempModelRender", TempModelRender);
       setContentRender(TempModelRender);
     }
     //on init get product from query
@@ -66,9 +66,7 @@ export default function InstallationMenu() {
   const handleClickClassified = async (id) => {
     setLoading(true);
     setSpateDetail({});
-    console.log("id", id);
     let resClassified1 = await GetDataProduct_InstallationByClassified1(id);
-    console.log("gghhjj", resClassified1);
     let tempClassified1 = [...ContentRender];
     tempClassified1 = resClassified1 ? resClassified1 : [];
     tempClassified1 = tempClassified1.map((item, index) => {
@@ -86,10 +84,8 @@ export default function InstallationMenu() {
   const handleClickClassified2 = async (id) => {
     setLoading(true);
     setSpateDetail({});
-    console.log("id12", id);
     let resClassified2 = await GetDataProduct_InstallationByClassified2(id);
     let tempClassified2 = [...ContentRender];
-
     tempClassified2 = resClassified2 ? resClassified2 : [];
     tempClassified2 = tempClassified2.map((item, index) => {
       return {
@@ -106,10 +102,7 @@ export default function InstallationMenu() {
     setLoading(true);
     if (type === "model") {
       let resMenu = await GetAllMenuProduct_Installation();
-      console.log(id);
-      console.log(resMenu);
       resMenu = resMenu.find((m) => m.installation_model_id === id);
-      console.log("resMenuresMenu", resMenu);
       if (resMenu.installation_classified.length > 0) {
         let tempindex = 0;
         let resClassified1 = await GetDataProduct_InstallationByClassified1(
@@ -131,15 +124,14 @@ export default function InstallationMenu() {
     } else if (type === "classified1") {
       // const ProductClass1 = await GetManageProductSparePartById(id);
       let ProductClass1 = await GetManageProductInstallationById(id);
-      // console.log("ProductClass11", ProductClass11);
       if (ProductClass1) {
         ProductClass1 = {
           ...ProductClass1,
           file: ProductClass1.installation_file,
           product_id: ProductClass1.installation_product_id,
           product_name: ProductClass1.installation_product_name,
-          product_old_code: ProductClass1.product_old_code,
-          product_picture: ProductClass1.product_picture,
+          product_old_code: ProductClass1.installation_product_old_code,
+          product_picture: ProductClass1.installation_product_picture,
         };
         let temp = { ...SpateDetail };
         temp = ProductClass1;
@@ -149,8 +141,6 @@ export default function InstallationMenu() {
         temp = {};
         setSpateDetail(temp);
       }
-
-      console.log("ProductClass1", ProductClass1);
     } else if (type === "classified2") {
       let ProductClass2 = await GetManageProductSparePartById(id);
 
@@ -159,8 +149,8 @@ export default function InstallationMenu() {
         file: ProductClass2.installation_file,
         product_id: ProductClass2.installation_product_id,
         product_name: ProductClass2.installation_product_name,
-        product_old_code: ProductClass2.product_old_code,
-        product_picture: ProductClass2.product_picture,
+        product_old_code: ProductClass2.installation_product_old_code,
+        product_picture: ProductClass2.installation_product_picture,
       };
       let temp = { ...SpateDetail };
       temp = ProductClass2;
@@ -236,10 +226,10 @@ export default function InstallationMenu() {
                   )}
                   <div className="row">
                     <div className="col-md-5">
-                      {SpateDetail.file.length > 0 && (
+                      {SpateDetail.product_picture.length > 0 && (
                         <div className="img-detail">
                           <img
-                            src={`http://www.mostactive.info/${SpateDetail.file[0].path}`}
+                            src={`http://www.mostactive.info/${SpateDetail.product_picture[0].path}`}
                           />
                         </div>
                       )}

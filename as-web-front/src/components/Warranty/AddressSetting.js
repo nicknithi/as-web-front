@@ -191,7 +191,7 @@ function AddressSetting({
           </div>
         </div>
         <div className="alert pl-0" role="alert">
-          service center
+          {t("register.careCenter")}
           <a href={t("link.serviceCenter")} className="alert-link">
             {" "}
             Click

@@ -83,15 +83,15 @@
     "tel": "Telephone Number",
     "mobile": "Mobile Number",
     "Email": "Email (Please specify for confirming the registration)",
-    "titleAddress1": "Installation address",
-    "titleAddress2": "Billing address",
+    "titleAddress1": "Installation Address",
+    "titleAddress2": "Installation Address",
     "installAddress": "Installation address to issue the receipt",
     "canChanged": "(Can not be changed)",
     "province": "Province",
     "district": "District",
     "subdistrict": "Subdistrict",
     "zipCode": "ZIP Code",
-    "careCenter": "ศูนย์บริการสาขา / Customer Care Center Branch",
+    "careCenter": "Customer Care Center Branch",
     "map": "Map (Please Specify)",
     "Submit": "Confirm",
     "selectProvince": "- Please select Province -",
@@ -110,7 +110,7 @@
     "mobile": "Mobile Number",
     "email": "Email",
     "address": "Address",
-    "serviceCenter": "ศูนย์บริการสาขา / Customer Care Center Branch"
+    "serviceCenter": "Customer Care Center Branch"
   },
   "warrantyConfirm": {
     "title": "Warranty Registration",
@@ -135,7 +135,8 @@
     "Qty": "Number of pieces purchased",
     "Barcode": "Barcode",
     "btnEdit": "Edit",
-    "btnConfirm": "Confirm"
+    "btnConfirm": "Confirm",
+    "remark": "Remark : Product warranty registration to facilitate the display of information and proof of purchase in accordance with the conditions of service rates and warranty. Warranty registration will be checked when customer notifies for service. Customer Care Center may change according to the receipt or others evidence to correct data."
   },
   "Login": {
     "title": "Membership Login",

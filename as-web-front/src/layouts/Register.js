@@ -305,7 +305,7 @@ export default function Register({ data }) {
     const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
     if (res.data.message === "Success!") {
       alert(t("register.alertSuccess"));
-      window.location = "/เข้าสู่ระบบสมาชิก";
+      window.location = "/";
     }
   };
   const goBlack = () => {
@@ -723,7 +723,7 @@ export default function Register({ data }) {
                   </div>
                 </div>
                 <div className="alert pl-0" role="alert">
-                  service center
+                  {t("register.careCenter")}
                   <a href={t("link.serviceCenter")} className="alert-link">
                     {" "}
                     Click
