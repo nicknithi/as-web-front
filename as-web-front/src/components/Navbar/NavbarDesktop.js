@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { getMenuAll } from "../../GetDataMenu";
 import { useParams } from "react-router-dom";
 export default function NavbarDesktop({ NavbarItem }) {
-  // let { customPath } = useParams();
+  let { customPath } = useParams();
   const [cookies, setCookie] = useCookies(["as_lang"]);
 
   // let lang = "TH";
@@ -63,21 +63,50 @@ export default function NavbarDesktop({ NavbarItem }) {
     }
   }, []);
   const ChangToThai = async () => {
-    // const datamenu = await getMenuAll("EN");
-    // console.log("dataMenu", customPath, datamenu);
-    // let tempMenu = datamenu.find(
-    //   (m) =>
-    //     m.menu.toLowerCase().replace(/\s/g, "") ===
-    //     customPath.toLowerCase().replace(/\s/g, "")
-    // );
+    const datamenuEN = await getMenuAll("EN");
+    let tempMenuEN = datamenuEN.find(
+      (m) =>
+        m.menu.toLowerCase().replace(/\s/g, "") ===
+        customPath.toLowerCase().replace(/\s/g, "")
+    );
+
+    if (tempMenuEN && Object.keys(tempMenuEN).length) {
+      const datamenuTH = await getMenuAll("TH");
+      if (datamenuTH && datamenuTH.length) {
+        const res = datamenuTH.find(
+          (e) => e.fK_MENU_EN_ID === tempMenuEN.fK_MENU_EN_ID
+        );
+        setCookie("as_lang", "TH");
+        // window.location = `/${res.menu}`;
+        window.location = "/";
+      }
+    }
     // console.log("kklklk", tempMenu);
-    setCookie("as_lang", "TH");
-    window.location = "/";
+    // setCookie("as_lang", "TH");
+    // window.location = "/";
     //window.location.reload(false);
   };
-  const ChangToEng = () => {
-    setCookie("as_lang", "EN");
-    window.location = "/home";
+  const ChangToEng = async () => {
+    const datamenuEN = await getMenuAll("TH");
+    let tempMenuEN = datamenuEN.find(
+      (m) =>
+        m.menu.toLowerCase().replace(/\s/g, "") ===
+        customPath.toLowerCase().replace(/\s/g, "")
+    );
+
+    if (tempMenuEN && Object.keys(tempMenuEN).length) {
+      const datamenuTH = await getMenuAll("EN");
+      if (datamenuTH && datamenuTH.length) {
+        const res = datamenuTH.find(
+          (e) => e.fK_MENU_TH_ID === tempMenuEN.fK_MENU_TH_ID
+        );
+        setCookie("as_lang", "EN");
+        // window.location = `/${res.menu}`;
+        window.location = "/home";
+      }
+    }
+
+    // window.location = "/home";
     //window.location.reload(false);
   };
   return (

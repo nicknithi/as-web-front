@@ -3,7 +3,13 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
-function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
+function SubMenu({
+  menu,
+  handleClickClassified,
+  handleClickClassified2,
+  isActiveClass1,
+  isActiveClass2,
+}) {
   return (
     <div>
       <Accordion defaultActiveKey={1}>
@@ -11,9 +17,14 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
           <Card key={index}>
             <Accordion.Toggle
               eventKey={index + 1}
-              className="main-menu p-0"
+              className={`main-menu p-0 ${isActiveClass1(
+                item.installation_classified_id
+              )} ${item.installation_sub_classified.length > 0 && "has-menu"}`}
               onClick={() =>
-                handleClickClassified(item.installation_classified_id)
+                handleClickClassified(
+                  item.installation_classified_id,
+                  item.installation_classified_name
+                )
               }
             >
               {/* <svg
@@ -36,10 +47,13 @@ function SubMenu({ menu, handleClickClassified, handleClickClassified2 }) {
                   {item.installation_sub_classified &&
                     item.installation_sub_classified.map((item2) => (
                       <div
-                        className="sub-menu"
+                        className={`sub-menu  ${isActiveClass2(
+                          item2.installation_sub_classified_id
+                        )}`}
                         onClick={() =>
                           handleClickClassified2(
-                            item2.installation_sub_classified
+                            item2.installation_sub_classified_id,
+                            item2.installation_sub_classified_name
                           )
                         }
                       >

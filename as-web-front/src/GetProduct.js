@@ -79,7 +79,7 @@ const GetDataProduct_InstallationByClassified1 = async (id, lang) => {
 };
 const GetDataProduct_InstallationByClassified2 = async (id, lang) => {
   const res = await http.post(
-    `/api/Sparepart/GetDataProduct_InstallationByClassified2`,
+    `/api/Installation/GetDataProduct_InstallationByClassified2`,
     {
       ID: id,
       Lang_ID: lang,
@@ -100,6 +100,28 @@ const GetManageProductInstallationById = async (id, lang) => {
   );
   return res.data.data;
 };
+const GetManageProductInstallationByCode = async (id, code, lang) => {
+  const res = await http.post(
+    `/api/Installation/GetManageProductInstallationByCode`,
+    {
+      ID: id,
+      Lang_ID: lang,
+      Product_Old_Code: code,
+    }
+  );
+  return res.data.data;
+};
+const GetManageProductSparePartByCode = async (id, code, lang) => {
+  const res = await http.post(
+    `/api/Sparepart/GetManageProductSparePartByCode`,
+    {
+      ID: id,
+      Lang_ID: lang,
+      Product_Old_Code: code,
+    }
+  );
+  return res.data.data;
+};
 export {
   GetAllProductModelSpare,
   GetAllClassifiedTypeSpare,
@@ -112,4 +134,6 @@ export {
   GetDataProduct_InstallationByClassified1,
   GetDataProduct_InstallationByClassified2,
   GetManageProductInstallationById,
+  GetManageProductInstallationByCode,
+  GetManageProductSparePartByCode,
 };

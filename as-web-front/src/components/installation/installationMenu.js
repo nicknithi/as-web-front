@@ -19,6 +19,7 @@ import {
   GetAllMenuProduct_Installation,
   GetDataProduct_InstallationByClassified1,
   GetDataProduct_InstallationByClassified2,
+  GetManageProductInstallationByCode,
 } from "../../GetProduct";
 export default function InstallationMenu() {
   const [cookies, setCookie] = useCookies(["as_lang"]);
@@ -28,8 +29,10 @@ export default function InstallationMenu() {
   const [SpateDetail, setSpateDetail] = useState({});
   const [ActiveRelate, setActiveRelate] = useState(2);
   const [loading, setLoading] = useState(false);
-
+  const [ActiveClass1, setActiveClass1] = useState(0);
+  const [ActiveClass2, setActiveClass2] = useState(0);
   const { search } = useLocation();
+  const [Title, setTitle] = useState("วิธีการติดตั้ง");
   const query = queryString.parse(search);
 
   useEffect(async () => {
@@ -55,11 +58,23 @@ export default function InstallationMenu() {
       setContentRender(TempModelRender);
     }
     //on init get product from query
-    if (query.id) {
-      handleClickCard(query.id, "classified1");
+    if ((query.id, query.code)) {
+      // handleClickCard(query.id, "classified1");
+      initFromQuery(query.id, query.code);
     }
   }, []);
-
+  const isActiveClass1 = (id) => {
+    if (ActiveClass1 === id) {
+      return "active";
+    }
+    return "";
+  };
+  const isActiveClass2 = (id) => {
+    if (ActiveClass2 === id) {
+      return "active";
+    }
+    return "";
+  };
   const setActiveMenu = (menu) => {
     setActiveRelate(menu);
   };
@@ -69,9 +84,11 @@ export default function InstallationMenu() {
     }
     return "";
   };
-  const handleClickClassified = async (id) => {
+  const handleClickClassified = async (id, name) => {
     setLoading(true);
     setSpateDetail({});
+    setTitle(name);
+    setActiveClass1(id);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -96,9 +113,12 @@ export default function InstallationMenu() {
     setContentRender(tempClassified1);
     setLoading(false);
   };
-  const handleClickClassified2 = async (id) => {
+  const handleClickClassified2 = async (id, name) => {
     setLoading(true);
     setSpateDetail({});
+    const tempTitle = Title.split("/")[0];
+    setTitle(`${tempTitle} / ${name}`);
+    setActiveClass2(id);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -137,7 +157,9 @@ export default function InstallationMenu() {
           resMenu.installation_classified[0].installation_classified_id,
           lang
         );
-
+        setTitle(
+          resMenu.installation_classified[0].installation_classified_name
+        );
         let tempClassified1 = [...ContentRender];
         if (resClassified1 && resClassified1.length) {
           tempClassified1 = resClassified1;
@@ -173,8 +195,8 @@ export default function InstallationMenu() {
         setSpateDetail(temp);
       }
     } else if (type === "classified2") {
-      let ProductClass2 = await GetManageProductSparePartById(id, lang);
-
+      let ProductClass2 = await GetManageProductInstallationById(id, lang);
+      console.log("ProductClass2", ProductClass2);
       ProductClass2 = {
         ...ProductClass2,
         file: ProductClass2.installation_file,
@@ -188,6 +210,35 @@ export default function InstallationMenu() {
       setSpateDetail(temp);
     }
     setLoading(false);
+  };
+  const initFromQuery = async (id, code) => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    let ProductClass1 = await GetManageProductInstallationByCode(
+      id,
+      code,
+      lang
+    );
+    console.log("InitProductClass1", ProductClass1);
+    if (ProductClass1) {
+      ProductClass1 = {
+        ...ProductClass1,
+        file: ProductClass1.installation_file,
+        product_id: ProductClass1.installation_product_id,
+        product_name: ProductClass1.installation_product_name,
+        product_old_code: ProductClass1.installation_product_old_code,
+        product_picture: ProductClass1.installation_product_picture,
+      };
+      let temp = { ...SpateDetail };
+      temp = ProductClass1;
+      setSpateDetail(temp);
+    } else {
+      let temp = { ...SpateDetail };
+      temp = {};
+      setSpateDetail(temp);
+    }
   };
   return (
     <div className="container mb-5">
@@ -237,6 +288,8 @@ export default function InstallationMenu() {
                               menu={item.installation_classified}
                               handleClickClassified={handleClickClassified}
                               handleClickClassified2={handleClickClassified2}
+                              isActiveClass1={isActiveClass1}
+                              isActiveClass2={isActiveClass2}
                             />
                           </Card.Body>
                         </Accordion.Collapse>
@@ -248,7 +301,7 @@ export default function InstallationMenu() {
             )}
           </div>
           <div className="col-md-8">
-            <h3 className="title-section">{}</h3>
+            <h3 className="title-section">{Title}</h3>
             {Object.keys(SpateDetail).length > 0 ? (
               <div className="container product-detail">
                 <div>
@@ -301,7 +354,7 @@ export default function InstallationMenu() {
                             {t("Product.installation")}
                           </button>
                           <a
-                            href={`/อะไหล่?id=${SpateDetail.product_id}`}
+                            href={`/อะไหล่?id=${SpateDetail.product_id}&code=${SpateDetail.installation_product_old_code}`}
                             className="mr-3"
                           >
                             {t("Product.spare")}
@@ -332,9 +385,7 @@ export default function InstallationMenu() {
                                   href={`http://www.mostactive.info/${item.path}`}
                                   target="_blank"
                                 >
-                                  <div className="title-install pl-3">{`การติดตั้ง ${
-                                    index + 1
-                                  } ${item.name}`}</div>
+                                  <div className="title-install pl-3">{` ${item.name}`}</div>
                                 </a>
                               )
                             )}

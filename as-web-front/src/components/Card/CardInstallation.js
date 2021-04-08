@@ -45,7 +45,11 @@ export default function CardInstallation({ data, handleClickCard }) {
         </div>
 
         <Card.Body>
-          <div className="card-content p-2 text-center">{data.title}</div>
+          <div className="card-content p-2 text-center">
+            {/* {data.product_old_code} */}
+            {/* <br /> */}
+            {data.title}
+          </div>
         </Card.Body>
       </Card>
     </div>

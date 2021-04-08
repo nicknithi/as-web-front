@@ -49,6 +49,15 @@
     border: none;
     border-radius: 0%;
     .card-header {
+      &:hover {
+        cursor: pointer;
+        background-color: #58a7af;
+        color: white;
+        button {
+          background-color: white;
+          color: #58a7af;
+        }
+      }
       border-color: white;
       border-bottom: 2px solid rgb(92, 153, 161);
       background-color: #dfe1e2;
@@ -82,8 +91,22 @@
       padding: 0px;
     }
     .main-menu {
-      //height: 40px;
+      &.has-menu {
+        position: relative;
+        &::after {
+          position: absolute;
+          content: "";
+          right: 12px;
+          top: 50%;
+          transform: translate(0, -50%) rotate(315deg);
+          width: 10px;
+          height: 10px;
+          border-left: 2px solid black;
+          border-bottom: 2px solid black;
+        }
+      }
 
+      //height: 40px;
       font-weight: bold;
       text-align: left;
       background-color: #efeff0;
@@ -91,10 +114,12 @@
       display: inline-flex;
       align-items: center;
       padding-left: 10px !important;
+      padding-right: 25px !important;
       border-bottom: 1px solid rgba(233, 233, 233, 0.397) !important;
       border: none;
       color: inherit;
-      &.active {
+      &.active,
+      &:hover {
         color: #58a7af;
       }
       svg {
@@ -114,7 +139,8 @@
       border-bottom: 1px solid rgb(189, 189, 189) !important;
       border: none;
       color: inherit;
-      &.active {
+      &.active,
+      &:hover {
         color: #f1c400;
       }
       svg {

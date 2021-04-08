@@ -17,7 +17,9 @@ function SubMenu({
           <Card key={index}>
             <Accordion.Toggle
               eventKey={index + 1}
-              className={`main-menu p-0 ${isActiveClass1(item.classified_id)}`}
+              className={`main-menu p-0 ${
+                item.sub_classified.length > 0 && "has-menu"
+              } ${isActiveClass1(item.classified_id)}`}
               onClick={() =>
                 handleClickClassified(item.classified_id, item.classified_name)
               }

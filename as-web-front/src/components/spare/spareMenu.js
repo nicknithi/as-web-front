@@ -19,6 +19,7 @@ import {
   GetAllMenuProduct_Sparepart,
   GetDataProduct_SparepartByClassified1,
   GetDataProduct_SparepartByClassified2,
+  GetManageProductSparePartByCode,
 } from "../../GetProduct";
 export default function SpareMenu() {
   const [cookies, setCookie] = useCookies(["as_lang"]);
@@ -54,8 +55,9 @@ export default function SpareMenu() {
       };
     });
     setContentRender(TempModelRender);
-    if (query.id) {
-      handleClickCard(query.id, "classified1");
+    if (query.id && query.code) {
+      // handleClickCard(query.id, "classified1");
+      initFromQuery(query.id, query.code);
     }
   }, []);
   const isActiveClass1 = (id) => {
@@ -208,6 +210,20 @@ export default function SpareMenu() {
       window.location.reload(false);
     }
   };
+  const initFromQuery = async (id, code) => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    const ProductClass1 = await GetManageProductSparePartByCode(id, code, lang);
+    if (ProductClass1) {
+      let temp = { ...SpateDetail };
+      temp = ProductClass1;
+      setSpateDetail(temp);
+    } else {
+      alert("not found data");
+    }
+  };
   return (
     <div className="container mb-5">
       {/* <BannerInstallation className="banner-installation" /> */}
@@ -324,7 +340,7 @@ export default function SpareMenu() {
                         <div className="relate-menu">
                           <a
                             className={`${isActive(1)} mr-3`}
-                            href={`/การติดตั้ง?id=${SpateDetail.id}`}
+                            href={`/การติดตั้ง?id=${SpateDetail.id}&code=${SpateDetail.product_old_code}`}
                             // onClick={() => setActiveMenu(1)}
                           >
                             {t("Product.installation")}

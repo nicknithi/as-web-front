@@ -1,7 +1,7 @@
 import http from "./axios";
 const getProductType = async (lang) => {
   const res = await http.post("/api/Product/GetAllProductType", {
-    Lang_ID: 1,
+    Lang_ID: lang,
   });
   const data = res.data.data.map((item, index) => {
     return { id: item.id, value: item.type_Name };
@@ -11,7 +11,7 @@ const getProductType = async (lang) => {
 const getStoreByProvinceData = async (Province_id, lang) => {
   console.log("Province_id", Province_id);
   const res = await http.post("/api/Product/GetStoreByName", {
-    Lang_ID: 1,
+    Lang_ID: lang,
     Province_ID: Province_id,
     Store_Name: "",
   });
