@@ -85,6 +85,7 @@
     "Email": "Email (Please specify for confirming the registration)",
     "titleAddress1": "Installation Address",
     "titleAddress2": "Installation address",
+    "installAddress1": "Installation address to issue the receipt",
     "installAddress": "Installation address to issue the receipt",
     "canChanged": "(Can not be changed)",
     "province": "Province",

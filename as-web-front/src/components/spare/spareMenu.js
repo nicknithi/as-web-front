@@ -40,9 +40,9 @@ export default function SpareMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     const resMenu = await GetAllMenuProduct_Sparepart(lang);
+    console.log("Menu spare", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
-    console.log("resMenu12", resMenu);
     setMenuSpareRender(tempMenu);
 
     const TempModelRender = tempMenu.map((item, index) => {
@@ -65,7 +65,6 @@ export default function SpareMenu() {
     return "";
   };
   const isActiveClass2 = (id) => {
-    console.log("55555", ActiveClass2, id);
     if (ActiveClass2 === id) {
       return "active";
     }
@@ -85,12 +84,13 @@ export default function SpareMenu() {
     setSpateDetail({});
     setTitle(name);
     setActiveClass1(id);
-    console.log("id", id);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     let resClassified1 = await GetDataProduct_SparepartByClassified1(id, lang);
+    console.log("class1 id", id);
+    console.log("resClass2", resClassified1);
     let tempClassified1 = [...ContentRender];
 
     tempClassified1 = resClassified1 ? resClassified1 : [];
@@ -117,6 +117,8 @@ export default function SpareMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     let resClassified2 = await GetDataProduct_SparepartByClassified2(id, lang);
+    console.log("class1 id", id);
+    console.log("resClass2", resClassified2);
     let tempClassified2 = [...ContentRender];
 
     tempClassified2 = resClassified2 ? resClassified2 : [];
@@ -141,7 +143,6 @@ export default function SpareMenu() {
       }
       let resMenu = await GetAllMenuProduct_Sparepart(lang);
       resMenu = resMenu.find((m) => m.model_id === id);
-      console.log("resMenuresMenu", resMenu);
 
       if (resMenu.classified.length > 0) {
         let tempindex = 0;
@@ -168,13 +169,11 @@ export default function SpareMenu() {
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;
       }
-      console.log("lang", lang);
       const ProductClass1 = await GetManageProductSparePartById(id, lang);
       if (ProductClass1) {
         let temp = { ...SpateDetail };
         temp = ProductClass1;
         setSpateDetail(temp);
-        console.log("ProductClass1", ProductClass1);
       } else {
         alert("not found data");
       }
@@ -183,12 +182,10 @@ export default function SpareMenu() {
       // resMenu = resMenu.filter((m) => {
       //   return m.classified.filter((c1) => {
       //     return c1.sub_classified.filter((c2) => {
-      //       console.log("test c2", c2);
       //       return c2.sub_classified_id === id;
       //     });
       //   });
       // });
-      // console.log("resMenunithi atsiri", resMenu);
       let lang = 1;
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;

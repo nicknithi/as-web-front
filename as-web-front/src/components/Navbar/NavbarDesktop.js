@@ -1,4 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from "react";
+
 import PropTypes from "prop-types";
 import "../../assets/scss/components/navbar.scss";
 import logo from "../../assets/img/Logo_300ppi.png";
@@ -6,8 +9,12 @@ import InputSearch from "../Input/InputSearch";
 import NavbarDesktopMenu from "./NavbarDesktopMenu";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
+import { getMenuAll } from "../../GetDataMenu";
+import { useParams } from "react-router-dom";
 export default function NavbarDesktop({ NavbarItem }) {
+  // let { customPath } = useParams();
   const [cookies, setCookie] = useCookies(["as_lang"]);
+
   // let lang = "TH";
 
   // if (cookies.as_lang) {
@@ -55,15 +62,23 @@ export default function NavbarDesktop({ NavbarItem }) {
       }
     }
   }, []);
-  const changToThai = () => {
+  const ChangToThai = async () => {
+    // const datamenu = await getMenuAll("EN");
+    // console.log("dataMenu", customPath, datamenu);
+    // let tempMenu = datamenu.find(
+    //   (m) =>
+    //     m.menu.toLowerCase().replace(/\s/g, "") ===
+    //     customPath.toLowerCase().replace(/\s/g, "")
+    // );
+    // console.log("kklklk", tempMenu);
     setCookie("as_lang", "TH");
     window.location = "/";
-    window.location.reload(false);
+    //window.location.reload(false);
   };
-  const changToEng = () => {
+  const ChangToEng = () => {
     setCookie("as_lang", "EN");
-    //window.location = "/home";
-    window.location.reload(false);
+    window.location = "/home";
+    //window.location.reload(false);
   };
   return (
     <div>
@@ -74,10 +89,10 @@ export default function NavbarDesktop({ NavbarItem }) {
           </a>
           <div className="right-content ml-auto d-flex align-items-center">
             <span className="mr-3 official-website">{t("website.navbar")}</span>
-            <button className="btn-lang th mr-3" onClick={() => changToThai()}>
+            <button className="btn-lang th mr-3" onClick={() => ChangToThai()}>
               TH
             </button>
-            <button className="btn-lang en mr-3" onClick={() => changToEng()}>
+            <button className="btn-lang en mr-3" onClick={() => ChangToEng()}>
               EN
             </button>
             <InputSearch placehoder={placeholderSearch} />

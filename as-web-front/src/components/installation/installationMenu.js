@@ -38,7 +38,7 @@ export default function InstallationMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     const resMenu = await GetAllMenuProduct_Installation(lang);
-    console.log("installation_menu", resMenu);
+    console.log("menu installation", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     if (resMenu) {
@@ -80,6 +80,8 @@ export default function InstallationMenu() {
       id,
       lang
     );
+    console.log("class1 id", id);
+    console.log("resClass1", resClassified1);
     let tempClassified1 = [...ContentRender];
     tempClassified1 = resClassified1 ? resClassified1 : [];
     tempClassified1 = tempClassified1.map((item, index) => {
@@ -105,6 +107,8 @@ export default function InstallationMenu() {
       id,
       lang
     );
+    console.log("class1 id", id);
+    console.log("resClass2", resClassified2);
     let tempClassified2 = [...ContentRender];
     tempClassified2 = resClassified2 ? resClassified2 : [];
     tempClassified2 = tempClassified2.map((item, index) => {
@@ -135,16 +139,18 @@ export default function InstallationMenu() {
         );
 
         let tempClassified1 = [...ContentRender];
-        tempClassified1 = resClassified1;
-        tempClassified1 = tempClassified1.map((item, index) => {
-          return {
-            ...item,
-            id: item.installation_product_id,
-            title: item.installation_product_name,
-            type: "classified1",
-          };
-        });
-        setContentRender(tempClassified1);
+        if (resClassified1 && resClassified1.length) {
+          tempClassified1 = resClassified1;
+          tempClassified1 = tempClassified1.map((item, index) => {
+            return {
+              ...item,
+              id: item.installation_product_id,
+              title: item.installation_product_name,
+              type: "classified1",
+            };
+          });
+          setContentRender(tempClassified1);
+        }
       }
     } else if (type === "classified1") {
       // const ProductClass1 = await GetManageProductSparePartById(id);
@@ -328,7 +334,7 @@ export default function InstallationMenu() {
                                 >
                                   <div className="title-install pl-3">{`การติดตั้ง ${
                                     index + 1
-                                  }`}</div>
+                                  } ${item.name}`}</div>
                                 </a>
                               )
                             )}

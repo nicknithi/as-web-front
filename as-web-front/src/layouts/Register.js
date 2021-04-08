@@ -636,7 +636,7 @@ export default function Register({ data }) {
                   <div className="col-md-12">
                     <label className="">
                       {DataFromRegister.Customer_Type === "2"
-                        ? t("register.titleAddress2")
+                        ? t("register.installAddress1")
                         : t("register.installAddress")}
                       * {t("register.canChanged")}
                     </label>

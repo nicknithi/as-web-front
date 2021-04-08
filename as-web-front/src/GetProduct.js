@@ -21,7 +21,8 @@ const GetManageProductSparePartById = async (id, lang) => {
       `/api/Sparepart/GetManageProductSparePartById`,
       {
         ID: id,
-        Lang_ID: lang,
+        // Lang_ID: lang,
+        Lang_ID: 1,
       }
     );
     return res.data.data;
@@ -32,7 +33,7 @@ const GetManageProductSparePartById = async (id, lang) => {
 
 const GetAllMenuProduct_Sparepart = async (lang) => {
   const res = await http.post(
-    `/api/Sparepart/GetAllMenuProduct_Sparepart?Lang_ID=${lang}`
+    `/api/Sparepart/GetAllMenuProduct_Sparepart?Lang_ID=${1}`
   );
   return res.data.data;
 };
@@ -41,7 +42,8 @@ const GetDataProduct_SparepartByClassified1 = async (id, lang) => {
     `/api/Sparepart/GetDataProduct_SparepartByClassified1`,
     {
       ID: id,
-      Lang_ID: lang,
+      // Lang_ID: lang,
+      Lang_ID: 1,
     }
   );
   return res.data.data;
@@ -51,7 +53,8 @@ const GetDataProduct_SparepartByClassified2 = async (id, lang) => {
     `/api/Sparepart/GetDataProduct_SparepartByClassified2`,
     {
       ID: id,
-      Lang_ID: lang,
+      // Lang_ID: lang,
+      Lang_ID: 1,
     }
   );
   return res.data.data;
@@ -69,6 +72,7 @@ const GetDataProduct_InstallationByClassified1 = async (id, lang) => {
     {
       ID: id,
       Lang_ID: lang,
+      // Lang_ID: 1,
     }
   );
   return res.data.data;
@@ -79,6 +83,7 @@ const GetDataProduct_InstallationByClassified2 = async (id, lang) => {
     {
       ID: id,
       Lang_ID: lang,
+      // Lang_ID: 1,
     }
   );
   return res.data.data;
@@ -90,6 +95,7 @@ const GetManageProductInstallationById = async (id, lang) => {
     {
       ID: id,
       Lang_ID: lang,
+      // Lang_ID: 1,
     }
   );
   return res.data.data;
