@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
@@ -35,7 +35,7 @@ export default function InstallationMenu() {
   const { search } = useLocation();
   const [Title, setTitle] = useState("วิธีการติดตั้ง");
   const query = queryString.parse(search);
-
+  const imgProductDetail = useRef(null);
   useEffect(async () => {
     let lang = 1;
     if (cookies.as_lang) {
@@ -90,6 +90,7 @@ export default function InstallationMenu() {
     setSpateDetail({});
     setTitle(name);
     setActiveClass1(id);
+    setActiveClass2(0);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -108,6 +109,7 @@ export default function InstallationMenu() {
         id: item.installation_product_id,
         title: item.installation_product_name,
         product_picture: item.installation_product_picture,
+        product_old_code: item.installation_product_old_code,
         type: "classified1",
       };
     });
@@ -138,6 +140,7 @@ export default function InstallationMenu() {
         id: item.installation_product_id,
         title: item.installation_product_name,
         product_picture: item.installation_product_picture,
+        product_old_code: item.installation_product_old_code,
         type: "classified2",
       };
     });
@@ -154,14 +157,19 @@ export default function InstallationMenu() {
       let resMenu = await GetAllMenuProduct_Installation(lang);
       resMenu = resMenu.find((m) => m.installation_model_id === id);
       if (resMenu.installation_classified.length > 0) {
-        let tempindex = 0;
         let resClassified1 = await GetDataProduct_InstallationByClassified1(
           resMenu.installation_classified[0].installation_classified_id,
           lang
         );
+        setActiveClass1(
+          resMenu.installation_classified[0].installation_classified_id
+        );
+        //set Active menu
+        document.querySelector(`#menu_${id}`).click();
         setTitle(
           resMenu.installation_classified[0].installation_classified_name
         );
+
         let tempClassified1 = [...ContentRender];
         if (resClassified1 && resClassified1.length) {
           tempClassified1 = resClassified1;
@@ -170,6 +178,8 @@ export default function InstallationMenu() {
               ...item,
               id: item.installation_product_id,
               title: item.installation_product_name,
+              product_picture: item.installation_product_picture,
+              product_old_code: item.installation_product_old_code,
               type: "classified1",
             };
           });
@@ -251,15 +261,16 @@ export default function InstallationMenu() {
         <div className="row">
           <div className="col-md-4">
             {menuSpareRender.length > 0 && (
-              <Accordion defaultActiveKey={1}>
+              <Accordion defaultActiveKey={0}>
                 {menuSpareRender.map((item, index) => (
                   <Card>
                     {item.installation_classified.length > 0 && (
                       <>
                         <Accordion.Toggle
                           as={Card.Header}
-                          eventKey={index + 1}
+                          eventKey={item.installation_model_id}
                           className="p-0 d-flex"
+                          id={`menu_${item.installation_model_id}`}
                         >
                           <span className="text-truncate">
                             {item.installation_model_name}
@@ -280,7 +291,9 @@ export default function InstallationMenu() {
                             </svg>
                           </button>
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={index + 1}>
+                        <Accordion.Collapse
+                          eventKey={item.installation_model_id}
+                        >
                           <Card.Body className="p-0">
                             <SubMenu
                               menu={item.installation_classified}
@@ -308,10 +321,20 @@ export default function InstallationMenu() {
                   )}
                   <div className="row">
                     <div className="col-md-5">
-                      {SpateDetail.product_picture.length > 0 && (
+                      {SpateDetail.product_picture.length > 0 ? (
                         <div className="img-detail">
                           <img
+                            ref={imgProductDetail}
                             src={`http://www.mostactive.info/${SpateDetail.product_picture[0].path}`}
+                            onError={() => {
+                              imgProductDetail.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="img-detail">
+                          <img
+                            src={`https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`}
                           />
                         </div>
                       )}

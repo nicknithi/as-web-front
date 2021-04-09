@@ -522,10 +522,12 @@ function FormWarranty({ Confirm }) {
   const handleLastSubmit = () => {
     console.log("LastDataComToConfirm", LastDataComToConfirm);
     let successCheck = 0;
+    console.log("json string", JSON.stringify(LastDataComToConfirm));
+    console.log("json:", LastDataComToConfirm);
     LastDataComToConfirm.forEach((items, index) => {
       let FormLastData = new FormData();
       items.Purchase_Date = convertDate(items.Purchase_Date);
-      FormLastData.append("files", FileWaranty[index]);
+      FormLastData.append("Files", FileWaranty[index]);
       FormLastData.append("datas", JSON.stringify(items));
       axios
         .post(

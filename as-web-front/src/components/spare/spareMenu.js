@@ -1,6 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Accordion from "react-bootstrap/Accordion";
+import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
+
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "../../assets/scss/installation.scss";
@@ -32,7 +34,7 @@ export default function SpareMenu() {
   const [ActiveClass2, setActiveClass2] = useState(0);
   const [loading, setLoading] = useState(false);
   const [Title, setTitle] = useState("รายการอะไหล่");
-
+  const imgProductDetail = useRef(null);
   const { search } = useLocation();
   const query = queryString.parse(search);
   useEffect(async () => {
@@ -86,6 +88,7 @@ export default function SpareMenu() {
     setSpateDetail({});
     setTitle(name);
     setActiveClass1(id);
+    setActiveClass2(0);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -102,6 +105,7 @@ export default function SpareMenu() {
         id: item.product_id,
         title: item.product_name,
         product_picture: item.product_picture,
+        product_old_code: item.product_old_code,
         type: "classified1",
       };
     });
@@ -136,7 +140,7 @@ export default function SpareMenu() {
     setContentRender(tempClassified2);
     setLoading(false);
   };
-  const handleClickCard = async (id, type) => {
+  const HandleClickCard = async (id, type) => {
     setLoading(true);
     if (type === "model") {
       let lang = 1;
@@ -147,11 +151,15 @@ export default function SpareMenu() {
       resMenu = resMenu.find((m) => m.model_id === id);
 
       if (resMenu.classified.length > 0) {
-        let tempindex = 0;
+        //set active menu
+        setActiveClass1(resMenu.classified[0].classified_id);
+        document.querySelector(`#menu_${id}`).click();
+        setTitle(resMenu.classified[0].classified_name);
         let resClassified1 = await GetDataProduct_SparepartByClassified1(
           resMenu.classified[0].classified_id,
           lang
         );
+
         setTitle(resMenu.classified[0].classified_name);
         let tempClassified1 = [...ContentRender];
         tempClassified1 = resClassified1;
@@ -180,18 +188,27 @@ export default function SpareMenu() {
         alert("not found data");
       }
     } else if (type === "classified2") {
-      // let resMenu = await GetAllMenuProduct_Sparepart();
-      // resMenu = resMenu.filter((m) => {
-      //   return m.classified.filter((c1) => {
-      //     return c1.sub_classified.filter((c2) => {
-      //       return c2.sub_classified_id === id;
-      //     });
-      //   });
-      // });
       let lang = 1;
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;
       }
+      // let resMenu = await GetAllMenuProduct_Sparepart(lang);
+      // // resMenu = resMenu.filter((m) =>
+      // //   m.classified.filter((c1) =>
+      // //     c1.sub_classified.filter((c2) => c2.sub_classified_id === id)
+      // //   )
+      // // );
+      // resMenu.forEach((item, index) => {
+      //   item.classified.forEach((item1, index1) => {
+      //     const result = item1.sub_classified.find(
+      //       (c2) => c2.sub_classified_id === id
+      //     );
+      //     if (result && Object.keys(result).length > 0) {
+      //       return false;
+      //     }
+      //   });
+      // });
+
       const ProductClass2 = await GetManageProductSparePartById(id, lang);
       if (ProductClass2) {
         let temp = { ...SpateDetail };
@@ -237,15 +254,16 @@ export default function SpareMenu() {
         <div className="row">
           <div className="col-md-4">
             {menuSpareRender.length > 0 && (
-              <Accordion defaultActiveKey={1}>
+              <Accordion defaultActiveKey={0}>
                 {menuSpareRender.map((item, index) => (
                   <Card>
                     {item && (
                       <>
                         <Accordion.Toggle
                           as={Card.Header}
-                          eventKey={index + 1}
+                          eventKey={item.model_id}
                           className="p-0 d-flex"
+                          id={`menu_${item.model_id}`}
                         >
                           <span className="text-wrap">{item.model_name}</span>
                           <button className="ml-auto">
@@ -264,7 +282,7 @@ export default function SpareMenu() {
                             </svg>
                           </button>
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={index + 1}>
+                        <Accordion.Collapse eventKey={item.model_id}>
                           <Card.Body className="p-0">
                             <SpareSubMenu
                               menu={item.classified}
@@ -292,10 +310,20 @@ export default function SpareMenu() {
                   )} */}
                   <div className="row">
                     <div className="col-md-5">
-                      {SpateDetail.sparepart_product_picture.length > 0 && (
+                      {SpateDetail.sparepart_product_picture.length > 0 ? (
                         <div className="img-detail">
                           <img
+                            ref={imgProductDetail}
                             src={`http://www.mostactive.info/${SpateDetail.sparepart_product_picture[0].path}`}
+                            onError={() => {
+                              imgProductDetail.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        <div className="img-detail">
+                          <img
+                            src={`https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`}
                           />
                         </div>
                       )}
@@ -332,7 +360,11 @@ export default function SpareMenu() {
                         {SpateDetail.active !== null && (
                           <label>
                             {t("Product.Status")}
-                            <span className="ml-2">
+                            <span
+                              className={`ml-2 status ${
+                                SpateDetail.active ? "" : "discon"
+                              }`}
+                            >
                               {SpateDetail.active ? "Active" : "Discontinuted"}
                             </span>
                           </label>
@@ -390,7 +422,7 @@ export default function SpareMenu() {
                               <div className="col-6 col-md-4 px-2">
                                 <CardInstallation
                                   data={item}
-                                  handleClickCard={handleClickCard}
+                                  handleClickCard={HandleClickCard}
                                 />
                               </div>
                             </>

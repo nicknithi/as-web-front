@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useRef } from "react";
 
 export default function ItemSpare({ data }) {
+  const imgProductDetail = useRef(null);
   console.log("dsta", data);
   let img = "";
   if (data.spare_picture && data.spare_picture.length) {
@@ -12,10 +13,16 @@ export default function ItemSpare({ data }) {
       <div className="spare-detail">
         <div className="spare-img">
           {data.spare_picture && data.spare_picture.length > 0 ? (
-            <img src={`http://www.mostactive.info/${img}`} />
+            <img
+              ref={imgProductDetail}
+              src={`http://www.mostactive.info/${img}`}
+              onError={() => {
+                imgProductDetail.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+              }}
+            />
           ) : (
             <img
-              src={`https://www.questionpro.com/userimages/site_media/no-image.png`}
+              src={`https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`}
             />
           )}
         </div>
