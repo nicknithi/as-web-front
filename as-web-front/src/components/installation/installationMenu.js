@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import Accordion from "react-bootstrap/Accordion";
@@ -58,9 +59,9 @@ export default function InstallationMenu() {
       setContentRender(TempModelRender);
     }
     //on init get product from query
-    if ((query.id, query.code)) {
+    if (query.code) {
       // handleClickCard(query.id, "classified1");
-      initFromQuery(query.id, query.code);
+      initFromQuery(query.code);
     }
   }, []);
   const isActiveClass1 = (id) => {
@@ -136,6 +137,7 @@ export default function InstallationMenu() {
         ...item,
         id: item.installation_product_id,
         title: item.installation_product_name,
+        product_picture: item.installation_product_picture,
         type: "classified2",
       };
     });
@@ -211,16 +213,12 @@ export default function InstallationMenu() {
     }
     setLoading(false);
   };
-  const initFromQuery = async (id, code) => {
+  const initFromQuery = async (code) => {
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    let ProductClass1 = await GetManageProductInstallationByCode(
-      id,
-      code,
-      lang
-    );
+    let ProductClass1 = await GetManageProductInstallationByCode(code, lang);
     console.log("InitProductClass1", ProductClass1);
     if (ProductClass1) {
       ProductClass1 = {
@@ -381,12 +379,14 @@ export default function InstallationMenu() {
                           <div className="row">
                             {SpateDetail.installation_file.map(
                               (item, index) => (
-                                <a
-                                  href={`http://www.mostactive.info/${item.path}`}
-                                  target="_blank"
-                                >
-                                  <div className="title-install pl-3">{` ${item.name}`}</div>
-                                </a>
+                                <div className="col-12">
+                                  <a
+                                    href={`http://www.mostactive.info/${item.path}`}
+                                    target="_blank"
+                                  >
+                                    <div className="title-install pl-3">{` ${item.name}`}</div>
+                                  </a>
+                                </div>
                               )
                             )}
                           </div>

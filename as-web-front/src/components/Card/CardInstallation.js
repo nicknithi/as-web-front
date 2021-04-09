@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 export default function CardInstallation({ data, handleClickCard }) {
+  console.log("data4", data);
   const imgProduct = useRef(null);
   const errorImg = () => {
     imgProduct.current.src = `https://www.questionpro.com/userimages/site_media/no-image.png`;

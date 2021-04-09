@@ -55,9 +55,9 @@ export default function SpareMenu() {
       };
     });
     setContentRender(TempModelRender);
-    if (query.id && query.code) {
+    if (query.code) {
       // handleClickCard(query.id, "classified1");
-      initFromQuery(query.id, query.code);
+      initFromQuery(query.code);
     }
   }, []);
   const isActiveClass1 = (id) => {
@@ -210,12 +210,12 @@ export default function SpareMenu() {
       window.location.reload(false);
     }
   };
-  const initFromQuery = async (id, code) => {
+  const initFromQuery = async (code) => {
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    const ProductClass1 = await GetManageProductSparePartByCode(id, code, lang);
+    const ProductClass1 = await GetManageProductSparePartByCode(code, lang);
     if (ProductClass1) {
       let temp = { ...SpateDetail };
       temp = ProductClass1;
