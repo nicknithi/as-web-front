@@ -8,6 +8,7 @@ import React, {
 import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
+import { useCookies } from "react-cookie";
 import http from "../../axios";
 export default function InputProcuctCode({
   handleEvent,
@@ -15,6 +16,7 @@ export default function InputProcuctCode({
   FormDataProduct,
   Confirm,
 }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const typeahead = useRef(null);
   const manualInput = (e) => {
     if (e.length) {
@@ -38,9 +40,13 @@ export default function InputProcuctCode({
 
   const handleSearch = (query) => {
     setIsLoading(true);
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
     http
       .post(`/api/Product/GetProductTop20ByCode`, {
-        Lang_ID: 1,
+        Lang_ID: lang,
         Product_Code: query.toUpperCase(),
       })
       .then((res) => {

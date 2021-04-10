@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import "../../assets/scss/components/map.scss";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 class googleMap extends Component {
   state = {
@@ -31,12 +32,58 @@ class googleMap extends Component {
       Customer_Longtitude: clickEvent.latLng.lng(),
     });
   };
+  goCurrentLocation = () => {
+    if (navigator && navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((pos) => {
+        const coords = pos.coords;
+        // this.setState({
+        //     currentLocation: {
+        //         lat: coords.latitude,
+        //         lng: coords.longitude
+        //     }
+        // })
+        this.setState({
+          showingInfoWindow: false,
+          activeMarker: null,
+          position: {
+            lat: coords.latitude,
+            lng: coords.longitude,
+          },
+          center: {
+            lat: coords.latitude,
+            lng: coords.longitude,
+          },
+        });
+        this.props.setFormDataWarranty({
+          ...this.props.FormDataWarranty,
+          Customer_Latitude: coords.latitude,
+          Customer_Longtitude: coords.longitude,
+        });
+      });
+    } else {
+      alert("Browser doesn't support Geolocation");
+    }
+  };
+  ButtonLocation = () => {
+    return (
+      <div className="button-location">
+        <div
+          className="button-go px-md-3 py-md-2 "
+          onClick={() => this.goCurrentLocation()}
+        >
+          Go Current Location
+        </div>
+      </div>
+    );
+  };
   render() {
     return (
       <div
         className="position-relative"
         style={{ height: "600px", border: "1px solid gray" }}
       >
+        <this.ButtonLocation />
+        {/* <button onClick={this.test}>test</button> */}
         <input
           type="hidden"
           id="Customer_Latitude"
@@ -52,6 +99,7 @@ class googleMap extends Component {
         <Map
           google={this.props.google}
           initialCenter={this.state.center}
+          center={this.state.center}
           onClick={this.onMapClicked}
         >
           <Marker

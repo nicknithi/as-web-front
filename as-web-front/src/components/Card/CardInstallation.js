@@ -2,11 +2,12 @@
 import React, { useRef } from "react";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import noImg from "../../assets/img/noImg.jpg";
 export default function CardInstallation({ data, handleClickCard }) {
   console.log("data4", data);
   const imgProduct = useRef(null);
   const errorImg = () => {
-    imgProduct.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+    imgProduct.current.src = noImg;
     // if (data.product_picture && data.product_picture.length > 0) {
     //   const el = document.querySelectorAll(
     //     `[src="http://www.mostactive.info/${data.product_picture[0].path}"]`
@@ -37,10 +38,7 @@ export default function CardInstallation({ data, handleClickCard }) {
             </>
           ) : (
             <>
-              <Card.Img
-                variant="top"
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png"
-              />
+              <Card.Img variant="top" src={noImg} />
             </>
           )}
         </div>

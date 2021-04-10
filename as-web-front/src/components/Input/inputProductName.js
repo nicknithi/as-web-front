@@ -2,6 +2,7 @@ import React, { useState, useEffect, Fragment, useRef } from "react";
 import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
+import { useCookies } from "react-cookie";
 import { Button } from "react-bootstrap";
 import http from "../../axios";
 export default function InputProductName({
@@ -11,6 +12,7 @@ export default function InputProductName({
   setFormDataProduct,
   Confirm,
 }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const typeahead = useRef(null);
   const [SelectedPN, setSelectedPN] = useState([]);
   const manualInput = (e) => {
@@ -37,10 +39,13 @@ export default function InputProductName({
 
   const handleSearch = (query) => {
     setIsLoading(true);
-
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
     http
       .post(`/api/Product/GetProductTop20ByName`, {
-        Lang_ID: 1,
+        Lang_ID: lang,
         Product_Name: query,
       })
       .then((res) => {

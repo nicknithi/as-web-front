@@ -21,18 +21,6 @@ export default function Spare({ data, RenderColumn }) {
         </div>
       ))}
       <InstallationMenu typePage="Spare" />
-      <div className="container">
-        <div className="row d-flex justify-content-center mb-5">
-          <ButtonMain
-            title={t("website.btnBack")}
-            color="#636363"
-            BgColor="#f1c400"
-            handleClick={() => {
-              window.location = "/";
-            }}
-          />
-        </div>
-      </div>
     </div>
   );
 }

@@ -34,7 +34,7 @@ function SubMenu({
               >
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
-              <div className="text-wrap">{item.classified_name}</div>
+              <div className="">{item.classified_name}</div>
             </Accordion.Toggle>
             {item.sub_classified.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
@@ -62,9 +62,7 @@ function SubMenu({
                         >
                           <circle cx="8" cy="8" r="8" />
                         </svg> */}
-                        <span className="text-wrap">
-                          {item2.sub_classified_name}
-                        </span>
+                        <span className="">{item2.sub_classified_name}</span>
                       </div>
                     ))}
                 </Card.Body>

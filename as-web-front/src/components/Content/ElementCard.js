@@ -9,7 +9,7 @@ export default function ElementCard({ data }) {
       {data.link && <a href={data.link} />}
       <div className="d-flex justify-content-between">
         {data.description && (
-          <h1
+          <h3
             className="mb-3"
             dangerouslySetInnerHTML={{ __html: data.description }}
           />

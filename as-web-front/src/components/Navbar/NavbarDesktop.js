@@ -41,20 +41,21 @@ export default function NavbarDesktop({ NavbarItem }) {
     if (cookies.as_lang) {
       if (cookies.as_lang === "TH") {
         i18n.changeLanguage("th");
-        document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
-        document.body.style.setProperty("font-size", "24px", "important");
-        document.body.style.setProperty("font-weight", "bold", "important");
-        let h1Elements = document.getElementsByTagName("h1");
-        console.log("h1Elements", h1Elements);
-        for (let i = 0; i < h1Elements.length; i++) {
-          h1Elements[i].classList.add("eng");
-        }
+        document.body.style.fontFamily = "psl_kittithadaspbold,sans-serif";
+        // document.body.style.setProperty("font-size", "14px", "important");
+        // document.body.style.setProperty("font-weight", "bold", "important");
+        // let h1Elements = document.getElementsByTagName("h1");
+        // console.log("h1Elements", h1Elements);
+        // for (let i = 0; i < h1Elements.length; i++) {
+        //   h1Elements[i].classList.add("eng");
+        // }
       } else {
         i18n.changeLanguage("en");
-        document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
-        document.body.style.setProperty("font-size", "14px", "important");
-        document.body.style.setProperty("font-weight", "normal", "important");
-        document.body.style.setProperty("line-height", "1.8", "important");
+        document.body.style.fontFamily =
+          "helvetica_neueregular,psl_kittithadaspbold,sans-serif";
+        // document.body.style.setProperty("font-size", "14px", "important");
+        // document.body.style.setProperty("font-weight", "normal", "important");
+        // document.body.style.setProperty("line-height", "1.8", "important");
 
         // document
         //   .querySelector(".as-footer")

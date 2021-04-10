@@ -37,9 +37,7 @@ function SubMenu({
               >
                 <circle cx="8" cy="8" r="8" />
               </svg> */}
-              <div className="text-truncate">
-                {item.installation_classified_name}
-              </div>
+              <div className="">{item.installation_classified_name}</div>
             </Accordion.Toggle>
             {item.installation_sub_classified.length > 0 && (
               <Accordion.Collapse eventKey={index + 1}>
@@ -67,7 +65,7 @@ function SubMenu({
                         >
                           <circle cx="8" cy="8" r="8" />
                         </svg> */}
-                        <span className="text-truncate">
+                        <span className="">
                           {item2.installation_sub_classified_name}
                         </span>
                       </div>

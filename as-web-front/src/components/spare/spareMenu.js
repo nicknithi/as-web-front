@@ -2,7 +2,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import { useAccordionToggle } from "react-bootstrap/AccordionToggle";
-
+import noImg from "../../assets/img/noImg.jpg";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import "../../assets/scss/installation.scss";
@@ -25,11 +25,13 @@ import {
 } from "../../GetProduct";
 export default function SpareMenu() {
   const [cookies, setCookie] = useCookies(["as_lang"]);
+  const [DataMenu, setDataMenu] = useState([]);
   const [t, i18n] = useTranslation("common");
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
   const [SpateDetail, setSpateDetail] = useState({});
   const [ActiveRelate, setActiveRelate] = useState(0);
+  const [ActiveModel, setActiveModel] = useState(0);
   const [ActiveClass1, setActiveClass1] = useState(0);
   const [ActiveClass2, setActiveClass2] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -43,6 +45,7 @@ export default function SpareMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     const resMenu = await GetAllMenuProduct_Sparepart(lang);
+    setDataMenu(resMenu);
     console.log("Menu spare", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
@@ -53,6 +56,7 @@ export default function SpareMenu() {
         ...item,
         id: item.model_id,
         title: item.model_name,
+        product_picture: item.model_cover,
         type: "model",
       };
     });
@@ -62,6 +66,12 @@ export default function SpareMenu() {
       initFromQuery(query.code);
     }
   }, []);
+  const isActiveModel = (id) => {
+    if (ActiveModel === id) {
+      return "active";
+    }
+    return "";
+  };
   const isActiveClass1 = (id) => {
     if (ActiveClass1 === id) {
       return "active";
@@ -82,6 +92,9 @@ export default function SpareMenu() {
       return "active";
     }
     return "";
+  };
+  const handleClickMenuModel = (id) => {
+    setActiveModel(id);
   };
   const handleClickClassified = async (id, name) => {
     setLoading(true);
@@ -117,7 +130,21 @@ export default function SpareMenu() {
     setSpateDetail({});
     const tempTitle = Title.split("/")[0];
     setTitle(`${tempTitle} / ${name}`);
+    //set Active
     setActiveClass2(id);
+    let resMenu = DataMenu;
+    resMenu.forEach((item, index) => {
+      item.classified.forEach((item1, index1) => {
+        const result = item1.sub_classified.find(
+          (c2) => c2.sub_classified_id === id
+        );
+        if (result && Object.keys(result).length > 0) {
+          setTitle(`${item1.classified_name} / ${name}`);
+          setActiveClass1(item1.classified_id);
+          return false;
+        }
+      });
+    });
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -147,8 +174,8 @@ export default function SpareMenu() {
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;
       }
-      let resMenu = await GetAllMenuProduct_Sparepart(lang);
-      resMenu = resMenu.find((m) => m.model_id === id);
+      let resMenu = [];
+      resMenu = DataMenu.find((m) => m.model_id === id);
 
       if (resMenu.classified.length > 0) {
         //set active menu
@@ -237,6 +264,10 @@ export default function SpareMenu() {
       let temp = { ...SpateDetail };
       temp = ProductClass1;
       setSpateDetail(temp);
+      setTimeout(() => {
+        document.getElementById("spareDetail").scrollIntoView();
+        setActiveRelate(2);
+      }, 1000);
     } else {
       alert("not found data");
     }
@@ -250,7 +281,7 @@ export default function SpareMenu() {
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
-      <div className="installation-container">
+      <div className="installation-container under-line mb-4 pb-4">
         <div className="row">
           <div className="col-md-4">
             {menuSpareRender.length > 0 && (
@@ -262,25 +293,14 @@ export default function SpareMenu() {
                         <Accordion.Toggle
                           as={Card.Header}
                           eventKey={item.model_id}
-                          className="p-0 d-flex"
+                          className={`p-0 d-flex ${isActiveModel(
+                            item.model_id
+                          )}`}
                           id={`menu_${item.model_id}`}
+                          onClick={() => handleClickMenuModel(item.model_id)}
                         >
-                          <span className="text-wrap">{item.model_name}</span>
-                          <button className="ml-auto">
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              class="bi bi-chevron-down"
-                              viewBox="0 0 16 16"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"
-                              />
-                            </svg>
-                          </button>
+                          <span className="">{item.model_name}</span>
+                          <button className="ml-auto"></button>
                         </Accordion.Toggle>
                         <Accordion.Collapse eventKey={item.model_id}>
                           <Card.Body className="p-0">
@@ -300,10 +320,10 @@ export default function SpareMenu() {
               </Accordion>
             )}
           </div>
-          <div className="col-md-8">
-            <h3 className="title-section">{Title}</h3>
+          <div className="col-md-8 mt-4 mt-md-0 " id="spareDetail">
+            <h3 className="title-section mb-5">{Title}</h3>
             {Object.keys(SpateDetail).length > 0 ? (
-              <div className="container product-detail">
+              <div className="product-detail">
                 <div>
                   {/* {SpateDetail.product_name && (
                     <h3 className="title">{SpateDetail.product_name}</h3>
@@ -316,15 +336,13 @@ export default function SpareMenu() {
                             ref={imgProductDetail}
                             src={`http://www.mostactive.info/${SpateDetail.sparepart_product_picture[0].path}`}
                             onError={() => {
-                              imgProductDetail.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+                              imgProductDetail.current.src = noImg;
                             }}
                           />
                         </div>
                       ) : (
                         <div className="img-detail">
-                          <img
-                            src={`https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`}
-                          />
+                          <img src={noImg} />
                         </div>
                       )}
                     </div>
@@ -398,7 +416,7 @@ export default function SpareMenu() {
                     </div>
                   </div>
                 </div>
-                <div className="relate-contet mt-5">
+                <div className="relate-contet mt-2 mt-md-5">
                   <div className={`${isActive(2)}`}>
                     <div className="row">
                       {SpateDetail.sparepart.map((item, index) => (
@@ -419,7 +437,7 @@ export default function SpareMenu() {
                         <>
                           {ContentRender.map((item, index) => (
                             <>
-                              <div className="col-6 col-md-4 px-2">
+                              <div className="col-6 col-md-4 px-md-2">
                                 <CardInstallation
                                   data={item}
                                   handleClickCard={HandleClickCard}
@@ -429,8 +447,8 @@ export default function SpareMenu() {
                           ))}
                         </>
                       ) : (
-                        <div className="d-flex justify-content-center w-100 ">
-                          <h1 className="">Not Found</h1>
+                        <div className="d-flex justify-content-center w-100 mt-4">
+                          <h3 className="">Not Found</h3>
                         </div>
                       )}
                     </>

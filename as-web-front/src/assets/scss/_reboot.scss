@@ -1,18 +1,46 @@
-// .h1,
-// h1 {
-//   &.eng {
-//     font-size: 1rem;
-//   }
-// }
-// .h2,
-// h2 {
-//   font-size: 1.3rem;
-// }
-// .h3,
-// h3 {
-//   font-size: 1.1rem;
-// }
-// .h4,
-// h4 {
-//   font-size: 0.9rem;
-// }
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  font-size: 14px;
+  @include breakpoint("lg") {
+    font-size: 16px;
+  }
+}
+body {
+  font-size: 14px;
+  @include breakpoint("lg") {
+    font-size: 16px;
+  }
+  line-height: 2;
+  color: #6e717f;
+}
+.h1,
+h1 {
+  font-size: 30px;
+  @include breakpoint("md") {
+    font-size: 35px;
+  }
+}
+.h2,
+h2 {
+  font-size: 25px;
+  @include breakpoint("md") {
+    font-size: 30px;
+  }
+}
+.h3,
+h3 {
+  font-size: 20px;
+  @include breakpoint("md") {
+    font-size: 25px;
+  }
+}
+.h4,
+h4 {
+  font-size: 16px;
+}
+.under-line {
+  border-bottom: 3px solid #f1c400;
+}

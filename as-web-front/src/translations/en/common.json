@@ -152,6 +152,8 @@
     "Status": "Status",
     "spare": "Spare Parts",
     "installation": "Installation",
-    "video": "Video Clip"
+    "video": "Video Clip",
+    "price": "Price",
+    "baht": "Baht"
   }
 }

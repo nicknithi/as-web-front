@@ -1,16 +1,22 @@
-body {
-  color: rgb(99, 99, 99);
-}
-.site-content {
-  width: 100%;
-  max-width: $container-lg-max-width;
+// body {
+//   color: #6e717f;
+// }
+// .site-content {
+//   width: 100%;
+//   max-width: $container-lg-max-width;
+//   margin-right: auto;
+//   margin-left: auto;
+//   padding-right: 15px;
+//   padding-left: 15px;
+//   flex: 1 0 auto;
+//   // @include breakpoint('lg') {
+//   //   padding-right: $site-container-lg-left-gap;
+//   //   padding-left: $site-container-lg-left-gap;
+//   // }
+// }
+.container {
   margin-right: auto;
   margin-left: auto;
-  padding-right: 15px;
-  padding-left: 15px;
-  flex: 1 0 auto;
-  // @include breakpoint('lg') {
-  //   padding-right: $site-container-lg-left-gap;
-  //   padding-left: $site-container-lg-left-gap;
-  // }
+  max-width: 1143px;
+  width: 100%;
 }

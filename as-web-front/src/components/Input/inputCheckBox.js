@@ -2,7 +2,7 @@ import React from "react";
 import "../../assets/scss/components/input/checkbox.scss";
 export default function inputCheckBox({ lable, handleCheck, checked }) {
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center as-checkbox-custom">
       <label className="as-checkbox">
         {lable}
         <input type="checkbox" onChange={handleCheck} checked={checked} />

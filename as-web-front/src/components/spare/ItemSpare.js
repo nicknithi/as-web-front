@@ -1,15 +1,16 @@
 import React, { useRef } from "react";
-
+import noImg from "../../assets/img/noImg.jpg";
+import { useTranslation } from "react-i18next";
 export default function ItemSpare({ data }) {
   const imgProductDetail = useRef(null);
-  console.log("dsta", data);
+  const [t, i18n] = useTranslation("common");
   let img = "";
   if (data.spare_picture && data.spare_picture.length) {
     img = data.spare_picture[0].path;
   }
 
   return (
-    <div className="col-md-4 ">
+    <div className="col-6 col-md-4 ">
       <div className="spare-detail">
         <div className="spare-img">
           {data.spare_picture && data.spare_picture.length > 0 ? (
@@ -17,13 +18,11 @@ export default function ItemSpare({ data }) {
               ref={imgProductDetail}
               src={`http://www.mostactive.info/${img}`}
               onError={() => {
-                imgProductDetail.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+                imgProductDetail.current.src = noImg;
               }}
             />
           ) : (
-            <img
-              src={`https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`}
-            />
+            <img src={noImg} />
           )}
         </div>
         <div className="detail p-3">
@@ -32,7 +31,9 @@ export default function ItemSpare({ data }) {
           {data.sparepart_name && data.sparepart_name}
           <br />
 
-          <>{`ราคา ${data.sparepart_price || "-"} บาท`}</>
+          <>{`${t("Product.price")} ${data.sparepart_price || "-"} ${t(
+            "Product.baht"
+          )}`}</>
 
           <br />
         </div>

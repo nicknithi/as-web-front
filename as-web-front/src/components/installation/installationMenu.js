@@ -1,9 +1,11 @@
 /* eslint-disable react/jsx-no-target-blank */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
+import noImg from "../../assets/img/noImg.jpg";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
+import ButtonMain from "../button/ButtonMain";
 import "../../assets/scss/installation.scss";
 import CardInstallation from "../Card/CardInstallation";
 import SubMenu from "../installation/SubMenu";
@@ -25,11 +27,13 @@ import {
 export default function InstallationMenu() {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
+  const [DataMenu, setDataMenu] = useState([]);
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
   const [SpateDetail, setSpateDetail] = useState({});
-  const [ActiveRelate, setActiveRelate] = useState(2);
+  const [ActiveRelate, setActiveRelate] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [ActiveModel, setActiveModel] = useState(0);
   const [ActiveClass1, setActiveClass1] = useState(0);
   const [ActiveClass2, setActiveClass2] = useState(0);
   const { search } = useLocation();
@@ -46,6 +50,7 @@ export default function InstallationMenu() {
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     if (resMenu) {
+      setDataMenu(resMenu);
       setMenuSpareRender(tempMenu);
 
       const TempModelRender = tempMenu.map((item, index) => {
@@ -53,6 +58,7 @@ export default function InstallationMenu() {
           ...item,
           id: item.installation_model_id,
           title: item.installation_model_name,
+          product_picture: [],
           type: "model",
         };
       });
@@ -64,6 +70,12 @@ export default function InstallationMenu() {
       initFromQuery(query.code);
     }
   }, []);
+  const isActiveModel = (id) => {
+    if (ActiveModel === id) {
+      return "active";
+    }
+    return "";
+  };
   const isActiveClass1 = (id) => {
     if (ActiveClass1 === id) {
       return "active";
@@ -84,6 +96,9 @@ export default function InstallationMenu() {
       return "active";
     }
     return "";
+  };
+  const handleClickMenuModel = (id) => {
+    setActiveModel(id);
   };
   const handleClickClassified = async (id, name) => {
     setLoading(true);
@@ -122,6 +137,20 @@ export default function InstallationMenu() {
     const tempTitle = Title.split("/")[0];
     setTitle(`${tempTitle} / ${name}`);
     setActiveClass2(id);
+    let resMenu = DataMenu;
+    resMenu.forEach((item, index) => {
+      item.installation_classified.forEach((item1, index1) => {
+        const result = item1.installation_sub_classified.find(
+          (c2) => c2.installation_sub_classified_id === id
+        );
+        if (result && Object.keys(result).length > 0) {
+          // console.log("result", result, item);
+          setTitle(`${item1.installation_classified_name} / ${name}`);
+          setActiveClass1(item1.installation_classified_id);
+          return false;
+        }
+      });
+    });
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -154,7 +183,7 @@ export default function InstallationMenu() {
     }
     setLoading(true);
     if (type === "model") {
-      let resMenu = await GetAllMenuProduct_Installation(lang);
+      let resMenu = DataMenu;
       resMenu = resMenu.find((m) => m.installation_model_id === id);
       if (resMenu.installation_classified.length > 0) {
         let resClassified1 = await GetDataProduct_InstallationByClassified1(
@@ -242,10 +271,22 @@ export default function InstallationMenu() {
       let temp = { ...SpateDetail };
       temp = ProductClass1;
       setSpateDetail(temp);
+      setActiveRelate(0);
+      setTimeout(() => {
+        document.getElementById("instalDetail").scrollIntoView();
+        setActiveRelate(1);
+      }, 1000);
     } else {
       let temp = { ...SpateDetail };
       temp = {};
       setSpateDetail(temp);
+    }
+  };
+  const goBack = () => {
+    if (ContentRender[0].type === "model") {
+      window.location = "/";
+    } else {
+      window.location.reload(false);
     }
   };
   return (
@@ -257,7 +298,7 @@ export default function InstallationMenu() {
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
-      <div className="installation-container">
+      <div className="installation-container under-line mb-4 pb-4">
         <div className="row">
           <div className="col-md-4">
             {menuSpareRender.length > 0 && (
@@ -269,10 +310,15 @@ export default function InstallationMenu() {
                         <Accordion.Toggle
                           as={Card.Header}
                           eventKey={item.installation_model_id}
-                          className="p-0 d-flex"
+                          className={`p-0 d-flex ${isActiveModel(
+                            item.installation_model_id
+                          )}`}
                           id={`menu_${item.installation_model_id}`}
+                          onClick={() =>
+                            handleClickMenuModel(item.installation_model_id)
+                          }
                         >
-                          <span className="text-truncate">
+                          <span className="">
                             {item.installation_model_name}
                           </span>
                           <button className="ml-auto">
@@ -311,14 +357,11 @@ export default function InstallationMenu() {
               </Accordion>
             )}
           </div>
-          <div className="col-md-8">
-            <h3 className="title-section">{Title}</h3>
+          <div className="col-md-8 mt-4 mt-md-0" id="instalDetail">
+            <h3 className="title-section mb-5">{Title}</h3>
             {Object.keys(SpateDetail).length > 0 ? (
-              <div className="container product-detail">
+              <div className="product-detail">
                 <div>
-                  {SpateDetail.product_name && (
-                    <h3 className="title">{SpateDetail.product_name}</h3>
-                  )}
                   <div className="row">
                     <div className="col-md-5">
                       {SpateDetail.product_picture.length > 0 ? (
@@ -327,15 +370,13 @@ export default function InstallationMenu() {
                             ref={imgProductDetail}
                             src={`http://www.mostactive.info/${SpateDetail.product_picture[0].path}`}
                             onError={() => {
-                              imgProductDetail.current.src = `https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`;
+                              imgProductDetail.current.src = noImg;
                             }}
                           />
                         </div>
                       ) : (
                         <div className="img-detail">
-                          <img
-                            src={`https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png`}
-                          />
+                          <img src={noImg} />
                         </div>
                       )}
                     </div>
@@ -368,24 +409,26 @@ export default function InstallationMenu() {
                           </label>
                         )} */}
                         <div className="relate-menu">
-                          <button
-                            className={`${isActive(1)} mr-3`}
-                            onClick={() => setActiveMenu(1)}
-                          >
-                            {t("Product.installation")}
-                          </button>
+                          {SpateDetail.installation_file.length > 0 && (
+                            <button
+                              className={`${isActive(1)} mr-3`}
+                              onClick={() => setActiveMenu(1)}
+                            >
+                              {t("Product.installation")}
+                            </button>
+                          )}
                           <a
                             href={`/อะไหล่?id=${SpateDetail.product_id}&code=${SpateDetail.installation_product_old_code}`}
                             className="mr-3"
                           >
                             {t("Product.spare")}
                           </a>
-                          <button
+                          {/* <button
                             className={`${isActive(3)}`}
                             onClick={() => setActiveMenu(3)}
                           >
                             {t("Product.video")}
-                          </button>
+                          </button> */}
                         </div>
                       </div>
 
@@ -395,7 +438,7 @@ export default function InstallationMenu() {
                 </div>
                 {SpateDetail.installation_file.length > 0 && (
                   <>
-                    <div className="relate-contet mt-5">
+                    <div className="relate-contet mt-2 mt-md-5">
                       <div className={`${isActive(1)}`}>
                         <div className="install-content pl-4">การติดตั้ง</div>
                         <div className="container">
@@ -430,7 +473,7 @@ export default function InstallationMenu() {
                         <>
                           {ContentRender.map((item, index) => (
                             <>
-                              <div className="col-6 col-md-4 px-2">
+                              <div className="col-6 col-md-4 px-md-2">
                                 <CardInstallation
                                   data={item}
                                   handleClickCard={handleClickCard}
@@ -440,8 +483,8 @@ export default function InstallationMenu() {
                           ))}
                         </>
                       ) : (
-                        <div className="d-flex justify-content-center w-100 ">
-                          <h1 className="">Not Found</h1>
+                        <div className="d-flex justify-content-center w-100 mt-4">
+                          <h3 className="">Not Found</h3>
                         </div>
                       )}
                     </>
@@ -450,6 +493,18 @@ export default function InstallationMenu() {
               </div>
             )}
           </div>
+        </div>
+      </div>
+      <div className="container">
+        <div className="row d-flex justify-content-center mb-5">
+          <ButtonMain
+            title={t("website.btnBack")}
+            color="#636363"
+            BgColor="#f1c400"
+            handleClick={() => {
+              goBack();
+            }}
+          />
         </div>
       </div>
     </div>
