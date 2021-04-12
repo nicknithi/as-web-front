@@ -22,40 +22,42 @@ export default function FormRate({ handleChangInput, Confirm }) {
   return (
     <div className="rate-form mt-4 py-4 px-3">
       <input type="hidden" name="Score" id="Score" />
+      <h3 className="title text-md-nowrap text-center">
+        {t("warranthForm.Evaluate")}
+      </h3>
       <div className="row">
         <div className="col-md-4 mx-auto">
-          <h3 className="title">{t("warranthForm.Evaluate")}</h3>
           <div className="d-flex justify-content-between">
             <div
-              style={{ backgroundColor: "red" }}
+              style={{ backgroundColor: "red", color: "white" }}
               className={`emotion ${IsActive(1)}`}
               onClick={() => handleRate(1)}
             >
               1
             </div>
             <div
-              style={{ backgroundColor: "#ffbc00" }}
+              style={{ backgroundColor: "#ffbc00", color: "white" }}
               className={`emotion ${IsActive(2)}`}
               onClick={() => handleRate(2)}
             >
               2
             </div>
             <div
-              style={{ backgroundColor: "yellow" }}
+              style={{ backgroundColor: "yellow", color: "white" }}
               className={`emotion ${IsActive(3)}`}
               onClick={() => handleRate(3)}
             >
               3
             </div>
             <div
-              style={{ backgroundColor: "#75bf3e" }}
+              style={{ backgroundColor: "#75bf3e", color: "white" }}
               className={`emotion ${IsActive(4)}`}
               onClick={() => handleRate(4)}
             >
               4
             </div>
             <div
-              style={{ backgroundColor: "#349a27" }}
+              style={{ backgroundColor: "#349a27", color: "white" }}
               className={`emotion ${IsActive(5)}`}
               onClick={() => handleRate(5)}
             >

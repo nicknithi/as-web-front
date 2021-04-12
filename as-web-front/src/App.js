@@ -3,7 +3,7 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Warranty from "./layouts/Warranty";
 import { useCookies } from "react-cookie";
-import { BrowserRouter, Route, useHistory } from "react-router-dom";
+import { BrowserRouter, Route, useHistory, HashRouter } from "react-router-dom";
 import Home from "./layouts/Home";
 import Login from "./layouts/Login";
 import Forgotpassowrd from "./layouts/Forgotpassowrd";
@@ -39,7 +39,7 @@ export default function App(props) {
     <div>
       <Loading />
       <Header />
-      <BrowserRouter history={history}>
+      <BrowserRouter basename="/Front" history={history}>
         <Route exact path="/warranty/test">
           <ExampleTest />
         </Route>

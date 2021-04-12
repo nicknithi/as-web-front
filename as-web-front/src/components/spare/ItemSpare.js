@@ -10,7 +10,7 @@ export default function ItemSpare({ data }) {
   }
 
   return (
-    <div className="col-6 col-md-4 ">
+    <div className="col-md-4 ">
       <div className="spare-detail">
         <div className="spare-img">
           {data.spare_picture && data.spare_picture.length > 0 ? (

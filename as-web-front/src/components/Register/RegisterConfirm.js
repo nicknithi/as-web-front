@@ -56,8 +56,8 @@ export default function RegisterConfirm({ data, setCheckData, Lastsubmit }) {
           <span className="font-weight-normal">
             {" "}
             {data.Address || ""} <br />
-            {`${data.FK_Province_ID || ""} ${data.FK_District_ID || ""} ${
-              data.FK_Sub_District_ID || ""
+            {` ${data.FK_District_ID || ""} ${data.FK_Sub_District_ID || ""} ${
+              data.FK_Province_ID || ""
             } ${data.ZIP_Code || ""}`}
           </span>
         </div>

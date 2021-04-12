@@ -155,5 +155,12 @@
     "video": "Video Clip",
     "price": "Price",
     "baht": "Baht"
+  },
+  "installation": {
+    "title": "How to Installation"
+  },
+  "spare": {
+    "title": "Spare Parts",
+    "titleList": "Spare Parts"
   }
 }

@@ -35,11 +35,12 @@ export default function SpareMenu() {
   const [ActiveClass1, setActiveClass1] = useState(0);
   const [ActiveClass2, setActiveClass2] = useState(0);
   const [loading, setLoading] = useState(false);
-  const [Title, setTitle] = useState("รายการอะไหล่");
+  const [Title, setTitle] = useState(t("spare.titleList"));
   const imgProductDetail = useRef(null);
   const { search } = useLocation();
   const query = queryString.parse(search);
   useEffect(async () => {
+    setTitle(t("spare.titleList"));
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -56,7 +57,7 @@ export default function SpareMenu() {
         ...item,
         id: item.model_id,
         title: item.model_name,
-        product_picture: item.model_cover,
+        product_picture: [{ path: item.model_cover }],
         type: "model",
       };
     });
@@ -277,7 +278,7 @@ export default function SpareMenu() {
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3">
         <div className="col-md-10">
-          <h2 className="p-0"></h2>
+          <h2 className="p-0">{t("spare.title")}</h2>
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>

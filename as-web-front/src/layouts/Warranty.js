@@ -55,7 +55,7 @@ export default function Warranty({ data, RenderColumn }) {
           </div>
         </div>
       ))}
-      <div className="container pb-4">
+      <div className="container pb-4 under-line mb-3">
         <div>
           <WarrantyConfirm
             title={dataWarrantyConfirm.content_Title}
@@ -96,7 +96,7 @@ export default function Warranty({ data, RenderColumn }) {
         </div>
         {true && <FormWarranty Confirm={Confirm} />}
       </div>
-      <div className="row justify-content-center mt-2 mb-4">
+      <div className="container row justify-content-center mt-2 mb-4">
         <ButtonMain
           title={t("website.btnBack")}
           color="#636363"

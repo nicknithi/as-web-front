@@ -15,7 +15,8 @@ export default function Login({ data }) {
   return (
     <div>
       <ElementBanner img={ImgBanner} />
-      <div className="site-content">
+      <div className="container under-line mb-4" />
+      <div className="container p-0">
         <FromLogin />
       </div>
     </div>

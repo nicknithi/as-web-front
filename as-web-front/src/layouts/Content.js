@@ -284,12 +284,24 @@ export default function Content() {
     customPath === "Benefit"
   ) {
     return (
-      <TapBenefit
-        title={""}
-        data={Content}
-        RenderColumn={RenderColumn}
-        getBannerContent={getBannerContent}
-      />
+      <>
+        <TapBenefit
+          title={""}
+          data={Content}
+          RenderColumn={RenderColumn}
+          getBannerContent={getBannerContent}
+        />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
     );
   } else {
     return (

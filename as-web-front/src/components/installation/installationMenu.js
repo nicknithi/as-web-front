@@ -37,10 +37,11 @@ export default function InstallationMenu() {
   const [ActiveClass1, setActiveClass1] = useState(0);
   const [ActiveClass2, setActiveClass2] = useState(0);
   const { search } = useLocation();
-  const [Title, setTitle] = useState("วิธีการติดตั้ง");
+  const [Title, setTitle] = useState(t("installation.title"));
   const query = queryString.parse(search);
   const imgProductDetail = useRef(null);
   useEffect(async () => {
+    setTitle(t("installation.title"));
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -58,7 +59,7 @@ export default function InstallationMenu() {
           ...item,
           id: item.installation_model_id,
           title: item.installation_model_name,
-          product_picture: [],
+          product_picture: [{ path: item.installation_model_cover }],
           type: "model",
         };
       });
@@ -294,7 +295,7 @@ export default function InstallationMenu() {
       {/* <BannerInstallation className="banner-installation" /> */}
       <div className="row mb-3 pt-3">
         <div className="col-md-10">
-          <h2 className="p-0">ติดตั้ง</h2>
+          <h2 className="p-0">{t("installation.title")}</h2>
         </div>
         <div className="col-md-2">{/* <InputSearch /> */}</div>
       </div>
@@ -400,14 +401,14 @@ export default function InstallationMenu() {
                           </label>
                         )}
                         <br />
-                        {/* {SpateDetail.model && SpateDetail.model.label && (
+                        {SpateDetail.model && SpateDetail.model.label && (
                           <label>
                             ชื่อรุ่น
                             <span className="ml-2">
                               {SpateDetail.model.label}
                             </span>
                           </label>
-                        )} */}
+                        )}
                         <div className="relate-menu">
                           {SpateDetail.installation_file.length > 0 && (
                             <button

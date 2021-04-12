@@ -231,6 +231,7 @@ export default function Register({ data }) {
     if (e.target) {
       const DataSet = { ...DataFromRegister };
       DataSet.FK_District_ID = parseInt(e.target.value);
+      DataSet.FK_Sub_District_ID = "";
       DataSet.ZIP_Code = "";
       setDataFromRegister(DataSet);
       console.log(

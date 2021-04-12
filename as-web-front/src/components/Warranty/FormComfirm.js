@@ -42,9 +42,9 @@ function FormComfirm(props) {
             <div className="mb-3">
               {t("warrantyConfirm.address")} :{" "}
               {dataSet.datas[0].Customer_Address}{" "}
-              {dataSet.datas[0].Customer_Province}{" "}
               {dataSet.datas[0].Customer_District}{" "}
               {dataSet.datas[0].Customer_SubDistrict}{" "}
+              {dataSet.datas[0].Customer_Province}{" "}
               {dataSet.datas[0].Customer_ZipCode}
             </div>
             <GoogleMapDisabled
