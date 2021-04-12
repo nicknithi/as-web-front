@@ -73,7 +73,7 @@ export default function TestApi() {
     formData.append("datas", JSON.stringify(dataMock));
     axios
       .post(
-        "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",
+        "http://lixilapps.com/CCC/API/api/Warranty/AddDataWarranty",
         formData,
         {
           headers: {

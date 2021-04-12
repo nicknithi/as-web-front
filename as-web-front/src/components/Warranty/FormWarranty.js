@@ -531,7 +531,7 @@ function FormWarranty({ Confirm }) {
       FormLastData.append("datas", JSON.stringify(items));
       axios
         .post(
-          "http://www.mostactive.info/API/api/Warranty/AddDataWarranty",
+          "https://lixilapps.com/CCC/API/api/Warranty/AddDataWarranty",
           FormLastData,
           {
             headers: {

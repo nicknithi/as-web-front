@@ -30,16 +30,16 @@ export default function App(props) {
   const pathWithOutDomain = window.location.href.split("/").reverse()[0];
   if (!pathWithOutDomain) {
     if (cookies.as_lang === "TH") {
-      window.location = "/หน้าแรก";
+      window.location = "หน้าแรก";
     } else if (cookies.as_lang === "EN") {
-      window.location = "/home";
+      window.location = "home";
     }
   }
   return (
     <div>
       <Loading />
       <Header />
-      <BrowserRouter basename="/Front" history={history}>
+      <BrowserRouter basename="/CCC" history={history}>
         <Route exact path="/warranty/test">
           <ExampleTest />
         </Route>

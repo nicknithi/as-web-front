@@ -22,13 +22,13 @@ export default function NavbarMobile({ NavbarItem }) {
   const changToThai = () => {
     i18n.changeLanguage("th");
     setCookie("as_lang", "TH");
-    window.location = "/หน้าแรก";
+    window.location = "หน้าแรก";
     // window.location.reload(false);
   };
   const changToEng = () => {
     i18n.changeLanguage("en");
     setCookie("as_lang", "EN");
-    window.location = "/home";
+    window.location = "home";
     // window.location.reload(false);
   };
   const responsive = () => {
