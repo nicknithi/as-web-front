@@ -157,10 +157,15 @@
     "baht": "Baht"
   },
   "installation": {
-    "title": "How to Installation"
+    "title": "How to Installation",
+    "titleList": "How to install",
+    "remark": "American Standard reserves the rights to change or withdraw without prior notice.",
+    "linkToSpare": "SPARE PARTS"
   },
   "spare": {
     "title": "Spare Parts",
-    "titleList": "Spare Parts"
+    "titleList": "Spare Parts",
+    "remark": "American Standard reserves the rights to change or withdraw without prior notice **price excludes VAT.",
+    "linkToInstall": "INSTALLATION"
   }
 }

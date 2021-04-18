@@ -9,8 +9,10 @@
     "@testing-library/user-event": "^12.7.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "dotenv": "^8.2.0",
     "google-map-react": "^2.1.9",
     "google-maps-react": "^2.0.6",
+    "html2canvas": "^1.0.0-rc.7",
     "i18next": "^19.9.1",
     "jspdf": "^2.3.1",
     "lodash.clonedeep": "^4.5.0",
@@ -63,5 +65,5 @@
   "devDependencies": {
     "node-sass": "^5.0.0"
   },
-  "homepage": "https://www.lixilapps.com/CCC"
+  "homepage": "http://www.mostactive.info/CCC"
 }

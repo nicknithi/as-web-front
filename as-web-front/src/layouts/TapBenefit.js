@@ -38,7 +38,7 @@ export default function TabContent({
         <div key={index}>
           <div className={`${item.content_Type !== 2 && "container"}`}>
             {item.content_Type !== 2 && (
-              <div className="row">{RenderColumn(item)}</div>
+              <div className="">{RenderColumn(item)}</div>
             )}
           </div>
         </div>

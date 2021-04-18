@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/scss/Element/Pdf.scss";
+// import "../../assets/scss/Element/Pdf.scss";
 export default function ElementPDF({ data }) {
   return (
     <div className="element-pdf">

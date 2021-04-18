@@ -3,6 +3,7 @@ import FormWarranty from "../components/Warranty/FormWarranty";
 import CostWarrantyDetail from "../components/Warranty/CostWarrantyDetail";
 import WarrantyConfirm from "../components/Warranty/WarrantyConfirm";
 import BannerCover from "../components/Banner/BannerCover";
+import { useCookies } from "react-cookie";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import "../assets/scss/warranty.scss";
@@ -11,6 +12,7 @@ import { useTranslation } from "react-i18next";
 import ButtonMain from "../components/button/ButtonMain";
 
 export default function Warranty({ data, RenderColumn }) {
+  const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [Confirm, setConfirm] = useState(false);
   const [show, setShow] = useState(false);
@@ -45,6 +47,15 @@ export default function Warranty({ data, RenderColumn }) {
   const ConfirmFromModal = () => {
     setConfirm(true);
     setShow(false);
+  };
+  const goBack = () => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+      lang === 1 ? "หน้าแรก" : "home"
+    }`;
   };
   return (
     <div className="warranty">
@@ -102,7 +113,7 @@ export default function Warranty({ data, RenderColumn }) {
           color="#636363"
           BgColor="#f1c400"
           handleClick={() => {
-            window.location = "/";
+            goBack();
           }}
         />
       </div>

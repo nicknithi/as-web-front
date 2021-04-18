@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/scss/Element/Textbox.scss";
+// import "../../assets/scss/Element/Textbox.scss";
 export default function ElementTextBox({ data, col }) {
   console.log(data);
   return (

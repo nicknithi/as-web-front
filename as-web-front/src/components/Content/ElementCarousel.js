@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../assets/scss/Element/carousel.scss";
+// import "../../assets/scss/Element/carousel.scss";
 import Carousel from "react-bootstrap/Carousel";
 export default function ElementCarousel({ data }) {
   let settings = { adaptiveHeight: true };

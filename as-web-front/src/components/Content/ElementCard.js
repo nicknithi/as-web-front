@@ -1,12 +1,14 @@
 import React from "react";
-import "../../assets/scss/Element/Card.scss";
+// import "../../assets/scss/Element/Card.scss";
 export default function ElementCard({ data }) {
   return (
     <div className="element-card mb-3">
       <div className="d-flex justify-content-center mb-4 card-img">
         {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
       </div>
-      {data.link && <a href={data.link} />}
+      {data.link && (
+        <a href={`${process.env.REACT_APP_SUB_DIRECTORY}${data.link}`} />
+      )}
       <div className="d-flex justify-content-between">
         {data.description && (
           <h3

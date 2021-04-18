@@ -41,7 +41,6 @@ export default function InstallationMenu() {
   const query = queryString.parse(search);
   const imgProductDetail = useRef(null);
   useEffect(async () => {
-    setTitle(t("installation.title"));
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -70,6 +69,7 @@ export default function InstallationMenu() {
       // handleClickCard(query.id, "classified1");
       initFromQuery(query.code);
     }
+    setTitle(t("installation.titleList"));
   }, []);
   const isActiveModel = (id) => {
     if (ActiveModel === id) {
@@ -220,6 +220,7 @@ export default function InstallationMenu() {
       // const ProductClass1 = await GetManageProductSparePartById(id);
       let ProductClass1 = await GetManageProductInstallationById(id, lang);
       if (ProductClass1) {
+        console.log("nithi", ProductClass1);
         ProductClass1 = {
           ...ProductClass1,
           file: ProductClass1.installation_file,
@@ -285,7 +286,13 @@ export default function InstallationMenu() {
   };
   const goBack = () => {
     if (ContentRender[0].type === "model") {
-      window.location = "/";
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+        lang === 1 ? "หน้าแรก" : "home"
+      }`;
     } else {
       window.location.reload(false);
     }
@@ -301,9 +308,9 @@ export default function InstallationMenu() {
       </div>
       <div className="installation-container under-line mb-4 pb-4">
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 d-flex flex-column">
             {menuSpareRender.length > 0 && (
-              <Accordion defaultActiveKey={0}>
+              <Accordion defaultActiveKey={0} className="w-100 mb-auto">
                 {menuSpareRender.map((item, index) => (
                   <Card>
                     {item.installation_classified.length > 0 && (
@@ -357,6 +364,7 @@ export default function InstallationMenu() {
                 ))}
               </Accordion>
             )}
+            <div className="text-break">{t("installation.remark")}</div>
           </div>
           <div className="col-md-8 mt-4 mt-md-0" id="instalDetail">
             <h3 className="title-section mb-5">{Title}</h3>
@@ -418,12 +426,18 @@ export default function InstallationMenu() {
                               {t("Product.installation")}
                             </button>
                           )}
-                          <a
-                            href={`/อะไหล่?id=${SpateDetail.product_id}&code=${SpateDetail.installation_product_old_code}`}
-                            className="mr-3"
-                          >
-                            {t("Product.spare")}
-                          </a>
+                          {SpateDetail.have_sparepart && (
+                            <a
+                              href={`${process.env.REACT_APP_SUB_DIRECTORY}/${t(
+                                "installation.linkToSpare"
+                              )}?id=${SpateDetail.product_id}&code=${
+                                SpateDetail.installation_product_old_code
+                              }`}
+                              className="mr-3"
+                            >
+                              {t("Product.spare")}
+                            </a>
+                          )}
                           {/* <button
                             className={`${isActive(3)}`}
                             onClick={() => setActiveMenu(3)}

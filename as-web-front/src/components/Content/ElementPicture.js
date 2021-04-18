@@ -1,5 +1,5 @@
 import React from "react";
-import "../../assets/scss/Element/ElementPicture.scss";
+// import "../../assets/scss/Element/ElementPicture.scss";
 
 import { fileDownload, blob2canvas, nomalDownloadFile } from "../../ManageFIle";
 export default function ElementPicture({ data, index }) {
@@ -25,7 +25,9 @@ export default function ElementPicture({ data, index }) {
           />
         )}
       </div>
-      {data.link && <a href={data.link} />}
+      {data.link && (
+        <a href={`${process.env.REACT_APP_SUB_DIRECTORY}${data.link}`} />
+      )}
       {data.description && (
         <div
           className="img-detail mb-3"

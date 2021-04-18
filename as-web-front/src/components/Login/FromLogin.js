@@ -13,7 +13,9 @@ export default function FromLogin() {
     console.log(res);
     if (res.data.message === "Login Success!") {
       console.log(res.data.data);
-      setCookie("customerID", res.data.data.customerID);
+      setCookie("customerID", res.data.data.customerID, {
+        path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+      });
       window.location = "/profile";
     } else {
       alert("usename or password incorrect");

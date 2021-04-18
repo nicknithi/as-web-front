@@ -192,7 +192,12 @@ function AddressSetting({
         </div>
         <div className="alert pl-0" role="alert">
           {t("register.careCenter")}
-          <a href={t("link.serviceCenter")} className="alert-link">
+          <a
+            href={`${process.env.REACT_APP_SUB_DIRECTORY}${t(
+              "link.serviceCenter"
+            )}`}
+            className="alert-link"
+          >
             {" "}
             Click
           </a>

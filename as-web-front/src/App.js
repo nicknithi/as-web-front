@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Warranty from "./layouts/Warranty";
 import { useCookies } from "react-cookie";
-import { BrowserRouter, Route, useHistory, HashRouter } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  useHistory,
+  HashRouter,
+  Redirect,
+} from "react-router-dom";
 import Home from "./layouts/Home";
 import Login from "./layouts/Login";
 import Forgotpassowrd from "./layouts/Forgotpassowrd";
@@ -24,27 +30,75 @@ import SpareDetail from "./layouts/SpareDetail";
 import Maintain from "./layouts/Maintain";
 import Loading from "./components/Loading";
 import testpicture from "./layouts/testPicture";
+import TestRenderPdf from "./components/testRenderPdf";
+import { useTranslation } from "react-i18next";
 export default function App(props) {
-  console.log("55555ooo0", props);
+  const [t, i18n] = useTranslation("common");
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const pathWithOutDomain = window.location.href.split("/").reverse()[0];
-  if (!pathWithOutDomain) {
-    if (cookies.as_lang === "TH") {
-      window.location = "หน้าแรก";
-    } else if (cookies.as_lang === "EN") {
-      window.location = "home";
-    }
+
+  if (!cookies.as_lang) {
+    setCookie("as_lang", "TH", {
+      path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+    });
+    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/หน้าแรก`;
   }
+  let lang = 1;
+  if (cookies.as_lang) {
+    // alert();
+    lang = cookies.as_lang === "TH" ? 1 : 2;
+  }
+  useEffect(() => {
+    if (!cookies.as_lang) {
+      setCookie("as_lang", "TH", {
+        path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+      });
+    }
+
+    if (cookies.as_lang) {
+      if (cookies.as_lang === "TH") {
+        i18n.changeLanguage("th");
+        document.body.style.fontFamily = "psl_kittithadaspbold,sans-serif";
+        // document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
+        // document.body.style.setProperty("font-size", "24px", "important");
+        // document.body.style.setProperty("font-weight", "bold", "important");
+        // let h1Elements = document.getElementsByTagName("h1");
+        // console.log("h1Elements", h1Elements);
+        // for (let i = 0; i < h1Elements.length; i++) {
+        //   h1Elements[i].classList.add("eng");
+        // }
+      } else {
+        i18n.changeLanguage("en");
+        document.body.style.fontFamily =
+          "helvetica_neueregular,psl_kittithadaspbold,sans-serif";
+        // document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
+        // document.body.style.setProperty("font-size", "14px", "important");
+        // document.body.style.setProperty("font-weight", "normal", "important");
+        // document.body.style.setProperty("line-height", "1.8", "important");
+
+        // document
+        //   .querySelector(".as-footer")
+        //   .style.setProperty("font-weight", "normal", "important");
+      }
+    }
+  }, []);
+
   return (
     <div>
       <Loading />
-      <Header />
-      <BrowserRouter basename="/CCC" history={history}>
+      <BrowserRouter
+        basename={`${process.env.REACT_APP_SUB_DIRECTORY}`}
+        history={history}
+      >
+        {/* <Route exact path="/">
+          <ExampleTest />
+        </Route> */}
         <Route exact path="/warranty/test">
           <ExampleTest />
         </Route>
-        <Route exact path="/test/picture">
-          <testPicture />
+        <Route exact path="/test/pdf">
+          {/* <ExampleTest /> */}
+          <TestRenderPdf />
         </Route>
 
         {/* <Route exact path="/">
@@ -99,7 +153,12 @@ export default function App(props) {
           <Maintain />
         </Route>  */}
         <Route exact path="/:customPath">
+          <Header />
           <Content />
+        </Route>
+        <Route exact path="/">
+          <Header />
+          <Redirect exact from="/" to={lang === 1 ? "/หน้าแรก" : "/home"} />
         </Route>
       </BrowserRouter>
       <Footer />

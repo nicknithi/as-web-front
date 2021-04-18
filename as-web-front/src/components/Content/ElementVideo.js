@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../assets/scss/Element/Video.scss";
+// import "../../assets/scss/Element/Video.scss";
 export default function ElementVideo({ data }) {
   const [IsShowVidio, setIsShowVidio] = useState(false);
   const [IsYoutube, setIsYoutube] = useState(false);

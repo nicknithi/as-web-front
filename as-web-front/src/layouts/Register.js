@@ -306,7 +306,13 @@ export default function Register({ data }) {
     const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
     if (res.data.message === "Success!") {
       alert(t("register.alertSuccess"));
-      window.location = "/";
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+        lang === 1 ? "หน้าแรก" : "home"
+      }`;
     }
   };
   const goBlack = () => {
@@ -725,7 +731,12 @@ export default function Register({ data }) {
                 </div>
                 <div className="alert pl-0" role="alert">
                   {t("register.careCenter")}
-                  <a href={t("link.serviceCenter")} className="alert-link">
+                  <a
+                    href={`${process.env.REACT_APP_SUB_DIRECTORY}${t(
+                      "link.serviceCenter"
+                    )}`}
+                    className="alert-link"
+                  >
                     {" "}
                     Click
                   </a>

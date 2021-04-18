@@ -21,13 +21,17 @@ export default function NavbarMobile({ NavbarItem }) {
   }, []);
   const changToThai = () => {
     i18n.changeLanguage("th");
-    setCookie("as_lang", "TH");
+    setCookie("as_lang", "TH", {
+      path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+    });
     window.location = "หน้าแรก";
     // window.location.reload(false);
   };
   const changToEng = () => {
     i18n.changeLanguage("en");
-    setCookie("as_lang", "EN");
+    setCookie("as_lang", "EN", {
+      path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+    });
     window.location = "home";
     // window.location.reload(false);
   };
@@ -39,6 +43,15 @@ export default function NavbarMobile({ NavbarItem }) {
       document.querySelector("header").style.height = `auto`;
     }
   };
+  const goBack = () => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
+    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+      lang === 1 ? "หน้าแรก" : "home"
+    }`;
+  };
   return (
     <Navbar
       collapseOnSelect
@@ -46,7 +59,7 @@ export default function NavbarMobile({ NavbarItem }) {
       fixed="top"
       className="navbar-mobile d-lg-none"
     >
-      <Navbar.Brand href="/" className="mr-0">
+      <Navbar.Brand onClick={() => goBack()} className="mr-0">
         <img src={logo} alt="logo" className="img-fluid" />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />

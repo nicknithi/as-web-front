@@ -40,7 +40,6 @@ export default function SpareMenu() {
   const { search } = useLocation();
   const query = queryString.parse(search);
   useEffect(async () => {
-    setTitle(t("spare.titleList"));
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -66,6 +65,7 @@ export default function SpareMenu() {
       // handleClickCard(query.id, "classified1");
       initFromQuery(query.code);
     }
+    setTitle(t("spare.titleList"));
   }, []);
   const isActiveModel = (id) => {
     if (ActiveModel === id) {
@@ -250,7 +250,13 @@ export default function SpareMenu() {
   };
   const goBack = () => {
     if (ContentRender[0].type === "model") {
-      window.location = "/";
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
+      }
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+        lang === 1 ? "หน้าแรก" : "home"
+      }`;
     } else {
       window.location.reload(false);
     }
@@ -284,9 +290,9 @@ export default function SpareMenu() {
       </div>
       <div className="installation-container under-line mb-4 pb-4">
         <div className="row">
-          <div className="col-md-4">
+          <div className="col-md-4 d-flex flex-column">
             {menuSpareRender.length > 0 && (
-              <Accordion defaultActiveKey={0}>
+              <Accordion defaultActiveKey={0} className="w-100 mb-auto">
                 {menuSpareRender.map((item, index) => (
                   <Card>
                     {item && (
@@ -320,6 +326,7 @@ export default function SpareMenu() {
                 ))}
               </Accordion>
             )}
+            <div className="text-break">{t("spare.remark")}</div>
           </div>
           <div className="col-md-8 mt-4 mt-md-0 " id="spareDetail">
             <h3 className="title-section mb-5">{Title}</h3>
@@ -391,7 +398,11 @@ export default function SpareMenu() {
                         <div className="relate-menu">
                           <a
                             className={`${isActive(1)} mr-3`}
-                            href={`/การติดตั้ง?id=${SpateDetail.id}&code=${SpateDetail.product_old_code}`}
+                            href={`${process.env.REACT_APP_SUB_DIRECTORY}/${t(
+                              "spare.linkToInstall"
+                            )}?id=${SpateDetail.id}&code=${
+                              SpateDetail.product_old_code
+                            }`}
                             // onClick={() => setActiveMenu(1)}
                           >
                             {t("Product.installation")}

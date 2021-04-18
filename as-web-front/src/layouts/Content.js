@@ -207,7 +207,21 @@ export default function Content() {
     return "";
   };
   if (customPath === "การรับประกัน" || customPath === "WARRANTY") {
-    return <Warranty data={Content} RenderColumn={RenderColumn} />;
+    return (
+      <>
+        <Warranty data={Content} RenderColumn={RenderColumn} />
+        {/* <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div> */}
+      </>
+    );
   } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
     return <Spare data={Content} RenderColumn={RenderColumn} />;
   } else if (customPath === "การติดตั้ง" || customPath === "INSTALLATION") {
@@ -241,7 +255,21 @@ export default function Content() {
     customPath === "ลงทะเบียนสมัครสมาชิก" ||
     customPath === "Membership Registration"
   ) {
-    return <Register data={Content} />;
+    return (
+      <>
+        <Register data={Content} />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
+    );
   } else if (maintain === 20 || maintain === 38) {
     return <Maintain data={Content} RenderColumn={RenderColumn} />;
   } else if (
@@ -249,12 +277,24 @@ export default function Content() {
     customPath === "Customer Care Center Branch"
   ) {
     return (
-      <TapBenefit
-        title={""}
-        data={Content}
-        RenderColumn={RenderColumn}
-        getBannerContent={getBannerContent}
-      />
+      <>
+        <TapBenefit
+          title={""}
+          data={Content}
+          RenderColumn={RenderColumn}
+          getBannerContent={getBannerContent}
+        />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
     );
   } else if (
     customPath === "การแก้ไขปัญหาผลิตภัณฑ์" ||

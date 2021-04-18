@@ -135,6 +135,10 @@ function FormWarranty({ Confirm }) {
     setFileWaranty(fileData);
     console.log(FileWaranty);
   };
+  let lang = 1;
+  if (cookies.as_lang) {
+    lang = cookies.as_lang === "TH" ? 1 : 2;
+  }
   const [procudeForm, setProcudeForm] = useState([0]);
   const [FormDataProduct, setFormDataProduct] = useState([
     {
@@ -152,6 +156,7 @@ function FormWarranty({ Confirm }) {
       QTY: 0,
       Product_code: null,
       product_Name: null,
+      Lang_ID: lang,
     },
   ]);
   const [FormDataWarranty, setFormDataWarranty] = useState({
@@ -323,6 +328,10 @@ function FormWarranty({ Confirm }) {
     console.log(FormDataProduct);
   };
   const addStoreForm = () => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
     setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
     FormDataProduct.push({
       Purchase_Province: null,
@@ -339,6 +348,7 @@ function FormWarranty({ Confirm }) {
       QTY: 0,
       Product_code: null,
       product_Name: null,
+      Lang_ID: lang,
     });
     setFormDataProduct(FormDataProduct);
     const tempFile = [...FileWaranty];
@@ -531,7 +541,7 @@ function FormWarranty({ Confirm }) {
       FormLastData.append("datas", JSON.stringify(items));
       axios
         .post(
-          "https://lixilapps.com/CCC/API/api/Warranty/AddDataWarranty",
+          `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
           FormLastData,
           {
             headers: {
@@ -553,7 +563,13 @@ function FormWarranty({ Confirm }) {
         alert("ไม่สำเร็จ กรุณาลองใหม่");
       } else {
         alert(t("warranthForm.alertSuccess"));
-        window.location = "/";
+        let lang = 1;
+        if (cookies.as_lang) {
+          lang = cookies.as_lang === "TH" ? 1 : 2;
+        }
+        window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+          lang === 1 ? "หน้าแรก" : "home"
+        }`;
       }
     });
   };
