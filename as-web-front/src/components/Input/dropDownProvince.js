@@ -21,6 +21,9 @@ export default function DropDown({
     }
   };
   useEffect(() => {
+    setTitleState(t("warranthForm.selectProvince"));
+  }, []);
+  useEffect(() => {
     if (FormDataWarranty.Customer_Province) {
       const findData = data.find(
         (a) => a.id === parseInt(FormDataWarranty.Customer_Province)

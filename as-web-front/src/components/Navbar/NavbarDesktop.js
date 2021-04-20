@@ -35,6 +35,9 @@ export default function NavbarDesktop({ NavbarItem }) {
   // }
 
   const ChangToThai = async () => {
+    setCookie("as_lang", "TH", {
+      path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+    });
     const datamenuEN = await getMenuAll("EN");
     let tempMenuEN = datamenuEN.find(
       (m) =>
@@ -48,9 +51,9 @@ export default function NavbarDesktop({ NavbarItem }) {
         const res = datamenuTH.find(
           (e) => e.fK_MENU_EN_ID === tempMenuEN.fK_MENU_EN_ID
         );
-        setCookie("as_lang", "TH", {
-          path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
-        });
+        // setCookie("as_lang", "TH", {
+        //   path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+        // });
         window.location = `${
           process.env.REACT_APP_SUB_DIRECTORY
         }/${res.menu.trim()}`;
@@ -63,21 +66,25 @@ export default function NavbarDesktop({ NavbarItem }) {
     //window.location.reload(false);
   };
   const ChangToEng = async () => {
+    setCookie("as_lang", "EN", {
+      path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+    });
     const datamenuEN = await getMenuAll("TH");
     let tempMenuEN = datamenuEN.find(
       (m) =>
         m.menu.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
+
     if (tempMenuEN && Object.keys(tempMenuEN).length) {
       const datamenuTH = await getMenuAll("EN");
       if (datamenuTH && datamenuTH.length) {
         const res = datamenuTH.find(
           (e) => e.fK_MENU_TH_ID === tempMenuEN.fK_MENU_TH_ID
         );
-        setCookie("as_lang", "EN", {
-          path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
-        });
+        // setCookie("as_lang", "EN", {
+        //   path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+        // });
         window.location = `${
           process.env.REACT_APP_SUB_DIRECTORY
         }/${res.menu.trim()}`;

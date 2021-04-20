@@ -68,6 +68,9 @@ function FormComfirm(props) {
                 {t("warrantyConfirm.OtherStoreName")}:{" "}
                 {item.Store_Name_Other || ""}
                 <br />
+                {t("warrantyConfirm.serviceCenter")}:{" "}
+                {item.Service_Center_Name || ""}
+                <br />
                 {t("warrantyConfirm.ReceiptNumber")}:{" "}
                 {item.Receipt_Number || ""}
                 <br />
@@ -77,6 +80,8 @@ function FormComfirm(props) {
                 {t("warrantyConfirm.ProductType")}: {item.Type_ID || ""}
                 <br />
                 {t("warrantyConfirm.ProductCode")}: {item.Product_code || ""}
+                <br />
+                {t("warrantyConfirm.ProductName")}: {item.product_Name || ""}
                 <br />
                 {t("warrantyConfirm.OtherProductCode")}:{" "}
                 {item.Product_Code_Other || ""}

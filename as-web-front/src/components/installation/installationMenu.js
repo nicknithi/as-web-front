@@ -90,7 +90,11 @@ export default function InstallationMenu() {
     return "";
   };
   const setActiveMenu = (menu) => {
-    setActiveRelate(menu);
+    if (ActiveRelate === menu) {
+      setActiveRelate(0);
+    } else {
+      setActiveRelate(menu);
+    }
   };
   const isActive = (menu) => {
     if (ActiveRelate === menu) {
@@ -364,10 +368,12 @@ export default function InstallationMenu() {
                 ))}
               </Accordion>
             )}
-            <div className="text-break">{t("installation.remark")}</div>
           </div>
           <div className="col-md-8 mt-4 mt-md-0" id="instalDetail">
-            <h3 className="title-section mb-5">{Title}</h3>
+            <h3 className="title-section">{Title}</h3>
+            <div className="container mb-5">
+              <div className="text-break">{t("installation.remark")}</div>
+            </div>
             {Object.keys(SpateDetail).length > 0 ? (
               <div className="product-detail">
                 <div>
@@ -426,7 +432,7 @@ export default function InstallationMenu() {
                               {t("Product.installation")}
                             </button>
                           )}
-                          {SpateDetail.have_sparepart && (
+                          {SpateDetail.have_sparepart !== 0 && (
                             <a
                               href={`${process.env.REACT_APP_SUB_DIRECTORY}/${t(
                                 "installation.linkToSpare"
@@ -455,7 +461,9 @@ export default function InstallationMenu() {
                   <>
                     <div className="relate-contet mt-2 mt-md-5">
                       <div className={`${isActive(1)}`}>
-                        <div className="install-content pl-4">การติดตั้ง</div>
+                        <div className="install-content pl-4">
+                          {t("installation.titleList")}
+                        </div>
                         <div className="container">
                           <div className="row">
                             {SpateDetail.installation_file.map(

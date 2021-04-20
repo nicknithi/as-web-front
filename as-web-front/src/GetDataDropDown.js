@@ -90,7 +90,7 @@ const getProductByBarcode = async (barcode) => {
 };
 const getAllStore = async (lang) => {
   const res = await http.post("/api/Master/GetStore", {
-    Lang_ID: 1,
+    Lang_ID: lang,
   });
   return res.data.data;
 };

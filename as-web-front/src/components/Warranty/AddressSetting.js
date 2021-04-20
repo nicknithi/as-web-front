@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import GoogleMap from "../map/googleMap";
@@ -197,6 +198,7 @@ function AddressSetting({
               "link.serviceCenter"
             )}`}
             className="alert-link"
+            target="_blank"
           >
             {" "}
             Click

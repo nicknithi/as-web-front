@@ -121,6 +121,7 @@
     "TelephoneNumber": "Telephone Number",
     "MobileNumber": "Mobile Number",
     "Email": "Email",
+    "serviceCenter": "Customer Care Center Branch",
     "titleAddress": "Installation Address",
     "address": "Product installation address",
     "titleProduct": "Product Information",
@@ -132,6 +133,7 @@
     "WarrantyNumber": "Warranty number",
     "ProductType": "Product Type",
     "ProductCode": "Product Code",
+    "ProductName": "Product Name",
     "OtherProductCode": "Product Code (other)",
     "Qty": "Number of pieces purchased",
     "Barcode": "Barcode",
@@ -157,7 +159,7 @@
     "baht": "Baht"
   },
   "installation": {
-    "title": "How to Installation",
+    "title": "How to install",
     "titleList": "How to install",
     "remark": "American Standard reserves the rights to change or withdraw without prior notice.",
     "linkToSpare": "SPARE PARTS"

@@ -45,8 +45,33 @@ export default function App(props) {
   }
   let lang = 1;
   if (cookies.as_lang) {
-    // alert();
     lang = cookies.as_lang === "TH" ? 1 : 2;
+  }
+  if (cookies.as_lang) {
+    if (cookies.as_lang === "TH") {
+      i18n.changeLanguage("th");
+      document.body.style.fontFamily = "psl_kittithadaspbold,sans-serif";
+      // document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
+      // document.body.style.setProperty("font-size", "24px", "important");
+      // document.body.style.setProperty("font-weight", "bold", "important");
+      // let h1Elements = document.getElementsByTagName("h1");
+      // console.log("h1Elements", h1Elements);
+      // for (let i = 0; i < h1Elements.length; i++) {
+      //   h1Elements[i].classList.add("eng");
+      // }
+    } else {
+      i18n.changeLanguage("en");
+      document.body.style.fontFamily =
+        "helvetica_neueregular,psl_kittithadaspbold,sans-serif";
+      // document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
+      // document.body.style.setProperty("font-size", "14px", "important");
+      // document.body.style.setProperty("font-weight", "normal", "important");
+      // document.body.style.setProperty("line-height", "1.8", "important");
+
+      // document
+      //   .querySelector(".as-footer")
+      //   .style.setProperty("font-weight", "normal", "important");
+    }
   }
   useEffect(() => {
     if (!cookies.as_lang) {
@@ -54,35 +79,7 @@ export default function App(props) {
         path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
       });
     }
-
-    if (cookies.as_lang) {
-      if (cookies.as_lang === "TH") {
-        i18n.changeLanguage("th");
-        document.body.style.fontFamily = "psl_kittithadaspbold,sans-serif";
-        // document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
-        // document.body.style.setProperty("font-size", "24px", "important");
-        // document.body.style.setProperty("font-weight", "bold", "important");
-        // let h1Elements = document.getElementsByTagName("h1");
-        // console.log("h1Elements", h1Elements);
-        // for (let i = 0; i < h1Elements.length; i++) {
-        //   h1Elements[i].classList.add("eng");
-        // }
-      } else {
-        i18n.changeLanguage("en");
-        document.body.style.fontFamily =
-          "helvetica_neueregular,psl_kittithadaspbold,sans-serif";
-        // document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
-        // document.body.style.setProperty("font-size", "14px", "important");
-        // document.body.style.setProperty("font-weight", "normal", "important");
-        // document.body.style.setProperty("line-height", "1.8", "important");
-
-        // document
-        //   .querySelector(".as-footer")
-        //   .style.setProperty("font-weight", "normal", "important");
-      }
-    }
   }, []);
-
   return (
     <div>
       <Loading />

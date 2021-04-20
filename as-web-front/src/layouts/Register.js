@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-target-blank */
 import React, { useState, useEffect } from "react";
 import "../assets/scss/register.scss";
 import DropdownProvince from "../components/Register/DropdownProvince";
@@ -135,6 +136,31 @@ export default function Register({ data }) {
   const [DataFromRegisterShow, setDataFromRegisterShow] = useState({});
 
   useEffect(() => {
+    //set title dropdown
+    setProvince([{ id: "", value: t("register.selectProvince") }]);
+    setDistrict([
+      { id: "", value: t("register.selectDistrict"), fK_Province_ID: "" },
+    ]);
+    setDistrictDN([
+      { id: "", value: t("register.selectDistrict"), fK_Province_ID: "" },
+    ]);
+    setSubDistrict([
+      {
+        id: "",
+        value: t("register.selectSubDistrict"),
+        fK_Province_ID: "",
+        fK_District_ID: "",
+      },
+    ]);
+    setSubDistrictDN([
+      {
+        id: "",
+        value: t("register.selectSubDistrict"),
+        fK_Province_ID: "",
+        fK_District_ID: "",
+      },
+    ]);
+
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -152,7 +178,6 @@ export default function Register({ data }) {
         setProvince([...Province, ...ProvinceSet]);
       })
       .catch((e) => {});
-
     //get District
     http
       .post("/api/Master/GetDistrict", {
@@ -303,7 +328,14 @@ export default function Register({ data }) {
     // }
   };
   const Lastsubmit = async () => {
-    const res = await http.post("/api/Customer/AddCustomer", DataFromRegister);
+    const lastData = { ...DataFromRegister };
+    lastData.Customer_Contractor_Type = parseInt(
+      lastData.Customer_Contractor_Type
+    );
+    lastData.Customer_Type = parseInt(lastData.Customer_Type);
+    lastData.Service_Center = lastData.Service_Center.toString();
+    console.log("lastData", lastData);
+    const res = await http.post("/api/Customer/AddCustomer", lastData);
     if (res.data.message === "Success!") {
       alert(t("register.alertSuccess"));
       let lang = 1;
@@ -736,6 +768,7 @@ export default function Register({ data }) {
                       "link.serviceCenter"
                     )}`}
                     className="alert-link"
+                    target="_blank"
                   >
                     {" "}
                     Click

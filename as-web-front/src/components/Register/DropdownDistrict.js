@@ -22,6 +22,9 @@ export default function DropDown({
     }
   };
   useEffect(() => {
+    setTitleState(t("register.selectDistrict"));
+  }, []);
+  useEffect(() => {
     if (DataFromRegister.FK_District_ID) {
       const findData = data.find(
         (a) => a.id === parseInt(DataFromRegister.FK_District_ID)

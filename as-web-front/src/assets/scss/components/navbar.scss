@@ -7,6 +7,7 @@
   .navbar-header {
     height: 9rem;
     .logo {
+      cursor: pointer;
       width: 300px;
       img {
         position: absolute;
@@ -34,7 +35,7 @@
   }
   .navbar-hr {
     background-color: #f1c400;
-    height: 2px;
+    height: 3px;
     border: none;
   }
   .navbar-menu {

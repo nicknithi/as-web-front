@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import MemberData from "../Warranty/MemberData";
@@ -80,6 +81,31 @@ function FormWarranty({ Confirm }) {
 
   const [DataStore, setDataStore] = useState([]);
   useEffect(async () => {
+    // set title dropdown
+    setProvince([{ id: "", value: t("warranthForm.selectProvince") }]);
+    setDistrict([
+      { id: "", value: t("warranthForm.selectDistrict"), fK_Province_ID: "" },
+    ]);
+    setDistrictDN([
+      { id: "", value: t("warranthForm.selectDistrict"), fK_Province_ID: "" },
+    ]);
+    setSubDistrict([
+      {
+        id: "",
+        value: t("warranthForm.selectSubDistrict"),
+        fK_Province_ID: "",
+        fK_District_ID: "",
+      },
+    ]);
+    setSubDistrictDN([
+      {
+        id: "",
+        value: t("warranthForm.selectSubDistrict"),
+        fK_Province_ID: "",
+        fK_District_ID: "",
+      },
+    ]);
+
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
@@ -520,7 +546,7 @@ function FormWarranty({ Confirm }) {
           return item;
         })
       );
-
+      console.log("dataShow", dataShow);
       setDataForComfirm(dataShow);
 
       setFormInput(!FormInput);
@@ -536,6 +562,9 @@ function FormWarranty({ Confirm }) {
     console.log("json:", LastDataComToConfirm);
     LastDataComToConfirm.forEach((items, index) => {
       let FormLastData = new FormData();
+      if (items.Service_Center) {
+        items.Service_Center = parseInt(items.Service_Center);
+      }
       items.Purchase_Date = convertDate(items.Purchase_Date);
       FormLastData.append("Files", FileWaranty[index]);
       FormLastData.append("datas", JSON.stringify(items));

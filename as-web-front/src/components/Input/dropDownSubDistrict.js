@@ -23,6 +23,9 @@ export default function DropDown({
     }
   };
   useEffect(() => {
+    setTitleState(t("warranthForm.selectSubDistrict"));
+  }, []);
+  useEffect(() => {
     if (FormDataWarranty.Customer_SubDistrict) {
       const findData = data.find(
         (a) => a.id === parseInt(FormDataWarranty.Customer_SubDistrict)

@@ -86,7 +86,11 @@ export default function SpareMenu() {
     return "";
   };
   const setActiveMenu = (menu) => {
-    setActiveRelate(menu);
+    if (ActiveRelate === menu) {
+      setActiveRelate(0);
+    } else {
+      setActiveRelate(menu);
+    }
   };
   const isActive = (menu) => {
     if (ActiveRelate === menu) {
@@ -326,10 +330,12 @@ export default function SpareMenu() {
                 ))}
               </Accordion>
             )}
-            <div className="text-break">{t("spare.remark")}</div>
           </div>
           <div className="col-md-8 mt-4 mt-md-0 " id="spareDetail">
-            <h3 className="title-section mb-5">{Title}</h3>
+            <h3 className="title-section ">{Title}</h3>
+            <div className="container mb-5">
+              <div className="text-break">{t("spare.remark")}</div>
+            </div>
             {Object.keys(SpateDetail).length > 0 ? (
               <div className="product-detail">
                 <div>

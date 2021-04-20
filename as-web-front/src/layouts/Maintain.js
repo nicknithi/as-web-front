@@ -100,12 +100,12 @@ export default function Maintain({ data, RenderColumn }) {
               >
                 {t("maintain.article")}
               </div>
-              <div
+              {/* <div
                 className={`tab-menu p-1 pl-2 ${ActiveTabMenu(2)}`}
                 onClick={() => printDocument()}
               >
                 {t("maintain.download")}
-              </div>
+              </div> */}
               <div
                 className={`tab-menu p-1 pl-2 ${ActiveTabMenu(3)}`}
                 onClick={() => setIsActive(3)}
