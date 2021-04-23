@@ -22,7 +22,9 @@ export default function ElementVideo({ data }) {
           <div class="play-video" onClick={() => playvideo()} />
         )}
         {data.coverimage_path && (
-          <img src={`http://www.mostactive.info/${data.coverimage_path}`} />
+          <img
+            src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.coverimage_path}`}
+          />
         )}
         <div className="play">
           <svg
@@ -61,7 +63,9 @@ export default function ElementVideo({ data }) {
             ></iframe>
           ) : (
             <video autoPlay controls>
-              <source src={`http://www.mostactive.info/${data.path}`} />
+              <source
+                src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`}
+              />
               Your browser does not support the video tag.
             </video>
           )}

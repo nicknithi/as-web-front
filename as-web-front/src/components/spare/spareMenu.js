@@ -348,7 +348,7 @@ export default function SpareMenu() {
                         <div className="img-detail">
                           <img
                             ref={imgProductDetail}
-                            src={`http://www.mostactive.info/${SpateDetail.sparepart_product_picture[0].path}`}
+                            src={`${process.env.REACT_APP_DOMAIN_NAME}/${SpateDetail.sparepart_product_picture[0].path}`}
                             onError={() => {
                               imgProductDetail.current.src = noImg;
                             }}

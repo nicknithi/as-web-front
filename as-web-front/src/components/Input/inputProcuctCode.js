@@ -9,6 +9,7 @@ import { Typeahead, AsyncTypeahead } from "react-bootstrap-typeahead"; // ES2015
 import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
 import { useCookies } from "react-cookie";
+import { GetProductTop20ByCode } from "../../GetDataDropDown";
 import http from "../../axios";
 export default function InputProcuctCode({
   handleEvent,
@@ -38,54 +39,57 @@ export default function InputProcuctCode({
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
-  const handleSearch = (query) => {
+  const handleSearch = async (query) => {
     setIsLoading(true);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    http
-      .post(`/api/Product/GetProductTop20ByCode`, {
-        Lang_ID: lang,
-        Product_Code: query.toUpperCase(),
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.message === "Success!") {
-          console.log("check check", res.data);
-          const option = res.data.data.map((item, index) => {
-            return {
-              id: item.id,
-              value: item.product_Name,
-              index: index,
-              fK_Model_ID: item.fK_Model_ID,
-              fK_Type_ID: item.fK_Type_ID,
-              product_Code: item.product_Code,
-              product_Old_Code: item.product_Old_Code,
-              product_Barcode: item.product_Barcode,
-              product_Name: item.product_Name,
-            };
-          });
-          const setNewOption = [];
-          option.forEach((item, index) => {
-            setNewOption.push({
-              ...item,
-              optionShow: `${item.product_Code} (new)`,
-            });
-            setNewOption.push({
-              ...item,
-              optionShow: `${item.product_Old_Code} (old)`,
-            });
-          });
-
-          setOptions(setNewOption);
-          setIsLoading(false);
-        } else {
-        }
-        if (res.data.message === "Fail!") {
-          setIsLoading(false);
-        }
+    const res = await GetProductTop20ByCode(lang, query.toUpperCase());
+    console.log(res);
+    if (res.data.message === "Success!") {
+      console.log("check check", res.data);
+      const option = res.data.data.map((item, index) => {
+        return {
+          id: item.id,
+          value: item.product_Name,
+          index: index,
+          fK_Model_ID: item.fK_Model_ID,
+          fK_Type_ID: item.fK_Type_ID,
+          product_Code: item.product_Code,
+          product_Old_Code: item.product_Old_Code,
+          product_Barcode: item.product_Barcode,
+          product_Name: item.product_Name,
+        };
       });
+      const setNewOption = [];
+      option.forEach((item, index) => {
+        setNewOption.push({
+          ...item,
+          optionShow: `${item.product_Code} (new)`,
+        });
+        setNewOption.push({
+          ...item,
+          optionShow: `${item.product_Old_Code} (old)`,
+        });
+      });
+
+      setOptions(setNewOption);
+      setIsLoading(false);
+    } else {
+    }
+    if (res.data.message === "Fail!") {
+      setIsLoading(false);
+    }
+
+    // http
+    //   .post(`/api/Product/GetProductTop20ByCode`, {
+    //     Lang_ID: lang,
+    //     Product_Code: query.toUpperCase(),
+    //   })
+    //   .then((res) => {
+
+    //   });
   };
   const filterBy = () => true;
   useEffect(() => {

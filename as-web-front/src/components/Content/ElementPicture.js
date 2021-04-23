@@ -20,7 +20,7 @@ export default function ElementPicture({ data, index }) {
       <div>
         {data.path && (
           <img
-            src={`http://www.mostactive.info/${data.path}`}
+            src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`}
             className="img-fluid d-block mx-auto mb-3"
           />
         )}

@@ -10,7 +10,7 @@ export default function ItemSpare({ data }) {
     <div className="col-md-4 ">
       <div className="spare-detail">
         <div className="spare-img">
-          <img src={`http://www.mostactive.info/${img}`} />
+          <img src={`${process.env.REACT_APP_DOMAIN_NAME}/${img}`} />
         </div>
         <div className="detail p-3">
           {data.sparepart_code}

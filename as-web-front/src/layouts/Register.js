@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/jsx-no-target-blank */
 import React, { useState, useEffect } from "react";
 import "../assets/scss/register.scss";
@@ -96,6 +97,10 @@ export default function Register({ data }) {
       fK_District_ID: "",
     },
   ]);
+  let lang = 1;
+  if (cookies.as_lang) {
+    lang = cookies.as_lang === "TH" ? 1 : 2;
+  }
   const [DataFromRegister, setDataFromRegister] = useState({
     Customer_Type: 0,
     Customer_Contractor_Type: 0,
@@ -120,6 +125,7 @@ export default function Register({ data }) {
     IsMember: true,
     Create_By: "",
     Customer_Company: "",
+    Lang_ID: lang,
   });
 
   const typeMember = [
@@ -353,6 +359,9 @@ export default function Register({ data }) {
   useEffect(() => {
     console.log("DataFromRegister", DataFromRegister);
   }, [DataFromRegister]);
+  useEffect(() => {
+    DataFromRegister.Customer_Contractor_Type = 0;
+  }, [DataFromRegister.Customer_Type]);
   return (
     <div>
       <ElementBanner img={ImgBanner} />

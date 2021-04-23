@@ -8,18 +8,6 @@ export default function CardInstallation({ data, handleClickCard }) {
   const imgProduct = useRef(null);
   const errorImg = () => {
     imgProduct.current.src = noImg;
-    // if (data.product_picture && data.product_picture.length > 0) {
-    //   const el = document.querySelectorAll(
-    //     `[src="http://www.mostactive.info/${data.product_picture[0].path}"]`
-    //   );
-    //   console.log("elel", el);
-    //   if (el.length) {
-    //     for (let i = 0; i < el.length; i++) {
-    //       el[i].srcset =
-    //         "https://www.questionpro.com/userimages/site_media/no-image.png";
-    //     }
-    //   }
-    // }
   };
   return (
     <div onClick={() => handleClickCard(data.id, data.type)}>
@@ -32,7 +20,7 @@ export default function CardInstallation({ data, handleClickCard }) {
             <>
               <img
                 ref={imgProduct}
-                src={`http://www.mostactive.info/${data.product_picture[0].path}`}
+                src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.product_picture[0].path}`}
                 onError={() => errorImg()}
               />
             </>

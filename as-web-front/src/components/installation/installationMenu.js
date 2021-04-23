@@ -383,7 +383,7 @@ export default function InstallationMenu() {
                         <div className="img-detail">
                           <img
                             ref={imgProductDetail}
-                            src={`http://www.mostactive.info/${SpateDetail.product_picture[0].path}`}
+                            src={`${process.env.REACT_APP_DOMAIN_NAME}/${SpateDetail.product_picture[0].path}`}
                             onError={() => {
                               imgProductDetail.current.src = noImg;
                             }}
@@ -470,7 +470,7 @@ export default function InstallationMenu() {
                               (item, index) => (
                                 <div className="col-12">
                                   <a
-                                    href={`http://www.mostactive.info/${item.path}`}
+                                    href={`${process.env.REACT_APP_DOMAIN_NAME}/${item.path}`}
                                     target="_blank"
                                   >
                                     <div className="title-install pl-3">{` ${item.name}`}</div>

@@ -101,6 +101,27 @@ const GetAllDataCareCenter = async (lang, id) => {
   });
   return res.data.data;
 };
+const GetProductTop20ByBarcode = async (lang, id) => {
+  const res = await http.post("/api/Product/GetProductTop20ByBarcode", {
+    Lang_ID: lang,
+    Product_Barcode: id,
+  });
+  return res;
+};
+const GetProductTop20ByCode = async (lang, id) => {
+  const res = await http.post("/api/Product/GetProductTop20ByCode", {
+    Lang_ID: lang,
+    Product_Code: id,
+  });
+  return res;
+};
+const GetProductTop20ByName = async (lang, id) => {
+  const res = await http.post("/api/Product/GetProductTop20ByName", {
+    Lang_ID: lang,
+    Product_Name: id,
+  });
+  return res;
+};
 export {
   getProductType,
   getStoreByProvinceData,
@@ -112,4 +133,7 @@ export {
   getProductByBarcode,
   getAllStore,
   GetAllDataCareCenter,
+  GetProductTop20ByBarcode,
+  GetProductTop20ByCode,
+  GetProductTop20ByName,
 };

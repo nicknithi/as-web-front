@@ -12,7 +12,9 @@ export default function ElementTextBox({ data, col }) {
           />
         )}
         <div className="d-flex justify-content-center">
-          {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
+          {data.path && (
+            <img src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`} />
+          )}
         </div>
         {data.flag_button === 1 && (
           <div className="d-flex justify-content-center mb-3 button-element">

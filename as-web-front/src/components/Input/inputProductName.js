@@ -4,6 +4,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
 import { useCookies } from "react-cookie";
 import { Button } from "react-bootstrap";
+import { GetProductTop20ByName } from "../../GetDataDropDown";
 import http from "../../axios";
 export default function InputProductName({
   handleEvent,
@@ -37,41 +38,43 @@ export default function InputProductName({
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
-  const handleSearch = (query) => {
+  const handleSearch = async (query) => {
     setIsLoading(true);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    http
-      .post(`/api/Product/GetProductTop20ByName`, {
-        Lang_ID: lang,
-        Product_Name: query,
-      })
-      .then((res) => {
-        console.log("5678", res);
-        if (res.data.message === "Success!") {
-          console.log(res.data.data);
-          const option = res.data.data.map((item, index) => {
-            return {
-              id: item.id,
-              value: item.product_Name,
-              index: index,
-              fK_Model_ID: item.fK_Model_ID,
-              fK_Type_ID: item.fK_Type_ID,
-              product_Barcode: item.product_Barcode,
-              product_Code: item.product_Code,
-            };
-          });
-          setOptions(option);
-          setIsLoading(false);
-        } else {
-          console.log(FormDataProduct[index].Purchase_Province);
-        }
-        if (res.data.message === "Fail!") {
-          setIsLoading(false);
-        }
+    const res = await GetProductTop20ByName(lang, query);
+    console.log("5678", res);
+    if (res.data.message === "Success!") {
+      console.log(res.data.data);
+      const option = res.data.data.map((item, index) => {
+        return {
+          id: item.id,
+          value: item.product_Name,
+          index: index,
+          fK_Model_ID: item.fK_Model_ID,
+          fK_Type_ID: item.fK_Type_ID,
+          product_Barcode: item.product_Barcode,
+          product_Code: item.product_Code,
+        };
       });
+      setOptions(option);
+      setIsLoading(false);
+    } else {
+      console.log(FormDataProduct[index].Purchase_Province);
+    }
+    if (res.data.message === "Fail!") {
+      setIsLoading(false);
+    }
+    // http
+    //   .post(`/api/Product/GetProductTop20ByName`, {
+    //     Lang_ID: lang,
+    //     Product_Name: query,
+    //   })
+    //   .then((res) => {
+
+    //   });
   };
   const filterBy = () => true;
   const [PD, setPD] = useState([]);

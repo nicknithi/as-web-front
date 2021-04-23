@@ -4,7 +4,9 @@ export default function ElementCard({ data }) {
   return (
     <div className="element-card mb-3">
       <div className="d-flex justify-content-center mb-4 card-img">
-        {data.path && <img src={`http://www.mostactive.info/${data.path}`} />}
+        {data.path && (
+          <img src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`} />
+        )}
       </div>
       {data.link && (
         <a href={`${process.env.REACT_APP_SUB_DIRECTORY}${data.link}`} />

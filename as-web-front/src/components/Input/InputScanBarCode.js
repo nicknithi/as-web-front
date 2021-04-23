@@ -4,6 +4,7 @@ import "react-bootstrap-typeahead/css/Typeahead.css";
 import "../../assets/scss/components/input/input-barcode.scss";
 import { useCookies } from "react-cookie";
 import http from "../../axios";
+import { GetProductTop20ByBarcode } from "../../GetDataDropDown";
 export default function InputScanBarCode({
   handleEvent,
   handleScan,
@@ -36,41 +37,43 @@ export default function InputScanBarCode({
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
 
-  const handleSearch = (query) => {
+  const handleSearch = async (query) => {
     setIsLoading(true);
     let lang = 1;
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    http
-      .post(`/api/Product/GetProductTop20ByBarcode`, {
-        Lang_ID: lang,
-        Product_Barcode: query,
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.message === "Success!") {
-          console.log("by bar code", res.data.data);
-          const option = res.data.data.map((item, index) => {
-            return {
-              id: item.id,
-              value: item.product_Name,
-              index: index,
-              fK_Model_ID: item.fK_Model_ID,
-              fK_Type_ID: item.fK_Type_ID,
-              barcode: item.product_Barcode,
-              product_code: item.product_Code,
-              product_Name: item.product_Name,
-            };
-          });
-          setOptions(option);
-          setIsLoading(false);
-        } else {
-        }
-        if (res.data.message === "Fail!") {
-          setIsLoading(false);
-        }
+    const res = await GetProductTop20ByBarcode(lang, query);
+    console.log(res);
+    if (res.data.message === "Success!") {
+      console.log("by bar code", res.data.data);
+      const option = res.data.data.map((item, index) => {
+        return {
+          id: item.id,
+          value: item.product_Name,
+          index: index,
+          fK_Model_ID: item.fK_Model_ID,
+          fK_Type_ID: item.fK_Type_ID,
+          barcode: item.product_Barcode,
+          product_code: item.product_Code,
+          product_Name: item.product_Name,
+        };
       });
+      setOptions(option);
+      setIsLoading(false);
+    } else {
+    }
+    if (res.data.message === "Fail!") {
+      setIsLoading(false);
+    }
+    // http
+    //   .post(`/api/Product/GetProductTop20ByBarcode`, {
+    //     Lang_ID: lang,
+    //     Product_Barcode: query,
+    //   })
+    //   .then((res) => {
+
+    //   });
   };
   const filterBy = () => true;
 

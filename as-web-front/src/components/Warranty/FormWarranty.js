@@ -8,6 +8,7 @@ import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
+import LoadingContentOverlay from "../LoadingContentOverlay";
 import {
   getProvince,
   setTempInput,
@@ -30,6 +31,7 @@ import {
   getAllStore,
 } from "../../GetDataDropDown";
 function FormWarranty({ Confirm }) {
+  const [loadingSendData, setLoadingSendData] = useState(false);
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
@@ -306,6 +308,10 @@ function FormWarranty({ Confirm }) {
     ));
   };
   const addProductForm = async () => {
+    let lang = 1;
+    if (cookies.as_lang) {
+      lang = cookies.as_lang === "TH" ? 1 : 2;
+    }
     const tempProduct = [...FormDataProduct];
     tempProduct.push({
       Purchase_Province: tempProduct[tempProduct.length - 1].Purchase_Province,
@@ -322,6 +328,7 @@ function FormWarranty({ Confirm }) {
       QTY: 0,
       Product_code: null,
       product_Name: null,
+      Lang_ID: lang,
     });
 
     setFormDataProduct(tempProduct);
@@ -555,52 +562,58 @@ function FormWarranty({ Confirm }) {
       // alert("กรุณากรอกข้อมูลให้ครบถ้วน");
     }
   };
-  const handleLastSubmit = () => {
+  const handleLastSubmit = async () => {
+    setLoadingSendData(true);
     console.log("LastDataComToConfirm", LastDataComToConfirm);
     let successCheck = 0;
     console.log("json string", JSON.stringify(LastDataComToConfirm));
     console.log("json:", LastDataComToConfirm);
-    LastDataComToConfirm.forEach((items, index) => {
-      let FormLastData = new FormData();
-      if (items.Service_Center) {
-        items.Service_Center = parseInt(items.Service_Center);
-      }
-      items.Purchase_Date = convertDate(items.Purchase_Date);
-      FormLastData.append("Files", FileWaranty[index]);
-      FormLastData.append("datas", JSON.stringify(items));
-      axios
-        .post(
-          `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
-          FormLastData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-          if (res.data.message === "Success!") {
-          } else {
-            successCheck = successCheck + 1;
-          }
-        })
-        .catch((e) => {
-          successCheck = successCheck + 1;
-        });
-      if (successCheck > 0) {
-        alert("ไม่สำเร็จ กรุณาลองใหม่");
-      } else {
-        alert(t("warranthForm.alertSuccess"));
-        let lang = 1;
-        if (cookies.as_lang) {
-          lang = cookies.as_lang === "TH" ? 1 : 2;
+    await Promise.all(
+      LastDataComToConfirm.map(async (items, index) => {
+        let FormLastData = new FormData();
+        if (items.Service_Center) {
+          items.Service_Center = parseInt(items.Service_Center);
         }
-        window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-          lang === 1 ? "หน้าแรก" : "home"
-        }`;
+        items.Purchase_Date = convertDate(items.Purchase_Date);
+        FormLastData.append("Files", FileWaranty[index]);
+        FormLastData.append("datas", JSON.stringify(items));
+        console.log(`warranty product${index + 1}`, items);
+        await axios
+          .post(
+            `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
+            FormLastData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+              },
+            }
+          )
+          .then((res) => {
+            console.log(res);
+            if (res.data.message === "Success!") {
+            } else {
+              successCheck = successCheck + 1;
+            }
+          })
+          .catch((e) => {
+            successCheck = successCheck + 1;
+          });
+      })
+    );
+    if (successCheck > 0) {
+      alert("ไม่สำเร็จ กรุณาลองใหม่");
+      setLoadingSendData(false);
+    } else {
+      alert(t("warranthForm.alertSuccess"));
+      setLoadingSendData(false);
+      let lang = 1;
+      if (cookies.as_lang) {
+        lang = cookies.as_lang === "TH" ? 1 : 2;
       }
-    });
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+        lang === 1 ? "หน้าแรก" : "home"
+      }`;
+    }
   };
   const convertDate = (str) => {
     let date = new Date(str),
@@ -629,6 +642,7 @@ function FormWarranty({ Confirm }) {
   };
   return (
     <div>
+      {loadingSendData && <LoadingContentOverlay />}
       {/* <button onClick={test}>teste</button> */}
       <div className={"form-warranty " + (FormInput ? "d-block" : "d-none")}>
         <form onSubmit={handleSubmit}>

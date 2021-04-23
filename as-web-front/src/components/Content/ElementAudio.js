@@ -6,7 +6,7 @@ export default function ElementAudio({ data }) {
       {data.path && (
         <audio controls className="my-3 w-50">
           <source
-            src={`http://www.mostactive.info/${data.path}`}
+            src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`}
             type={data.type}
           />
           Your browser does not support the audio element.

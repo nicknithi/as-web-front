@@ -16,7 +16,7 @@ export default function ItemSpare({ data }) {
           {data.spare_picture && data.spare_picture.length > 0 ? (
             <img
               ref={imgProductDetail}
-              src={`http://www.mostactive.info/${img}`}
+              src={`${process.env.REACT_APP_DOMAIN_NAME}/${img}`}
               onError={() => {
                 imgProductDetail.current.src = noImg;
               }}

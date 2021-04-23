@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from "react";
 // import "../../assets/scss/Element/carousel.scss";
 import Carousel from "react-bootstrap/Carousel";
@@ -20,7 +21,9 @@ export default function ElementCarousel({ data }) {
     <div className="element-carousel pb-4">
       {data[0].path && (
         <div className="img-carousel text-center">
-          <img src={`http://www.mostactive.info/${data[0].coverimage_path}`} />
+          <img
+            src={`${process.env.REACT_APP_DOMAIN_NAME}/${data[0].coverimage_path}`}
+          />
           <div className="button-show" onClick={handleShow}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +60,7 @@ export default function ElementCarousel({ data }) {
             {DataSlide.map((item, index) => (
               <Carousel.Item>
                 <img
-                  src={`http://www.mostactive.info/${item.path}`}
+                  src={`${process.env.REACT_APP_DOMAIN_NAME}/${item.path}`}
                   className="img-fluid"
                 />
               </Carousel.Item>

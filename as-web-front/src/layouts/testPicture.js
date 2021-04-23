@@ -7,7 +7,7 @@ export default function TestPicture() {
   return (
     <div>
       <img
-        src={`http://www.mostactive.info/Resources\File\SIZE1200X6382021-03-24_12-14-57-417.png`}
+        src={`${process.env.REACT_APP_DOMAIN_NAME}/Resources\File\SIZE1200X6382021-03-24_12-14-57-417.png`}
         className="img-fluid"
       />
     </div>

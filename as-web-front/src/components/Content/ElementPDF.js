@@ -6,14 +6,17 @@ export default function ElementPDF({ data }) {
       {data.path && (
         <div className="d-flex justify-content-center mb-2">
           <img
-            src={`http://www.mostactive.info/${data.coverimage_path}`}
+            src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.coverimage_path}`}
             className="img-fluid"
           />
         </div>
       )}
       {data.flag_button === 1 && (
         <div className="d-flex justify-content-center mb-3 button-element">
-          <a href={`http://www.mostactive.info/${data.path}`} download>
+          <a
+            href={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`}
+            download
+          >
             download
           </a>
         </div>

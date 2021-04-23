@@ -12,7 +12,7 @@ function FormComfirm(props) {
   const [t, i18n] = useTranslation("common");
   return (
     <div className="form-comfirm">
-      {props.ProvinceC}
+      {/* {props.ProvinceC} */}
       <div className="container">
         <h1 className="mt-3">{t("warrantyConfirm.title")}</h1>
         <div className="mb-4">
@@ -55,7 +55,7 @@ function FormComfirm(props) {
         </div>
         {dataSet.datas.map((item, index) => (
           <div>
-            <h2>{t("warrantyConfirm.titleProduct")}</h2>
+            <h2>{`${t("warrantyConfirm.titleProduct")} ${index + 1}`}</h2>
             <div className="product-section p-4 mb-4">
               <div>
                 {t("warrantyConfirm.ProvinceOfPurchase")} :{" "}
