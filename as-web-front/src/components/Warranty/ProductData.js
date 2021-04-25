@@ -29,6 +29,7 @@ export default function ProductData({
   setStoreData,
   Confirm,
   FileWaranty,
+  setFileWaranty,
 }) {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
@@ -139,7 +140,8 @@ export default function ProductData({
     //   });
     // }
     const type = dataTypeID.find((d) => d.id === TypeId);
-    if (type !== undefined) {
+    console.log("typetype", type, TypeId);
+    if (type !== undefined && TypeId !== 0) {
       setTypeId([type]);
     } else {
       setTypeId(dataTypeID);
@@ -367,6 +369,8 @@ export default function ProductData({
                 data={typeId}
                 // selectedAS={typeId}
                 handleEvent={handleChangInput}
+                FormDataProduct={FormDataProduct}
+                setFormDataProduct={setFormDataProduct}
               />
             </div>
             {/* <div className="col-md-6">
@@ -412,6 +416,7 @@ export default function ProductData({
               index={index}
               Confirm={Confirm}
               FileWaranty={FileWaranty}
+              setFileWaranty={setFileWaranty}
             />
           </div>
         </div>

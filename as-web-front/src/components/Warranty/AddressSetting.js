@@ -43,7 +43,7 @@ function AddressSetting({
       }
       const resServiceCenter = await GetAllDataCareCenter(lang, e.target.value);
       if (resServiceCenter && resServiceCenter.length) {
-        DataSet.Service_Center = resServiceCenter[0].id;
+        DataSet.Service_Center = resServiceCenter[0].code;
         DataSet.Service_Center_Name = resServiceCenter[0].name;
         console.log("test", resServiceCenter);
         // Service_Center: "",

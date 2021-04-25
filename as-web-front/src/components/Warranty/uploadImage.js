@@ -7,20 +7,31 @@ export default function UploadImage({
   index,
   Confirm,
   FileWaranty,
+  setFileWaranty,
 }) {
   const [t, i18n] = useTranslation("common");
   const [imgPreview, setImgPreview] = useState("");
   const uploadImg = (file, index) => {
-    handleGetFile(file, index);
-    setImgPreview(URL.createObjectURL(file));
+    //handleGetFile(file, index);
+    let dataFile = [...FileWaranty];
+
+    alert(file.length);
+    const fileTemp = [];
+    for (let i = 0; i < file.length; i++) {
+      fileTemp.push(file[i]);
+    }
+    setImgPreview(fileTemp);
+    dataFile[index] = fileTemp;
+    setFileWaranty(dataFile);
+    // setImgPreview(URL.createObjectURL(file));
   };
 
   useEffect(() => {
-    if (FileWaranty.length) {
-      if (!Array.isArray(FileWaranty[index])) {
-        setImgPreview(URL.createObjectURL(FileWaranty[index]));
-      }
-    }
+    // if (FileWaranty.length) {
+    //   if (!Array.isArray(FileWaranty[index])) {
+    //     setImgPreview(URL.createObjectURL(FileWaranty[index]));
+    //   }
+    // }
     // console.log("testFile", Array.isArray(FileWaranty[index]), FileWaranty);
     // if (FileWaranty.length) {
     //   if (!Array.isArray(FileWaranty[index])) {
@@ -39,14 +50,23 @@ export default function UploadImage({
     // } else {
     // }
   }, []);
+  const imgPreviewShow = (file) => {
+    console.log("imgtest", file);
+    // URL.createObjectURL(file);
+    return URL.createObjectURL(file);
+  };
+
   return (
     <div className="col-md-4  mx-auto text-center">
       {imgPreview ? (
-        <img
-          src={imgPreview}
-          alt="preview"
-          style={{ maxWidth: "100%", maxHeight: "100%" }}
-        />
+        imgPreview.map((item, index) => (
+          <img
+            className="mb-3"
+            src={imgPreviewShow(item)}
+            alt="preview"
+            style={{ maxWidth: "100%", maxHeight: "100%" }}
+          />
+        ))
       ) : (
         <div className="img-upload">
           <svg

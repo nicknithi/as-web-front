@@ -44,7 +44,11 @@ export default function InputProductName({
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    const res = await GetProductTop20ByName(lang, query);
+    const res = await GetProductTop20ByName(
+      lang,
+      query,
+      FormDataProduct[index].Type_ID
+    );
     console.log("5678", res);
     if (res.data.message === "Success!") {
       console.log(res.data.data);
@@ -63,6 +67,7 @@ export default function InputProductName({
       setIsLoading(false);
     } else {
       console.log(FormDataProduct[index].Purchase_Province);
+      setIsLoading(false);
     }
     if (res.data.message === "Fail!") {
       setIsLoading(false);
@@ -109,6 +114,7 @@ export default function InputProductName({
         disabled={!Confirm}
         filterBy={filterBy}
         id="async-example"
+        useCache={false}
         // defaultSelected={PD}
         isLoading={isLoading}
         labelKey="value"

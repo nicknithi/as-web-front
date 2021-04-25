@@ -38,6 +38,7 @@ export default function InputProcuctCode({
   const [PD, setPD] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [options, setOptions] = useState([]);
+  const [rerender, setRerender] = useState(true);
 
   const handleSearch = async (query) => {
     setIsLoading(true);
@@ -45,7 +46,11 @@ export default function InputProcuctCode({
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    const res = await GetProductTop20ByCode(lang, query.toUpperCase());
+    const res = await GetProductTop20ByCode(
+      lang,
+      query.toUpperCase(),
+      FormDataProduct[index].Type_ID
+    );
     console.log(res);
     if (res.data.message === "Success!") {
       console.log("check check", res.data);
@@ -77,8 +82,11 @@ export default function InputProcuctCode({
       setOptions(setNewOption);
       setIsLoading(false);
     } else {
+      setOptions([]);
+      setIsLoading(false);
     }
     if (res.data.message === "Fail!") {
+      setOptions([]);
       setIsLoading(false);
     }
 
@@ -119,37 +127,41 @@ export default function InputProcuctCode({
   }, []);
   return (
     <div className={`input-barcode input-product-code-${index}`}>
-      <AsyncTypeahead
-        filterBy={filterBy}
-        id="async-example"
-        // defaultSelected={PD}
-        ref={typeahead}
-        disabled={!Confirm}
-        isLoading={isLoading}
-        labelKey="product_Code"
-        minLength={3}
-        onSearch={handleSearch}
-        onChange={manualInput}
-        options={options}
-        placeholder=""
-        selected={PD}
-        required={true}
-        renderMenuItemChildren={(option, props) => (
-          <Fragment>
-            {/* <img
-              alt={option.login}
-              src={option.avatar_url}
-              style={{
-                height: "24px",
-                marginRight: "10px",
-                width: "24px",
-              }}
-            /> */}
-            <span>{option.optionShow}</span>
-          </Fragment>
+      <>
+        {rerender && (
+          <AsyncTypeahead
+            filterBy={filterBy}
+            id="async-example"
+            useCache={false}
+            // defaultSelected={PD}
+            ref={typeahead}
+            disabled={!Confirm}
+            isLoading={isLoading}
+            labelKey="product_Code"
+            minLength={3}
+            onSearch={handleSearch}
+            onChange={manualInput}
+            options={options}
+            placeholder=""
+            selected={PD}
+            required={true}
+            renderMenuItemChildren={(option, props) => (
+              <Fragment>
+                {/* <img
+          //     alt={option.login}
+          //     src={option.avatar_url}
+          //     style={{
+          //       height: "24px",
+          //       marginRight: "10px",
+          //       width: "24px",
+          //     }}
+          //   /> */}
+                <span>{option.optionShow}</span>
+              </Fragment>
+            )}
+          />
         )}
-      />
-      {/* <button onClick={handleScan}>scan</button> */}
+      </>
     </div>
   );
 }

@@ -101,24 +101,30 @@ const GetAllDataCareCenter = async (lang, id) => {
   });
   return res.data.data;
 };
-const GetProductTop20ByBarcode = async (lang, id) => {
+const GetProductTop20ByBarcode = async (lang, id, type) => {
+  const type_id = parseInt(type);
   const res = await http.post("/api/Product/GetProductTop20ByBarcode", {
     Lang_ID: lang,
     Product_Barcode: id,
+    Product_TypeID: type_id,
   });
   return res;
 };
-const GetProductTop20ByCode = async (lang, id) => {
+const GetProductTop20ByCode = async (lang, id, type) => {
+  const type_id = parseInt(type);
   const res = await http.post("/api/Product/GetProductTop20ByCode", {
     Lang_ID: lang,
     Product_Code: id,
+    Product_TypeID: type_id,
   });
   return res;
 };
-const GetProductTop20ByName = async (lang, id) => {
+const GetProductTop20ByName = async (lang, id, type) => {
+  const type_id = parseInt(type);
   const res = await http.post("/api/Product/GetProductTop20ByName", {
     Lang_ID: lang,
     Product_Name: id,
+    Product_TypeID: type_id,
   });
   return res;
 };

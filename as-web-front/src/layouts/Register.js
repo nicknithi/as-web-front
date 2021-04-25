@@ -18,11 +18,14 @@ import WarrantyConfirm from "../components/Warranty/WarrantyConfirm";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import "react-perfect-scrollbar/dist/css/styles.css";
 import RegisterConfirm from "../components/Register/RegisterConfirm";
+import LoadingContentOverlay from "../components/LoadingContentOverlay";
 // import WarrantyConfirm form '../components/Warranty/WarrantyConfirm'
 export default function Register({ data }) {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [ImgBanner, setImgBanner] = useState("");
+
+  const [loadingSendData, setLoadingSendData] = useState(false);
 
   //set Data Before form
   const [checkData, setCheckData] = useState(false);
@@ -119,7 +122,7 @@ export default function Register({ data }) {
     FK_Province_ID: 0,
     FK_District_ID: 0,
     FK_Sub_District_ID: 0,
-    Service_Center: "",
+    Service_Center: null,
     Service_Center_Name: "",
     Quota_Service: 0,
     IsMember: true,
@@ -237,7 +240,7 @@ export default function Register({ data }) {
       }
       const resServiceCenter = await GetAllDataCareCenter(lang, e.target.value);
       if (resServiceCenter && resServiceCenter.length) {
-        DataSet.Service_Center = resServiceCenter[0].id;
+        DataSet.Service_Center = resServiceCenter[0].code;
         DataSet.Service_Center_Name = resServiceCenter[0].name;
         console.log("test", resServiceCenter);
         // Service_Center: "",
@@ -334,6 +337,7 @@ export default function Register({ data }) {
     // }
   };
   const Lastsubmit = async () => {
+    setLoadingSendData(true);
     const lastData = { ...DataFromRegister };
     lastData.Customer_Contractor_Type = parseInt(
       lastData.Customer_Contractor_Type
@@ -342,6 +346,7 @@ export default function Register({ data }) {
     lastData.Service_Center = lastData.Service_Center.toString();
     console.log("lastData", lastData);
     const res = await http.post("/api/Customer/AddCustomer", lastData);
+    setLoadingSendData(false);
     if (res.data.message === "Success!") {
       alert(t("register.alertSuccess"));
       let lang = 1;
@@ -364,6 +369,7 @@ export default function Register({ data }) {
   }, [DataFromRegister.Customer_Type]);
   return (
     <div>
+      {loadingSendData && <LoadingContentOverlay />}
       <ElementBanner img={ImgBanner} />
       <>
         {checkData && (
@@ -425,9 +431,9 @@ export default function Register({ data }) {
                       type="radio"
                       name="radio"
                       name="customer-type"
-                      value="1"
+                      value="3"
                       disabled={!Confirm}
-                      checked={DataFromRegister.Customer_Type === "1"}
+                      checked={DataFromRegister.Customer_Type === "3"}
                       onChange={(e) =>
                         setDataFromRegister({
                           ...DataFromRegister,
@@ -447,9 +453,9 @@ export default function Register({ data }) {
                       type="radio"
                       name="radio"
                       name="customer-type"
-                      value="3"
+                      value="1"
                       disabled={!Confirm}
-                      checked={DataFromRegister.Customer_Type === "3"}
+                      checked={DataFromRegister.Customer_Type === "1"}
                       onChange={(e) =>
                         setDataFromRegister({
                           ...DataFromRegister,

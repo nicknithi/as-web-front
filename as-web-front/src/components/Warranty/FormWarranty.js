@@ -203,7 +203,7 @@ function FormWarranty({ Confirm }) {
     Customer_Longtitude: null,
     Score: null,
     Description: null,
-    Service_Center: "",
+    Service_Center: null,
     Service_Center_Name: "",
   });
   const handleSearchByCustomerCode = async (code) => {
@@ -304,6 +304,7 @@ function FormWarranty({ Confirm }) {
         setFormDataProduct={setFormDataProduct}
         Province={Province}
         FileWaranty={FileWaranty}
+        setFileWaranty={setFileWaranty}
       />
     ));
   };
@@ -565,55 +566,102 @@ function FormWarranty({ Confirm }) {
   const handleLastSubmit = async () => {
     setLoadingSendData(true);
     console.log("LastDataComToConfirm", LastDataComToConfirm);
-    let successCheck = 0;
-    console.log("json string", JSON.stringify(LastDataComToConfirm));
-    console.log("json:", LastDataComToConfirm);
+    // let successCheck = 0;
+    // console.log("json string", JSON.stringify(LastDataComToConfirm));
+    // console.log("json:", LastDataComToConfirm);
+    // await Promise.all(
+    //   LastDataComToConfirm.map(async (items, index) => {
+    //     let FormLastData = new FormData();
+    //     if (items.Service_Center) {
+    //       items.Service_Center = parseInt(items.Service_Center);
+    //     }
+    //     items.Purchase_Date = convertDate(items.Purchase_Date);
+    //     FormLastData.append("Files", FileWaranty[index]);
+    //     FormLastData.append("datas", JSON.stringify(items));
+    //     await axios
+    //       .post(
+    //         `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
+    //         FormLastData,
+    //         {
+    //           headers: {
+    //             "Content-Type": "multipart/form-data",
+    //           },
+    //         }
+    //       )
+    //       .then((res) => {
+    //         console.log(res);
+    //         if (res.data.message === "Success!") {
+    //         } else {
+    //           successCheck = successCheck + 1;
+    //         }
+    //       })
+    //       .catch((e) => {
+    //         successCheck = successCheck + 1;
+    //       });
+    //   })
+    // );
+    const FileData = [];
+    const Datas = [];
     await Promise.all(
       LastDataComToConfirm.map(async (items, index) => {
-        let FormLastData = new FormData();
-        if (items.Service_Center) {
-          items.Service_Center = parseInt(items.Service_Center);
-        }
-        items.Purchase_Date = convertDate(items.Purchase_Date);
-        FormLastData.append("Files", FileWaranty[index]);
-        FormLastData.append("datas", JSON.stringify(items));
-        console.log(`warranty product${index + 1}`, items);
-        await axios
-          .post(
-            `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
-            FormLastData,
-            {
-              headers: {
-                "Content-Type": "multipart/form-data",
-              },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            if (res.data.message === "Success!") {
-            } else {
-              successCheck = successCheck + 1;
-            }
-          })
-          .catch((e) => {
-            successCheck = successCheck + 1;
-          });
+        FileData.push({ seq: index, File: FileWaranty[index] });
+        Datas.push({ seq: index, Data: JSON.stringify(items) });
+        // FormLastData.push({
+        //   Files: FileWaranty[index],
+        //   datas: JSON.stringify(items),
+        // });
       })
     );
-    if (successCheck > 0) {
-      alert("ไม่สำเร็จ กรุณาลองใหม่");
-      setLoadingSendData(false);
-    } else {
-      alert(t("warranthForm.alertSuccess"));
-      setLoadingSendData(false);
-      let lang = 1;
-      if (cookies.as_lang) {
-        lang = cookies.as_lang === "TH" ? 1 : 2;
-      }
-      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-        lang === 1 ? "หน้าแรก" : "home"
-      }`;
-    }
+    let FormLastData = new FormData();
+    console.log("Files:", FileData);
+    console.log("Datas:", Datas);
+    FormLastData.append("Files", FileData);
+    FormLastData.append("datas", Datas);
+    await axios
+      .post(
+        `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
+        FormLastData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data",
+        //   },
+        // }
+      )
+      .then((res) => {
+        console.log(res);
+        if (res.data.message === "Success!") {
+          alert(t("warranthForm.alertSuccess"));
+          setLoadingSendData(false);
+          let lang = 1;
+          if (cookies.as_lang) {
+            lang = cookies.as_lang === "TH" ? 1 : 2;
+          }
+          // window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+          //   lang === 1 ? "หน้าแรก" : "home"
+          // }`;
+        } else {
+          alert("ไม่สำเร็จ กรุณาลองใหม่");
+          setLoadingSendData(false);
+        }
+      })
+      .catch((e) => {
+        alert("ไม่สำเร็จ กรุณาลองใหม่");
+        setLoadingSendData(false);
+      });
+    // if (successCheck > 0) {
+    //   alert("ไม่สำเร็จ กรุณาลองใหม่");
+    //   setLoadingSendData(false);
+    // } else {
+    //   alert(t("warranthForm.alertSuccess"));
+    //   setLoadingSendData(false);
+    //   let lang = 1;
+    //   if (cookies.as_lang) {
+    //     lang = cookies.as_lang === "TH" ? 1 : 2;
+    //   }
+    //   window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+    //     lang === 1 ? "หน้าแรก" : "home"
+    //   }`;
+    // }
   };
   const convertDate = (str) => {
     let date = new Date(str),

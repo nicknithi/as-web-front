@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from "react";
 import "../../assets/scss/components/input/dropdown.scss";
 import { useTranslation } from "react-i18next";
-export default function DropDownType_ID({ data, handleEvent, index, Confirm }) {
+export default function DropDownType_ID({
+  data,
+  handleEvent,
+  index,
+  Confirm,
+  FormDataProduct,
+  setFormDataProduct,
+}) {
   const [t, i18n] = useTranslation("common");
   const [title, setTitleState] = useState(t("warranthForm.selectType"));
   const handleSelect = (e) => {
     setTitleState(data.find((a) => a.id === parseInt(e.target.value)).value);
-    handleEvent(e);
+    // handleEvent(e);
+    const dataSet = [...FormDataProduct];
+    dataSet[index].Type_ID = e.target.value;
+    setFormDataProduct(dataSet);
   };
 
   useEffect(() => {

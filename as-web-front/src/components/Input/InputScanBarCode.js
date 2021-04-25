@@ -43,7 +43,11 @@ export default function InputScanBarCode({
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    const res = await GetProductTop20ByBarcode(lang, query);
+    const res = await GetProductTop20ByBarcode(
+      lang,
+      query,
+      FormDataProduct[index].Type_ID
+    );
     console.log(res);
     if (res.data.message === "Success!") {
       console.log("by bar code", res.data.data);
@@ -62,6 +66,7 @@ export default function InputScanBarCode({
       setOptions(option);
       setIsLoading(false);
     } else {
+      setIsLoading(false);
     }
     if (res.data.message === "Fail!") {
       setIsLoading(false);
@@ -119,6 +124,7 @@ export default function InputScanBarCode({
       <AsyncTypeahead
         filterBy={filterBy}
         id="async-example"
+        useCache={false}
         // defaultSelected={PD}
         ref={typeahead}
         disabled={!Confirm}
