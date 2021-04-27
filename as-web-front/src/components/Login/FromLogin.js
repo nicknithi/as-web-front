@@ -10,9 +10,7 @@ export default function FromLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     const res = await http.post("/api/Login/CustomerLogin", DataLogin);
-    console.log(res);
     if (res.data.message === "Login Success!") {
-      console.log(res.data.data);
       setCookie("customerID", res.data.data.customerID, {
         path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
       });

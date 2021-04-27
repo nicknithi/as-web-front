@@ -2,7 +2,6 @@ import React from "react";
 import "../../assets/scss/components/button/button-upload.scss";
 export default function ButtonUpload({ title, uploadImg, index, Confirm }) {
   const handleSelectFile = (e) => {
-    console.log("dataimg", e.target.files);
     uploadImg(e.target.files, parseInt(e.target.attributes.index.value));
   };
   return (

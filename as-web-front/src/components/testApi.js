@@ -2,9 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 export default function TestApi() {
   const [name, setName] = useState("");
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
+  useEffect(() => {}, [name]);
   let dataMock = {
     Customer_Code: "ทดสอบรับประกัน",
     Customer_Firstname: "ทดสอบรับประกัน1",
@@ -81,9 +79,7 @@ export default function TestApi() {
           },
         }
       )
-      .then((res) => {
-        console.log(res);
-      });
+      .then((res) => {});
   };
   const test = () => {
     setName("Nick");

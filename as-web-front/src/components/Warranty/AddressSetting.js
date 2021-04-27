@@ -45,19 +45,13 @@ function AddressSetting({
       if (resServiceCenter && resServiceCenter.length) {
         DataSet.Service_Center = resServiceCenter[0].code;
         DataSet.Service_Center_Name = resServiceCenter[0].name;
-        console.log("test", resServiceCenter);
-        // Service_Center: "",
-        // Service_Center_Name: "",
-        console.log("resServiceCenter", resServiceCenter);
       }
 
       setFormDataWarranty(DataSet);
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
       );
-      console.log("ggghhh", newSet);
       if (newSet.length) {
-        console.log("55566888");
         setDistrict([
           { id: "", value: t("warranthForm.selectDistrict") },
           ...newSet,
@@ -77,7 +71,6 @@ function AddressSetting({
           p.fK_Province_ID === parseInt(FormDataWarranty.Customer_Province) &&
           p.fK_District_ID === parseInt(e.target.value)
       );
-      console.log(newSet);
       if (newSet.length) {
         setSubDistrict([
           { id: "", value: t("warranthForm.selectSubDistrict") },

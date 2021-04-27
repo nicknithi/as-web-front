@@ -13,7 +13,6 @@ export default function TabContent({
   let dataTitle = data[1] === undefined ? [] : [data[1]];
   let dataTap = [...data];
   dataTap.splice(1, 1);
-  console.log("dataTap", dataTap);
   const [Active, setActive] = useState(1);
   const isActive = (tab) => {
     if (Active === tab) {

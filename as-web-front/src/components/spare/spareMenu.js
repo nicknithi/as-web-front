@@ -46,7 +46,6 @@ export default function SpareMenu() {
     }
     const resMenu = await GetAllMenuProduct_Sparepart(lang);
     setDataMenu(resMenu);
-    console.log("Menu spare", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     setMenuSpareRender(tempMenu);
@@ -112,8 +111,6 @@ export default function SpareMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     let resClassified1 = await GetDataProduct_SparepartByClassified1(id, lang);
-    console.log("class1 id", id);
-    console.log("resClass2", resClassified1);
     let tempClassified1 = [...ContentRender];
 
     tempClassified1 = resClassified1 ? resClassified1 : [];
@@ -155,8 +152,6 @@ export default function SpareMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     let resClassified2 = await GetDataProduct_SparepartByClassified2(id, lang);
-    console.log("class1 id", id);
-    console.log("resClass2", resClassified2);
     let tempClassified2 = [...ContentRender];
 
     tempClassified2 = resClassified2 ? resClassified2 : [];

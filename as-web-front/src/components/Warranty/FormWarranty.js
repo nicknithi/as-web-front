@@ -114,7 +114,6 @@ function FormWarranty({ Confirm }) {
     }
     const DataStoreSet = await getAllStore(lang);
     setDataStore(DataStoreSet);
-    //console.log("555566677888", lang);
     const typeData = await getProductType(lang);
     setDataTypeId([
       { id: 0, value: t("warranthForm.selectType") },
@@ -136,7 +135,6 @@ function FormWarranty({ Confirm }) {
         Lang_ID: 1,
       })
       .then((res) => {
-        console.log("product", res.data.data);
         const data = res.data.data.map((item, index) => {
           return { id: item.id, value: item.product_Name_TH };
         });
@@ -149,7 +147,6 @@ function FormWarranty({ Confirm }) {
         Lang_ID: lang,
       })
       .then((res) => {
-        console.log("model ", res.data.data);
         // const data = res.data.data.map((item, index) => {
         //   return { id: item.id, value: item.model_Name_TH };
         // });
@@ -161,7 +158,6 @@ function FormWarranty({ Confirm }) {
     const fileData = [...FileWaranty];
     fileData[index] = file;
     setFileWaranty(fileData);
-    console.log(FileWaranty);
   };
   let lang = 1;
   if (cookies.as_lang) {
@@ -215,10 +211,7 @@ function FormWarranty({ Confirm }) {
           setSubDistrict(SubDistrictDN);
 
           const data = res.data.data;
-          console.log("data.fK_Province_ID", data.fK_Province_ID);
           const oldData = { ...FormDataWarranty };
-          console.log("old", oldData);
-          console.log("new", data);
           oldData.Customer_Code = code;
           oldData.Customer_Firstname = data.customer_Name;
           oldData.Customer_Lastname = data.customer_Surname;
@@ -255,23 +248,18 @@ function FormWarranty({ Confirm }) {
       });
   };
   useEffect(() => {
-    console.log(FormDataWarranty);
-  }, [FormDataWarranty]);
-  useEffect(() => {
-    console.log("FormDataProduct", FormDataProduct);
+    // console.log("FormDataProduct", FormDataProduct);
   }, [FormDataProduct]);
   useEffect(() => {
-    console.log("FileWaranty", FileWaranty);
+    // console.log("FileWaranty", FileWaranty);
   }, [FileWaranty]);
   const handleChangInput = (e) => {
     if (e.target) {
       FormDataWarranty[e.target.name] = e.target.value;
       setFormDataWarranty(FormDataWarranty);
-      console.log(e.target.value, e.target.name);
     } else {
       FormDataWarranty[e.name] = e.value;
       setFormDataWarranty(FormDataWarranty);
-      console.log(e.value, e.name);
     }
   };
   const handleInputProduct = (e) => {
@@ -279,14 +267,8 @@ function FormWarranty({ Confirm }) {
       FormDataProduct[parseInt(e.target.attributes.index.value)][
         e.target.name
       ] = e.target.value;
-      console.log(
-        e.target.attributes.index.value,
-        e.target.value,
-        e.target.name
-      );
     } else {
       FormDataProduct[parseInt(e.attributes.index.value)][e.name] = e.value;
-      console.log(e.attributes.index.value, e.value, e.name);
     }
   };
   const uiProductForm = () => {
@@ -359,7 +341,6 @@ function FormWarranty({ Confirm }) {
     }
 
     setProcudeForm([...procudeForm, procudeForm[procudeForm.length - 1] + 1]);
-    console.log(FormDataProduct);
   };
   const addStoreForm = () => {
     let lang = 1;
@@ -391,7 +372,6 @@ function FormWarranty({ Confirm }) {
     const storeDataSet = [...storeData];
     storeDataSet.push([{ id: "", value: t("warranthForm.selectStore") }]);
     setStoreData(storeDataSet);
-    console.log(FormDataProduct);
   };
   const handleEdit = () => {
     setFormInput(!FormInput);
@@ -412,9 +392,7 @@ function FormWarranty({ Confirm }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("testset", FormDataProduct, FormDataWarranty);
     let dataFromLast = await FormDataProduct.map((item, index) => {
-      console.log(item.Customer_Province, item);
       FormDataWarranty.Customer_Province = parseInt(
         FormDataWarranty.Customer_Province
       );
@@ -486,7 +464,6 @@ function FormWarranty({ Confirm }) {
       const dataLoop = dataFromLast;
       const dataShow = await Promise.all(
         dataLoop.map(async (item, index) => {
-          //console.log("5555", item.Customer_Province, Province);
           let tempAddressID = 0;
           tempAddressID = Province.find((p) => p.id === item.Customer_Province);
           if (tempAddressID) {
@@ -519,7 +496,7 @@ function FormWarranty({ Confirm }) {
           item.Purchase_Date = formatDate(item.Purchase_Date);
           // const sotreidset = storeData.find((s) => s.id === item.Store_ID);
           // if (sotreidset !== undefined) {
-          //   console.log("store", sotreidset);
+
           //   item.Store_ID = parseInt(sotreidset.value);
           // } else {
           //   item.Store_ID = 0;
@@ -537,11 +514,6 @@ function FormWarranty({ Confirm }) {
           }
 
           item.Model_ID = 0;
-          console.log(
-            "ProvinceProvinceProvince",
-            Province,
-            item.Purchase_Province
-          );
           const PurchaseProvinceTemp = Province.find(
             (p) => p.id === parseInt(item.Purchase_Province)
           );
@@ -562,7 +534,6 @@ function FormWarranty({ Confirm }) {
           return item;
         })
       );
-      console.log("dataShow", dataShow);
       setDataForComfirm(dataShow);
 
       setFormInput(!FormInput);
@@ -573,10 +544,8 @@ function FormWarranty({ Confirm }) {
   };
   const handleLastSubmit = async () => {
     setLoadingSendData(true);
-    console.log("LastDataComToConfirm", LastDataComToConfirm);
     // let successCheck = 0;
-    // console.log("json string", JSON.stringify(LastDataComToConfirm));
-    // console.log("json:", LastDataComToConfirm);
+
     // await Promise.all(
     //   LastDataComToConfirm.map(async (items, index) => {
     //     let FormLastData = new FormData();
@@ -597,7 +566,6 @@ function FormWarranty({ Confirm }) {
     //         }
     //       )
     //       .then((res) => {
-    //         console.log(res);
     //         if (res.data.message === "Success!") {
     //         } else {
     //           successCheck = successCheck + 1;
@@ -619,7 +587,6 @@ function FormWarranty({ Confirm }) {
         seqFile[index] = [];
         items.map((item, i) => {
           FormLastData.append("Files", item);
-          console.log("saveSeq:", seqTemp);
           seqFile[index][i] = seqTemp;
           seqTemp += 1;
         });
@@ -634,7 +601,7 @@ function FormWarranty({ Confirm }) {
       })
     );
     FormLastData.append("datas", Datas);
-    console.log("Datas:", Datas);
+    console.log("Datas", Datas);
     await axios
       .post(
         `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
@@ -646,7 +613,6 @@ function FormWarranty({ Confirm }) {
         }
       )
       .then((res) => {
-        console.log(res);
         if (res.data.message === "Success!") {
           alert(t("warranthForm.alertSuccess"));
           setLoadingSendData(false);

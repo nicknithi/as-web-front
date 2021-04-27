@@ -17,10 +17,8 @@ export default function InputProductName({
   const typeahead = useRef(null);
   const [SelectedPN, setSelectedPN] = useState([]);
   const manualInput = (e) => {
-    console.log(e);
     if (e.length) {
       setPD(e);
-      console.log("e", e);
       handleEvent(
         e[0].id,
         e[0].fK_Model_ID,
@@ -49,9 +47,7 @@ export default function InputProductName({
       query,
       FormDataProduct[index].Type_ID
     );
-    console.log("5678", res);
     if (res.data.message === "Success!") {
-      console.log(res.data.data);
       const option = res.data.data.map((item, index) => {
         return {
           id: item.id,
@@ -66,7 +62,6 @@ export default function InputProductName({
       setOptions(option);
       setIsLoading(false);
     } else {
-      console.log(FormDataProduct[index].Purchase_Province);
       setIsLoading(false);
     }
     if (res.data.message === "Fail!") {

@@ -20,7 +20,6 @@ export default function DropDownPurchaseProvince({
       const tempTitle = data.find((a) => a.id === parseInt(e.target.value));
       if (tempTitle !== undefined) {
         const title = tempTitle.value;
-        console.log("set titel province ", title);
         setTitleState(title);
       } else {
         setTitleState(t("warranthForm.selectProvince"));

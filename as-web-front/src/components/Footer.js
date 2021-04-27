@@ -11,7 +11,6 @@ import Card from "react-bootstrap/Card";
 
 export default function Footer() {
   function RendersubMenu(dataList) {
-    console.log("data2131,", dataList);
     return (
       <ul>
         {dataList.subMenu.map((item, index) => (
@@ -32,7 +31,6 @@ export default function Footer() {
   useEffect(async () => {
     let resMemu = await getMenuAll(lang);
     resMemu = resMemu.filter((e) => e.hide_Footer !== 0);
-    console.log("resMemu", resMemu);
     const mainMenu = resMemu.filter(
       (e) => e.id_menu === 0 || e.id_menu === null
     );
@@ -50,9 +48,7 @@ export default function Footer() {
         item.subMenu = SubMenuTemp;
       }
     });
-    // console.log(NavMainMenu);
     setNavbarData(NavMainMenu);
-    console.log("ggg", NavMainMenu);
   }, []);
   return (
     <footer className="as-footer pt-5 pb-5">

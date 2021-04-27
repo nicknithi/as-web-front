@@ -26,7 +26,6 @@ export default function DropDownType_ID({
     // x.setAttribute("index", index);
     // x.setAttribute("value", data[0].id);
     // handleEvent(x);
-    console.log("jjjj", data);
     setTitleState(data[0].value);
   }, [data]);
   useEffect(() => {

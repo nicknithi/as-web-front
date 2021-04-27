@@ -11,7 +11,6 @@ export default function ElementCarousel({ data }) {
   const closeCarousel = () => {
     setTrigleShow(false);
   };
-  console.log("datacarousel", data);
   let DataSlide = [...data];
   //DataSlide.shift();
   // if (DataSlide.length >= 2) {

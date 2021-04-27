@@ -8,7 +8,6 @@ export default function DropDown({
 }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
-    console.log("eeeee");
     if (e.target.value) {
       let index1 = e.nativeEvent.target.selectedIndex;
       setTitleState(e.nativeEvent.target[index1].text);

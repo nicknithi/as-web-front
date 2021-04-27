@@ -8,7 +8,6 @@ export default function DropDown({
 }) {
   const [title, setTitleState] = useState("กรุณาเลือก");
   const handleSelect = (e) => {
-    console.log("eeeee");
     if (e.target.value) {
       let index1 = e.nativeEvent.target.selectedIndex;
       setTitleState(e.nativeEvent.target[index1].text);
@@ -23,7 +22,6 @@ export default function DropDown({
       const findData = data.find(
         (a) => a.id === parseInt(DataFromRegister.fK_District_ID)
       );
-      console.log("555555555555test", data);
       if (findData !== undefined) {
         setTitleState(findData.value);
       } else {

@@ -63,10 +63,8 @@ export default function Register({ data }) {
   //-------------------------------------------------
 
   useEffect(() => {
-    console.log("tests ggggg");
     const banner = data.find((b) => b.content_Type === 2);
     if (banner !== undefined) {
-      console.log("bannerbanner", banner.image);
       setImgBanner(banner.image);
     }
   }, [data]);
@@ -211,7 +209,6 @@ export default function Register({ data }) {
         Lang_ID: lang,
       })
       .then((res) => {
-        console.log("555", res);
         const DistrictSet = res.data.data.map((item, index) => {
           return {
             id: item.id,
@@ -242,17 +239,12 @@ export default function Register({ data }) {
       if (resServiceCenter && resServiceCenter.length) {
         DataSet.Service_Center = resServiceCenter[0].code;
         DataSet.Service_Center_Name = resServiceCenter[0].name;
-        console.log("test", resServiceCenter);
-        // Service_Center: "",
-        // Service_Center_Name: "",
-        console.log("resServiceCenter", resServiceCenter);
       }
 
       setDataFromRegister(DataSet);
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
       );
-      console.log("ggghhh", newSet);
       if (newSet.length) {
         setDistrict([
           { id: "", value: t("register.selectDistrict") },
@@ -268,17 +260,11 @@ export default function Register({ data }) {
       DataSet.FK_Sub_District_ID = "";
       DataSet.ZIP_Code = "";
       setDataFromRegister(DataSet);
-      console.log(
-        DataFromRegister.FK_Province_ID,
-        e.target.value,
-        SubDistrictDN
-      );
       const newSet = SubDistrictDN.filter(
         (p) =>
           p.fK_Province_ID === parseInt(DataFromRegister.FK_Province_ID) &&
           p.fK_District_ID === parseInt(e.target.value)
       );
-      console.log("test", newSet);
       if (newSet.length) {
         setSubDistrict([
           { id: "", value: t("register.selectSubDistrict") },
@@ -344,7 +330,6 @@ export default function Register({ data }) {
     );
     lastData.Customer_Type = parseInt(lastData.Customer_Type);
     lastData.Service_Center = lastData.Service_Center.toString();
-    console.log("lastData", lastData);
     const res = await http.post("/api/Customer/AddCustomer", lastData);
     setLoadingSendData(false);
     if (res.data.message === "Success!") {
@@ -362,7 +347,8 @@ export default function Register({ data }) {
     window.location = "/";
   };
   useEffect(() => {
-    console.log("DataFromRegister", DataFromRegister);
+    //
+    "DataFromRegister", DataFromRegister;
   }, [DataFromRegister]);
   useEffect(() => {
     DataFromRegister.Customer_Contractor_Type = 0;

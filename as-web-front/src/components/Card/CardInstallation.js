@@ -4,7 +4,6 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import noImg from "../../assets/img/noImg.jpg";
 export default function CardInstallation({ data, handleClickCard }) {
-  console.log("data4", data);
   const imgProduct = useRef(null);
   const errorImg = () => {
     imgProduct.current.src = noImg;

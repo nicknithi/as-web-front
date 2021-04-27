@@ -11,7 +11,6 @@ export default function DropDown({
   const [t, i18n] = useTranslation("common");
   const [title, setTitleState] = useState(t("register.selectProvince"));
   const handleSelect = (e) => {
-    console.log("eeeee");
     if (e.target.value) {
       let index1 = e.nativeEvent.target.selectedIndex;
       setTitleState(e.nativeEvent.target[index1].text);

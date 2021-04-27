@@ -14,7 +14,6 @@ export default function CostWarrantyDetail({ data }) {
   };
   useEffect(() => {
     const dataList = data.file;
-    console.log("dataList", dataList);
     if (dataList !== undefined && dataList.length) {
       const group = [];
       let tempOrder = dataList[0].file_order;

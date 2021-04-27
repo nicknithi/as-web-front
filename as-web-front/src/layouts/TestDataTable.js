@@ -61,7 +61,6 @@ export default function TestDataTable() {
     return resWarranty;
   };
   useEffect(async () => {
-    console.log("555555");
     const res = await GetProvinceData(1);
     setDataProvince(res);
     Type = await getProductType(1);

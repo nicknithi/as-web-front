@@ -46,7 +46,6 @@ export default function InstallationMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     const resMenu = await GetAllMenuProduct_Installation(lang);
-    console.log("menu installation", resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     if (resMenu) {
@@ -119,8 +118,6 @@ export default function InstallationMenu() {
       id,
       lang
     );
-    console.log("class1 id", id);
-    console.log("resClass1", resClassified1);
     let tempClassified1 = [...ContentRender];
     tempClassified1 = resClassified1 ? resClassified1 : [];
     tempClassified1 = tempClassified1.map((item, index) => {
@@ -149,7 +146,6 @@ export default function InstallationMenu() {
           (c2) => c2.installation_sub_classified_id === id
         );
         if (result && Object.keys(result).length > 0) {
-          // console.log("result", result, item);
           setTitle(`${item1.installation_classified_name} / ${name}`);
           setActiveClass1(item1.installation_classified_id);
           return false;
@@ -164,8 +160,6 @@ export default function InstallationMenu() {
       id,
       lang
     );
-    console.log("class1 id", id);
-    console.log("resClass2", resClassified2);
     let tempClassified2 = [...ContentRender];
     tempClassified2 = resClassified2 ? resClassified2 : [];
     tempClassified2 = tempClassified2.map((item, index) => {
@@ -224,7 +218,6 @@ export default function InstallationMenu() {
       // const ProductClass1 = await GetManageProductSparePartById(id);
       let ProductClass1 = await GetManageProductInstallationById(id, lang);
       if (ProductClass1) {
-        console.log("nithi", ProductClass1);
         ProductClass1 = {
           ...ProductClass1,
           file: ProductClass1.installation_file,
@@ -243,7 +236,6 @@ export default function InstallationMenu() {
       }
     } else if (type === "classified2") {
       let ProductClass2 = await GetManageProductInstallationById(id, lang);
-      console.log("ProductClass2", ProductClass2);
       ProductClass2 = {
         ...ProductClass2,
         file: ProductClass2.installation_file,
@@ -264,7 +256,6 @@ export default function InstallationMenu() {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
     let ProductClass1 = await GetManageProductInstallationByCode(code, lang);
-    console.log("InitProductClass1", ProductClass1);
     if (ProductClass1) {
       ProductClass1 = {
         ...ProductClass1,

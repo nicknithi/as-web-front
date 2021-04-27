@@ -41,7 +41,6 @@ export default function ProfileHome() {
   useEffect(async () => {
     const dataProfile = await getCustomerById(cookies.customerID);
     setProfileData(dataProfile);
-    console.log(dataProfile);
   }, []);
   return (
     <div className="container profile-container">

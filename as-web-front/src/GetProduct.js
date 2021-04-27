@@ -88,7 +88,6 @@ const GetDataProduct_InstallationByClassified2 = async (id, lang) => {
   return res.data.data;
 };
 const GetManageProductInstallationById = async (id, lang) => {
-  console.log("id", id);
   const res = await http.post(
     `/api/Installation/GetManageProductInstallationById`,
     {

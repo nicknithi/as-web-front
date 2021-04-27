@@ -11,7 +11,6 @@ export default function DropDown({
   const [t, i18n] = useTranslation("common");
   const [title, setTitleState] = useState(t("register.selectSubDistrict"));
   const handleSelect = (e) => {
-    console.log("eeeee");
     if (e.target.value) {
       let index1 = e.nativeEvent.target.selectedIndex;
       setTitleState(e.nativeEvent.target[index1].text);
@@ -23,7 +22,6 @@ export default function DropDown({
   };
   useEffect(() => {
     if (DataFromRegister.FK_Sub_District_ID) {
-      console.log("sd change");
       const findData = data.find(
         (a) => a.id === parseInt(DataFromRegister.FK_Sub_District_ID)
       );

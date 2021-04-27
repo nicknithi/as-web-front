@@ -60,7 +60,6 @@ export default function NavbarDesktop({ NavbarItem }) {
         //window.location = "/";
       }
     }
-    // console.log("kklklk", tempMenu);
     // setCookie("as_lang", "TH");
     // window.location = "หน้าแรก";
     //window.location.reload(false);

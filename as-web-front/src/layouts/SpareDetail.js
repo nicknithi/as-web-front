@@ -11,7 +11,6 @@ export default function SpareDetail({ data, getBannerContent }) {
   const [SpateDetail, setSpateDetail] = useState({});
   useEffect(async () => {
     const resProduce = await GetManageProductSparePartById(query.id);
-    console.log("resProduce", resProduce);
     let tempDetail = { ...SpateDetail };
     tempDetail = resProduce;
     setSpateDetail(tempDetail);

@@ -35,13 +35,11 @@ export default function Installation({ data, getBannerContent }) {
     MenuSpare = MenuSpare.map((item, index) => {
       return { ...item, classified1: resClassType };
     });
-    console.log("MenuSpare", MenuSpare);
     let TempMenu = [...menuSpare];
     TempMenu = MenuSpare;
     setMenuSpare(TempMenu);
 
     let dataProduct = await GetAllProduct_SparepartList();
-    console.log("dataProduct");
     dataProduct = dataProduct.map((item, index) => {
       return { ...item, title: item.product_name };
     });
@@ -53,7 +51,6 @@ export default function Installation({ data, getBannerContent }) {
     TempSpare = dataProduct;
     setSpareList(TempSpare);
   }, []);
-  console.log("5555555555555k", getBannerContent(data));
   return (
     <div>
       <ElementBanner img={getBannerContent(data)} />

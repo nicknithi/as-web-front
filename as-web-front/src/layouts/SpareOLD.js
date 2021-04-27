@@ -29,13 +29,11 @@ export default function Installation() {
     MenuSpare = MenuSpare.map((item, index) => {
       return { ...item, classified1: resClassType };
     });
-    console.log("MenuSpare", MenuSpare);
     let TempMenu = [...menuSpare];
     TempMenu = MenuSpare;
     setMenuSpare(TempMenu);
 
     const dataProduct = await GetAllProduct_SparepartList();
-    console.log("resClassTyperesClassType", dataProduct);
     let TempSpare = [...SpareList];
     TempSpare = dataProduct;
     setSpareList(TempSpare);

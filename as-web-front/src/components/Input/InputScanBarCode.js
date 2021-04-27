@@ -15,10 +15,7 @@ export default function InputScanBarCode({
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const typeahead = useRef(null);
   const manualInput = (e) => {
-    console.log("555");
     if (e.length) {
-      document.getElementById("Barcode_Number").value = e[0].id;
-      // console.log(document.getElementById("Barcode_Number"));
       setPD(e);
       handleEvent(
         e[0].id,
@@ -48,9 +45,7 @@ export default function InputScanBarCode({
       query,
       FormDataProduct[index].Type_ID
     );
-    console.log(res);
     if (res.data.message === "Success!") {
-      console.log("by bar code", res.data.data);
       const option = res.data.data.map((item, index) => {
         return {
           id: item.id,

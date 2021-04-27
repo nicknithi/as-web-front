@@ -55,7 +55,6 @@ export default function App(props) {
       // document.body.style.setProperty("font-size", "24px", "important");
       // document.body.style.setProperty("font-weight", "bold", "important");
       // let h1Elements = document.getElementsByTagName("h1");
-      // console.log("h1Elements", h1Elements);
       // for (let i = 0; i < h1Elements.length; i++) {
       //   h1Elements[i].classList.add("eng");
       // }

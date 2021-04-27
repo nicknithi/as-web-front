@@ -9,7 +9,6 @@ const getProductType = async (lang) => {
   return data;
 };
 const getStoreByProvinceData = async (Province_id, lang) => {
-  console.log("Province_id", Province_id);
   const res = await http.post("/api/Product/GetStoreByName", {
     Lang_ID: lang,
     Province_ID: Province_id,

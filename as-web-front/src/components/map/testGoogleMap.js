@@ -3,7 +3,6 @@ import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 function googleMap(props) {
   let markPosition = { lat: 37.778519, lng: -122.40564 };
   const onMarkerClick = (mapProps, map, clickEvent) => {
-    console.log(props);
     markPosition.lat = clickEvent.latLng.lat();
     markPosition.lng = clickEvent.latLng.lng();
   };

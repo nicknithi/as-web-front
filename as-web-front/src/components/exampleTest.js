@@ -12,7 +12,6 @@ export default function ExampleTest() {
     const url = window.URL.createObjectURL(new Blob([blob]));
     const canvas = document.getElementById("canvas");
     blob2canvas(canvas, url);
-    // console.log(url);
     // const link = document.createElement("a");
     // link.href = url;
     // link.setAttribute("download", "file.png");

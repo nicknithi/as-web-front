@@ -99,7 +99,6 @@ export default function EditProfile() {
       const newSet = DistrictDN.filter(
         (p) => p.fK_Province_ID === parseInt(e.target.value)
       );
-      console.log("ggghhh", newSet);
       if (newSet.length) {
         setDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
       }
@@ -116,14 +115,12 @@ export default function EditProfile() {
           p.fK_Province_ID === parseInt(DataFromRegister.fK_Province_ID) &&
           p.fK_District_ID === parseInt(e.target.value)
       );
-      console.log(newSet);
       if (newSet.length) {
         setSubDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
       }
     }
   };
   const getSubDistrictDropDown = (e) => {
-    console.log("target", e.target.value);
     if (e.target) {
       const DataSet = { ...DataFromRegister };
       DataSet.fK_Sub_District_ID = parseInt(e.target.value);
@@ -171,9 +168,7 @@ export default function EditProfile() {
   const goBlack = () => {
     window.location = "/";
   };
-  useEffect(() => {
-    console.log("DataFromRegister", DataFromRegister);
-  }, [DataFromRegister]);
+  useEffect(() => {}, [DataFromRegister]);
   return (
     <div>
       <form onSubmit={submit}>

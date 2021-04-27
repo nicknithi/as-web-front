@@ -5,7 +5,6 @@ const GetContent = async (id, lang) => {
     LangID: lang === "TH" ? 1 : 2,
     ID: id,
   });
-  console.log(res);
   return res.data.data;
 };
 export { GetContent };

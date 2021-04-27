@@ -35,8 +35,6 @@ export default function Warranty({ data, RenderColumn }) {
     }
   });
 
-  console.log("nicknithi", dataWarrantyConfirm);
-
   const handleCheck = (e) => {
     setConfirm(e.target.checked);
   };

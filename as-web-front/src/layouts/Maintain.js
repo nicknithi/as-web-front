@@ -28,11 +28,9 @@ export default function Maintain({ data, RenderColumn }) {
   };
   const printDocument = async () => {
     const input = document.getElementById("divToPrint");
-    console.log(input.childNodes);
     const pdf = new jsPDF();
     let tempHeight = 0;
     const arrayDoc = [...input.childNodes];
-    console.log("arrayDoc", arrayDoc);
     await Promise.all(
       arrayDoc.map(async (item, index) => {
         tempHeight += item.clientHeight;
@@ -65,7 +63,7 @@ export default function Maintain({ data, RenderColumn }) {
     // });
   };
   const dataRenderFilter = data.filter((f) => f.content_Type !== 6);
-  console.log("dataRenderFilter", dataRenderFilter);
+
   if (dataRenderFilter.length) {
     // const tempdataContent = [...dataContent];
     // setDataContent(tempdataContent);
@@ -77,7 +75,7 @@ export default function Maintain({ data, RenderColumn }) {
   }
   //   useEffect(() => {
   //     const dataRenderFilter = data.filter((f) => f.content_Type !== 6);
-  //     console.log("dataRenderFilter", dataRenderFilter);
+
   //     if (dataRenderFilter.length) {
   //       const tempdataContent = [...dataContent];
   //       setDataContent(tempdataContent);

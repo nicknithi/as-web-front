@@ -51,9 +51,7 @@ export default function InputProcuctCode({
       query.toUpperCase(),
       FormDataProduct[index].Type_ID
     );
-    console.log(res);
     if (res.data.message === "Success!") {
-      console.log("check check", res.data);
       const option = res.data.data.map((item, index) => {
         return {
           id: item.id,

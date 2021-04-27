@@ -5,10 +5,8 @@ import ElementBanner from "../../src/components/Content/ElementBanner";
 export default function Login({ data }) {
   const [ImgBanner, setImgBanner] = useState("");
   useEffect(() => {
-    console.log("tests ggggg");
     const banner = data.find((b) => b.content_Type === 2);
     if (banner !== undefined) {
-      console.log("bannerbanner", banner.image);
       setImgBanner(banner.image);
     }
   }, [data]);

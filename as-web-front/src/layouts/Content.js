@@ -60,12 +60,9 @@ export default function Content() {
         tempCustomPath.toLowerCase().replace(/\s/g, "")
     );
 
-    console.log("maintain", maintain);
-    console.log("dataUrl", dataUrl, resMemu);
     if (dataUrl !== undefined) {
       setMaintain(dataUrl.id_menu);
       const resContent = await GetContent(dataUrl.id_main_menu, lang);
-      console.log("resContent", resContent);
 
       setContent(resContent);
     } else {
@@ -105,7 +102,6 @@ export default function Content() {
         const group = [];
         let tempOrder = dataRender[0].file_order;
         group.push(dataRender.filter((d) => d.file_order === tempOrder));
-        console.log("tempOrder", tempOrder);
         data.file.forEach((item, index) => {
           if (item.file_order !== tempOrder) {
             group.push(
@@ -114,7 +110,6 @@ export default function Content() {
             tempOrder = item.file_order;
           }
         });
-        console.log("group", group);
         return (
           <div className="row position-relative">
             {group.map((item, index) => (
@@ -148,7 +143,6 @@ export default function Content() {
     }
   };
   const codition = (data, index, col, type) => {
-    console.log(type);
     if (type === 0) {
       return (
         <div className={columcOption[col]}>

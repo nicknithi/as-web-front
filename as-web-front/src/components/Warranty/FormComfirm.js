@@ -8,7 +8,6 @@ import http from "../../axios";
 import { useTranslation } from "react-i18next";
 function FormComfirm(props) {
   const dataSet = props.DataComfirm;
-  console.log("dataSet", dataSet);
   const [t, i18n] = useTranslation("common");
 
   const imgPreviewShow = (file) => {

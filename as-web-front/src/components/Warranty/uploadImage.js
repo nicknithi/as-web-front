@@ -37,9 +37,7 @@ export default function UploadImage({
     //   }
     // }
     // if (FileWaranty[index].length) {
-    //   console.log("file if");
     // } else {
-    //   console.log("file else");
     // }
     // if (FileWaranty[index].) {
     //   if (!Array.isArray(FileWaranty[index])) {

@@ -42,7 +42,6 @@ export default function SpareListByModel({ data, getBannerContent }) {
       });
 
       if (Object.keys(renderClassofied).length > 0) {
-        console.log("renderClassofied", renderClassofied);
         let TempSpare = [...SpareList];
         TempSpare = renderClassofied.product_sparepart;
         TempSpare = TempSpare.map((item, index) => {

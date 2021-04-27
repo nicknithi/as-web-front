@@ -20,7 +20,6 @@ export default function ProductData({
 }) {
   useEffect(() => {
     http.post("/api/Product/GetAllProduct").then((res) => {
-      console.log("product", res.data.data);
       const data = res.data.data.map((item, index) => {
         return { id: item.id, value: item.product_Name_TH };
       });
@@ -35,7 +34,6 @@ export default function ProductData({
       //setTypeId(data);
     });
     http.post("/api/Product/GetAllProductModel").then((res) => {
-      console.log("model ", res.data.data);
       const data = res.data.data.map((item, index) => {
         return { id: item.id, value: item.model_Name_TH };
       });
@@ -55,11 +53,9 @@ export default function ProductData({
   };
   const handleChangInputBarcode = (e) => {
     handleChangInput(e);
-    console.log("test");
     http
       .post(`/api/Product/GetProductTop20ByBarcode?Barcode=${e.target.value}`)
       .then((res) => {
-        console.log(res);
         if (res.data.message === "Success!") {
           setTypeId([
             dataTypeID.find((d) => d.id === res.data.data[0].fK_Type_ID),
@@ -75,7 +71,6 @@ export default function ProductData({
     handleGetFileForm(file, index);
   };
   const handleSetDateTime = (d, i) => {
-    console.log(d, i);
     document.getElementById("Purchase_Date").value = formatDate(d);
     document.getElementById("Purchase_Date").attributes.index.value = i;
     handleChangInput(document.getElementById("Purchase_Date"));

@@ -122,7 +122,6 @@ export default function ProductData({
     product_code,
     product_Name
   ) => {
-    console.log(id, ModelId, TypeId, BarCode, product_code);
     const barCodeSet = [...FormDataProduct];
     barCodeSet[index].Barcode_Number = BarCode;
     barCodeSet[index].Product_ID = id;
@@ -133,14 +132,12 @@ export default function ProductData({
     setFormDataProduct(barCodeSet);
 
     // const ProductData = await GetProduct(product_code);
-    // console.log("Product 12312", ProductData);
     // if (allProduct.data.message === "Success!" && allProduct.data.data.length) {
     //   const Product allProduct.data.data.map((item, index) => {
     //     return
     //   });
     // }
     const type = dataTypeID.find((d) => d.id === TypeId);
-    console.log("typetype", type, TypeId);
     if (type !== undefined && TypeId !== 0) {
       setTypeId([type]);
     } else {
@@ -197,12 +194,10 @@ export default function ProductData({
   };
   useEffect(() => {
     if (FormDataProduct[index].Product_Code_Other) {
-      console.log("if");
       document.querySelector(
         `.input-product-code-${index} .rbt input`
       ).required = false;
     } else {
-      console.log("else test12");
       document.querySelector(
         `.input-product-code-${index} .rbt input`
       ).required = true;

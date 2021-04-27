@@ -3,7 +3,6 @@ import React from "react";
 
 import { fileDownload, blob2canvas, nomalDownloadFile } from "../../ManageFIle";
 export default function ElementPicture({ data, index }) {
-  console.log("data11", data);
   const downloadPdf = async () => {
     if (data.path) {
       const res = await fileDownload(data.path);

@@ -4,8 +4,6 @@ import ButtonMain from "../button/ButtonMain";
 import GoogleMapDisabled from "../../components/map/googleMapDisabled";
 export default function RegisterConfirm({ data, setCheckData, Lastsubmit }) {
   const [t, i18n] = useTranslation("common");
-  console.log("test data form register", data);
-
   return (
     <div className="container ">
       <h1>{t("register.title")}</h1>
