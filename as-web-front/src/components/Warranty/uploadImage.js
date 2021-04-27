@@ -14,8 +14,6 @@ export default function UploadImage({
   const uploadImg = (file, index) => {
     //handleGetFile(file, index);
     let dataFile = [...FileWaranty];
-
-    alert(file.length);
     const fileTemp = [];
     for (let i = 0; i < file.length; i++) {
       fileTemp.push(file[i]);
@@ -51,15 +49,14 @@ export default function UploadImage({
     // }
   }, []);
   const imgPreviewShow = (file) => {
-    console.log("imgtest", file);
     // URL.createObjectURL(file);
     return URL.createObjectURL(file);
   };
 
   return (
     <div className="col-md-4  mx-auto text-center">
-      {imgPreview ? (
-        imgPreview.map((item, index) => (
+      {FileWaranty[index] && FileWaranty[index].length ? (
+        FileWaranty[index].map((item, index) => (
           <img
             className="mb-3"
             src={imgPreviewShow(item)}

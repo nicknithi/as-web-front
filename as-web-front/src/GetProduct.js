@@ -15,7 +15,6 @@ const GetAllProduct_SparepartList = async (lang) => {
 };
 
 const GetManageProductSparePartById = async (id, lang) => {
-  console.log("id", id);
   try {
     const res = await http.post(
       `/api/Sparepart/GetManageProductSparePartById`,

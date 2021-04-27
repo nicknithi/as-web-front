@@ -10,6 +10,11 @@ function FormComfirm(props) {
   const dataSet = props.DataComfirm;
   console.log("dataSet", dataSet);
   const [t, i18n] = useTranslation("common");
+
+  const imgPreviewShow = (file) => {
+    // URL.createObjectURL(file);
+    return URL.createObjectURL(file);
+  };
   return (
     <div className="form-comfirm">
       {/* {props.ProvinceC} */}
@@ -92,11 +97,14 @@ function FormComfirm(props) {
               </div>
               <div className="img-preview row">
                 <div className="col-md-4 mx-auto">
-                  <img
-                    src={URL.createObjectURL(dataSet.files[index])}
-                    alt={"preview"}
-                    style={{ "max-width": "100%", "max-height": "100%" }}
-                  />
+                  {dataSet.files[index].map((item, i) => (
+                    <img
+                      className="mb-3"
+                      src={imgPreviewShow(item)}
+                      alt={"preview"}
+                      style={{ "max-width": "100%", "max-height": "100%" }}
+                    />
+                  ))}
                 </div>
               </div>
               <div className="row">

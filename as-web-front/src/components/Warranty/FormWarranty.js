@@ -445,34 +445,42 @@ function FormWarranty({ Confirm }) {
 
     // fix data show for form confirm
     let validate = true;
-    FormDataProduct.forEach((item, index) => {
-      console.log("item", item.Product_ID);
-      if (item.Product_ID || item.Product_Code_Other) {
+    for (let i = 0; i < FormDataProduct.length; i++) {
+      if (
+        FormDataProduct[i].Product_ID ||
+        FormDataProduct[i].Product_Code_Other
+      ) {
       } else {
         alert("กรุณาเลือก รหัสสินค้า");
         validate = false;
-        return 0;
+        break;
       }
-      console.log("FileWarantyFileWaranty", Array.isArray(FileWaranty[index]));
-      if (Array.isArray(FileWaranty[index])) {
-        alert("กรุณาเลือก รูปภาพใบเสร็จ");
-        validate = false;
-        return 0;
-      } else {
-      }
-      if (FileWaranty[index]) {
+      if (FileWaranty[i] && FileWaranty[i].length > 0) {
       } else {
         alert("กรุณาเลือก รูปภาพใบเสร็จ");
         validate = false;
-        return 0;
+        break;
       }
+
+      // if (Array.isArray(FileWaranty[index])) {
+      //   alert("กรุณาเลือก รูปภาพใบเสร็จ");
+      //   validate = false;
+      //   return 0;
+      // } else {
+      // }
+      // if (FileWaranty[index]) {
+      // } else {
+      //   alert("กรุณาเลือก รูปภาพใบเสร็จ");
+      //   validate = false;
+      //   return 0;
+      // }
       if (FormDataWarranty.Score) {
       } else {
         alert("กรุณาเลือกระดับความพึงพอใจ");
         validate = false;
-        return 0;
+        break;
       }
-    });
+    }
 
     if (validate) {
       const dataLoop = dataFromLast;
@@ -600,32 +608,42 @@ function FormWarranty({ Confirm }) {
     //       });
     //   })
     // );
-    const FileData = [];
-    const Datas = [];
+    let FormLastData = new FormData();
+    // FormLastData.append("Files", FileData);
+    // FormLastData.append("datas", Datas);
+
+    const seqFile = [];
+    let seqTemp = 0;
     await Promise.all(
-      LastDataComToConfirm.map(async (items, index) => {
-        FileData.push({ seq: index, File: FileWaranty[index] });
-        Datas.push({ seq: index, Data: JSON.stringify(items) });
-        // FormLastData.push({
-        //   Files: FileWaranty[index],
-        //   datas: JSON.stringify(items),
-        // });
+      FileWaranty.map((items, index) => {
+        seqFile[index] = [];
+        items.map((item, i) => {
+          FormLastData.append("Files", item);
+          console.log("saveSeq:", seqTemp);
+          seqFile[index][i] = seqTemp;
+          seqTemp += 1;
+        });
       })
     );
-    let FormLastData = new FormData();
-    console.log("Files:", FileData);
-    console.log("Datas:", Datas);
-    FormLastData.append("Files", FileData);
+
+    const Datas = await Promise.all(
+      LastDataComToConfirm.map(async (items, index) => {
+        items.Customer_Latitude = items.Customer_Latitude.toString();
+        items.Customer_Longtitude = items.Customer_Longtitude.toString();
+        return { ...items, Seq: seqFile[index] };
+      })
+    );
     FormLastData.append("datas", Datas);
+    console.log("Datas:", Datas);
     await axios
       .post(
         `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
-        FormLastData
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data",
-        //   },
-        // }
+        FormLastData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       )
       .then((res) => {
         console.log(res);
