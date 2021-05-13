@@ -47,13 +47,14 @@ export default function Warranty({ data, RenderColumn }) {
     setShow(false);
   };
   const goBack = () => {
-    let lang = 1;
-    if (cookies.as_lang) {
-      lang = cookies.as_lang === "TH" ? 1 : 2;
-    }
-    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-      lang === 1 ? "หน้าแรก" : "home"
-    }`;
+    // let lang = 1;
+    // if (cookies.as_lang) {
+    //   lang = cookies.as_lang === "TH" ? 1 : 2;
+    // }
+    // window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+    //   lang === 1 ? "หน้าแรก" : "home"
+    // }`;
+    window.history.back();
   };
   return (
     <div className="warranty">

@@ -10,30 +10,95 @@ import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
+import { getMenuAll } from "../../GetDataMenu";
+import { useParams } from "react-router-dom";
 export default function NavbarMobile({ NavbarItem }) {
+  let { customPath } = useParams();
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
+
   useEffect(() => {
     responsive();
     window.addEventListener("resize", () => {
       responsive();
     });
   }, []);
-  const changToThai = () => {
-    i18n.changeLanguage("th");
+  // const changToThai = () => {
+  //   i18n.changeLanguage("th");
+  //   setCookie("as_lang", "TH", {
+  //     path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+  //   });
+  //   window.location = "หน้าแรก";
+  //   // window.location.reload(false);
+  // };
+  // const changToEng = () => {
+  //   i18n.changeLanguage("en");
+  //   setCookie("as_lang", "EN", {
+  //     path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+  //   });
+  //   window.location = "home";
+  //   // window.location.reload(false);
+  // };
+
+  const ChangToThai = async () => {
     setCookie("as_lang", "TH", {
       path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
     });
-    window.location = "หน้าแรก";
-    // window.location.reload(false);
+    const datamenuEN = await getMenuAll("EN");
+    let tempMenuEN = datamenuEN.find(
+      (m) =>
+        m.menu.toLowerCase().replace(/\s/g, "") ===
+        customPath.toLowerCase().replace(/\s/g, "")
+    );
+
+    if (tempMenuEN && Object.keys(tempMenuEN).length) {
+      const datamenuTH = await getMenuAll("TH");
+      if (datamenuTH && datamenuTH.length) {
+        const res = datamenuTH.find(
+          (e) => e.fK_MENU_EN_ID === tempMenuEN.fK_MENU_EN_ID
+        );
+        // setCookie("as_lang", "TH", {
+        //   path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+        // });
+        window.location = `${
+          process.env.REACT_APP_SUB_DIRECTORY
+        }/${res.menu.trim()}`;
+        //window.location = "/";
+      }
+    }
+    // setCookie("as_lang", "TH");
+    // window.location = "หน้าแรก";
+    //window.location.reload(false);
   };
-  const changToEng = () => {
-    i18n.changeLanguage("en");
+  const ChangToEng = async () => {
     setCookie("as_lang", "EN", {
       path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
     });
-    window.location = "home";
-    // window.location.reload(false);
+    const datamenuEN = await getMenuAll("TH");
+    let tempMenuEN = datamenuEN.find(
+      (m) =>
+        m.menu.toLowerCase().replace(/\s/g, "") ===
+        customPath.toLowerCase().replace(/\s/g, "")
+    );
+
+    if (tempMenuEN && Object.keys(tempMenuEN).length) {
+      const datamenuTH = await getMenuAll("EN");
+      if (datamenuTH && datamenuTH.length) {
+        const res = datamenuTH.find(
+          (e) => e.fK_MENU_TH_ID === tempMenuEN.fK_MENU_TH_ID
+        );
+        // setCookie("as_lang", "EN", {
+        //   path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+        // });
+        window.location = `${
+          process.env.REACT_APP_SUB_DIRECTORY
+        }/${res.menu.trim()}`;
+        //window.location = "/home";
+      }
+    }
+    // setCookie("as_lang", "EN");
+    // window.location = "home";
+    //window.location.reload(false);
   };
   const responsive = () => {
     if (window.innerWidth < 992) {
@@ -65,8 +130,8 @@ export default function NavbarMobile({ NavbarItem }) {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <div className="nav-lang-mobile mt-2 ml-3">
-          <button onClick={() => changToThai()}>TH</button> |
-          <button onClick={() => changToEng()}>EN</button>
+          <button onClick={() => ChangToThai()}>TH</button> |
+          <button onClick={() => ChangToEng()}>EN</button>
         </div>
         <Nav>
           <Accordion defaultActiveKey={1}>

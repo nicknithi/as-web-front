@@ -24,4 +24,22 @@
     margin-left: -15px;
     margin-right: -15px;
   }
+  .content-data {
+    border: 26px solid #f1f1f5;
+    .content-text {
+    }
+  }
+  .content-img {
+    padding: 13px;
+    background-color: #f1f1f5;
+    img {
+      padding: 13px;
+    }
+    .price {
+      text-align: right;
+      // width: 200px;
+      height: 45px;
+      background-color: white;
+    }
+  }
 }

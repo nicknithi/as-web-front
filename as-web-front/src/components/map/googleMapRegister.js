@@ -34,6 +34,17 @@ class googleMap extends Component {
   };
   goCurrentLocation = () => {
     if (navigator && navigator.geolocation) {
+      navigator.geolocation.watchPosition(
+        function (position) {},
+        function (error) {
+          if (error.code == error.PERMISSION_DENIED) {
+            alert(
+              "Please Allow Location Access on Web Browser \n\nHow to do \nSettings > Privacy > Location Services \n> Choose Browser > Choose While Using the App"
+            );
+            return 0;
+          }
+        }
+      );
       navigator.geolocation.getCurrentPosition((pos) => {
         const coords = pos.coords;
         // this.setState({

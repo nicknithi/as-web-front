@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+
 import reportWebVitals from "./reportWebVitals";
 import store from "./store";
 import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/scss/app.scss";
+import App from "./App";
 import common_en from "./translations/en/common.json";
 import common_th from "./translations/th/common.json";
 import { I18nextProvider } from "react-i18next";

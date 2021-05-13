@@ -285,9 +285,10 @@ export default function InstallationMenu() {
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;
       }
-      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-        lang === 1 ? "หน้าแรก" : "home"
-      }`;
+      // window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+      //   lang === 1 ? "หน้าแรก" : "home"
+      // }`;
+      window.history.back();
     } else {
       window.location.reload(false);
     }

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-has-content */
+/* eslint-disable jsx-a11y/alt-text */
 import React from "react";
 // import "../../assets/scss/Element/Card.scss";
 export default function ElementCard({ data }) {

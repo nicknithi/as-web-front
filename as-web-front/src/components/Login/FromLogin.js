@@ -14,7 +14,7 @@ export default function FromLogin() {
       setCookie("customerID", res.data.data.customerID, {
         path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
       });
-      window.location = "/profile";
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/profile`;
     } else {
       alert("usename or password incorrect");
     }
@@ -57,7 +57,11 @@ export default function FromLogin() {
           <div className="row">
             <div className="col-md-4 mx-auto text-right">
               <label>
-                <a href="/forgotpassowrd">{t("Login.forget")}</a>
+                <a
+                  href={`${process.env.REACT_APP_SUB_DIRECTORY}forgotpassowrd`}
+                >
+                  {t("Login.forget")}
+                </a>
               </label>
             </div>
           </div>

@@ -130,7 +130,6 @@ export default function ProductData({
     barCodeSet[index].Product_code = product_code;
     barCodeSet[index].product_Name = product_Name;
     setFormDataProduct(barCodeSet);
-
     // const ProductData = await GetProduct(product_code);
     // if (allProduct.data.message === "Success!" && allProduct.data.data.length) {
     //   const Product allProduct.data.data.map((item, index) => {
@@ -291,7 +290,7 @@ export default function ProductData({
               <label className="">{t("warranthForm.barCode")}</label>
               {/* <input type="text" className="as-input" required /> */}
               <div className="row">
-                <div className="col-10">
+                <div className="col-8">
                   <InputScanBarCode
                     Confirm={Confirm}
                     handleEvent={handleChangInputBarcode}
@@ -299,8 +298,10 @@ export default function ProductData({
                     FormDataProduct={FormDataProduct}
                   />
                 </div>
-                <div className="col-2 btn-scan" onClick={handleScanBarCode}>
-                  {t("warranthForm.scanBarcode")}
+                <div className="col-4 pl-0" onClick={handleScanBarCode}>
+                  <div className="btn-scan">
+                    {t("warranthForm.scanBarcode")}
+                  </div>
                 </div>
               </div>
 

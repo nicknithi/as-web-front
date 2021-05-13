@@ -248,8 +248,11 @@ function FormWarranty({ Confirm }) {
       });
   };
   useEffect(() => {
-    // console.log("FormDataProduct", FormDataProduct);
+    console.log("FormDataProduct", FormDataProduct);
   }, [FormDataProduct]);
+  useEffect(() => {
+    console.log("FormDataWarranty", FormDataWarranty);
+  }, [FormDataWarranty]);
   useEffect(() => {
     // console.log("FileWaranty", FileWaranty);
   }, [FileWaranty]);
@@ -393,16 +396,18 @@ function FormWarranty({ Confirm }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     let dataFromLast = await FormDataProduct.map((item, index) => {
-      FormDataWarranty.Customer_Province = parseInt(
-        FormDataWarranty.Customer_Province
-      );
-      FormDataWarranty.Customer_District = parseInt(
-        FormDataWarranty.Customer_District
-      );
-      FormDataWarranty.Customer_SubDistrict = parseInt(
-        FormDataWarranty.Customer_SubDistrict
-      );
-      FormDataWarranty.Score = parseInt(FormDataWarranty.Score);
+      FormDataWarranty.Customer_Province = FormDataWarranty.Customer_Province
+        ? parseInt(FormDataWarranty.Customer_Province)
+        : null;
+      FormDataWarranty.Customer_District = FormDataWarranty.Customer_District
+        ? parseInt(FormDataWarranty.Customer_District)
+        : null;
+      FormDataWarranty.Customer_SubDistrict = FormDataWarranty.Customer_SubDistrict
+        ? parseInt(FormDataWarranty.Customer_SubDistrict)
+        : null;
+      FormDataWarranty.Score = FormDataWarranty.Score
+        ? parseInt(FormDataWarranty.Score)
+        : null;
       if (item.Store_Name_Other === null) {
         item.Store_Name_Other = "";
       }
@@ -595,12 +600,16 @@ function FormWarranty({ Confirm }) {
 
     const Datas = await Promise.all(
       LastDataComToConfirm.map(async (items, index) => {
-        items.Customer_Latitude = items.Customer_Latitude.toString();
-        items.Customer_Longtitude = items.Customer_Longtitude.toString();
+        items.Customer_Latitude = items.Customer_Latitude
+          ? items.Customer_Latitude.toString()
+          : "";
+        items.Customer_Longtitude = items.Customer_Longtitude
+          ? items.Customer_Longtitude.toString()
+          : "";
         return { ...items, Seq: seqFile[index] };
       })
     );
-    FormLastData.append("datas", Datas);
+    FormLastData.append("datas", JSON.stringify(Datas));
     console.log("Datas", Datas);
     await axios
       .post(
@@ -620,9 +629,9 @@ function FormWarranty({ Confirm }) {
           if (cookies.as_lang) {
             lang = cookies.as_lang === "TH" ? 1 : 2;
           }
-          // window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-          //   lang === 1 ? "หน้าแรก" : "home"
-          // }`;
+          window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+            lang === 1 ? "หน้าแรก" : "home"
+          }`;
         } else {
           alert("ไม่สำเร็จ กรุณาลองใหม่");
           setLoadingSendData(false);

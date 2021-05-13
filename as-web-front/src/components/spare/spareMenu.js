@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState, useRef } from "react";
 import Accordion from "react-bootstrap/Accordion";
@@ -24,6 +25,7 @@ import {
   GetManageProductSparePartByCode,
 } from "../../GetProduct";
 export default function SpareMenu() {
+  console.log("test", process.env.REACT_APP_DOMAIN_NAME);
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [DataMenu, setDataMenu] = useState([]);
   const [t, i18n] = useTranslation("common");
@@ -253,9 +255,10 @@ export default function SpareMenu() {
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;
       }
-      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-        lang === 1 ? "หน้าแรก" : "home"
-      }`;
+      // window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
+      //   lang === 1 ? "หน้าแรก" : "home"
+      // }`;
+      window.history.back();
     } else {
       window.location.reload(false);
     }

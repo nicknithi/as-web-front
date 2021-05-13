@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-no-target-blank */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 // import "../../assets/scss/Element/ElementPicture.scss";
 
@@ -48,9 +50,11 @@ export default function ElementPicture({ data, index }) {
           ) : (
             <a
               className="btn rounded-0"
-              onClick={() => {
-                nomalDownloadFile(data.path, data.name);
-              }}
+              href={`${process.env.REACT_APP_DOMAIN_NAME}/${data.path}`}
+              target="_blank"
+              // onClick={() => {
+              //   nomalDownloadFile(data.path, data.name);
+              // }}
             >
               download
             </a>

@@ -130,9 +130,9 @@ export default function Register({ data }) {
   });
 
   const typeMember = [
-    t("register.residential"),
-    t("register.contractor"),
     t("register.otherType"),
+    t("register.contractor"),
+    t("register.residential"),
   ];
   const subTypeMember = [
     t("register.subType1"),
@@ -347,8 +347,7 @@ export default function Register({ data }) {
     window.location = "/";
   };
   useEffect(() => {
-    //
-    "DataFromRegister", DataFromRegister;
+    // console.log("DataFromRegister", DataFromRegister);
   }, [DataFromRegister]);
   useEffect(() => {
     DataFromRegister.Customer_Contractor_Type = 0;

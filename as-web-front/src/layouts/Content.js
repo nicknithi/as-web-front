@@ -23,6 +23,7 @@ import Register from "../layouts/Register";
 import Warranty from "../layouts/Warranty";
 import Spare from "../layouts/Spare";
 import Installation from "../layouts/Installation";
+import ProfileHome from "../layouts/ProfileHome";
 import "../assets/scss/components/content.scss";
 import Maintain from "./Maintain";
 import { useTranslation } from "react-i18next";
@@ -80,8 +81,18 @@ export default function Content() {
 
     return (
       <div className={`content ${!data.line_status && "disable-underline"}`}>
-        {data.content_Title && <h1 className="">{data.content_Title}</h1>}
-        {data.content_Desc && <h3 className="">{data.content_Desc}</h3>}
+        {data.content_Title && (
+          <h1
+            className=""
+            dangerouslySetInnerHTML={{ __html: data.content_Title }}
+          />
+        )}
+        {data.content_Desc && (
+          <h3
+            className=""
+            dangerouslySetInnerHTML={{ __html: data.content_Desc }}
+          />
+        )}
         {data.content_body && (
           <div
             className="content-body"
@@ -268,7 +279,7 @@ export default function Content() {
     return <Maintain data={Content} RenderColumn={RenderColumn} />;
   } else if (
     customPath === "ศูนย์บริการ สาขา" ||
-    customPath === "Customer Care Center Branch"
+    customPath === "Customer Care Center Branches"
   ) {
     return (
       <>
@@ -315,7 +326,7 @@ export default function Content() {
     );
   } else if (
     customPath === "สิทธิประโยชน์ของสมาชิก" ||
-    customPath === "Benefit"
+    customPath === "Benefits"
   ) {
     return (
       <>
@@ -325,6 +336,22 @@ export default function Content() {
           RenderColumn={RenderColumn}
           getBannerContent={getBannerContent}
         />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
+    );
+  } else if (customPath === "profile" || customPath === "profile") {
+    return (
+      <>
+        <ProfileHome />
         <div className="container">
           <div className="row d-flex justify-content-center mb-5">
             <ButtonMain
