@@ -118,6 +118,19 @@ const GetManageProductSparePartByCode = async (code, lang) => {
   );
   return res.data.data;
 };
+const GetSearchProduct_SparepartList = async (keySearch) => {
+  const res = await http.post(`/api/Sparepart/GetSearchProduct_SparepartList`, {
+    PerPage: 0,
+    Page: 0,
+    Search: keySearch,
+    Order: {
+      Field: "",
+      Order: "",
+    },
+    ID: 0,
+  });
+  return res.data.data;
+};
 export {
   GetAllProductModelSpare,
   GetAllClassifiedTypeSpare,
@@ -132,4 +145,5 @@ export {
   GetManageProductInstallationById,
   GetManageProductInstallationByCode,
   GetManageProductSparePartByCode,
+  GetSearchProduct_SparepartList,
 };

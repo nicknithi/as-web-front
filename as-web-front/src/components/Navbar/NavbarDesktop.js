@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import "../../assets/scss/components/navbar.scss";
 import logo from "../../assets/img/Logo_300ppi.png";
-import InputSearch from "../Input/InputSearch";
+import InputSearchAll from "../Input/inputSearchAll";
 import NavbarDesktopMenu from "./NavbarDesktopMenu";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
@@ -118,7 +118,7 @@ export default function NavbarDesktop({ NavbarItem }) {
             <button className="btn-lang en mr-3" onClick={() => ChangToEng()}>
               EN
             </button>
-            <InputSearch placehoder={placeholderSearch} />
+            <InputSearchAll placehoder={placeholderSearch} />
           </div>
         </div>
         <hr className="navbar-hr my-0" />

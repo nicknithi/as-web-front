@@ -32,6 +32,7 @@ import Loading from "./components/Loading";
 import testpicture from "./layouts/testPicture";
 import TestRenderPdf from "./components/testRenderPdf";
 import { useTranslation } from "react-i18next";
+import { multiply } from "./Helper/getLang";
 export default function App(props) {
   const [t, i18n] = useTranslation("common");
   const [cookies, setCookie] = useCookies(["as_lang"]);
@@ -96,7 +97,10 @@ export default function App(props) {
           {/* <ExampleTest /> */}
           <TestRenderPdf />
         </Route>
-
+        <Route exact path="/:langContent/:customPath">
+          <Header />
+          <Content />
+        </Route>
         {/* <Route exact path="/">
           <Home />
         </Route>

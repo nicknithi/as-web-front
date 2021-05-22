@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+import { GetAllDataASCC } from "../../GetContent";
 import "../../assets/scss/components/input/input-search.scss";
-export default function InputSearch({ placehoder, handleSearch }) {
+export default function InputSearch({ placehoder }) {
   const [keySearch, setKeySearch] = useState("");
-  const clickSearch = () => {
-    handleSearch(keySearch);
+  const clickSearch = async () => {};
+
+  const handleSearch = async (keySearch) => {
+    const resSearch = await GetAllDataASCC(keySearch);
+    console.clear();
+    console.log(resSearch);
   };
   return (
     <div className="row no-gutters input-search input-group">
@@ -13,8 +18,7 @@ export default function InputSearch({ placehoder, handleSearch }) {
           className="input pl-2 w-100"
           placeholder={placehoder}
           onChange={(i) => {
-            console.log(i.target.value);
-            setKeySearch(i.target.value);
+            handleSearch(i.target.value);
           }}
         />
       </div>

@@ -29,7 +29,7 @@ import Maintain from "./Maintain";
 import { useTranslation } from "react-i18next";
 export default function Content() {
   const [t, i18n] = useTranslation("common");
-  let { customPath } = useParams();
+  let { customPath, langContent } = useParams();
   const [Content, setContent] = useState([]);
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [maintain, setMaintain] = useState(0);
@@ -48,6 +48,7 @@ export default function Content() {
       lang = cookies.as_lang;
     }
     let tempCustomPath = customPath;
+    lang = langContent.toUpperCase();
     if (
       tempCustomPath === "SpareListByModel" ||
       tempCustomPath === "SpareDetail"
@@ -55,12 +56,13 @@ export default function Content() {
       tempCustomPath = "อะไหล่";
     }
     const resMemu = await getMenuAll(lang);
+    console.log("resMemu:", resMemu);
     const dataUrl = resMemu.find(
       (m) =>
-        m.menu.toLowerCase().replace(/\s/g, "") ===
+        m.menu_link.toLowerCase().replace(/\s/g, "") ===
         tempCustomPath.toLowerCase().replace(/\s/g, "")
     );
-
+    console.log("dataUrl", dataUrl);
     if (dataUrl !== undefined) {
       setMaintain(dataUrl.id_menu);
       const resContent = await GetContent(dataUrl.id_main_menu, lang);

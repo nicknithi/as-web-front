@@ -23,6 +23,7 @@ import {
   GetDataProduct_InstallationByClassified1,
   GetDataProduct_InstallationByClassified2,
   GetManageProductInstallationByCode,
+  GetSearchProduct_SparepartList,
 } from "../../GetProduct";
 export default function InstallationMenu() {
   const [cookies, setCookie] = useCookies(["as_lang"]);
@@ -100,6 +101,29 @@ export default function InstallationMenu() {
       return "active";
     }
     return "";
+  };
+  const searchSpare = async (KeySearch) => {
+    setLoading(true);
+    setSpateDetail({});
+    setTitle("Search");
+    // setActiveClass1(id);
+    // setActiveClass2(0);
+    let res = await await GetSearchProduct_SparepartList(KeySearch);
+    let tempSearch = [...ContentRender];
+
+    tempSearch = res ? res : [];
+    tempSearch = tempSearch.map((item, index) => {
+      return {
+        ...item,
+        id: item.product_id,
+        title: item.product_name,
+        product_picture: item.product_picture,
+        product_old_code: item.product_old_code,
+        type: "classified1",
+      };
+    });
+    setContentRender(tempSearch);
+    setLoading(false);
   };
   const handleClickMenuModel = (id) => {
     setActiveModel(id);
@@ -300,7 +324,9 @@ export default function InstallationMenu() {
         <div className="col-md-10">
           <h2 className="p-0">{t("installation.title")}</h2>
         </div>
-        <div className="col-md-2">{/* <InputSearch /> */}</div>
+        <div className="col-md-2">
+          <InputSearch handleSearch={searchSpare} />
+        </div>
       </div>
       <div className="installation-container under-line mb-4 pb-4">
         <div className="row">

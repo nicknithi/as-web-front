@@ -7,4 +7,8 @@ const GetContent = async (id, lang) => {
   });
   return res.data.data;
 };
-export { GetContent };
+const GetAllDataASCC = async (search) => {
+  const res = await http.post(`/api/Master/GetAllDataASCC?Search=${search}`);
+  return res.data.data;
+};
+export { GetContent, GetAllDataASCC };

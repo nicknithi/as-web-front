@@ -156,7 +156,7 @@ export default function NavbarMobile({ NavbarItem }) {
                     <Card.Body>
                       {item.subMenu.map((item, index) => (
                         <div className="item-sub-menu card-header border-0">
-                          <a href={item.link}>{item.menu}</a>
+                          <a href={item.menu_link}>{item.menu}</a>
                         </div>
                       ))}
                     </Card.Body>
