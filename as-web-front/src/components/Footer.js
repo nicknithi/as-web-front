@@ -8,14 +8,15 @@ import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import Accordion from "react-bootstrap/Accordion";
 import Card from "react-bootstrap/Card";
-
+import { useParams } from "react-router-dom";
 export default function Footer() {
+  let { customPath, langContent } = useParams();
   function RendersubMenu(dataList) {
     return (
       <ul>
         {dataList.subMenu.map((item, index) => (
           <li>
-            <a href={item.link}>{item.menu}</a>
+            <a href={item.menu_link}>{item.menu}</a>
           </li>
         ))}
       </ul>
@@ -28,6 +29,7 @@ export default function Footer() {
     lang = cookies.as_lang;
   }
 
+  lang = langContent.toUpperCase();
   useEffect(async () => {
     let resMemu = await getMenuAll(lang);
     resMemu = resMemu.filter((e) => e.hide_Footer !== 0);
@@ -59,7 +61,7 @@ export default function Footer() {
               {item.subMenu.length > 0 ? (
                 <div>{item.menu}</div>
               ) : (
-                <a href={item.link}>{item.menu}</a>
+                <a href={item.menu_link}>{item.menu}</a>
               )}
 
               <div>{item.subMenu.length > 0 && RendersubMenu(item)}</div>
@@ -80,7 +82,7 @@ export default function Footer() {
                   </Accordion.Toggle>
                 ) : (
                   <div className="item-menu card-header">
-                    <a href={item.link}>{item.menu}</a>
+                    <a href={item.menu_link}>{item.menu}</a>
                   </div>
                 )}
 
@@ -89,7 +91,7 @@ export default function Footer() {
                     <Card.Body>
                       {item.subMenu.map((item, index) => (
                         <div className="item-sub-menu card-header border-0">
-                          <a href={item.link}>{item.menu}</a>
+                          <a href={item.menu_link}>{item.menu}</a>
                         </div>
                       ))}
                     </Card.Body>

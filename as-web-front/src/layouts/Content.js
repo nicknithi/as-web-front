@@ -31,7 +31,7 @@ export default function Content() {
   const [t, i18n] = useTranslation("common");
   let { customPath, langContent } = useParams();
   const [Content, setContent] = useState([]);
-  const [cookies, setCookie] = useCookies(["as_lang"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["as_lang"]);
   const [maintain, setMaintain] = useState(0);
   const columcOption = {
     0: "col-md-12",
@@ -40,6 +40,7 @@ export default function Content() {
     3: "col-md-4",
     4: "col-md-3",
     5: "col-md-2_5",
+    6: "col-md-2",
   };
   useEffect(async () => {
     let lang = "TH";
@@ -49,24 +50,26 @@ export default function Content() {
     }
     let tempCustomPath = customPath;
     lang = langContent.toUpperCase();
-    if (
-      tempCustomPath === "SpareListByModel" ||
-      tempCustomPath === "SpareDetail"
-    ) {
-      tempCustomPath = "อะไหล่";
+
+    //logout
+    if (tempCustomPath === "logout") {
+      document.cookie = `customerID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${process.env.REACT_APP_SUB_DIRECTORY};`;
+      window.location = `${
+        process.env.REACT_APP_SUB_DIRECTORY
+      }/${langContent}/${langContent === "th" ? "Home_TH" : "Home_EN"}`;
     }
     const resMemu = await getMenuAll(lang);
-    console.log("resMemu:", resMemu);
+    // console.log("resMemu:", resMemu);
     const dataUrl = resMemu.find(
       (m) =>
         m.menu_link.toLowerCase().replace(/\s/g, "") ===
         tempCustomPath.toLowerCase().replace(/\s/g, "")
     );
-    console.log("dataUrl", dataUrl);
+    // console.log("dataUrl", dataUrl);
     if (dataUrl !== undefined) {
       setMaintain(dataUrl.id_menu);
       const resContent = await GetContent(dataUrl.id_main_menu, lang);
-
+      console.log(resContent);
       setContent(resContent);
     } else {
       //window.location = "/";
@@ -109,7 +112,7 @@ export default function Content() {
     let dataRender = data.file;
     const col = data.content_col;
     const type = data.content_Type;
-
+    console.log("dataRender", dataRender);
     if (dataRender.length) {
       if (data.content_Type === 8) {
         const group = [];
@@ -136,11 +139,12 @@ export default function Content() {
       if (type === 2) {
         return (
           <div className="row no-gutters">
-            {dataRender.map((item, index) => (
+            {/* {dataRender.map((item, index) => (
               <React.Fragment key={item.id}>
                 {codition(item, index, col, type)}
               </React.Fragment>
-            ))}
+            ))} */}
+            {codition(dataRender, 0, col, type)}
           </div>
         );
       }
@@ -171,7 +175,7 @@ export default function Content() {
     } else if (type === 2) {
       return (
         <div className={`${columcOption[col]} p-0`}>
-          <ElementBanner img={data.path} />
+          <ElementBanner img={data} />
         </div>
       );
     } else if (type === 3) {
@@ -213,7 +217,7 @@ export default function Content() {
     }
     return "";
   };
-  if (customPath === "การรับประกัน" || customPath === "WARRANTY") {
+  if (customPath === "Warranty_TH" || customPath === "Warranty_EN") {
     return (
       <>
         <Warranty data={Content} RenderColumn={RenderColumn} />
@@ -229,19 +233,19 @@ export default function Content() {
         </div> */}
       </>
     );
-  } else if (customPath === "อะไหล่" || customPath === "SPARE PARTS") {
-    return <Spare data={Content} RenderColumn={RenderColumn} />;
-  } else if (customPath === "การติดตั้ง" || customPath === "INSTALLATION") {
-    return <Installation data={Content} RenderColumn={RenderColumn} />;
-  } else if (customPath === "SpareListByModel") {
-    return (
-      <SpareListByModel data={Content} getBannerContent={getBannerContent} />
-    );
-  } else if (customPath === "SpareDetail") {
-    return <SpareDetail data={Content} getBannerContent={getBannerContent} />;
   } else if (
-    customPath === "เข้าสู่ระบบสมาชิก" ||
-    customPath === "Membership Login"
+    customPath === "Spare Parts_EN" ||
+    customPath === "Spare Parts_TH"
+  ) {
+    return <Spare data={Content} RenderColumn={RenderColumn} />;
+  } else if (
+    customPath === "Installation_TH" ||
+    customPath === "Installation_EN"
+  ) {
+    return <Installation data={Content} RenderColumn={RenderColumn} />;
+  } else if (
+    customPath === "Membership Login_TH" ||
+    customPath === "Membership Login_EN"
   ) {
     return (
       <>
@@ -259,8 +263,8 @@ export default function Content() {
       </>
     );
   } else if (
-    customPath === "ลงทะเบียนสมัครสมาชิก" ||
-    customPath === "Membership Registration"
+    customPath === "Membership Registration_EN" ||
+    customPath === "Membership Registration_TH"
   ) {
     return (
       <>
@@ -280,8 +284,8 @@ export default function Content() {
   } else if (maintain === 20 || maintain === 38) {
     return <Maintain data={Content} RenderColumn={RenderColumn} />;
   } else if (
-    customPath === "ศูนย์บริการ สาขา" ||
-    customPath === "Customer Care Center Branches"
+    customPath === "Customer Care Center Branch_TH" ||
+    customPath === "Customer Care Center Branch_EN"
   ) {
     return (
       <>
@@ -304,8 +308,8 @@ export default function Content() {
       </>
     );
   } else if (
-    customPath === "การแก้ไขปัญหาผลิตภัณฑ์" ||
-    customPath === "Troubleshooting"
+    customPath === "Troubleshooting_EN" ||
+    customPath === "Troubleshooting_TH"
   ) {
     return (
       <>
@@ -326,10 +330,7 @@ export default function Content() {
         </div>
       </>
     );
-  } else if (
-    customPath === "สิทธิประโยชน์ของสมาชิก" ||
-    customPath === "Benefits"
-  ) {
+  } else if (customPath === "Benefit_EN" || customPath === "Benefit_TH") {
     return (
       <>
         <TapBenefit

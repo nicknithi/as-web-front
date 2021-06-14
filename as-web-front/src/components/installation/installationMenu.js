@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 import {
   GetManageProductSparePartById,
   GetManageProductInstallationById,
@@ -28,6 +29,7 @@ import {
 export default function InstallationMenu() {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
+  let { customPath, langContent } = useParams();
   const [DataMenu, setDataMenu] = useState([]);
   const [menuSpareRender, setMenuSpareRender] = useState([]);
   const [ContentRender, setContentRender] = useState([]);
@@ -46,7 +48,10 @@ export default function InstallationMenu() {
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    const resMenu = await GetAllMenuProduct_Installation(lang);
+    let resMenu = await GetAllMenuProduct_Installation(lang);
+    resMenu = resMenu.filter((item, index) => {
+      return item.installation_classified.length > 0;
+    });
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
     if (resMenu) {
@@ -108,17 +113,16 @@ export default function InstallationMenu() {
     setTitle("Search");
     // setActiveClass1(id);
     // setActiveClass2(0);
-    let res = await await GetSearchProduct_SparepartList(KeySearch);
+    let res = await GetSearchProduct_SparepartList(KeySearch);
     let tempSearch = [...ContentRender];
-
-    tempSearch = res ? res : [];
+    tempSearch = res.result_installation.length ? res.result_installation : [];
     tempSearch = tempSearch.map((item, index) => {
       return {
         ...item,
-        id: item.product_id,
-        title: item.product_name,
-        product_picture: item.product_picture,
-        product_old_code: item.product_old_code,
+        id: item.installation_product_id,
+        title: item.installation_product_name,
+        product_picture: item.installation_product_picture,
+        product_old_code: item.installation_product_old_code,
         type: "classified1",
       };
     });
@@ -433,14 +437,14 @@ export default function InstallationMenu() {
                           </label>
                         )}
                         <br />
-                        {SpateDetail.model && SpateDetail.model.label && (
+                        {/* {SpateDetail.model && SpateDetail.model.label && (
                           <label>
                             ชื่อรุ่น
                             <span className="ml-2">
                               {SpateDetail.model.label}
                             </span>
                           </label>
-                        )}
+                        )} */}
                         <div className="relate-menu">
                           {SpateDetail.installation_file.length > 0 && (
                             <button
@@ -452,7 +456,9 @@ export default function InstallationMenu() {
                           )}
                           {SpateDetail.have_sparepart !== 0 && (
                             <a
-                              href={`${process.env.REACT_APP_SUB_DIRECTORY}/${t(
+                              href={`${
+                                process.env.REACT_APP_SUB_DIRECTORY
+                              }/${langContent}/${t(
                                 "installation.linkToSpare"
                               )}?id=${SpateDetail.product_id}&code=${
                                 SpateDetail.installation_product_old_code

@@ -17,10 +17,6 @@ export default function CardInstallation({ data, handleClickCard }) {
         <div className="product-img">
           {data.product_picture && data.product_picture.length > 0 ? (
             <>
-              {console.log(
-                "urlimg",
-                `${process.env.REACT_APP_DOMAIN_NAME}/${data.product_picture[0].path}`
-              )}
               <img
                 ref={imgProduct}
                 src={`${process.env.REACT_APP_DOMAIN_NAME}/${data.product_picture[0].path}`}

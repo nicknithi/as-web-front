@@ -11,6 +11,7 @@ export default function CostWarrantyDetail({ data }) {
     3: "col-md-4",
     4: "col-md-3",
     5: "col-md-2_5",
+    6: "col-md-2",
   };
   useEffect(() => {
     const dataList = data.file;

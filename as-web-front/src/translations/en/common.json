@@ -19,7 +19,7 @@
     "rateHeight": "Very High"
   },
   "link": {
-    "serviceCenter": "/Customer Care Center Branches"
+    "serviceCenter": "/en/Customer Care Center Branch_EN"
   },
   "warranthForm": {
     "customerTitle": "Customer Information",
@@ -162,12 +162,12 @@
     "title": "How to install",
     "titleList": "How to install",
     "remark": "American Standard reserves the rights to change or withdraw without prior notice.",
-    "linkToSpare": "SPARE PARTS"
+    "linkToSpare": "Spare Parts_EN"
   },
   "spare": {
     "title": "Spare Parts",
     "titleList": "Spare Parts",
     "remark": "American Standard reserves the rights to change or withdraw without prior notice **price excludes VAT.",
-    "linkToInstall": "INSTALLATION"
+    "linkToInstall": "Installation_EN"
   }
 }

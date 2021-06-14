@@ -4,9 +4,11 @@ import ButtonMain from "../button/ButtonMain";
 import http from "../../axios";
 import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 export default function FromLogin() {
   const [t, i18n] = useTranslation("common");
   const [cookies, setCookie] = useCookies(["customerID"]);
+  let { customPath, langContent } = useParams();
   const handleLogin = async (e) => {
     e.preventDefault();
     const res = await http.post("/api/Login/CustomerLogin", DataLogin);
@@ -14,7 +16,7 @@ export default function FromLogin() {
       setCookie("customerID", res.data.data.customerID, {
         path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
       });
-      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/profile`;
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}/profile`;
     } else {
       alert("usename or password incorrect");
     }
@@ -56,13 +58,13 @@ export default function FromLogin() {
           </div>
           <div className="row">
             <div className="col-md-4 mx-auto text-right">
-              <label>
+              {/* <label>
                 <a
                   href={`${process.env.REACT_APP_SUB_DIRECTORY}forgotpassowrd`}
                 >
                   {t("Login.forget")}
                 </a>
-              </label>
+              </label> */}
             </div>
           </div>
           <div className="row">

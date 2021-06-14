@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { getMenuAll } from "../../GetDataMenu";
 import { useParams } from "react-router-dom";
 export default function NavbarMobile({ NavbarItem }) {
-  let { customPath } = useParams();
+  let { customPath, langContent } = useParams();
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
 
@@ -47,7 +47,7 @@ export default function NavbarMobile({ NavbarItem }) {
     const datamenuEN = await getMenuAll("EN");
     let tempMenuEN = datamenuEN.find(
       (m) =>
-        m.menu.toLowerCase().replace(/\s/g, "") ===
+        m.menu_link.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
 
@@ -62,7 +62,7 @@ export default function NavbarMobile({ NavbarItem }) {
         // });
         window.location = `${
           process.env.REACT_APP_SUB_DIRECTORY
-        }/${res.menu.trim()}`;
+        }/th/${res.menu_link.trim()}`;
         //window.location = "/";
       }
     }
@@ -77,7 +77,7 @@ export default function NavbarMobile({ NavbarItem }) {
     const datamenuEN = await getMenuAll("TH");
     let tempMenuEN = datamenuEN.find(
       (m) =>
-        m.menu.toLowerCase().replace(/\s/g, "") ===
+        m.menu_link.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
 
@@ -92,7 +92,7 @@ export default function NavbarMobile({ NavbarItem }) {
         // });
         window.location = `${
           process.env.REACT_APP_SUB_DIRECTORY
-        }/${res.menu.trim()}`;
+        }/en/${res.menu_link.trim()}`;
         //window.location = "/home";
       }
     }
@@ -113,8 +113,8 @@ export default function NavbarMobile({ NavbarItem }) {
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-      lang === 1 ? "หน้าแรก" : "home"
+    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}/${
+      lang === 1 ? "Home_TH" : "Home_EN"
     }`;
   };
   return (
@@ -147,7 +147,7 @@ export default function NavbarMobile({ NavbarItem }) {
                   </Accordion.Toggle>
                 ) : (
                   <div className="item-menu card-header">
-                    <a href={item.link}>{item.menu}</a>
+                    <a href={item.menu_link}>{item.menu}</a>
                   </div>
                 )}
 

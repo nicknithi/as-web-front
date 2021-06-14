@@ -17,6 +17,7 @@ import { useCookies } from "react-cookie";
 import { useTranslation } from "react-i18next";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   GetManageProductSparePartById,
   GetAllMenuProduct_Sparepart,
@@ -26,8 +27,8 @@ import {
   GetSearchProduct_SparepartList,
 } from "../../GetProduct";
 export default function SpareMenu() {
-  console.log("test", process.env.REACT_APP_DOMAIN_NAME);
   const [cookies, setCookie] = useCookies(["as_lang"]);
+  let { customPath, langContent } = useParams();
   const [DataMenu, setDataMenu] = useState([]);
   const [t, i18n] = useTranslation("common");
   const [menuSpareRender, setMenuSpareRender] = useState([]);
@@ -47,7 +48,10 @@ export default function SpareMenu() {
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    const resMenu = await GetAllMenuProduct_Sparepart(lang);
+    let resMenu = await GetAllMenuProduct_Sparepart(lang);
+    resMenu = resMenu.filter((item, index) => {
+      return item.classified.length > 0;
+    });
     setDataMenu(resMenu);
     let tempMenu = [...menuSpareRender];
     tempMenu = resMenu;
@@ -106,10 +110,9 @@ export default function SpareMenu() {
     setTitle("Search");
     // setActiveClass1(id);
     // setActiveClass2(0);
-    let res = await await GetSearchProduct_SparepartList(KeySearch);
+    let res = await GetSearchProduct_SparepartList(KeySearch);
     let tempSearch = [...ContentRender];
-
-    tempSearch = res ? res : [];
+    tempSearch = res.result_sparepart.length ? res.result_sparepart : [];
     tempSearch = tempSearch.map((item, index) => {
       return {
         ...item,
@@ -323,7 +326,7 @@ export default function SpareMenu() {
               <Accordion defaultActiveKey={0} className="w-100 mb-auto">
                 {menuSpareRender.map((item, index) => (
                   <Card>
-                    {item && (
+                    {item.classified.length > 0 && (
                       <>
                         <Accordion.Toggle
                           as={Card.Header}
@@ -428,11 +431,11 @@ export default function SpareMenu() {
                         <div className="relate-menu">
                           <a
                             className={`${isActive(1)} mr-3`}
-                            href={`${process.env.REACT_APP_SUB_DIRECTORY}/${t(
-                              "spare.linkToInstall"
-                            )}?id=${SpateDetail.id}&code=${
-                              SpateDetail.product_old_code
-                            }`}
+                            href={`${
+                              process.env.REACT_APP_SUB_DIRECTORY
+                            }/${langContent}/${t("spare.linkToInstall")}?id=${
+                              SpateDetail.id
+                            }&code=${SpateDetail.product_old_code}`}
                             // onClick={() => setActiveMenu(1)}
                           >
                             {t("Product.installation")}

@@ -2,9 +2,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from "react";
 // import "../../assets/scss/Element/ElementPicture.scss";
-
+import { useParams } from "react-router-dom";
 import { fileDownload, blob2canvas, nomalDownloadFile } from "../../ManageFIle";
 export default function ElementPicture({ data, index }) {
+  let { customPath, langContent } = useParams();
   const downloadPdf = async () => {
     if (data.path) {
       const res = await fileDownload(data.path);
@@ -27,7 +28,9 @@ export default function ElementPicture({ data, index }) {
         )}
       </div>
       {data.link && (
-        <a href={`${process.env.REACT_APP_SUB_DIRECTORY}${data.link}`} />
+        <a
+          href={`${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}${data.link}`}
+        />
       )}
       {data.description && (
         <div

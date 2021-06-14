@@ -7,7 +7,7 @@ export default function NavbarSubMenuDesktop(prop) {
         <NavbarSubMenuDesktopItem
           key={index}
           title={item.title}
-          link={item.link}
+          link={item.menu_link}
         />
       ))}
     </div>

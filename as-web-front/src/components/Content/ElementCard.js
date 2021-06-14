@@ -1,8 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-has-content */
 /* eslint-disable jsx-a11y/alt-text */
 import React from "react";
+import { useParams } from "react-router-dom";
 // import "../../assets/scss/Element/Card.scss";
 export default function ElementCard({ data }) {
+  let { customPath, langContent } = useParams();
   return (
     <div className="element-card mb-3">
       <div className="d-flex justify-content-center mb-4 card-img">
@@ -11,7 +13,9 @@ export default function ElementCard({ data }) {
         )}
       </div>
       {data.link && (
-        <a href={`${process.env.REACT_APP_SUB_DIRECTORY}${data.link}`} />
+        <a
+          href={`${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}${data.link}`}
+        />
       )}
       <div className="d-flex justify-content-between">
         {data.description && (

@@ -8,6 +8,7 @@ import FormComfirm from "../Warranty/FormComfirm";
 import AddressSetting from "../../components/Warranty/AddressSetting";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 import LoadingContentOverlay from "../LoadingContentOverlay";
 import {
   getProvince,
@@ -35,7 +36,7 @@ function FormWarranty({ Confirm }) {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [LastDataComToConfirm, setLastDataComToConfirm] = useState([]);
-
+  let { customPath, langContent } = useParams();
   const [storeData, setStoreData] = useState([
     [{ id: "", value: t("warranthForm.selectStore") }],
   ]);
@@ -248,10 +249,10 @@ function FormWarranty({ Confirm }) {
       });
   };
   useEffect(() => {
-    console.log("FormDataProduct", FormDataProduct);
+    // console.log("FormDataProduct", FormDataProduct);
   }, [FormDataProduct]);
   useEffect(() => {
-    console.log("FormDataWarranty", FormDataWarranty);
+    // console.log("FormDataWarranty", FormDataWarranty);
   }, [FormDataWarranty]);
   useEffect(() => {
     // console.log("FileWaranty", FileWaranty);
@@ -402,9 +403,10 @@ function FormWarranty({ Confirm }) {
       FormDataWarranty.Customer_District = FormDataWarranty.Customer_District
         ? parseInt(FormDataWarranty.Customer_District)
         : null;
-      FormDataWarranty.Customer_SubDistrict = FormDataWarranty.Customer_SubDistrict
-        ? parseInt(FormDataWarranty.Customer_SubDistrict)
-        : null;
+      FormDataWarranty.Customer_SubDistrict =
+        FormDataWarranty.Customer_SubDistrict
+          ? parseInt(FormDataWarranty.Customer_SubDistrict)
+          : null;
       FormDataWarranty.Score = FormDataWarranty.Score
         ? parseInt(FormDataWarranty.Score)
         : null;
@@ -610,7 +612,7 @@ function FormWarranty({ Confirm }) {
       })
     );
     FormLastData.append("datas", JSON.stringify(Datas));
-    console.log("Datas", Datas);
+    // console.log("Datas", Datas);
     await axios
       .post(
         `${process.env.REACT_APP_API_ENVPOINT}/api/Warranty/AddDataWarranty`,
@@ -629,9 +631,9 @@ function FormWarranty({ Confirm }) {
           if (cookies.as_lang) {
             lang = cookies.as_lang === "TH" ? 1 : 2;
           }
-          window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-            lang === 1 ? "หน้าแรก" : "home"
-          }`;
+          window.location = `${
+            process.env.REACT_APP_SUB_DIRECTORY
+          }/${langContent}/${lang === 1 ? "Home_TH" : "Home_EN"}`;
         } else {
           alert("ไม่สำเร็จ กรุณาลองใหม่");
           setLoadingSendData(false);

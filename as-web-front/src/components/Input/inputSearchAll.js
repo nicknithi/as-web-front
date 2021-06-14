@@ -8,7 +8,6 @@ export default function InputSearch({ placehoder }) {
   const handleSearch = async (keySearch) => {
     const resSearch = await GetAllDataASCC(keySearch);
     console.clear();
-    console.log(resSearch);
   };
   return (
     <div className="row no-gutters input-search input-group">

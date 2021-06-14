@@ -5,9 +5,15 @@ export default function Banner({ img }) {
   return (
     <div className="element-banner pb-4">
       <Carousel>
-        <Carousel.Item>
-          <img className="d-block w-100" src={img} />
-        </Carousel.Item>
+        {img.map((item, index) => (
+          <Carousel.Item>
+            <img
+              className="d-block w-100"
+              src={`${process.env.REACT_APP_DOMAIN_NAME}/${item.path}`}
+              key={index}
+            />
+          </Carousel.Item>
+        ))}
       </Carousel>
     </div>
   );

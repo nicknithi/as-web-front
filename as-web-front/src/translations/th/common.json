@@ -19,7 +19,7 @@
     "rateHeight": "มากสุด"
   },
   "link": {
-    "serviceCenter": "/ศูนย์บริการ สาขา"
+    "serviceCenter": "/th/Customer Care Center Branch_TH"
   },
   "warranthForm": {
     "customerTitle": "ข้อมูลลูกค้า",
@@ -162,12 +162,12 @@
     "title": "วิธีการติดตั้ง",
     "titleList": "วิธีการติดตั้ง",
     "remark": "บริษัทฯ ขอสงวนสิทธิ์ในการเปลี่ยนแปลงใดๆ โดยไม่แจ้งให้ทราบล่วงหน้า",
-    "linkToSpare": "อะไหล่"
+    "linkToSpare": "Spare Parts_TH"
   },
   "spare": {
     "title": "อะไหล่",
     "titleList": "รายการอะไหล่",
     "remark": "บริษัทฯ ขอสงวนสิทธิ์ในการเปลี่ยนแปลงใดๆ โดยไม่แจ้งให้ทราบล่วงหน้า **ราคาไม่รวมภาษีมูลค่าเพิ่ม",
-    "linkToInstall": "การติดตั้ง"
+    "linkToInstall": "Installation_TH"
   }
 }

@@ -13,6 +13,7 @@ import http from "../axios";
 import { GetAllDataCareCenter } from "../GetDataDropDown";
 import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import WarrantyConfirm from "../components/Warranty/WarrantyConfirm";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -24,7 +25,7 @@ export default function Register({ data }) {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
   const [ImgBanner, setImgBanner] = useState("");
-
+  let { customPath, langContent } = useParams();
   const [loadingSendData, setLoadingSendData] = useState(false);
 
   //set Data Before form
@@ -338,9 +339,9 @@ export default function Register({ data }) {
       if (cookies.as_lang) {
         lang = cookies.as_lang === "TH" ? 1 : 2;
       }
-      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-        lang === 1 ? "หน้าแรก" : "home"
-      }`;
+      window.location = `${
+        process.env.REACT_APP_SUB_DIRECTORY
+      }/${langContent}/${lang === 1 ? "Home_TH" : "Home_EN"}`;
     }
   };
   const goBlack = () => {

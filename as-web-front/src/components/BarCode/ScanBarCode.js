@@ -22,7 +22,6 @@ function ScanBarCode({
       Product_Barcode: code,
     });
     const dataScanFetch = res.data.data;
-    console.log("dataScanFetch", dataScanFetch);
     if (res.data.message === "Success!") {
       handleEvent(
         dataScanFetch.id,

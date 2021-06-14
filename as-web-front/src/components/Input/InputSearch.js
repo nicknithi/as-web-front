@@ -7,18 +7,22 @@ export default function InputSearch({ placehoder, handleSearch }) {
   };
   return (
     <div className="row no-gutters input-search input-group">
-      <div className="col-md-10">
+      <div className="col-10">
         <input
           type="text"
           className="input pl-2 w-100"
           placeholder={placehoder}
           onChange={(i) => {
-            console.log(i.target.value);
             setKeySearch(i.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              clickSearch();
+            }
           }}
         />
       </div>
-      <div className="col-md-2">
+      <div className="col-2">
         <button
           type="button"
           className="button"

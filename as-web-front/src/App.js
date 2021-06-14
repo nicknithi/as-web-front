@@ -32,47 +32,38 @@ import Loading from "./components/Loading";
 import testpicture from "./layouts/testPicture";
 import TestRenderPdf from "./components/testRenderPdf";
 import { useTranslation } from "react-i18next";
-import { multiply } from "./Helper/getLang";
 export default function App(props) {
   const [t, i18n] = useTranslation("common");
   const [cookies, setCookie] = useCookies(["as_lang"]);
-  const pathWithOutDomain = window.location.href.split("/").reverse()[0];
 
   if (!cookies.as_lang) {
     setCookie("as_lang", "TH", {
       path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
     });
-    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/หน้าแรก`;
+    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/th/Home_TH`;
   }
+  if (window.location.pathname.split("/").length > 3) {
+    var pathname = window.location.pathname.split("/")[3].toUpperCase();
+    if (pathname === "th" || pathname === "en") {
+      setCookie("as_lang", pathname, {
+        path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
+      });
+    } else {
+      // window.location = `${
+      //   process.env.REACT_APP_SUB_DIRECTORY
+      // }/${cookies.as_lang.toLowerCase()}/Home_${cookies.as_lang}`;
+    }
+  } else {
+    window.location = `${
+      process.env.REACT_APP_SUB_DIRECTORY
+    }/${cookies.as_lang.toLowerCase()}/Home_${cookies.as_lang}`;
+  }
+
   let lang = 1;
   if (cookies.as_lang) {
     lang = cookies.as_lang === "TH" ? 1 : 2;
   }
-  if (cookies.as_lang) {
-    if (cookies.as_lang === "TH") {
-      i18n.changeLanguage("th");
-      document.body.style.fontFamily = "psl_kittithadaspbold,sans-serif";
-      // document.body.style.fontFamily = "psl_kittithadaregular,sans-serif";
-      // document.body.style.setProperty("font-size", "24px", "important");
-      // document.body.style.setProperty("font-weight", "bold", "important");
-      // let h1Elements = document.getElementsByTagName("h1");
-      // for (let i = 0; i < h1Elements.length; i++) {
-      //   h1Elements[i].classList.add("eng");
-      // }
-    } else {
-      i18n.changeLanguage("en");
-      document.body.style.fontFamily =
-        "helvetica_neueregular,psl_kittithadaspbold,sans-serif";
-      // document.body.style.fontFamily = "helvetica_neueregular,sans-serif";
-      // document.body.style.setProperty("font-size", "14px", "important");
-      // document.body.style.setProperty("font-weight", "normal", "important");
-      // document.body.style.setProperty("line-height", "1.8", "important");
 
-      // document
-      //   .querySelector(".as-footer")
-      //   .style.setProperty("font-weight", "normal", "important");
-    }
-  }
   useEffect(() => {
     if (!cookies.as_lang) {
       setCookie("as_lang", "TH", {
@@ -100,6 +91,7 @@ export default function App(props) {
         <Route exact path="/:langContent/:customPath">
           <Header />
           <Content />
+          <Footer />
         </Route>
         {/* <Route exact path="/">
           <Home />
@@ -155,13 +147,17 @@ export default function App(props) {
         <Route exact path="/:customPath">
           <Header />
           <Content />
+          <Footer />
         </Route>
         <Route exact path="/">
           <Header />
-          <Redirect exact from="/" to={lang === 1 ? "/หน้าแรก" : "/home"} />
+          <Redirect
+            exact
+            from="/"
+            to={lang === 1 ? "/th/Home_TH" : "/en/Home_EN"}
+          />
         </Route>
       </BrowserRouter>
-      <Footer />
     </div>
   );
 }

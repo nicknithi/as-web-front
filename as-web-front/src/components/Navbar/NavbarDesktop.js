@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { getMenuAll } from "../../GetDataMenu";
 import { useParams } from "react-router-dom";
 export default function NavbarDesktop({ NavbarItem }) {
-  let { customPath } = useParams();
+  let { customPath, langContent } = useParams();
   const [cookies, setCookie] = useCookies(["as_lang"]);
 
   // let lang = "TH";
@@ -41,7 +41,7 @@ export default function NavbarDesktop({ NavbarItem }) {
     const datamenuEN = await getMenuAll("EN");
     let tempMenuEN = datamenuEN.find(
       (m) =>
-        m.menu.toLowerCase().replace(/\s/g, "") ===
+        m.menu_link.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
 
@@ -56,9 +56,11 @@ export default function NavbarDesktop({ NavbarItem }) {
         // });
         window.location = `${
           process.env.REACT_APP_SUB_DIRECTORY
-        }/${res.menu.trim()}`;
+        }/th/${res.menu_link.trim()}`;
         //window.location = "/";
       }
+    } else {
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/th/${customPath}`;
     }
     // setCookie("as_lang", "TH");
     // window.location = "หน้าแรก";
@@ -71,7 +73,7 @@ export default function NavbarDesktop({ NavbarItem }) {
     const datamenuEN = await getMenuAll("TH");
     let tempMenuEN = datamenuEN.find(
       (m) =>
-        m.menu.toLowerCase().replace(/\s/g, "") ===
+        m.menu_link.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
 
@@ -86,9 +88,11 @@ export default function NavbarDesktop({ NavbarItem }) {
         // });
         window.location = `${
           process.env.REACT_APP_SUB_DIRECTORY
-        }/${res.menu.trim()}`;
+        }/en/${res.menu_link.trim()}`;
         //window.location = "/home";
       }
+    } else {
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/en/${customPath}`;
     }
     // setCookie("as_lang", "EN");
     // window.location = "home";
@@ -99,8 +103,8 @@ export default function NavbarDesktop({ NavbarItem }) {
     if (cookies.as_lang) {
       lang = cookies.as_lang === "TH" ? 1 : 2;
     }
-    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${
-      lang === 1 ? "หน้าแรก" : "home"
+    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}/${
+      lang === 1 ? "Home_TH" : "Home_EN"
     }`;
   };
   return (
@@ -118,7 +122,7 @@ export default function NavbarDesktop({ NavbarItem }) {
             <button className="btn-lang en mr-3" onClick={() => ChangToEng()}>
               EN
             </button>
-            <InputSearchAll placehoder={placeholderSearch} />
+            {/* <InputSearchAll placehoder={placeholderSearch} /> */}
           </div>
         </div>
         <hr className="navbar-hr my-0" />
