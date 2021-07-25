@@ -3,11 +3,13 @@ import FromLogin from "../components/Login/FromLogin";
 import ElementBanner from "../../src/components/Content/ElementBanner";
 
 export default function Login({ data }) {
-  const [ImgBanner, setImgBanner] = useState("");
+  const [ImgBanner, setImgBanner] = useState([]);
   useEffect(() => {
     const banner = data.find((b) => b.content_Type === 2);
     if (banner !== undefined) {
-      setImgBanner(banner.image);
+      setImgBanner(banner.file);
+    } else {
+      setImgBanner([]);
     }
   }, [data]);
   return (

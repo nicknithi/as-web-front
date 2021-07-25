@@ -58,13 +58,13 @@ export default function FromLogin() {
           </div>
           <div className="row">
             <div className="col-md-4 mx-auto text-right">
-              {/* <label>
+              <label>
                 <a
-                  href={`${process.env.REACT_APP_SUB_DIRECTORY}forgotpassowrd`}
+                  href={`${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}/forgotpassowrd`}
                 >
                   {t("Login.forget")}
                 </a>
-              </label> */}
+              </label>
             </div>
           </div>
           <div className="row">

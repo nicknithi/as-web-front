@@ -127,6 +127,14 @@ const GetProductTop20ByName = async (lang, id, type) => {
   });
   return res;
 };
+const SaveRequestCustomerRenew = async (ID, type, center) => {
+  const res = await http.post("/api/CustomerRenew/SaveRequestCustomerRenew", {
+    Customer_ID: ID,
+    Renew_Type: type,
+    Renew_Center: center,
+  });
+  return res;
+};
 export {
   getProductType,
   getStoreByProvinceData,
@@ -141,4 +149,5 @@ export {
   GetProductTop20ByBarcode,
   GetProductTop20ByCode,
   GetProductTop20ByName,
+  SaveRequestCustomerRenew,
 };

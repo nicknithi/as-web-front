@@ -40,7 +40,7 @@ export default function App(props) {
     setCookie("as_lang", "TH", {
       path: `${process.env.REACT_APP_SUB_DIRECTORY}`,
     });
-    window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/th/Home_TH`;
+    // window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/th/Home_TH`;
   }
   if (window.location.pathname.split("/").length > 3) {
     var pathname = window.location.pathname.split("/")[3].toUpperCase();
@@ -54,9 +54,11 @@ export default function App(props) {
       // }/${cookies.as_lang.toLowerCase()}/Home_${cookies.as_lang}`;
     }
   } else {
-    window.location = `${
-      process.env.REACT_APP_SUB_DIRECTORY
-    }/${cookies.as_lang.toLowerCase()}/Home_${cookies.as_lang}`;
+    if (cookies.as_lang) {
+      window.location = `${
+        process.env.REACT_APP_SUB_DIRECTORY
+      }/${cookies.as_lang.toLowerCase()}/Home_${cookies.as_lang}`;
+    }
   }
 
   let lang = 1;
@@ -144,11 +146,11 @@ export default function App(props) {
         {/* <Route exact path="/maintain">
           <Maintain />
         </Route>  */}
-        <Route exact path="/:customPath">
+        {/* <Route exact path="/:customPath">
           <Header />
           <Content />
           <Footer />
-        </Route>
+        </Route> */}
         <Route exact path="/">
           <Header />
           <Redirect

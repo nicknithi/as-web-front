@@ -6,7 +6,7 @@ export default function Forgotpassowrd() {
   return (
     <div>
       <BannerLogin />
-      <div className="site-content">
+      <div className="container">
         <FormForgotLogin />
       </div>
     </div>

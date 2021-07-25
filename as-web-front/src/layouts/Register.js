@@ -24,7 +24,7 @@ import LoadingContentOverlay from "../components/LoadingContentOverlay";
 export default function Register({ data }) {
   const [cookies, setCookie] = useCookies(["as_lang"]);
   const [t, i18n] = useTranslation("common");
-  const [ImgBanner, setImgBanner] = useState("");
+  const [ImgBanner, setImgBanner] = useState([]);
   let { customPath, langContent } = useParams();
   const [loadingSendData, setLoadingSendData] = useState(false);
 
@@ -66,7 +66,7 @@ export default function Register({ data }) {
   useEffect(() => {
     const banner = data.find((b) => b.content_Type === 2);
     if (banner !== undefined) {
-      setImgBanner(banner.image);
+      setImgBanner(banner.file);
     }
   }, [data]);
 

@@ -1,5 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import "../assets/scss/register.scss";
+import { useTranslation } from "react-i18next";
 import DropdownProvince from "../components/Register/DropdownProvinceEdit";
 import DropdownDistrict from "../components/Register/DropdownDistrictEdit";
 import DropdownSubDistrict from "../components/Register/DropdownSubDistrictEdit";
@@ -8,6 +10,8 @@ import ButtonMain from "../components/button/ButtonMain";
 import "../assets/scss/components/input/radio.scss";
 import { useCookies } from "react-cookie";
 import http from "../axios";
+import { useParams } from "react-router-dom";
+
 import {
   getCustomerById,
   GetProvinceData,
@@ -15,25 +19,42 @@ import {
   GetSubDistrictData,
 } from "../GetDataDropDown";
 export default function EditProfile() {
+  const [t, i18n] = useTranslation("common");
   const [cookies, setCookie] = useCookies(["customerID"]);
-
+  let { customPath, langContent } = useParams();
+  let lang = 1;
+  if (cookies.as_lang) {
+    lang = cookies.as_lang === "TH" ? 1 : 2;
+  }
   const [DataCustomer, setDataCustomer] = useState({});
   const [LagLong, setLagLong] = useState({ lat: 13.7563, lng: 100.5018 });
-  const [Province, setProvince] = useState([{ id: "", value: "กรุณาเลือก" }]);
+  const [Province, setProvince] = useState([
+    { id: "", value: t("register.selectProvince") },
+  ]);
   const [District, setDistrict] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+    { id: "", value: t("register.selectDistrict"), fK_Province_ID: "" },
   ]);
   const [SubDistrict, setSubDistrict] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+    {
+      id: "",
+      value: t("register.selectSubDistrict"),
+      fK_Province_ID: "",
+      fK_District_ID: "",
+    },
   ]);
   // const [ProvinceDN, setProvinceDN] = useState([
   //   { id: "", value: "กรุณาเลือก" },
   // ]);
   const [DistrictDN, setDistrictDN] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "" },
+    { id: "", value: t("register.selectDistrict"), fK_Province_ID: "" },
   ]);
   const [SubDistrictDN, setSubDistrictDN] = useState([
-    { id: "", value: "กรุณาเลือก", fK_Province_ID: "", fK_District_ID: "" },
+    {
+      id: "",
+      value: t("register.selectSubDistrict"),
+      fK_Province_ID: "",
+      fK_District_ID: "",
+    },
   ]);
   const [DataFromRegister, setDataFromRegister] = useState({
     id: null,
@@ -69,16 +90,16 @@ export default function EditProfile() {
     }
 
     //get Province
-    const resProvince = await GetProvinceData();
+    const resProvince = await GetProvinceData(lang);
     setProvince([...Province, ...resProvince]);
 
     //get District
-    const DistrictSet = await GetDistrictData();
+    const DistrictSet = await GetDistrictData(lang);
     setDistrictDN([...District, ...DistrictSet]);
     setDistrict([...District, ...DistrictSet]);
 
     //get subDistrict
-    const subDistrictSet = await GetSubDistrictData();
+    const subDistrictSet = await GetSubDistrictData(lang);
     setSubDistrictDN([...SubDistrict, ...subDistrictSet]);
     setSubDistrict([...SubDistrict, ...subDistrictSet]);
 
@@ -100,7 +121,10 @@ export default function EditProfile() {
         (p) => p.fK_Province_ID === parseInt(e.target.value)
       );
       if (newSet.length) {
-        setDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+        setDistrict([
+          { id: "", value: t("register.selectDistrict") },
+          ...newSet,
+        ]);
       }
     }
   };
@@ -116,7 +140,10 @@ export default function EditProfile() {
           p.fK_District_ID === parseInt(e.target.value)
       );
       if (newSet.length) {
-        setSubDistrict([{ id: "", value: "กรุณาเลือก" }, ...newSet]);
+        setSubDistrict([
+          { id: "", value: t("register.selectSubDistrict") },
+          ...newSet,
+        ]);
       }
     }
   };
@@ -162,7 +189,7 @@ export default function EditProfile() {
       Customer_Company: DataFromRegister.customer_Company,
     });
     if (res.data.message === "Success!") {
-      window.location = "/home";
+      window.location = `${process.env.REACT_APP_SUB_DIRECTORY}/${langContent}/profile`;
     }
   };
   const goBlack = () => {
@@ -173,12 +200,12 @@ export default function EditProfile() {
     <div>
       <form onSubmit={submit}>
         <div className="container register pb-3 mb-3">
-          <h1 className=" mb-3 mt-3">แก้ไขข้อมูลส่วนตัว</h1>
+          <h1 className=" mb-3 mt-3">{t("formEdit.title")}</h1>
 
           <div className="register-container">
             <div className="row">
               <div className="col-md-6">
-                <label className="">ชื่อ*</label>
+                <label className="">{t("formEdit.name")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -193,7 +220,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="">นามสกุล*</label>
+                <label className="">{t("formEdit.surname")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -210,7 +237,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <label className="">ชื่อบริษัท</label>
+                <label className="">{t("formEdit.office")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -226,7 +253,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="">เบอร์โทรศัพท์</label>
+                <label className="">{t("formEdit.tel")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -240,7 +267,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="">มือถือ*</label>
+                <label className="">{t("formEdit.phone")}*</label>
                 <input
                   type="text"
                   className="as-input"
@@ -257,9 +284,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-12">
-                <label className="">
-                  อีเมล (โปรดระบุเพื่อให้ระบบส่งข้อความยืนยันการลงทะเบียน)
-                </label>
+                <label className="">{t("formEdit.email")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -274,13 +299,11 @@ export default function EditProfile() {
               </div>
             </div>
           </div>
-          <h3 className="mb-3 mt-3">ที่อยู่การติดตั้ง</h3>
+          <h3 className="mb-3 mt-3">{t("formEdit.titleAddress")}</h3>
           <div className="address-container">
             <div className="row">
               <div className="col-md-12">
-                <label className="">
-                  ที่อยู่ที่ติดตั้งสินค้า* (ไม่สามารถเปลี่ยนแปลงได้)
-                </label>
+                <label className="">{t("formEdit.address")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -298,7 +321,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="">จังหวัด*</label>
+                <label className="">{t("formEdit.province")}</label>
                 <DropdownProvince
                   handleEvent={getProvinceDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -307,7 +330,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="">อำเภอเขต*</label>
+                <label className="">{t("formEdit.district")}</label>
                 <DropdownDistrict
                   handleEvent={getDistrictDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -318,7 +341,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6 mt-3">
-                <label className="">ตำบล/เขต*</label>
+                <label className="">{t("formEdit.subDistrict")}</label>
                 <DropdownSubDistrict
                   handleEvent={getSubDistrictDropDown}
                   setDataFromRegister={setDataFromRegister}
@@ -327,7 +350,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6 mt-3">
-                <label className="">รหัสไปรษณีย์*</label>
+                <label className="">{t("formEdit.zipCode")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -345,7 +368,7 @@ export default function EditProfile() {
             </div>
             <div className="row">
               <div className="col-md-6">
-                <label className="">ศูนย์บริการสาขา</label>
+                <label className="">{t("formEdit.serviceCenter")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -361,7 +384,7 @@ export default function EditProfile() {
             </div>
 
             <div>
-              <label className="mt-3">แผนที่ (โปรดระบุ)</label>
+              <label className="mt-3">{t("formEdit.map")}</label>
               <GoogleMap
                 DataFromRegister={DataFromRegister}
                 setDataFromRegister={setDataFromRegister}
@@ -372,7 +395,7 @@ export default function EditProfile() {
           <div className="login-container mt-5">
             <div className="row">
               <div className="col-md-6">
-                <label className="">ชื่อล็อกอิน</label>
+                <label className="">{t("formEdit.username")}</label>
                 <input
                   type="text"
                   className="as-input"
@@ -386,7 +409,7 @@ export default function EditProfile() {
                 />
               </div>
               <div className="col-md-6">
-                <label className="">รหัสผ่าน</label>
+                <label className="">{t("formEdit.password")}</label>
                 <input
                   type="text"
                   className="as-input"

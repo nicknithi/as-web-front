@@ -17,6 +17,8 @@ import SpareListByModel from "../layouts/SpareListByModel";
 import SpareDetail from "../layouts/SpareDetail";
 import TabContent from "../layouts/TabContent";
 import TapBenefit from "../layouts/TapBenefit";
+import EditProfile from "../layouts/EditProfile";
+import Forgotpassowrd from "../layouts/Forgotpassowrd";
 import ButtonMain from "../components/button/ButtonMain";
 import Login from "../layouts/Login";
 import Register from "../layouts/Register";
@@ -69,7 +71,7 @@ export default function Content() {
     if (dataUrl !== undefined) {
       setMaintain(dataUrl.id_menu);
       const resContent = await GetContent(dataUrl.id_main_menu, lang);
-      console.log(resContent);
+      console.log("resContent", resContent);
       setContent(resContent);
     } else {
       //window.location = "/";
@@ -137,6 +139,7 @@ export default function Content() {
         );
       }
       if (type === 2) {
+        console.log("this is type 2");
         return (
           <div className="row no-gutters">
             {/* {dataRender.map((item, index) => (
@@ -212,10 +215,12 @@ export default function Content() {
   };
   const getBannerContent = (data) => {
     const banner = data.find((b) => b.content_Type === 2);
+    console.log("banner", banner);
     if (banner !== undefined) {
-      return banner.image;
+      // return banner.image;
+      return banner.file;
     }
-    return "";
+    return [];
   };
   if (customPath === "Warranty_TH" || customPath === "Warranty_EN") {
     return (
@@ -355,6 +360,38 @@ export default function Content() {
     return (
       <>
         <ProfileHome />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
+    );
+  } else if (customPath === "edit-profile" || customPath === "edit-profile") {
+    return (
+      <>
+        <EditProfile />
+        <div className="container">
+          <div className="row d-flex justify-content-center mb-5">
+            <ButtonMain
+              title={t("website.btnBack")}
+              color="#636363"
+              BgColor="#f1c400"
+              handleClick={() => goBack()}
+            />
+          </div>
+        </div>
+      </>
+    );
+  } else if (customPath === "forgotpassowrd") {
+    return (
+      <>
+        <Forgotpassowrd />
         <div className="container">
           <div className="row d-flex justify-content-center mb-5">
             <ButtonMain

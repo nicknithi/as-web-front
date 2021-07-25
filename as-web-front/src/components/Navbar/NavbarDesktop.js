@@ -44,7 +44,6 @@ export default function NavbarDesktop({ NavbarItem }) {
         m.menu_link.toLowerCase().replace(/\s/g, "") ===
         customPath.toLowerCase().replace(/\s/g, "")
     );
-
     if (tempMenuEN && Object.keys(tempMenuEN).length) {
       const datamenuTH = await getMenuAll("TH");
       if (datamenuTH && datamenuTH.length) {
@@ -115,7 +114,14 @@ export default function NavbarDesktop({ NavbarItem }) {
             <img className="img-fluid" src={logo} />
           </a>
           <div className="right-content ml-auto d-flex align-items-center">
-            <span className="mr-3 official-website">{t("website.navbar")}</span>
+            <span className="mr-3 official-website">
+              <a
+                href="https://www.americanstandard.co.th"
+                style={{ color: "#6e717f" }}
+              >
+                {t("website.navbar")}
+              </a>
+            </span>
             <button className="btn-lang th mr-3" onClick={() => ChangToThai()}>
               TH
             </button>
