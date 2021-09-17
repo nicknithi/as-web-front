@@ -205,6 +205,9 @@ export default function ProductData({
   const handleScanBarCode = () => {
     setTriggleBarcode(true);
   };
+  useEffect(() => {
+    console.log(FormDataProduct);
+  }, [FormDataProduct]);
   return (
     <div>
       <div className="mt-3">
@@ -235,6 +238,7 @@ export default function ProductData({
               />
               <div className="row px-3 data-picker">
                 <DatePicker
+                  dateFormat="dd/MM/yyyy"
                   disabled={!Confirm}
                   selected={FormDataProduct[index].Purchase_Date}
                   onChange={(date) => handleSetDateTime(date, index)}

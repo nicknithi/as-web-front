@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-export default function FormRate({ handleChangInput, Confirm, title }) {
+export default function FormRate({
+  handleChangInput,
+  Confirm,
+  title,
+  setDataComment,
+  DataComment,
+}) {
   const [t, i18n] = useTranslation("common");
   const handleRate = (rate) => {
     document.getElementById("Score").value = rate;
@@ -29,35 +35,65 @@ export default function FormRate({ handleChangInput, Confirm, title }) {
             <div
               style={{ backgroundColor: "red", color: "white" }}
               className={`emotion ${IsActive(1)}`}
-              onClick={() => handleRate(1)}
+              onClick={() => {
+                setActive(1);
+                setDataComment({
+                  ...DataComment,
+                  Score: 1,
+                });
+              }}
             >
               1
             </div>
             <div
               style={{ backgroundColor: "#ffbc00", color: "white" }}
               className={`emotion ${IsActive(2)}`}
-              onClick={() => handleRate(2)}
+              onClick={() => {
+                setActive(2);
+                setDataComment({
+                  ...DataComment,
+                  Score: 2,
+                });
+              }}
             >
               2
             </div>
             <div
               style={{ backgroundColor: "yellow", color: "white" }}
               className={`emotion ${IsActive(3)}`}
-              onClick={() => handleRate(3)}
+              onClick={() => {
+                setActive(3);
+                setDataComment({
+                  ...DataComment,
+                  Score: 3,
+                });
+              }}
             >
               3
             </div>
             <div
               style={{ backgroundColor: "#75bf3e", color: "white" }}
               className={`emotion ${IsActive(4)}`}
-              onClick={() => handleRate(4)}
+              onClick={() => {
+                setActive(4);
+                setDataComment({
+                  ...DataComment,
+                  Score: 4,
+                });
+              }}
             >
               4
             </div>
             <div
               style={{ backgroundColor: "#349a27", color: "white" }}
               className={`emotion ${IsActive(5)}`}
-              onClick={() => handleRate(5)}
+              onClick={() => {
+                setActive(5);
+                setDataComment({
+                  ...DataComment,
+                  Score: 5,
+                });
+              }}
             >
               5
             </div>
@@ -75,7 +111,12 @@ export default function FormRate({ handleChangInput, Confirm, title }) {
           <textarea
             rows="3"
             maxlength="200"
-            onChange={handleCommend}
+            onChange={(e) =>
+              setDataComment({
+                ...DataComment,
+                Feedback: e.target.value,
+              })
+            }
             disabled={!Confirm}
             className="w-100 mt-3"
             name="Description"

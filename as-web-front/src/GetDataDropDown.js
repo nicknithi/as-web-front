@@ -79,6 +79,12 @@ const getWarrantyByCustomerId = async (id) => {
   );
   return res.data.data.warrantyData;
 };
+const GetAllDataWarrantyByCustomerID = async (id) => {
+  const res = await http.post(
+    `api/Warranty/GetAllDataWarrantyByCustomerID?Customer_ID=${id}`
+  );
+  return res.data.data;
+};
 
 const getProductByBarcode = async (barcode) => {
   const res = await http.post("/api/Product/GetProductByBarcode", {
@@ -135,6 +141,26 @@ const SaveRequestCustomerRenew = async (ID, type, center) => {
   });
   return res;
 };
+const GetAllCustomerRenewByCustomer_Code = async (Customer_Code) => {
+  const res = await http.post(
+    `/api/CustomerRenew/GetAllCustomerRenewByCustomer_Code?Customer_Code=${Customer_Code}`
+  );
+  return res.data;
+};
+const GetDataServiceHistoryByCustomerCode = async (Customer_Code) => {
+  const res = await http.post(
+    `/api/ServiceInformation/GetDataServiceHistoryByCustomerCode?CustomerCode=${Customer_Code}`
+  );
+  return res.data;
+};
+const AddDataSatisfactionAssessmentByCustomerCode = async (data) => {
+  const res = await http.post(
+    "/api/ServiceInformation/AddDataSatisfactionAssessmentByCustomerCode",
+    data
+  );
+  return res;
+};
+
 export {
   getProductType,
   getStoreByProvinceData,
@@ -150,4 +176,8 @@ export {
   GetProductTop20ByCode,
   GetProductTop20ByName,
   SaveRequestCustomerRenew,
+  GetAllDataWarrantyByCustomerID,
+  GetAllCustomerRenewByCustomer_Code,
+  GetDataServiceHistoryByCustomerCode,
+  AddDataSatisfactionAssessmentByCustomerCode,
 };

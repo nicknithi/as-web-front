@@ -331,6 +331,7 @@ export default function Register({ data }) {
     );
     lastData.Customer_Type = parseInt(lastData.Customer_Type);
     lastData.Service_Center = lastData.Service_Center.toString();
+    console.log(lastData);
     const res = await http.post("/api/Customer/AddCustomer", lastData);
     setLoadingSendData(false);
     if (res.data.message === "Success!") {

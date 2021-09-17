@@ -5,4 +5,11 @@ const getMenuAll = async (lang) => {
   return res.data.data;
 };
 
-export { getMenuAll };
+const ForgetPasswordCustomer = async (email) => {
+  const res = await http.post(
+    `/api/Customer/ForgetPasswordCustomer?input_email=${email}`
+  );
+  return res.data;
+};
+
+export { getMenuAll, ForgetPasswordCustomer };

@@ -188,6 +188,7 @@
     "btnRenew": "Renew",
     "btnEditProfile": "Edit Profile",
     "noData": "No Data",
+    "evaluation": "Evaluate your satisfaction with American Standard Service.",
     "renew": {
       "titlePicture": "Services Pictures",
       "costService": "Service Charge",
@@ -198,7 +199,11 @@
       "estimate": "Evaluate your satisfaction of American Standard services.",
       "Emo1": "Very Good",
       "Emo2": "Fair",
-      "Emo3": "Poor"
+      "Emo3": "Poor",
+      "comment": "Suggestion",
+      "submit": "Submit",
+      "no": "Renewal No.",
+      "date": "Renewal Date"
     }
   },
   "formEdit": {
@@ -222,5 +227,32 @@
     "forgettitle": "Forgot Password",
     "forgetdetail": "Please insert email that used to register membership. The system will verify the information and send a link to reset the new password.",
     "forgetlable": "Please insert email that used to register membership."
+  },
+  "table": {
+    "PdAndSp": {
+      "date": "Date",
+      "type": "Product Type",
+      "productCode": "Product Code",
+      "model": "Model Name",
+      "store": "Dealer Name",
+      "province": "Province of Purchase",
+      "image": "Receipt Picture"
+    },
+    "Renew": {
+      "No": "Renewal No.",
+      "Date": "Renewal Date",
+      "name": "Member/Representative",
+      "officer": "Service Officer",
+      "NumRight": "Remaining Usage Services"
+    },
+    "History": {
+      "No": "No.",
+      "Date": "Service Date",
+      "RecipeNumber": "Service Receipt Number",
+      "Admin": "Service Officer",
+      "putan": "Member/Representative",
+      "costService": "Service Charge",
+      "costSpare": "Spare Parts"
+    }
   }
 }

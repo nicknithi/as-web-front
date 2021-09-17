@@ -62,3 +62,30 @@
   border-radius: 50%;
   background: #58a7af;
 }
+
+.rate-form {
+  margin-right: -15px;
+  margin-left: -15px;
+  background-color: #f1f1f5;
+  .title {
+    // font-weight: bold;
+  }
+  .emotion {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    // font-weight: bold;
+    // font-size: 25px;
+    cursor: pointer;
+    &.active {
+      border: 3px solid black;
+    }
+  }
+  textarea {
+    // font-size: 22px;
+    border-color: white;
+    border: none;
+  }
+}

@@ -1,15 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import DataTable from "react-data-table-component";
+import { useTranslation } from "react-i18next";
 import {
   getWarrantyByCustomerId,
   GetProvinceData,
   getProductByBarcode,
   getProductType,
   getAllStore,
+  GetAllDataWarrantyByCustomerID,
 } from "../../GetDataDropDown";
 import "../../assets/scss/components/data-table.scss";
-export default function TestDataTable({ customer_id }) {
+export default function TestDataTable({ customer_id, textNoData }) {
+  const [t, i18n] = useTranslation("common");
   const [DataProvince, setDataProvince] = useState([{}]);
   const [dataWarranty, setDataWarranty] = useState([]);
   const [trigerShow, setTrigerShow] = useState(false);
@@ -65,8 +68,8 @@ export default function TestDataTable({ customer_id }) {
     setDataProvince(res);
     Type = await getProductType(1);
     Store = await getAllStore(1);
-    const resWarranty = await getWarrantyByCustomerId(customer_id);
-
+    // const resWarranty = await getWarrantyByCustomerId(customer_id);
+    const resWarranty = await GetAllDataWarrantyByCustomerID(customer_id);
     const resWarrantySetProduct = await processArray(resWarranty);
     setDataWarranty(resWarrantySetProduct);
     setTrigerShow(true);
@@ -89,47 +92,55 @@ export default function TestDataTable({ customer_id }) {
       day = ("0" + date.getDate()).slice(-2);
     return [day, mnth, date.getFullYear()].join("/");
   };
-
+  const showimg = (img) => {
+    var a = document.createElement("a");
+    a.href = `${process.env.REACT_APP_DOMAIN_NAME}/${img}`;
+    a.setAttribute("target", "_blank");
+    a.click();
+  };
   const columns = [
     {
-      name: "วัน/เดือน/ปี",
+      name: t("table.PdAndSp.date"),
+      selector: "warranty_Date",
+      sortable: true,
       cell: (row) => <div>{convertFormatDate(row.warranty_Date)}</div>,
     },
     {
-      name: "ประเภทสินค้า",
+      name: t("table.PdAndSp.type"),
       center: true,
       cell: (row) => <div className>{row.fK_Type_ID}</div>,
     },
     {
-      name: "รหัสสินค้า",
+      name: t("table.PdAndSp.productCode"),
       center: true,
       cell: (row) => <div>{row.product_Code}</div>,
     },
     {
-      name: "ชื่อรุ่น",
-      selector: "product_ID",
-      sortable: true,
+      name: t("table.PdAndSp.model"),
+      // selector: "product_ID",
+      //sortable: true,
       center: true,
       cell: (row) => <div>-</div>,
     },
     {
-      name: "ร้านค้าที่ซื้อ",
-      selector: "store_ID",
+      name: t("table.PdAndSp.store"),
+      // selector: "store_ID",
       center: true,
     },
     {
-      name: "จังหวัดที่ซื้อ",
+      name: t("table.PdAndSp.province"),
       selector: "province_ID",
       // sortable: true,
       cell: (row) => <div>{convertProvince(row.province_ID)}</div>,
     },
     {
-      name: "ภาพใบเสร็จ",
-
+      name: t("table.PdAndSp.image"),
       center: true,
       cell: (row) => (
         <div>
-          <button>คลิก</button>
+          <button className="p-2" onClick={() => showimg(row.image)}>
+            click
+          </button>
         </div>
       ),
     },
@@ -156,15 +167,22 @@ export default function TestDataTable({ customer_id }) {
   return (
     <div className="container">
       <div className="">
-        {trigerShow && (
+        {
           <DataTable
             data={dataWarranty}
             columns={columns}
+            noDataComponent={textNoData} //or your component
             // customStyles={customStyles}
             pagination={true}
             paginationPerPage={5}
+            progressPending={!trigerShow}
+            progressComponent={
+              <div style={{ fontSize: "20px", color: "#6e717f" }}>
+                Loading...
+              </div>
+            }
           />
-        )}
+        }
       </div>
     </div>
   );

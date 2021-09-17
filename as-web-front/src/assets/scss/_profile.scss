@@ -30,6 +30,13 @@
     }
   }
   .content-img {
+    .text {
+      h4 {
+        span {
+          color: #58a7af;
+        }
+      }
+    }
     padding: 13px;
     background-color: #f1f1f5;
     img {
@@ -40,6 +47,19 @@
       // width: 200px;
       height: 45px;
       background-color: white;
+    }
+  }
+  .menu-4 {
+    position: relative;
+    &::after {
+      position: absolute;
+      content: "";
+      bottom: -15px;
+      left: 50%;
+      transform: translate(-50%);
+      width: 100%;
+      max-width: 1140px;
+      border-bottom: 3px solid #f1c400;
     }
   }
 }

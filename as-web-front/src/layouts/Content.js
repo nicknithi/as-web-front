@@ -361,8 +361,9 @@ export default function Content() {
       <>
         <ProfileHome />
         <div className="container">
-          <div className="row d-flex justify-content-center mb-5">
+          <div className="row d-flex justify-content-center mb-5 button-back">
             <ButtonMain
+              className="button-back"
               title={t("website.btnBack")}
               color="#636363"
               BgColor="#f1c400"

@@ -602,6 +602,7 @@ function FormWarranty({ Confirm }) {
 
     const Datas = await Promise.all(
       LastDataComToConfirm.map(async (items, index) => {
+        items.Purchase_Date = formatDate(items.Purchase_Date);
         items.Customer_Latitude = items.Customer_Latitude
           ? items.Customer_Latitude.toString()
           : "";
@@ -611,6 +612,7 @@ function FormWarranty({ Confirm }) {
         return { ...items, Seq: seqFile[index] };
       })
     );
+    console.log(Datas);
     FormLastData.append("datas", JSON.stringify(Datas));
     // console.log("Datas", Datas);
     await axios
@@ -720,7 +722,11 @@ function FormWarranty({ Confirm }) {
             addStoreForm={addStoreForm}
             deleteFormProduct={deleteFormProduct}
           />
-          <FormRate handleChangInput={handleChangInput} Confirm={Confirm} />
+          <FormRate
+            handleChangInput={handleChangInput}
+            Confirm={Confirm}
+            title={t("warranthForm.Evaluate")}
+          />
           <div className="row">
             <div className="col-md-4 mx-auto text-center mt-4">
               <ButtonMain
