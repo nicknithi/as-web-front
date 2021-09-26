@@ -165,18 +165,16 @@ export default function ProfileHome() {
   }, [showPage]);
   const addComment = async (event) => {
     event.preventDefault();
-    console.log("DataComment", DataComment);
-    console.log("dataSum", dataSum.ServiceID);
-    // console.log(e);
     const temp = { ...DataComment, ServiceID: dataSum.ServiceID };
-    console.log("temp", temp);
-    console.log("DataComment", DataComment);
-    const res = await AddDataSatisfactionAssessmentByCustomerCode(temp);
-    console.log("res", res);
-    if (res.data.message === "Success!") {
-      setShowPage("1");
+    if (DataComment.Score > 0 || DataComment.Feedback !== "") {
+      const res = await AddDataSatisfactionAssessmentByCustomerCode(temp);
+      if (res.data.message === "Success!") {
+        setShowPage("1");
+      } else {
+        alert("เกิดข้อผิดพลาด");
+      }
     } else {
-      alert("เกิดข้อผิดพลาด");
+      alert(t("profile.evaluation"));
     }
   };
   useEffect(async () => {

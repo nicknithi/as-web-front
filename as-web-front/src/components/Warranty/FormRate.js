@@ -1,9 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-export default function FormRate({ handleChangInput, Confirm, title }) {
+export default function FormRate({
+  handleChangInput,
+  Confirm,
+  title,
+  FormDataWarranty,
+  setFormDataWarranty,
+}) {
   const [t, i18n] = useTranslation("common");
   const handleRate = (rate) => {
     document.getElementById("Score").value = rate;
+    const DataSet = { ...FormDataWarranty };
+    DataSet.Score = rate;
+    setFormDataWarranty(DataSet);
+    if (rate && rate > 0) {
+      // document.querySelector("#warrantyDes").required = false;
+    } else {
+      // document.querySelector("#warrantyDes").required = true;
+    }
     handleChangInput(document.getElementById("Score"));
     setActive(rate);
   };
@@ -73,6 +87,7 @@ export default function FormRate({ handleChangInput, Confirm, title }) {
       <div className="row">
         <div className="col-md-4 mx-auto">
           <textarea
+            id="warrantyDes"
             rows="3"
             maxlength="200"
             onChange={handleCommend}
@@ -80,7 +95,7 @@ export default function FormRate({ handleChangInput, Confirm, title }) {
             className="w-100 mt-3"
             name="Description"
             placeholder={t("warranthForm.Suggestion")}
-            required
+            // required
           ></textarea>
         </div>
       </div>

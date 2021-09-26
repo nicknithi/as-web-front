@@ -40,14 +40,14 @@ export default function ProductData({
     }
     const resTypeID = await getProductType(lang);
     setDataTypeId([
-      { id: 0, value: t("warranthForm.selectType") },
+      { id: "", value: t("warranthForm.selectType") },
       ...resTypeID,
     ]);
-    setTypeId([{ id: 0, value: t("warranthForm.selectType") }, ...resTypeID]);
+    setTypeId([{ id: "", value: t("warranthForm.selectType") }, ...resTypeID]);
   }, []);
 
   const [dataTypeID, setDataTypeId] = useState([
-    { id: 0, value: t("warranthForm.selectType") },
+    { id: "", value: t("warranthForm.selectType") },
   ]);
   const [dataModelID, setDataModelID] = useState([
     { id: 0, value: "กรุณาเลือก" },
@@ -95,14 +95,14 @@ export default function ProductData({
   ) => {
     const ProductCodeSet = [...FormDataProduct];
     ProductCodeSet[index].Model_ID = ModelId;
-    ProductCodeSet[index].Type_ID = TypeId;
+    ProductCodeSet[index].Type_ID = TypeId || null;
     ProductCodeSet[index].Product_code = product_code;
     ProductCodeSet[index].Product_ID = id;
     ProductCodeSet[index].Barcode_Number = product_Barcode;
     ProductCodeSet[index].product_Name = product_Name;
     setFormDataProduct(ProductCodeSet);
     const type = dataTypeID.find((d) => d.id === TypeId);
-
+    console.log("type", TypeId || null);
     if (type !== undefined && TypeId !== 0) {
       setTypeId([type]);
     } else {
@@ -126,7 +126,7 @@ export default function ProductData({
     barCodeSet[index].Barcode_Number = BarCode;
     barCodeSet[index].Product_ID = id;
     barCodeSet[index].Model_ID = ModelId;
-    barCodeSet[index].Type_ID = TypeId;
+    barCodeSet[index].Type_ID = TypeId || null;
     barCodeSet[index].Product_code = product_code;
     barCodeSet[index].product_Name = product_Name;
     setFormDataProduct(barCodeSet);
@@ -137,6 +137,7 @@ export default function ProductData({
     //   });
     // }
     const type = dataTypeID.find((d) => d.id === TypeId);
+    console.log("type", type);
     if (type !== undefined && TypeId !== 0) {
       setTypeId([type]);
     } else {
@@ -192,11 +193,14 @@ export default function ProductData({
     setFormDataProduct(setOnOtherCodeSet);
   };
   useEffect(() => {
+    console.log("test 1235");
     if (FormDataProduct[index].Product_Code_Other) {
+      console.log("if");
       document.querySelector(
         `.input-product-code-${index} .rbt input`
       ).required = false;
     } else {
+      console.log("else");
       document.querySelector(
         `.input-product-code-${index} .rbt input`
       ).required = true;

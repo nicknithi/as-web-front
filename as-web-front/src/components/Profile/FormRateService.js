@@ -9,9 +9,11 @@ export default function FormRate({
 }) {
   const [t, i18n] = useTranslation("common");
   const handleRate = (rate) => {
-    document.getElementById("Score").value = rate;
-    handleChangInput(document.getElementById("Score"));
-    setActive(rate);
+    if (DataComment.Score > 0) {
+      document.querySelector("#commentService").required = false;
+    } else {
+      document.querySelector("#commentService").required = true;
+    }
   };
   const handleCommend = (e) => {
     handleChangInput(e);
@@ -37,6 +39,7 @@ export default function FormRate({
               className={`emotion ${IsActive(1)}`}
               onClick={() => {
                 setActive(1);
+                handleRate(1);
                 setDataComment({
                   ...DataComment,
                   Score: 1,
@@ -50,6 +53,7 @@ export default function FormRate({
               className={`emotion ${IsActive(2)}`}
               onClick={() => {
                 setActive(2);
+                handleRate(2);
                 setDataComment({
                   ...DataComment,
                   Score: 2,
@@ -63,6 +67,7 @@ export default function FormRate({
               className={`emotion ${IsActive(3)}`}
               onClick={() => {
                 setActive(3);
+                handleRate(3);
                 setDataComment({
                   ...DataComment,
                   Score: 3,
@@ -76,6 +81,7 @@ export default function FormRate({
               className={`emotion ${IsActive(4)}`}
               onClick={() => {
                 setActive(4);
+                handleRate(4);
                 setDataComment({
                   ...DataComment,
                   Score: 4,
@@ -89,6 +95,7 @@ export default function FormRate({
               className={`emotion ${IsActive(5)}`}
               onClick={() => {
                 setActive(5);
+                handleRate(5);
                 setDataComment({
                   ...DataComment,
                   Score: 5,
@@ -109,6 +116,7 @@ export default function FormRate({
       <div className="row">
         <div className="col-md-4 mx-auto">
           <textarea
+            id="commentService"
             rows="3"
             maxlength="200"
             onChange={(e) =>

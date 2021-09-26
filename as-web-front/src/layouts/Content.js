@@ -52,7 +52,7 @@ export default function Content() {
     }
     let tempCustomPath = customPath;
     lang = langContent.toUpperCase();
-
+    i18n.changeLanguage(lang.toLowerCase());
     //logout
     if (tempCustomPath === "logout") {
       document.cookie = `customerID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${process.env.REACT_APP_SUB_DIRECTORY};`;
@@ -373,13 +373,14 @@ export default function Content() {
         </div>
       </>
     );
-  } else if (customPath === "edit-profile" || customPath === "edit-profile") {
+  } else if (customPath === "edit-profile") {
     return (
       <>
         <EditProfile />
         <div className="container">
           <div className="row d-flex justify-content-center mb-5">
             <ButtonMain
+              className="button-back"
               title={t("website.btnBack")}
               color="#636363"
               BgColor="#f1c400"

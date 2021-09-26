@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import LoadingContentOverlay from "../LoadingContentOverlay";
+import { GetAllDataCareCenter } from "../../GetDataDropDown";
 import {
   getProvince,
   setTempInput,
@@ -206,7 +207,7 @@ function FormWarranty({ Confirm }) {
   const handleSearchByCustomerCode = async (code) => {
     await http
       .post(`/api/Customer/GetDataCustomerByCode?Customer_Code=${code}`)
-      .then((res) => {
+      .then(async (res) => {
         if (res.data.message == "Success!") {
           setDistrict(DistrictDN);
           setSubDistrict(SubDistrictDN);
@@ -226,6 +227,14 @@ function FormWarranty({ Confirm }) {
           oldData.Customer_ZipCode = data.customer_ZIP_Code;
           oldData.Customer_Latitude = data.customer_Latitude;
           oldData.Customer_Longtitude = data.customer_Longitude;
+          const resServiceCenter = await GetAllDataCareCenter(
+            lang,
+            data.fK_Province_ID
+          );
+          if (resServiceCenter && resServiceCenter.length) {
+            oldData.Service_Center = resServiceCenter[0].code;
+            oldData.Service_Center_Name = resServiceCenter[0].name;
+          }
           setFormDataWarranty(oldData);
           setDisableFromSearch(true);
         } else {
@@ -243,6 +252,8 @@ function FormWarranty({ Confirm }) {
           oldData.Customer_ZipCode = "";
           oldData.Customer_Latitude = "";
           oldData.Customer_Longtitude = "";
+          oldData.Service_Center = null;
+          oldData.Service_Center_Name = "";
           setFormDataWarranty(oldData);
           setDisableFromSearch(false);
         }
@@ -252,7 +263,7 @@ function FormWarranty({ Confirm }) {
     // console.log("FormDataProduct", FormDataProduct);
   }, [FormDataProduct]);
   useEffect(() => {
-    // console.log("FormDataWarranty", FormDataWarranty);
+    console.log("FormDataWarranty", FormDataWarranty);
   }, [FormDataWarranty]);
   useEffect(() => {
     // console.log("FileWaranty", FileWaranty);
@@ -724,6 +735,8 @@ function FormWarranty({ Confirm }) {
           />
           <FormRate
             handleChangInput={handleChangInput}
+            setFormDataWarranty={setFormDataWarranty}
+            FormDataWarranty={FormDataWarranty}
             Confirm={Confirm}
             title={t("warranthForm.Evaluate")}
           />

@@ -425,7 +425,11 @@ export default function EditProfile() {
             </div>
           </div>
           <div className="row mt-3 d-flex justify-content-center mb-4">
-            <ButtonMain title="ส่งข้อมูล" color="#636363" BgColor="#f1c400" />
+            <ButtonMain
+              title={t("formEdit.save")}
+              color="#636363"
+              BgColor="#f1c400"
+            />
           </div>
         </div>
       </form>

@@ -107,7 +107,7 @@ export default function TestDataTable({
             noDataComponent={textNoData} //or your component
             // customStyles={customStyles}
             pagination={true}
-            paginationPerPage={5}
+            paginationPerPage={10}
             progressPending={!trigerShow}
             progressComponent={
               <div style={{ fontSize: "20px", color: "#6e717f" }}>

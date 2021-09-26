@@ -6,6 +6,10 @@
     "navbar": "Official Website",
     "btnBack": "Back"
   },
+  "website2": {
+    "navbar": "Official Website",
+    "btnBack": "Back"
+  },
   "maintain": {
     "article": "Article",
     "download": "Download",
@@ -226,7 +230,8 @@
     "password": "Password",
     "forgettitle": "Forgot Password",
     "forgetdetail": "Please insert email that used to register membership. The system will verify the information and send a link to reset the new password.",
-    "forgetlable": "Please insert email that used to register membership."
+    "forgetlable": "Please insert email that used to register membership.",
+    "save": "Save"
   },
   "table": {
     "PdAndSp": {

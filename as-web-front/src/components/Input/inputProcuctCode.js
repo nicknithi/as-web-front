@@ -119,9 +119,9 @@ export default function InputProcuctCode({
   }, [FormDataProduct[index].Product_code]);
 
   useEffect(() => {
-    document.querySelector(
-      `.input-product-code-${index} .rbt input`
-    ).required = true;
+    // document.querySelector(
+    //   `.input-product-code-${index} .rbt input`
+    // ).required = true;
   }, []);
   return (
     <div className={`input-barcode input-product-code-${index}`}>

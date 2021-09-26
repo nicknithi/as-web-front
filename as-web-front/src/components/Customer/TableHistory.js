@@ -29,7 +29,7 @@ export default function TestDataTable({
     let date = new Date(str),
       mnth = ("0" + (date.getMonth() + 1)).slice(-2),
       day = ("0" + date.getDate()).slice(-2);
-    return [date.getFullYear(), mnth, day].join("-");
+    return [day, mnth, date.getFullYear()].join("-");
   };
   const columns = [
     {
@@ -39,6 +39,7 @@ export default function TestDataTable({
     {
       name: t("table.History.Date"),
       center: true,
+      sortField: t("table.History.Date"),
       cell: (row) => <div className>{convertDate(row.serviceDate) || "-"}</div>,
       // cell: (row) => <div className>{row.ServiceDate || "-"}</div>,
     },
@@ -117,7 +118,7 @@ export default function TestDataTable({
             noDataComponent={textNoData} //or your component
             // customStyles={customStyles}
             pagination={true}
-            paginationPerPage={5}
+            paginationPerPage={10}
             progressPending={!trigerShow}
             progressComponent={
               <div style={{ fontSize: "20px", color: "#6e717f" }}>
